@@ -117,7 +117,7 @@ class _ApiServiceClient implements ApiServiceClient {
 
   @override
   Future<GeneralSuccessResponse> checkdomainavailiability(
-      Map<String, String> queryParams) async {
+      Map<String, dynamic> queryParams) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(queryParams);
@@ -162,6 +162,79 @@ class _ApiServiceClient implements ApiServiceClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = GeneralSuccessResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GetUserResponse> getUserData() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<GetUserResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/tenancy/ui/userprofile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetUserResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GetDashboardResponse> getDashboardData(
+      Map<String, dynamic> queryParams) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(queryParams);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetDashboardResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/tenancy/ui/dashboard',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetDashboardResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GetUserListResponse> getUserListData(
+      Map<String, dynamic> queryParams) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(queryParams);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetUserListResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/tenancy/ui/userscreen',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetUserListResponse.fromJson(_result.data!);
     return value;
   }
 

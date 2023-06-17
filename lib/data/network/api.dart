@@ -22,9 +22,20 @@ abstract class ApiServiceClient {
 
   @GET("/api/v1/tenancy/checkdomainavail")
   Future<GeneralSuccessResponse> checkdomainavailiability(
-      @Queries() Map<String, String> queryParams);
+      @Queries() Map<String, dynamic> queryParams);
 
   @POST("/api/v1/tenancy/forgotpassword")
   Future<GeneralSuccessResponse> forgotpassword(
       @Body() Map<String, dynamic> body);
+
+  @GET("/api/v1/tenancy/ui/userprofile")
+  Future<GetUserResponse> getUserData();
+
+  @GET("/api/v1/tenancy/ui/dashboard")
+  Future<GetDashboardResponse> getDashboardData(
+      @Queries() Map<String, dynamic> queryParams);
+
+  @GET("/api/v1/tenancy/ui/userscreen")
+  Future<GetUserListResponse> getUserListData(
+      @Queries() Map<String, dynamic> queryParams);
 }

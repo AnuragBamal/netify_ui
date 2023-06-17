@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:netify/app/di.dart';
 import 'package:netify/data/network/failure.dart';
+import 'package:netify/persentation/main/authentication_service.dart';
 
 enum DataSource {
   success,
@@ -21,6 +23,8 @@ enum DataSource {
 
 class ErrorHandler implements Exception {
   late Failure failure;
+  // final AuthenticationService _authenticationService =
+  //     instance<AuthenticationService>();
 
   ErrorHandler.handle(dynamic error) {
     if (error is DioError) {
@@ -40,7 +44,21 @@ class ErrorHandler implements Exception {
       case DioErrorType.receiveTimeout:
         return DataSource.receiveTimeout.getFailure();
       case DioErrorType.badResponse:
-        return DataSource.badRequest.getFailure();
+        if (error.response?.statusCode == 401) {
+          // _authenticationService.signOutUser();
+          return DataSource.unauthorized.getFailure();
+        } else if (error.response?.statusCode == 403) {
+          return DataSource.forbidden.getFailure();
+        } else if (error.response?.statusCode == 404) {
+          return DataSource.notFound.getFailure();
+        } else if (error.response?.statusCode == 500) {
+          return DataSource.internalServerError.getFailure();
+        } else if (error.response?.statusCode == 204) {
+          return DataSource.noContent.getFailure();
+        } else {
+          return DataSource.unknown.getFailure();
+        }
+
       case DioErrorType.cancel:
         return DataSource.cancel.getFailure();
       case DioErrorType.unknown:

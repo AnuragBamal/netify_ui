@@ -27,7 +27,9 @@ class RegisterObject with _$RegisterObject {
       String password,
       String tenancyType,
       String countryCode,
-      String confirmPassword) = _RegisterObject;
+      String confirmPassword,
+      String companyName,
+      String brandName) = _RegisterObject;
 }
 
 @freezed
@@ -38,4 +40,28 @@ class ForgotPasswordObject with _$ForgotPasswordObject {
       String? newPaasCode,
       String confirmPassword,
       bool isOtpSent) = _ForgotPasswordObject;
+}
+
+@freezed
+class CreateNewUserObject with _$CreateNewUserObject {
+  factory CreateNewUserObject(
+    String firstName,
+    String lastName,
+    //String aadharNumber,
+    String email,
+    String userName,
+    String password,
+    String countryCode,
+    String mobileNumber,
+    String gstNumber,
+    String companyName,
+    String brandName,
+    String country,
+    String address,
+    String pincode,
+    String city,
+    String state,
+    String owner,
+    String userType,
+  ) = _CreateNewUserObject;
 }

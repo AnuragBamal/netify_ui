@@ -41,3 +41,5 @@ flutter pub get && flutter pub run build_runner build --delete-conflicting-outpu
 If build error are happening relation to some version in gradle file try check and update netify_ui/android/gradle/wrapper/gradle-wrapper.properties
 
 
+
+

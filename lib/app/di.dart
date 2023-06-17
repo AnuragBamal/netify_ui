@@ -8,11 +8,16 @@ import 'package:netify/data/network/network_info.dart';
 import 'package:netify/data/repository/repository_implementor.dart';
 import 'package:netify/domain/repository/repository.dart';
 import 'package:netify/domain/usecase/forgot_password_usecase.dart';
+import 'package:netify/domain/usecase/getdashboard_usecase.dart';
+import 'package:netify/domain/usecase/getuser_usecase.dart';
+import 'package:netify/domain/usecase/getuserlist_usecase.dart';
 import 'package:netify/domain/usecase/login_usecase.dart';
 import 'package:netify/domain/usecase/otp_usecase.dart';
 import 'package:netify/domain/usecase/signup_usecase.dart';
 import 'package:netify/persentation/forgot_password/forgot_password_view_model.dart';
 import 'package:netify/persentation/login/login_view_model.dart';
+import 'package:netify/persentation/main/authentication_service.dart';
+import 'package:netify/persentation/main/home_page_view_model.dart';
 import 'package:netify/persentation/register/register_view_model.dart';
 import 'package:netify/persentation/verification/verification_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +31,9 @@ Future<void> initAppModule() async {
   //App Preference instance
   instance.registerLazySingleton<AppPreferences>(
       () => AppPreferences(instance<SharedPreferences>()));
-
+  //Instance of authentication service
+  instance.registerLazySingleton<AuthenticationService>(
+      () => AuthenticationService());
   //Instance of network info
   instance.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImplementer(InternetConnectionChecker()));
@@ -45,6 +52,8 @@ Future<void> initAppModule() async {
   //Instance of repository
   instance.registerLazySingleton<Repository>(() => RepositoryImplementer(
       instance<RemoteDataSource>(), instance<NetworkInfo>()));
+
+  //Instance of authService
 }
 
 initLoginModule() {
@@ -80,6 +89,18 @@ initForgotPasswordModule() {
         () => ForgotPasswordUseCase(instance()));
     instance.registerFactory<ForgotPasswordViewModel>(
         () => ForgotPasswordViewModel(instance()));
+  }
+}
+
+initHomepageModule() {
+  if (!GetIt.I.isRegistered<GetUserUseCase>()) {
+    instance.registerFactory<GetUserUseCase>(() => GetUserUseCase(instance()));
+    instance.registerFactory<GetUserListUsecase>(
+        () => GetUserListUsecase(instance()));
+    instance.registerFactory<GetDashboardUseCase>(
+        () => GetDashboardUseCase(instance()));
+    instance.registerFactory<HomepageViewModel>(
+        () => HomepageViewModel(instance(), instance(), instance()));
   }
 }
 

@@ -11,6 +11,11 @@ abstract class RemoteDataSource {
       CheckDomainAvailiabilityRequest checkDomainAvailiabilityRequest);
   Future<GeneralSuccessResponse> forgotpassword(
       ForgotPasswordRequest forgotPasswordRequest);
+  Future<GetUserResponse> getUserData();
+  Future<GetDashboardResponse> getDashboardData(
+      GetDashboardRequest getDashboardRequest);
+  Future<GetUserListResponse> getUserListData(
+      GetScreenRequest getScreenRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -50,5 +55,23 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
       ForgotPasswordRequest forgotPasswordRequest) async {
     return await _apiServiceClient
         .forgotpassword(forgotPasswordRequest.toJson());
+  }
+
+  @override
+  Future<GetUserResponse> getUserData() async {
+    return await _apiServiceClient.getUserData();
+  }
+
+  @override
+  Future<GetDashboardResponse> getDashboardData(
+      GetDashboardRequest getDashboardRequest) async {
+    return await _apiServiceClient
+        .getDashboardData(getDashboardRequest.toJson());
+  }
+
+  @override
+  Future<GetUserListResponse> getUserListData(
+      GetScreenRequest getScreenRequest) async {
+    return await _apiServiceClient.getUserListData(getScreenRequest.toJson());
   }
 }

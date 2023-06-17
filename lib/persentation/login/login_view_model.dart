@@ -8,6 +8,7 @@ import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
+import 'package:netify/persentation/main/authentication_service.dart';
 
 class LoginViewModel extends BaseViewModel
     implements LoginViewModelInput, LoginViewModelOutput {
@@ -129,8 +130,22 @@ class LoginViewModel extends BaseViewModel
   }
 
   _handleSuccess(Login login) async {
+    // await _appPreferences.setJwtToken(login.data[0].token);
+    // resetAllmodules();
+
+    // inputState.add(ContentState());
+    // if (login.data[0].isVerified == false) {
+    //   verificationRequiredStreamController.add(true);
+    // } else {
+    //   verificationRequiredStreamController.add(false);
+    //   final AuthenticationService authenticationService =
+    //       instance();
+    //   await authenticationService.signInUser(login.data[0].token);
+    // }
+    //isUserLoggedInSuccessfullyStreamController.add(true);
     await _appPreferences.setJwtToken(login.data[0].token);
     resetAllmodules();
+
     inputState.add(ContentState());
     if (login.data[0].isVerified == false) {
       verificationRequiredStreamController.add(true);

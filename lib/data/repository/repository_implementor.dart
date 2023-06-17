@@ -151,4 +151,74 @@ class RepositoryImplementer extends Repository {
           message: ResponseMessage.noInternetConnection));
     }
   }
+
+  @override
+  Future<Either<Failure, GetUser>> getUserData() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getUserData();
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+              code: response.errorCode ?? "X-410",
+              message: response.message ?? "API Error"));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+          code: ResponseCode.noInternetConnection.toString(),
+          message: ResponseMessage.noInternetConnection));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetDashboardItemList>> getDashboardData(
+      GetDashboardRequest getDashboardRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.getDashboardData(getDashboardRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+              code: response.errorCode ?? "X-410",
+              message: response.message ?? "API Error"));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+          code: ResponseCode.noInternetConnection.toString(),
+          message: ResponseMessage.noInternetConnection));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetUserList>> getUserListData(
+      GetScreenRequest getScreenRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.getUserListData(getScreenRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+              code: response.errorCode ?? "X-410",
+              message: response.message ?? "API Error"));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+          code: ResponseCode.noInternetConnection.toString(),
+          message: ResponseMessage.noInternetConnection));
+    }
+  }
 }

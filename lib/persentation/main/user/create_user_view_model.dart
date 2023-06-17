@@ -9,21 +9,11 @@ import 'package:netify/persentation/common/freezed_data_classes.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
 
-class RegisterViewModel extends BaseViewModel
-    implements RegisterViewModelInput, RegisterViewModelOutput {
+class UserViewModel extends BaseViewModel
+    implements UserViewModelInput, UserViewModelOutput {
   static const firstNamePattern = r'^[a-zA-Z\s]{3,}$';
   static const lastNamePattern = r'^[a-zA-Z]{3,}$';
-  final List<DropdownMenuItem<String>> tenantTypesList = const [
-    DropdownMenuItem(
-      value: "ISP",
-      child: Text("ISP"),
-    ),
-    DropdownMenuItem(
-      value: "HOTEL",
-      child: Text("HOTEL"),
-    )
-  ];
-  static const defaultTenantType = "ISP";
+
   final StreamController _firstNameStreamController =
       StreamController<String>.broadcast();
   final StreamController _lastNameStreamController =
@@ -34,19 +24,13 @@ class RegisterViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController _passwordStreamController =
       StreamController<String>.broadcast();
-  final StreamController _confirmPasswordStreamController =
-      StreamController<String>.broadcast();
-  final StreamController _aadharNumberStreamController =
-      StreamController<String>.broadcast();
+  // final StreamController _aadharNumberStreamController =
+  //     StreamController<String>.broadcast();
   final StreamController _countryStreamController =
       StreamController<String>.broadcast();
   final StreamController _cityStreamController =
       StreamController<String>.broadcast();
   final StreamController _addressStreamController =
-      StreamController<String>.broadcast();
-  final StreamController _tenancyTypeStreamController =
-      StreamController<String>.broadcast();
-  final StreamController _domainStreamController =
       StreamController<String>.broadcast();
   final StreamController _userNameStreamController =
       StreamController<String>.broadcast();
@@ -54,17 +38,21 @@ class RegisterViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController _brandNameStreamController =
       StreamController<String>.broadcast();
+  final StreamController _stateAddressStreamController =
+      StreamController<String>.broadcast();
+  final StreamController _pincodeStreamController =
+      StreamController<String>.broadcast();
+  final StreamController _gstNumberStreamController =
+      StreamController<String>.broadcast();
   final StreamController _isAllInputValidStreamController =
       StreamController<void>.broadcast();
-  final StreamController isTenantCreatedSuccessfullyStreamController =
+  final StreamController isUserCreatedSuccessfullyStreamController =
       StreamController<bool>();
 
-  final SignUpUseCase _signUpUseCase;
-  final CheckDomainAvailiabilityUseCase _checkDomainAvailiabilityUseCase;
-  var signUpObject = RegisterObject(
-      "", "", "", "", "IN", "", "", "", "", "", "", "", "+91", "", "", "");
+  var createNewUser = CreateNewUserObject(
+      "", "", "", "", "", "+91", "", "", "", "", "", "", "", "", "", "", "");
 
-  RegisterViewModel(this._signUpUseCase, this._checkDomainAvailiabilityUseCase);
+  UserViewModel();
 
   @override
   void dispose() {
@@ -73,16 +61,17 @@ class RegisterViewModel extends BaseViewModel
     _emailStreamController.close();
     _mobileNumberStreamController.close();
     _passwordStreamController.close();
-    _confirmPasswordStreamController.close();
-    _aadharNumberStreamController.close();
+    //_aadharNumberStreamController.close();
     _countryStreamController.close();
     _cityStreamController.close();
     _addressStreamController.close();
-    _tenancyTypeStreamController.close();
-    _domainStreamController.close();
+
     _userNameStreamController.close();
     _isAllInputValidStreamController.close();
-    isTenantCreatedSuccessfullyStreamController.close();
+    isUserCreatedSuccessfullyStreamController.close();
+    _stateAddressStreamController.close();
+    _pincodeStreamController.close();
+    _gstNumberStreamController.close();
 
     super.dispose();
   }
@@ -94,46 +83,85 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   void submitRegister() async {
-    inputState.add(
-        LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
-    final result = await _signUpUseCase.execute(SignUpUseCaseInput(
-      firstName: signUpObject.firstName,
-      lastName: signUpObject.lastName,
-      email: signUpObject.email,
-      mobileNumber: "${signUpObject.countryCode} ${signUpObject.mobileNumber}",
-      password: signUpObject.password,
-      aadharNumber: signUpObject.aadharNumber,
-      country: signUpObject.country,
-      city: signUpObject.city,
-      address: signUpObject.address,
-      tenancyType: signUpObject.tenancyType,
-      garudaDomain: signUpObject.garudaDomain,
-      userName: signUpObject.userName,
-      companyName: signUpObject.companyName,
-      brandName: signUpObject.brandName,
-    ));
-    result.fold((failure) => _handleSubmitFailure(failure),
-        (data) => _handleSubmitSuccess(data));
+    // inputState.add(
+    //     LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
+    // final result = await _signUpUseCase.execute(SignUpUseCaseInput(
+    //   firstName: signUpObject.firstName,
+    //   lastName: signUpObject.lastName,
+    //   email: signUpObject.email,
+    //   mobileNumber: "${signUpObject.countryCode} ${signUpObject.mobileNumber}",
+    //   password: signUpObject.password,
+    //   aadharNumber: signUpObject.aadharNumber,
+    //   country: signUpObject.country,
+    //   city: signUpObject.city,
+    //   address: signUpObject.address,
+    //   tenancyType: signUpObject.tenancyType,
+    //   garudaDomain: signUpObject.garudaDomain,
+    //   userName: signUpObject.userName,
+    //   companyName: signUpObject.companyName,
+    //   brandName: signUpObject.brandName,
+    // ));
+    // result.fold((failure) => _handleSubmitFailure(failure),
+    //     (data) => _handleSubmitSuccess(data));
+  }
+
+  // @override
+  // setAadharNumber(String aadharNumber) {
+  //   inputAadharNumber.add(aadharNumber);
+  //   if (_isAadharNumberValid(aadharNumber)) {
+  //     signUpObject = signUpObject.copyWith(aadharNumber: aadharNumber);
+  //   } else {
+  //     signUpObject = signUpObject.copyWith(aadharNumber: "");
+  //   }
+  //   _validateInputs();
+  // }
+  @override
+  setOwneruser(String owner) {
+    createNewUser = createNewUser.copyWith(owner: owner);
   }
 
   @override
-  setAadharNumber(String aadharNumber) {
-    inputAadharNumber.add(aadharNumber);
-    if (_isAadharNumberValid(aadharNumber)) {
-      signUpObject = signUpObject.copyWith(aadharNumber: aadharNumber);
+  setUserType(String userType) {
+    createNewUser = createNewUser.copyWith(userType: userType);
+  }
+
+  @override
+  setGSTNumber(String gstNumber) {
+    inputgstNumber.add(gstNumber);
+    if (_isGSTNumberValid(gstNumber)) {
+      createNewUser = createNewUser.copyWith(gstNumber: gstNumber);
     } else {
-      signUpObject = signUpObject.copyWith(aadharNumber: "");
+      createNewUser = createNewUser.copyWith(gstNumber: "");
     }
-    _validateInputs();
+  }
+
+  @override
+  setPincode(String pincode) {
+    inputPincode.add(pincode);
+    if (_isPincodeValid(pincode)) {
+      createNewUser = createNewUser.copyWith(pincode: pincode);
+    } else {
+      createNewUser = createNewUser.copyWith(pincode: "");
+    }
+  }
+
+  @override
+  setState(String state) {
+    inputAddressState.add(state);
+    if (_isAddressStateValid(state)) {
+      createNewUser = createNewUser.copyWith(state: state);
+    } else {
+      createNewUser = createNewUser.copyWith(state: "");
+    }
   }
 
   @override
   setAddress(String address) {
     inputAddress.add(address);
     if (_isAddressValid(address)) {
-      signUpObject = signUpObject.copyWith(address: address);
+      createNewUser = createNewUser.copyWith(address: address);
     } else {
-      signUpObject = signUpObject.copyWith(address: "");
+      createNewUser = createNewUser.copyWith(address: "");
     }
     _validateInputs();
   }
@@ -142,37 +170,20 @@ class RegisterViewModel extends BaseViewModel
   setCity(String city) {
     inputCity.add(city);
     if (_isCityValid(city)) {
-      signUpObject = signUpObject.copyWith(city: city);
+      createNewUser = createNewUser.copyWith(city: city);
     } else {
-      signUpObject = signUpObject.copyWith(city: "");
+      createNewUser = createNewUser.copyWith(city: "");
     }
     _validateInputs();
-  }
-
-  @override
-  setDomain(String domain) {
-    inputDomain.add(domain);
-
-    _checkDomainAvailiability(domain).then((value) {
-      if (value) {
-        signUpObject = signUpObject.copyWith(garudaDomain: domain);
-        inputDomain.add(domain);
-        _validateInputs();
-      } else {
-        signUpObject = signUpObject.copyWith(garudaDomain: "");
-        inputDomain.add(domain);
-        _validateInputs();
-      }
-    });
   }
 
   @override
   setEmail(String email) {
     inputEmail.add(email);
     if (_isEmailValid(email)) {
-      signUpObject = signUpObject.copyWith(email: email);
+      createNewUser = createNewUser.copyWith(email: email);
     } else {
-      signUpObject = signUpObject.copyWith(email: "");
+      createNewUser = createNewUser.copyWith(email: "");
     }
     _validateInputs();
   }
@@ -181,9 +192,9 @@ class RegisterViewModel extends BaseViewModel
   setFirstName(String firstName) {
     inputFirstName.add(firstName);
     if (_isFirstNameValid(firstName)) {
-      signUpObject = signUpObject.copyWith(firstName: firstName);
+      createNewUser = createNewUser.copyWith(firstName: firstName);
     } else {
-      signUpObject = signUpObject.copyWith(firstName: "");
+      createNewUser = createNewUser.copyWith(firstName: "");
     }
     _validateInputs();
   }
@@ -192,9 +203,9 @@ class RegisterViewModel extends BaseViewModel
   setLastName(String lastName) {
     inputLastName.add(lastName);
     if (_isLastNameValid(lastName)) {
-      signUpObject = signUpObject.copyWith(lastName: lastName);
+      createNewUser = createNewUser.copyWith(lastName: lastName);
     } else {
-      signUpObject = signUpObject.copyWith(lastName: "");
+      createNewUser = createNewUser.copyWith(lastName: "");
     }
     _validateInputs();
   }
@@ -203,30 +214,20 @@ class RegisterViewModel extends BaseViewModel
   setMobileNumber(String mobileNumber) {
     inputMobileNumber.add(mobileNumber);
     if (_isMobileNumberValid(mobileNumber)) {
-      signUpObject = signUpObject.copyWith(mobileNumber: mobileNumber);
+      createNewUser = createNewUser.copyWith(mobileNumber: mobileNumber);
     } else {
-      signUpObject = signUpObject.copyWith(mobileNumber: "");
+      createNewUser = createNewUser.copyWith(mobileNumber: "");
     }
     _validateInputs();
-  }
-
-  @override
-  setConfirmPassword(String confirmPassword) {
-    inputConfirmPassword.add(confirmPassword);
-    if (_isConfirmPasswordValid(confirmPassword)) {
-      signUpObject = signUpObject.copyWith(confirmPassword: confirmPassword);
-    } else {
-      signUpObject = signUpObject.copyWith(confirmPassword: "");
-    }
   }
 
   @override
   setPassword(String password) {
     inputPassword.add(password);
     if (_isPasswordValid(password)) {
-      signUpObject = signUpObject.copyWith(password: password);
+      createNewUser = createNewUser.copyWith(password: password);
     } else {
-      signUpObject = signUpObject.copyWith(password: "");
+      createNewUser = createNewUser.copyWith(password: "");
     }
     _validateInputs();
   }
@@ -235,37 +236,24 @@ class RegisterViewModel extends BaseViewModel
   setCountry(String country) {
     inputCountry.add(country);
     if (_isCountryValid(country)) {
-      signUpObject = signUpObject.copyWith(country: country);
+      createNewUser = createNewUser.copyWith(country: country);
     } else {
-      signUpObject = signUpObject.copyWith(country: "");
+      createNewUser = createNewUser.copyWith(country: "");
     }
     _validateInputs();
   }
 
   setCountryCode(String countryCode) {
-    signUpObject = signUpObject.copyWith(countryCode: countryCode);
-  }
-
-  @override
-  setTenancyType(String? tenancyType) {
-    if (tenancyType == null) {
-      signUpObject = signUpObject.copyWith(tenancyType: "");
-      return;
-    }
-    if (_isTenancyTypeValid(tenancyType)) {
-      signUpObject = signUpObject.copyWith(tenancyType: tenancyType);
-    } else {
-      signUpObject = signUpObject.copyWith(tenancyType: "");
-    }
+    createNewUser = createNewUser.copyWith(countryCode: countryCode);
   }
 
   @override
   setUserName(String userName) {
     inputUserName.add(userName);
     if (_isUserNameValid(userName)) {
-      signUpObject = signUpObject.copyWith(userName: userName);
+      createNewUser = createNewUser.copyWith(userName: userName);
     } else {
-      signUpObject = signUpObject.copyWith(userName: "");
+      createNewUser = createNewUser.copyWith(userName: "");
     }
     _validateInputs();
   }
@@ -274,9 +262,9 @@ class RegisterViewModel extends BaseViewModel
   setCompanyName(String companyName) {
     inputCompanyName.add(companyName);
     if (_isCompanyNameValid(companyName)) {
-      signUpObject = signUpObject.copyWith(companyName: companyName);
+      createNewUser = createNewUser.copyWith(companyName: companyName);
     } else {
-      signUpObject = signUpObject.copyWith(companyName: "");
+      createNewUser = createNewUser.copyWith(companyName: "");
     }
     _validateInputs();
   }
@@ -285,15 +273,15 @@ class RegisterViewModel extends BaseViewModel
   setBrandName(String brandName) {
     inputBrandName.add(brandName);
     if (_isBrandNameValid(brandName)) {
-      signUpObject = signUpObject.copyWith(brandName: brandName);
+      createNewUser = createNewUser.copyWith(brandName: brandName);
     } else {
-      signUpObject = signUpObject.copyWith(brandName: "");
+      createNewUser = createNewUser.copyWith(brandName: "");
     }
     _validateInputs();
   }
 
-  @override
-  Sink get inputAadharNumber => _aadharNumberStreamController.sink;
+  // @override
+  // Sink get inputAadharNumber => _aadharNumberStreamController.sink;
 
   @override
   Sink get inputAddress => _addressStreamController.sink;
@@ -302,13 +290,7 @@ class RegisterViewModel extends BaseViewModel
   Sink get inputCity => _cityStreamController.sink;
 
   @override
-  Sink get inputConfirmPassword => _confirmPasswordStreamController.sink;
-
-  @override
   Sink get inputCountry => _countryStreamController.sink;
-
-  @override
-  Sink get inputDomain => _domainStreamController.sink;
 
   @override
   Sink get inputEmail => _emailStreamController.sink;
@@ -326,9 +308,6 @@ class RegisterViewModel extends BaseViewModel
   Sink get inputMobileNumber => _mobileNumberStreamController.sink;
 
   @override
-  Sink get inputTenancyType => _tenancyTypeStreamController.sink;
-
-  @override
   Sink get inputUserName => _userNameStreamController.sink;
 
   @override
@@ -341,7 +320,38 @@ class RegisterViewModel extends BaseViewModel
   Sink get inputAllinputsAreValid => _isAllInputValidStreamController.sink;
 
   //-----------------Outputs-----------------
+  @override
+  Sink get inputAddressState => _stateAddressStreamController.sink;
 
+  @override
+  Sink get inputPincode => _pincodeStreamController.sink;
+
+  @override
+  Sink get inputgstNumber => _gstNumberStreamController.sink;
+
+  @override
+  Stream<String?> get outputErrorAddressState => outputIsAddressStateValid
+      .map((isValid) => isValid ? null : "Please select state");
+
+  @override
+  Stream<String?> get outputErrorGSTNumber => outputIsGSTNumberValid
+      .map((isValid) => isValid ? null : "Please enter valid GST Number");
+
+  @override
+  Stream<String?> get outputErrorPincode => outputIsPincodeValid
+      .map((isValid) => isValid ? null : "Please enter valid Pincode");
+
+  @override
+  Stream<bool> get outputIsAddressStateValid => _addressStreamController.stream
+      .map((address) => _isAddressStateValid(address));
+
+  @override
+  Stream<bool> get outputIsGSTNumberValid => _gstNumberStreamController.stream
+      .map((gstNumber) => _isGSTNumberValid(gstNumber));
+
+  @override
+  Stream<bool> get outputIsPincodeValid => _pincodeStreamController.stream
+      .map((pincode) => _isPincodeValid(pincode));
   @override
   Stream<bool> get outputIsFirstNameValid => _firstNameStreamController.stream
       .map((firstName) => _isFirstNameValid(firstName));
@@ -358,15 +368,15 @@ class RegisterViewModel extends BaseViewModel
   Stream<String?> get outputErrorLastName => outputIsLastNameValid
       .map((isLastNameValid) => isLastNameValid ? null : "Invalid Last Name");
 
-  @override
-  Stream<bool> get outputIsAadharNumberValid =>
-      _aadharNumberStreamController.stream
-          .map((aadharNumber) => _isAadharNumberValid(aadharNumber));
+  // @override
+  // Stream<bool> get outputIsAadharNumberValid =>
+  //     _aadharNumberStreamController.stream
+  //         .map((aadharNumber) => _isAadharNumberValid(aadharNumber));
 
-  @override
-  Stream<String?> get outputErrorAadharNumber =>
-      outputIsAadharNumberValid.map((isAadharNumberValid) =>
-          isAadharNumberValid ? null : "Invalid Aadhar Number");
+  // @override
+  // Stream<String?> get outputErrorAadharNumber =>
+  //     outputIsAadharNumberValid.map((isAadharNumberValid) =>
+  //         isAadharNumberValid ? null : "Invalid Aadhar Number");
 
   @override
   Stream<bool> get outputIsAddressValid => _addressStreamController.stream
@@ -383,14 +393,6 @@ class RegisterViewModel extends BaseViewModel
   @override
   Stream<String?> get outputErrorCity => outputIsCityValid
       .map((isCityValid) => isCityValid ? null : "Invalid City");
-
-  @override
-  Stream<bool> get outputIsDomainValid =>
-      _domainStreamController.stream.map((_) => _isDomainValid());
-
-  @override
-  Stream<String?> get outputErrorDomain => outputIsDomainValid
-      .map((isDomainValid) => isDomainValid ? null : "Domain not availiable");
 
   @override
   Stream<bool> get outputIsEmailValid =>
@@ -418,16 +420,6 @@ class RegisterViewModel extends BaseViewModel
   @override
   Stream<bool> get outputIsCountryValid => _countryStreamController.stream
       .map((country) => _isCountryValid(country));
-
-  @override
-  Stream<bool> get outputIsConfirmPasswordValid =>
-      _confirmPasswordStreamController.stream
-          .map((confirmPassword) => _isConfirmPasswordValid(confirmPassword));
-
-  @override
-  Stream<String?> get outputErrorConfirmPassword =>
-      outputIsConfirmPasswordValid.map((isConfirmPasswordValid) =>
-          isConfirmPasswordValid ? null : "Password does not match");
 
   @override
   Stream<bool> get outputIsPasswordValid => _passwordStreamController.stream
@@ -462,25 +454,43 @@ class RegisterViewModel extends BaseViewModel
 //----------Private Methods----------------
 
   _isAllInputValid() {
-    return signUpObject.firstName.isNotEmpty &&
-        signUpObject.lastName.isNotEmpty &&
-        signUpObject.email.isNotEmpty &&
-        signUpObject.mobileNumber.isNotEmpty &&
-        signUpObject.password.isNotEmpty &&
-        signUpObject.aadharNumber.isNotEmpty &&
-        signUpObject.country.isNotEmpty &&
-        signUpObject.city.isNotEmpty &&
-        signUpObject.address.isNotEmpty &&
-        signUpObject.tenancyType.isNotEmpty &&
-        signUpObject.garudaDomain.isNotEmpty &&
-        signUpObject.userName.isNotEmpty &&
-        signUpObject.confirmPassword.isNotEmpty &&
-        signUpObject.companyName.isNotEmpty &&
-        signUpObject.brandName.isNotEmpty;
+    return createNewUser.firstName.isNotEmpty &&
+        createNewUser.lastName.isNotEmpty &&
+        createNewUser.email.isNotEmpty &&
+        createNewUser.mobileNumber.isNotEmpty &&
+        createNewUser.password.isNotEmpty &&
+        // createNewUser.aadharNumber.isNotEmpty &&
+        createNewUser.country.isNotEmpty &&
+        createNewUser.city.isNotEmpty &&
+        createNewUser.address.isNotEmpty &&
+        createNewUser.userName.isNotEmpty &&
+        createNewUser.companyName.isNotEmpty &&
+        createNewUser.brandName.isNotEmpty &&
+        createNewUser.gstNumber.isNotEmpty &&
+        createNewUser.pincode.isNotEmpty &&
+        createNewUser.state.isNotEmpty &&
+        createNewUser.owner.isNotEmpty &&
+        createNewUser.userType.isNotEmpty;
   }
 
   _validateInputs() {
     inputAllinputsAreValid.add(null);
+  }
+
+  _isGSTNumberValid(String gstNumber) {
+    final pattern = RegExp(
+        r'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9A-Z]{1}$');
+    return pattern.hasMatch(gstNumber.trim());
+  }
+
+  _isAddressStateValid(String addressState) {
+    final pattern = RegExp(r'^[a-zA-Z\s-]+$');
+    return pattern.hasMatch(addressState.trim());
+  }
+
+  _isPincodeValid(String pinCode) {
+    final pattern = RegExp(r'^[1-9][0-9]{5}$');
+    return pattern.hasMatch(pinCode.trim());
   }
 
   _isFirstNameValid(String firstName) {
@@ -493,10 +503,10 @@ class RegisterViewModel extends BaseViewModel
     return firstNameRegExp.hasMatch(lastName.trim());
   }
 
-  _isAadharNumberValid(String aadharNumber) {
-    final pattern = RegExp(r'^\d{12}$');
-    return pattern.hasMatch(aadharNumber.trim());
-  }
+  // _isAadharNumberValid(String aadharNumber) {
+  //   final pattern = RegExp(r'^\d{12}$');
+  //   return pattern.hasMatch(aadharNumber.trim());
+  // }
 
   _isAddressValid(String address) {
     return address.length > 3;
@@ -507,16 +517,11 @@ class RegisterViewModel extends BaseViewModel
     return pattern.hasMatch(city.trim());
   }
 
-  bool _isDomainValid() {
-    return signUpObject.garudaDomain.isNotEmpty &&
-        signUpObject.garudaDomain.length > 3;
-  }
-
-  Future<bool> _checkDomainAvailiability(String domain) async {
-    return (await _checkDomainAvailiabilityUseCase.execute(
-            CheckDomainAvailiabilityUseCaseInput(garudaDomain: domain)))
-        .fold((l) => false, (r) => true);
-  }
+  // Future<bool> _checkDomainAvailiability(String domain) async {
+  //   // return (await _checkDomainAvailiabilityUseCase.execute(
+  //   //         CheckDomainAvailiabilityUseCaseInput(garudaDomain: domain)))
+  //   //     .fold((l) => false, (r) => true);
+  // }
 
   _isEmailValid(String email) {
     final pattern = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
@@ -561,11 +566,6 @@ class RegisterViewModel extends BaseViewModel
         hasSpecialChar;
   }
 
-  _isConfirmPasswordValid(String confirmPassword) {
-    return _isPasswordValid(signUpObject.password) &&
-        confirmPassword == signUpObject.password;
-  }
-
   _handleSubmitFailure(Failure failure) {
     inputState.add(ErrorState(
         stateRendrerType: StateRendrerType.popupErrorState,
@@ -573,24 +573,14 @@ class RegisterViewModel extends BaseViewModel
   }
 
   _handleSubmitSuccess(GeneralSuccess data) {
-    inputState.add(SuccessState(
-        stateRendrerType: StateRendrerType.popupSuccessState,
-        message: data.data[0].message));
-    isTenantCreatedSuccessfullyStreamController.add(true);
+    // inputState.add(SuccessState(
+    //     stateRendrerType: StateRendrerType.popupSuccessState,
+    //     message: data.data[0].message));
+    // isTenantCreatedSuccessfullyStreamController.add(true);
   }
 
   bool _isCountryValid(String country) {
     return country.isNotEmpty;
-  }
-
-  bool _isTenancyTypeValid(String tenancyType) {
-    var tenancyTypeValues =
-        tenantTypesList.map((item) => item.value as String).toList();
-    if (tenancyTypeValues.contains(tenancyType)) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   bool _isCompanyNameValid(String companyName) {
@@ -602,22 +592,24 @@ class RegisterViewModel extends BaseViewModel
   }
 }
 
-abstract class RegisterViewModelInput {
+abstract class UserViewModelInput {
+  setOwneruser(String owner);
+  setUserType(String userType);
   setFirstName(String firstName);
   setLastName(String lastName);
   setEmail(String email);
   setMobileNumber(String mobileNumber);
   setPassword(String password);
-  setConfirmPassword(String confirmPassword);
-  setAadharNumber(String aadharNumber);
+  // setAadharNumber(String aadharNumber);
   setCountry(String country);
   setCity(String city);
   setAddress(String address);
-  setTenancyType(String tenancyType);
-  setDomain(String domain);
   setUserName(String userName);
   setCompanyName(String companyName);
   setBrandName(String brandName);
+  setPincode(String pincode);
+  setState(String state);
+  setGSTNumber(String gstNumber);
 
   void submitRegister();
   Sink get inputFirstName;
@@ -625,20 +617,20 @@ abstract class RegisterViewModelInput {
   Sink get inputEmail;
   Sink get inputMobileNumber;
   Sink get inputPassword;
-  Sink get inputConfirmPassword;
-  Sink get inputAadharNumber;
+  // Sink get inputAadharNumber;
   Sink get inputCountry;
   Sink get inputCity;
   Sink get inputAddress;
-  Sink get inputTenancyType;
-  Sink get inputDomain;
   Sink get inputUserName;
   Sink get inputAllinputsAreValid;
   Sink get inputCompanyName;
   Sink get inputBrandName;
+  Sink get inputPincode;
+  Sink get inputgstNumber;
+  Sink get inputAddressState;
 }
 
-abstract class RegisterViewModelOutput {
+abstract class UserViewModelOutput {
   Stream<bool> get outputIsFirstNameValid;
   Stream<String?> get outputErrorFirstName;
   Stream<bool> get outputIsLastNameValid;
@@ -649,22 +641,23 @@ abstract class RegisterViewModelOutput {
   Stream<String?> get outputErrorMobileNumber;
   Stream<bool> get outputIsPasswordValid;
   Stream<String?> get outputErrorPassword;
-  Stream<bool> get outputIsConfirmPasswordValid;
-  Stream<bool> get outputIsAadharNumberValid;
-  Stream<String?> get outputErrorAadharNumber;
+  // Stream<String?> get outputErrorAadharNumber;
   Stream<bool> get outputIsCountryValid;
   Stream<bool> get outputIsCityValid;
   Stream<String?> get outputErrorCity;
   Stream<bool> get outputIsAddressValid;
   Stream<String?> get outputErrorAddress;
-  Stream<bool> get outputIsDomainValid;
-  Stream<String?> get outputErrorDomain;
   Stream<bool> get outputIsUserNameValid;
   Stream<String?> get outputErrorUserName;
   Stream<bool> get allInputsValid;
-  Stream<String?> get outputErrorConfirmPassword;
   Stream<bool> get outputIsCompanyNameValid;
   Stream<String?> get outputErrorCompanyName;
   Stream<bool> get outputIsBrandNameValid;
   Stream<String?> get outputErrorBrandName;
+  Stream<bool> get outputIsPincodeValid;
+  Stream<String?> get outputErrorPincode;
+  Stream<bool> get outputIsGSTNumberValid;
+  Stream<String?> get outputErrorGSTNumber;
+  Stream<bool> get outputIsAddressStateValid;
+  Stream<String?> get outputErrorAddressState;
 }

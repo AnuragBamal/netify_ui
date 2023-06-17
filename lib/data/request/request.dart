@@ -33,6 +33,8 @@ class SignUpRequest {
   String userName;
   String password;
   String tenancyType;
+  String companyName;
+  String brandName;
 
   SignUpRequest(
       {required this.firstName,
@@ -46,7 +48,9 @@ class SignUpRequest {
       required this.garudaDomain,
       required this.userName,
       required this.password,
-      required this.tenancyType});
+      required this.tenancyType,
+      required this.companyName,
+      required this.brandName});
 
   Map<String, dynamic> toJson() => {
         "firstName": firstName,
@@ -61,6 +65,8 @@ class SignUpRequest {
         "userName": userName,
         "password": password,
         "tenancyType": tenancyType,
+        "companyName": companyName,
+        "brandName": brandName,
       };
 }
 
@@ -69,7 +75,7 @@ class CheckDomainAvailiabilityRequest {
 
   CheckDomainAvailiabilityRequest({required this.garudaDomain});
 
-  Map<String, String> toJson() => {
+  Map<String, dynamic> toJson() => {
         "garudaDomain": garudaDomain,
       };
 }
@@ -88,6 +94,49 @@ class ForgotPasswordRequest {
     }
     if (newPasscode != null) {
       data["newPasscode"] = newPasscode;
+    }
+    return data;
+  }
+}
+
+class GetDashboardRequest {
+  String screenTypeIdentity;
+
+  GetDashboardRequest({required this.screenTypeIdentity});
+
+  Map<String, dynamic> toJson() => {
+        "screenTypeIdentity": screenTypeIdentity,
+      };
+}
+
+class GetScreenRequest {
+  String screenTypeIdentity;
+  bool isSearch;
+  String? searchValue;
+  String? searchFilter;
+  int pageNumber;
+  int pageSize;
+
+  GetScreenRequest(
+      {required this.screenTypeIdentity,
+      required this.isSearch,
+      this.searchValue,
+      this.searchFilter,
+      required this.pageNumber,
+      required this.pageSize});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {
+      "screenTypeIdentity": screenTypeIdentity,
+      "isSearch": isSearch,
+      "pageNumber": pageNumber,
+      "pageSize": pageSize
+    };
+    if (searchValue != null) {
+      data["searchValue"] = searchValue;
+    }
+    if (searchFilter != null) {
+      data["searchFilter"] = searchFilter;
     }
     return data;
   }

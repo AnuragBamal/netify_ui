@@ -25,7 +25,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   _goNext() async {
-    // _appPreferences.clearAll();
+    _appPreferences.clearAll();
     _appPreferences.isUserLoggedIn().then((isUserLoggedIn) => {
           if (isUserLoggedIn)
             {Navigator.pushReplacementNamed(context, Routes.homeRoute)}

@@ -48,6 +48,10 @@ class AppString {
   static const String registerPasswordHint = "Enter Password";
   static const String registerConfirmPassword = "Confirm Password";
   static const String registerConfirmPasswordHint = "Retype Password";
+  static const String registerCompanyNameHint = "Enter Company Name";
+  static const String registerCompanyName = "Company Name";
+  static const String registerBrandNameHint = "Enter Brand Name";
+  static const String registerBrandName = "Brand Name";
   static const String registerAadharNumber = "Aadhar Number";
   static const String registerAadharNumberHint = "Enter Aadhar Number";
   static const String registerMobileNumber = "Mobile Number";
@@ -59,9 +63,18 @@ class AppString {
   static const String registerTenancyTypeHint = "Select Tenancy Type";
   static const String registerTenancyType = "Tenancy Type";
   static const String registerSignupButton = "Sign Up";
+  static const String registerGSTNumber = "GST Number";
+  static const String registerGSTNumberHint = "Enter GST Number";
+  static const String registerPinCode = "Pin Code";
+  static const String registerPinCodeHint = "Enter Pin Code";
+  static const String registerState = "State";
+  static const String registerStateHint = "Enter State";
   static const String forgotPasswordScreenHeader = "Forgot Password Screen";
   static const String forgotPasswordOtp = "OTP";
   static const String forgotPasswordScreenPassword = "New Password";
   static const String forgotPasswordScreenPasswordHint = "Enter New Password";
   static const String forgotPasswordSubmit = "Forgot Password";
+  static const String createResellerScreenTitle = "Create New Reseller";
+  static const String createOperatorScreenTitle = "Create New Operator";
+  static const String createUserSubmitButton = "Create User";
 }

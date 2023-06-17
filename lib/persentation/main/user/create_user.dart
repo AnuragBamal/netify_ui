@@ -1,83 +1,93 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:netify/app/di.dart';
+import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
-import 'package:netify/persentation/register/register_view_model.dart';
-import 'package:netify/persentation/resources/assets_manager.dart';
+import 'package:netify/persentation/main/home_page_view_model.dart';
+import 'package:netify/persentation/main/user/create_user_view_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/resources/values_manager.dart';
 
-class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+class CreateUserView extends StatefulWidget {
+  final HomepageViewModel homepageViewModel;
+  final String screenTypeIdentity;
+  final String methodNameToExecute;
+  final User? user;
+  const CreateUserView(
+      {super.key,
+      required this.homepageViewModel,
+      required this.screenTypeIdentity,
+      required this.methodNameToExecute,
+      this.user});
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<CreateUserView> createState() => _CreateUserViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
-  final RegisterViewModel _registerViewModel = instance<RegisterViewModel>();
-
+class _CreateUserViewState extends State<CreateUserView> {
+  final _userViewModel = UserViewModel();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _domainNameController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _aadharNumberController = TextEditingController();
+  //final TextEditingController _aadharNumberController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _brandNameController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _pinCodeController = TextEditingController();
+  final TextEditingController _gstNumberController = TextEditingController();
+  final TextEditingController _stateController = TextEditingController();
 
   _bind() {
-    _registerViewModel.start();
-    _domainNameController.addListener(() {
-      _registerViewModel.setDomain(_domainNameController.text);
-    });
+    _userViewModel.start();
+
     _firstNameController.addListener(() {
-      _registerViewModel.setFirstName(_firstNameController.text);
+      _userViewModel.setFirstName(_firstNameController.text);
     });
     _lastNameController.addListener(() {
-      _registerViewModel.setLastName(_lastNameController.text);
+      _userViewModel.setLastName(_lastNameController.text);
     });
     _userNameController.addListener(() {
-      _registerViewModel.setUserName(_userNameController.text);
+      _userViewModel.setUserName(_userNameController.text);
     });
     _emailController.addListener(() {
-      _registerViewModel.setEmail(_emailController.text);
+      _userViewModel.setEmail(_emailController.text);
     });
     _passwordController.addListener(() {
-      _registerViewModel.setPassword(_passwordController.text);
-    });
-    _confirmPasswordController.addListener(() {
-      _registerViewModel.setConfirmPassword(_confirmPasswordController.text);
-    });
-    _aadharNumberController.addListener(() {
-      _registerViewModel.setAadharNumber(_aadharNumberController.text);
+      _userViewModel.setPassword(_passwordController.text);
     });
     _mobileNumberController.addListener(() {
-      _registerViewModel.setMobileNumber(_mobileNumberController.text);
+      _userViewModel.setMobileNumber(_mobileNumberController.text);
     });
     _cityController.addListener(() {
-      _registerViewModel.setCity(_cityController.text);
+      _userViewModel.setCity(_cityController.text);
     });
     _addressController.addListener(() {
-      _registerViewModel.setAddress(_addressController.text);
+      _userViewModel.setAddress(_addressController.text);
     });
     _companyNameController.addListener(() {
-      _registerViewModel.setCompanyName(_companyNameController.text);
+      _userViewModel.setCompanyName(_companyNameController.text);
     });
     _brandNameController.addListener(() {
-      _registerViewModel.setBrandName(_brandNameController.text);
+      _userViewModel.setBrandName(_brandNameController.text);
     });
-    _registerViewModel.isTenantCreatedSuccessfullyStreamController.stream
+    _pinCodeController.addListener(() {
+      _userViewModel.setPincode(_pinCodeController.text);
+    });
+    _gstNumberController.addListener(() {
+      _userViewModel.setGSTNumber(_gstNumberController.text);
+    });
+    _stateController.addListener(() {
+      _userViewModel.setState(_stateController.text);
+    });
+
+    _userViewModel.isUserCreatedSuccessfullyStreamController.stream
         .listen((isSuccessRegistered) {
       if (isSuccessRegistered) {
         //navigate to login screen
@@ -99,7 +109,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
       backgroundColor: ColorManager.surfaceColor,
       body: StreamBuilder<FlowState>(
-        stream: _registerViewModel.outputState,
+        stream: _userViewModel.outputState,
         builder: (context, snapshot) {
           return snapshot.data?.getScreenWidget(
                   context, _getContentWidget(context), () {}) ??
@@ -117,67 +127,19 @@ class _RegisterViewState extends State<RegisterView> {
           key: _formKey,
           child: Column(
             children: [
-              const Image(
-                image: AssetImage(ImageAssets.splashLogo),
-                width: AppSize.s200,
-              ),
-              const SizedBox(
-                height: AppSize.s64,
-              ),
               Text(
-                AppString.registerFormText,
+                AppString.createResellerScreenTitle,
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               const SizedBox(
-                height: AppSize.s64,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p24,
-                ),
-                child: DropdownButtonFormField<String>(
-                  items: _registerViewModel.tenantTypesList,
-                  icon: const Icon(
-                    Icons.arrow_drop_down_circle_rounded,
-                    color: ColorManager.primaryColor,
-                  ),
-                  decoration: const InputDecoration(
-                    hintText: AppString.registerTenancyTypeHint,
-                    labelText: AppString.registerTenancyType,
-                  ),
-                  onChanged: (String? tenancyType) {
-                    _registerViewModel.setTenancyType(tenancyType);
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: AppSize.s24,
+                height: AppSize.s32,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppPadding.p24,
                 ),
                 child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorDomain,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          controller: _domainNameController,
-                          decoration: InputDecoration(
-                            hintText: AppString.garudaDomainNameHint,
-                            labelText: AppString.garudaDomainName,
-                            errorText: snapshot.data,
-                          ));
-                    }),
-              ),
-              const SizedBox(
-                height: AppSize.s24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p24,
-                ),
-                child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorFirstName,
+                    stream: _userViewModel.outputErrorFirstName,
                     builder: (context, snapshot) {
                       return TextFormField(
                           controller: _firstNameController,
@@ -196,7 +158,7 @@ class _RegisterViewState extends State<RegisterView> {
                   horizontal: AppPadding.p24,
                 ),
                 child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorLastName,
+                    stream: _userViewModel.outputErrorLastName,
                     builder: (context, snapshot) {
                       return TextFormField(
                           controller: _lastNameController,
@@ -215,7 +177,7 @@ class _RegisterViewState extends State<RegisterView> {
                   horizontal: AppPadding.p24,
                 ),
                 child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorUserName,
+                    stream: _userViewModel.outputErrorUserName,
                     builder: (context, snapshot) {
                       return TextFormField(
                           controller: _userNameController,
@@ -234,7 +196,7 @@ class _RegisterViewState extends State<RegisterView> {
                   horizontal: AppPadding.p24,
                 ),
                 child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorEmail,
+                    stream: _userViewModel.outputErrorEmail,
                     builder: (context, snapshot) {
                       return TextFormField(
                           controller: _emailController,
@@ -253,51 +215,13 @@ class _RegisterViewState extends State<RegisterView> {
                   horizontal: AppPadding.p24,
                 ),
                 child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorPassword,
+                    stream: _userViewModel.outputErrorPassword,
                     builder: (context, snapshot) {
                       return TextFormField(
                           controller: _passwordController,
                           decoration: InputDecoration(
                             hintText: AppString.registerPasswordHint,
                             labelText: AppString.registerPassword,
-                            errorText: snapshot.data,
-                          ));
-                    }),
-              ),
-              const SizedBox(
-                height: AppSize.s24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p24,
-                ),
-                child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorConfirmPassword,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          controller: _confirmPasswordController,
-                          decoration: InputDecoration(
-                            hintText: AppString.registerConfirmPasswordHint,
-                            labelText: AppString.registerConfirmPassword,
-                            errorText: snapshot.data,
-                          ));
-                    }),
-              ),
-              const SizedBox(
-                height: AppSize.s24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p24,
-                ),
-                child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorAadharNumber,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          controller: _aadharNumberController,
-                          decoration: InputDecoration(
-                            hintText: AppString.registerAadharNumberHint,
-                            labelText: AppString.registerAadharNumber,
                             errorText: snapshot.data,
                           ));
                     }),
@@ -317,9 +241,9 @@ class _RegisterViewState extends State<RegisterView> {
                           flex: 1,
                           child: CountryCodePicker(
                             onChanged: (value) {
-                              _registerViewModel
+                              _userViewModel
                                   .setCountryCode(value.dialCode ?? '');
-                              _registerViewModel.setCountry(value.code ?? '');
+                              _userViewModel.setCountry(value.code ?? '');
                             },
                             initialSelection: "IN",
                             favorite: const ['+91', 'IN'],
@@ -331,7 +255,7 @@ class _RegisterViewState extends State<RegisterView> {
                       Expanded(
                         flex: 3,
                         child: StreamBuilder<String?>(
-                            stream: _registerViewModel.outputErrorMobileNumber,
+                            stream: _userViewModel.outputErrorMobileNumber,
                             builder: (context, snapshot) {
                               return TextFormField(
                                   controller: _mobileNumberController,
@@ -355,13 +279,13 @@ class _RegisterViewState extends State<RegisterView> {
                   horizontal: AppPadding.p24,
                 ),
                 child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorCity,
+                    stream: _userViewModel.outputErrorGSTNumber,
                     builder: (context, snapshot) {
                       return TextFormField(
-                          controller: _cityController,
+                          controller: _gstNumberController,
                           decoration: InputDecoration(
-                            hintText: AppString.registerCityHint,
-                            labelText: AppString.registerCity,
+                            hintText: AppString.registerGSTNumberHint,
+                            labelText: AppString.registerGSTNumber,
                             errorText: snapshot.data,
                           ));
                     }),
@@ -374,26 +298,7 @@ class _RegisterViewState extends State<RegisterView> {
                   horizontal: AppPadding.p24,
                 ),
                 child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorAddress,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          controller: _addressController,
-                          decoration: InputDecoration(
-                            hintText: AppString.registerAddressHint,
-                            labelText: AppString.registerAddress,
-                            errorText: snapshot.data,
-                          ));
-                    }),
-              ),
-              const SizedBox(
-                height: AppSize.s24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p24,
-                ),
-                child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorCompanyName,
+                    stream: _userViewModel.outputErrorCompanyName,
                     builder: (context, snapshot) {
                       return TextFormField(
                           controller: _companyNameController,
@@ -412,7 +317,7 @@ class _RegisterViewState extends State<RegisterView> {
                   horizontal: AppPadding.p24,
                 ),
                 child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorBrandName,
+                    stream: _userViewModel.outputErrorBrandName,
                     builder: (context, snapshot) {
                       return TextFormField(
                           controller: _brandNameController,
@@ -427,19 +332,95 @@ class _RegisterViewState extends State<RegisterView> {
                 height: AppSize.s24,
               ),
               Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.p24,
+                ),
+                child: StreamBuilder<String?>(
+                    stream: _userViewModel.outputErrorAddress,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                          controller: _addressController,
+                          decoration: InputDecoration(
+                            hintText: AppString.registerAddressHint,
+                            labelText: AppString.registerAddress,
+                            errorText: snapshot.data,
+                          ));
+                    }),
+              ),
+              const SizedBox(
+                height: AppSize.s24,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.p24,
+                ),
+                child: StreamBuilder<String?>(
+                    stream: _userViewModel.outputErrorPincode,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                          controller: _pinCodeController,
+                          decoration: InputDecoration(
+                            hintText: AppString.registerPinCodeHint,
+                            labelText: AppString.registerPinCode,
+                            errorText: snapshot.data,
+                          ));
+                    }),
+              ),
+              const SizedBox(
+                height: AppSize.s24,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.p24,
+                ),
+                child: StreamBuilder<String?>(
+                    stream: _userViewModel.outputErrorCity,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                          controller: _cityController,
+                          decoration: InputDecoration(
+                            hintText: AppString.registerCityHint,
+                            labelText: AppString.registerCity,
+                            errorText: snapshot.data,
+                          ));
+                    }),
+              ),
+              const SizedBox(
+                height: AppSize.s24,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.p24,
+                ),
+                child: StreamBuilder<String?>(
+                    stream: _userViewModel.outputErrorAddressState,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                          controller: _stateController,
+                          decoration: InputDecoration(
+                            hintText: AppString.registerStateHint,
+                            labelText: AppString.registerState,
+                            errorText: snapshot.data,
+                          ));
+                    }),
+              ),
+              const SizedBox(
+                height: AppSize.s24,
+              ),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
                 child: StreamBuilder<bool>(
-                  stream: _registerViewModel.allInputsValid,
+                  stream: _userViewModel.allInputsValid,
                   builder: (context, snapshot) {
                     return SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: (snapshot.data == true)
                             ? () {
-                                _registerViewModel.submitRegister();
+                                _userViewModel.submitRegister();
                               }
                             : null,
-                        child: const Text(AppString.registerSignupButton),
+                        child: const Text(AppString.createUserSubmitButton),
                       ),
                     );
                   },
@@ -454,20 +435,21 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   void dispose() {
-    _registerViewModel.dispose();
+    _userViewModel.dispose();
     _userNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    _aadharNumberController.dispose();
+    // _aadharNumberController.dispose();
     _mobileNumberController.dispose();
     _cityController.dispose();
     _addressController.dispose();
-    _aadharNumberController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
     _companyNameController.dispose();
     _brandNameController.dispose();
+    _pinCodeController.dispose();
+    _gstNumberController.dispose();
+    _stateController.dispose();
 
     super.dispose();
   }

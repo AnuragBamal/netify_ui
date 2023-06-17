@@ -37,11 +37,15 @@ class AppPreferences {
     return _sharedPreferences.getBool(prefsKeyIsUserLoggedIn) ?? false;
   }
 
-  Future<void> setJwtToken(String token) async {
-    await _sharedPreferences.setString("jwt_token", token);
+  Future<bool> setJwtToken(String token) async {
+    return await _sharedPreferences.setString("jwt_token", token);
+  }
+
+  Future<bool> removeJwtToken() async {
+    return await _sharedPreferences.remove("jwt_token");
   }
 
   Future<String?> getJwtToken() async {
-    return _sharedPreferences.getString("jwt_token") ?? "No Token";
+    return _sharedPreferences.getString("jwt_token") ?? "";
   }
 }

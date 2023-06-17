@@ -24,7 +24,9 @@ class SignUpUseCase implements BaseUseCase<SignUpUseCaseInput, GeneralSuccess> {
         garudaDomain: input.garudaDomain,
         userName: input.userName,
         password: input.password,
-        tenancyType: input.tenancyType));
+        tenancyType: input.tenancyType,
+        companyName: input.companyName,
+        brandName: input.brandName));
   }
 }
 
@@ -41,6 +43,8 @@ class SignUpUseCaseInput {
   String userName;
   String password;
   String tenancyType;
+  String companyName;
+  String brandName;
 
   SignUpUseCaseInput(
       {required this.firstName,
@@ -54,7 +58,9 @@ class SignUpUseCaseInput {
       required this.garudaDomain,
       required this.userName,
       required this.password,
-      required this.tenancyType});
+      required this.tenancyType,
+      required this.companyName,
+      required this.brandName});
 }
 
 class CheckDomainAvailiabilityUseCase

@@ -18,4 +18,12 @@ abstract class Repository {
 
   Future<Either<Failure, GeneralSuccess>> forgotpassword(
       ForgotPasswordRequest forgotPasswordRequest);
+
+  Future<Either<Failure, GetUser>> getUserData();
+
+  Future<Either<Failure, GetDashboardItemList>> getDashboardData(
+      GetDashboardRequest getDashboardRequest);
+
+  Future<Either<Failure, GetUserList>> getUserListData(
+      GetScreenRequest getScreenRequest);
 }

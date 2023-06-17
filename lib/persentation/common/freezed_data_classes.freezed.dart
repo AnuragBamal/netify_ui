@@ -283,6 +283,8 @@ mixin _$RegisterObject {
   String get tenancyType => throw _privateConstructorUsedError;
   String get countryCode => throw _privateConstructorUsedError;
   String get confirmPassword => throw _privateConstructorUsedError;
+  String get companyName => throw _privateConstructorUsedError;
+  String get brandName => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RegisterObjectCopyWith<RegisterObject> get copyWith =>
@@ -309,7 +311,9 @@ abstract class $RegisterObjectCopyWith<$Res> {
       String password,
       String tenancyType,
       String countryCode,
-      String confirmPassword});
+      String confirmPassword,
+      String companyName,
+      String brandName});
 }
 
 /// @nodoc
@@ -339,6 +343,8 @@ class _$RegisterObjectCopyWithImpl<$Res, $Val extends RegisterObject>
     Object? tenancyType = null,
     Object? countryCode = null,
     Object? confirmPassword = null,
+    Object? companyName = null,
+    Object? brandName = null,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
@@ -397,6 +403,14 @@ class _$RegisterObjectCopyWithImpl<$Res, $Val extends RegisterObject>
           ? _value.confirmPassword
           : confirmPassword // ignore: cast_nullable_to_non_nullable
               as String,
+      companyName: null == companyName
+          ? _value.companyName
+          : companyName // ignore: cast_nullable_to_non_nullable
+              as String,
+      brandName: null == brandName
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -423,7 +437,9 @@ abstract class _$$_RegisterObjectCopyWith<$Res>
       String password,
       String tenancyType,
       String countryCode,
-      String confirmPassword});
+      String confirmPassword,
+      String companyName,
+      String brandName});
 }
 
 /// @nodoc
@@ -451,6 +467,8 @@ class __$$_RegisterObjectCopyWithImpl<$Res>
     Object? tenancyType = null,
     Object? countryCode = null,
     Object? confirmPassword = null,
+    Object? companyName = null,
+    Object? brandName = null,
   }) {
     return _then(_$_RegisterObject(
       null == firstName
@@ -509,6 +527,14 @@ class __$$_RegisterObjectCopyWithImpl<$Res>
           ? _value.confirmPassword
           : confirmPassword // ignore: cast_nullable_to_non_nullable
               as String,
+      null == companyName
+          ? _value.companyName
+          : companyName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == brandName
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -530,7 +556,9 @@ class _$_RegisterObject implements _RegisterObject {
       this.password,
       this.tenancyType,
       this.countryCode,
-      this.confirmPassword);
+      this.confirmPassword,
+      this.companyName,
+      this.brandName);
 
   @override
   final String firstName;
@@ -560,10 +588,14 @@ class _$_RegisterObject implements _RegisterObject {
   final String countryCode;
   @override
   final String confirmPassword;
+  @override
+  final String companyName;
+  @override
+  final String brandName;
 
   @override
   String toString() {
-    return 'RegisterObject(firstName: $firstName, lastName: $lastName, aadharNumber: $aadharNumber, email: $email, country: $country, city: $city, address: $address, mobileNumber: $mobileNumber, garudaDomain: $garudaDomain, userName: $userName, password: $password, tenancyType: $tenancyType, countryCode: $countryCode, confirmPassword: $confirmPassword)';
+    return 'RegisterObject(firstName: $firstName, lastName: $lastName, aadharNumber: $aadharNumber, email: $email, country: $country, city: $city, address: $address, mobileNumber: $mobileNumber, garudaDomain: $garudaDomain, userName: $userName, password: $password, tenancyType: $tenancyType, countryCode: $countryCode, confirmPassword: $confirmPassword, companyName: $companyName, brandName: $brandName)';
   }
 
   @override
@@ -594,7 +626,11 @@ class _$_RegisterObject implements _RegisterObject {
             (identical(other.countryCode, countryCode) ||
                 other.countryCode == countryCode) &&
             (identical(other.confirmPassword, confirmPassword) ||
-                other.confirmPassword == confirmPassword));
+                other.confirmPassword == confirmPassword) &&
+            (identical(other.companyName, companyName) ||
+                other.companyName == companyName) &&
+            (identical(other.brandName, brandName) ||
+                other.brandName == brandName));
   }
 
   @override
@@ -613,7 +649,9 @@ class _$_RegisterObject implements _RegisterObject {
       password,
       tenancyType,
       countryCode,
-      confirmPassword);
+      confirmPassword,
+      companyName,
+      brandName);
 
   @JsonKey(ignore: true)
   @override
@@ -637,7 +675,9 @@ abstract class _RegisterObject implements RegisterObject {
       final String password,
       final String tenancyType,
       final String countryCode,
-      final String confirmPassword) = _$_RegisterObject;
+      final String confirmPassword,
+      final String companyName,
+      final String brandName) = _$_RegisterObject;
 
   @override
   String get firstName;
@@ -667,6 +707,10 @@ abstract class _RegisterObject implements RegisterObject {
   String get countryCode;
   @override
   String get confirmPassword;
+  @override
+  String get companyName;
+  @override
+  String get brandName;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterObjectCopyWith<_$_RegisterObject> get copyWith =>
@@ -874,5 +918,477 @@ abstract class _ForgotPasswordObject implements ForgotPasswordObject {
   @override
   @JsonKey(ignore: true)
   _$$_ForgotPasswordObjectCopyWith<_$_ForgotPasswordObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CreateNewUserObject {
+  String get firstName => throw _privateConstructorUsedError;
+  String get lastName =>
+      throw _privateConstructorUsedError; //String aadharNumber,
+  String get email => throw _privateConstructorUsedError;
+  String get userName => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get countryCode => throw _privateConstructorUsedError;
+  String get mobileNumber => throw _privateConstructorUsedError;
+  String get gstNumber => throw _privateConstructorUsedError;
+  String get companyName => throw _privateConstructorUsedError;
+  String get brandName => throw _privateConstructorUsedError;
+  String get country => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  String get pincode => throw _privateConstructorUsedError;
+  String get city => throw _privateConstructorUsedError;
+  String get state => throw _privateConstructorUsedError;
+  String get owner => throw _privateConstructorUsedError;
+  String get userType => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CreateNewUserObjectCopyWith<CreateNewUserObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateNewUserObjectCopyWith<$Res> {
+  factory $CreateNewUserObjectCopyWith(
+          CreateNewUserObject value, $Res Function(CreateNewUserObject) then) =
+      _$CreateNewUserObjectCopyWithImpl<$Res, CreateNewUserObject>;
+  @useResult
+  $Res call(
+      {String firstName,
+      String lastName,
+      String email,
+      String userName,
+      String password,
+      String countryCode,
+      String mobileNumber,
+      String gstNumber,
+      String companyName,
+      String brandName,
+      String country,
+      String address,
+      String pincode,
+      String city,
+      String state,
+      String owner,
+      String userType});
+}
+
+/// @nodoc
+class _$CreateNewUserObjectCopyWithImpl<$Res, $Val extends CreateNewUserObject>
+    implements $CreateNewUserObjectCopyWith<$Res> {
+  _$CreateNewUserObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? email = null,
+    Object? userName = null,
+    Object? password = null,
+    Object? countryCode = null,
+    Object? mobileNumber = null,
+    Object? gstNumber = null,
+    Object? companyName = null,
+    Object? brandName = null,
+    Object? country = null,
+    Object? address = null,
+    Object? pincode = null,
+    Object? city = null,
+    Object? state = null,
+    Object? owner = null,
+    Object? userType = null,
+  }) {
+    return _then(_value.copyWith(
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      countryCode: null == countryCode
+          ? _value.countryCode
+          : countryCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      mobileNumber: null == mobileNumber
+          ? _value.mobileNumber
+          : mobileNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      gstNumber: null == gstNumber
+          ? _value.gstNumber
+          : gstNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      companyName: null == companyName
+          ? _value.companyName
+          : companyName // ignore: cast_nullable_to_non_nullable
+              as String,
+      brandName: null == brandName
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      pincode: null == pincode
+          ? _value.pincode
+          : pincode // ignore: cast_nullable_to_non_nullable
+              as String,
+      city: null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String,
+      owner: null == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
+              as String,
+      userType: null == userType
+          ? _value.userType
+          : userType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateNewUserObjectCopyWith<$Res>
+    implements $CreateNewUserObjectCopyWith<$Res> {
+  factory _$$_CreateNewUserObjectCopyWith(_$_CreateNewUserObject value,
+          $Res Function(_$_CreateNewUserObject) then) =
+      __$$_CreateNewUserObjectCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String firstName,
+      String lastName,
+      String email,
+      String userName,
+      String password,
+      String countryCode,
+      String mobileNumber,
+      String gstNumber,
+      String companyName,
+      String brandName,
+      String country,
+      String address,
+      String pincode,
+      String city,
+      String state,
+      String owner,
+      String userType});
+}
+
+/// @nodoc
+class __$$_CreateNewUserObjectCopyWithImpl<$Res>
+    extends _$CreateNewUserObjectCopyWithImpl<$Res, _$_CreateNewUserObject>
+    implements _$$_CreateNewUserObjectCopyWith<$Res> {
+  __$$_CreateNewUserObjectCopyWithImpl(_$_CreateNewUserObject _value,
+      $Res Function(_$_CreateNewUserObject) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? email = null,
+    Object? userName = null,
+    Object? password = null,
+    Object? countryCode = null,
+    Object? mobileNumber = null,
+    Object? gstNumber = null,
+    Object? companyName = null,
+    Object? brandName = null,
+    Object? country = null,
+    Object? address = null,
+    Object? pincode = null,
+    Object? city = null,
+    Object? state = null,
+    Object? owner = null,
+    Object? userType = null,
+  }) {
+    return _then(_$_CreateNewUserObject(
+      null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == countryCode
+          ? _value.countryCode
+          : countryCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == mobileNumber
+          ? _value.mobileNumber
+          : mobileNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == gstNumber
+          ? _value.gstNumber
+          : gstNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == companyName
+          ? _value.companyName
+          : companyName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == brandName
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == pincode
+          ? _value.pincode
+          : pincode // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == userType
+          ? _value.userType
+          : userType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateNewUserObject implements _CreateNewUserObject {
+  _$_CreateNewUserObject(
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.userName,
+      this.password,
+      this.countryCode,
+      this.mobileNumber,
+      this.gstNumber,
+      this.companyName,
+      this.brandName,
+      this.country,
+      this.address,
+      this.pincode,
+      this.city,
+      this.state,
+      this.owner,
+      this.userType);
+
+  @override
+  final String firstName;
+  @override
+  final String lastName;
+//String aadharNumber,
+  @override
+  final String email;
+  @override
+  final String userName;
+  @override
+  final String password;
+  @override
+  final String countryCode;
+  @override
+  final String mobileNumber;
+  @override
+  final String gstNumber;
+  @override
+  final String companyName;
+  @override
+  final String brandName;
+  @override
+  final String country;
+  @override
+  final String address;
+  @override
+  final String pincode;
+  @override
+  final String city;
+  @override
+  final String state;
+  @override
+  final String owner;
+  @override
+  final String userType;
+
+  @override
+  String toString() {
+    return 'CreateNewUserObject(firstName: $firstName, lastName: $lastName, email: $email, userName: $userName, password: $password, countryCode: $countryCode, mobileNumber: $mobileNumber, gstNumber: $gstNumber, companyName: $companyName, brandName: $brandName, country: $country, address: $address, pincode: $pincode, city: $city, state: $state, owner: $owner, userType: $userType)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateNewUserObject &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.countryCode, countryCode) ||
+                other.countryCode == countryCode) &&
+            (identical(other.mobileNumber, mobileNumber) ||
+                other.mobileNumber == mobileNumber) &&
+            (identical(other.gstNumber, gstNumber) ||
+                other.gstNumber == gstNumber) &&
+            (identical(other.companyName, companyName) ||
+                other.companyName == companyName) &&
+            (identical(other.brandName, brandName) ||
+                other.brandName == brandName) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.pincode, pincode) || other.pincode == pincode) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.owner, owner) || other.owner == owner) &&
+            (identical(other.userType, userType) ||
+                other.userType == userType));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      firstName,
+      lastName,
+      email,
+      userName,
+      password,
+      countryCode,
+      mobileNumber,
+      gstNumber,
+      companyName,
+      brandName,
+      country,
+      address,
+      pincode,
+      city,
+      state,
+      owner,
+      userType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateNewUserObjectCopyWith<_$_CreateNewUserObject> get copyWith =>
+      __$$_CreateNewUserObjectCopyWithImpl<_$_CreateNewUserObject>(
+          this, _$identity);
+}
+
+abstract class _CreateNewUserObject implements CreateNewUserObject {
+  factory _CreateNewUserObject(
+      final String firstName,
+      final String lastName,
+      final String email,
+      final String userName,
+      final String password,
+      final String countryCode,
+      final String mobileNumber,
+      final String gstNumber,
+      final String companyName,
+      final String brandName,
+      final String country,
+      final String address,
+      final String pincode,
+      final String city,
+      final String state,
+      final String owner,
+      final String userType) = _$_CreateNewUserObject;
+
+  @override
+  String get firstName;
+  @override
+  String get lastName;
+  @override //String aadharNumber,
+  String get email;
+  @override
+  String get userName;
+  @override
+  String get password;
+  @override
+  String get countryCode;
+  @override
+  String get mobileNumber;
+  @override
+  String get gstNumber;
+  @override
+  String get companyName;
+  @override
+  String get brandName;
+  @override
+  String get country;
+  @override
+  String get address;
+  @override
+  String get pincode;
+  @override
+  String get city;
+  @override
+  String get state;
+  @override
+  String get owner;
+  @override
+  String get userType;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateNewUserObjectCopyWith<_$_CreateNewUserObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
