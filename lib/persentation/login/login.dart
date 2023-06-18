@@ -25,6 +25,7 @@ class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   _bind() {
+    _appPreferences.removeJwtToken();
     _loginViewModel.start();
     _userNameController.addListener(() {
       _loginViewModel.setUserName(_userNameController.text);
@@ -34,21 +35,21 @@ class _LoginViewState extends State<LoginView> {
     });
     _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isSuccessLoggedIn) {
-      if (isSuccessLoggedIn) {
+      resetAllmodules();
+      if (isSuccessLoggedIn != null && isSuccessLoggedIn) {
         _loginViewModel.verificationRequiredStreamController.stream
             .listen((isVerificationRequired) {
-          if (isVerificationRequired) {
+          if (isVerificationRequired != null && isVerificationRequired) {
             //navigate to verification screen
             SchedulerBinding.instance.addPostFrameCallback((_) {
-              var result =
-                  Navigator.of(context).pushNamed(Routes.verificationRoute);
+              var result = Navigator.of(context, rootNavigator: true)
+                  .pushNamed(Routes.verificationRoute);
               result.then((value) {
-                if (value != null && value.toString().isNotEmpty == true) {
-                  _successfulLogin();
-                }
+                _loginViewModel.verificationRequiredStreamController.add(false);
               });
             });
-          } else {
+          } else if (isVerificationRequired != null &&
+              !isVerificationRequired) {
             //navigate to main screen
             _successfulLogin();
           }
@@ -66,8 +67,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void initState() {
-    _bind();
     super.initState();
+    _bind();
   }
 
   @override
@@ -85,6 +86,42 @@ class _LoginViewState extends State<LoginView> {
           },
         ));
   }
+
+  // Widget _main(BuildContext context) {
+  //   return StreamBuilder<bool?>(
+  //       stream:
+  //           _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream,
+  //       builder: (context, snapshot) {
+  //         if (snapshot.data == null) {
+  //           return _getContentWidget(context);
+  //         } else if (snapshot.data == true) {
+  //           return StreamBuilder<bool?>(
+  //               stream:
+  //                   _loginViewModel.verificationRequiredStreamController.stream,
+  //               builder: (context, snapshot) {
+  //                 if (snapshot.data == null) {
+  //                   return _getContentWidget(context);
+  //                 } else if (snapshot.data == true) {
+  //                   SchedulerBinding.instance.addPostFrameCallback((_) {
+  //                     resetAllmodules();
+  //                     var result = Navigator.of(context)
+  //                         .pushNamed(Routes.verificationRoute);
+  //                     result.then((value) {
+  //                       _loginViewModel.login();
+  //                     });
+  //                   });
+  //                   return Container();
+  //                 } else {
+  //                   resetAllmodules();
+  //                   _successfulLogin();
+  //                   return Container();
+  //                 }
+  //               });
+  //         } else {
+  //           return _getContentWidget(context);
+  //         }
+  //       });
+  // }
 
   Widget _getContentWidget(BuildContext context) {
     return Container(

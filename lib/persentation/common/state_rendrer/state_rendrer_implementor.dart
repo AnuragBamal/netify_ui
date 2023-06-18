@@ -65,10 +65,13 @@ class SuccessState extends FlowState {
   StateRendrerType stateRendrerType;
   String message;
   String? title;
+  Function? actionFunctionName;
 
   SuccessState(
-      {required this.stateRendrerType, required this.message, String? title})
-      : title = title ?? AppString.successFlowStateTitle;
+      {required this.stateRendrerType, required this.message, String? title}) {
+    this.title = title ?? AppString.successFlowStateTitle;
+    actionFunctionName = actionFunctionName ?? () {};
+  }
 
   @override
   StateRendrerType getStateRendrerType() => stateRendrerType;
@@ -78,6 +81,8 @@ class SuccessState extends FlowState {
 
   @override
   String getTitle() => title!;
+
+  Function getActionFunctionName() => actionFunctionName!;
 }
 
 extension FlowStateExtension on FlowState {
@@ -87,7 +92,8 @@ extension FlowStateExtension on FlowState {
       case LoadingState:
         {
           if (getStateRendrerType() == StateRendrerType.popupLoadingState) {
-            showPopUp(context, getStateRendrerType(), getMessage(), getTitle());
+            showPopUp(context, getStateRendrerType(), getMessage(), getTitle(),
+                () {});
             return contentScreenWidget;
           } else {
             return StateRendrer(
@@ -101,7 +107,8 @@ extension FlowStateExtension on FlowState {
         {
           dismissDialog(context);
           if (getStateRendrerType() == StateRendrerType.popupErrorState) {
-            showPopUp(context, getStateRendrerType(), getMessage(), getTitle());
+            showPopUp(context, getStateRendrerType(), getMessage(), getTitle(),
+                () {});
             return contentScreenWidget;
           } else {
             return StateRendrer(
@@ -128,7 +135,8 @@ extension FlowStateExtension on FlowState {
         {
           dismissDialog(context);
           if (getStateRendrerType() == StateRendrerType.popupSuccessState) {
-            showPopUp(context, getStateRendrerType(), getMessage(), getTitle());
+            showPopUp(context, getStateRendrerType(), getMessage(), getTitle(),
+                () {});
             return contentScreenWidget;
           } else {
             return StateRendrer(
@@ -156,14 +164,14 @@ extension FlowStateExtension on FlowState {
   }
 
   showPopUp(BuildContext context, StateRendrerType stateRendrerType,
-      String message, String? title) {
+      String message, String? title, Function? action) {
     WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
         context: context,
         builder: (BuildContext context) => StateRendrer(
               stateRendrerType: stateRendrerType,
               message: message,
               title: title,
-              onRetryPressed: () {},
+              onRetryPressed: action ?? () {},
             )));
   }
 }

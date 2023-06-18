@@ -3,7 +3,6 @@ import 'package:netify/app/di.dart';
 import 'package:netify/persentation/forgot_password/forgot_password.dart';
 import 'package:netify/persentation/login/login.dart';
 import 'package:netify/persentation/main/home_page.dart';
-import 'package:netify/persentation/main/user/create_user.dart';
 import 'package:netify/persentation/onboarding/onboarding.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/splash/splash.dart';

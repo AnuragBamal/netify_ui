@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:netify/app/di.dart';
 import 'package:netify/data/network/failure.dart';
 import 'package:netify/data/request/request.dart';
 import 'package:netify/domain/model/home_model.dart';
@@ -11,6 +12,7 @@ import 'package:netify/domain/usecase/getuserlist_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
+import 'package:netify/persentation/main/authentication_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class HomepageViewModel extends BaseViewModel
@@ -36,6 +38,8 @@ class HomepageViewModel extends BaseViewModel
   final GetUserUseCase _getUserUseCase;
   final GetUserListUsecase _getUserListUsecase;
   final GetDashboardUseCase _getDashboardUseCase;
+  final AuthenticationService _authenticationService =
+      instance<AuthenticationService>();
   late final Map<int, MainPageModel> _screenIndex;
   final Map<String, String> searchFilterCurrentValues = {};
   String _currentFilter = "";
@@ -49,6 +53,7 @@ class HomepageViewModel extends BaseViewModel
 
   @override
   void start() {
+    _authenticationService.signInUser();
     inputState.add(
         LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
     _getUserData();

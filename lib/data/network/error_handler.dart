@@ -23,8 +23,8 @@ enum DataSource {
 
 class ErrorHandler implements Exception {
   late Failure failure;
-  // final AuthenticationService _authenticationService =
-  //     instance<AuthenticationService>();
+  final AuthenticationService _authenticationService =
+      instance<AuthenticationService>();
 
   ErrorHandler.handle(dynamic error) {
     if (error is DioError) {
@@ -45,7 +45,7 @@ class ErrorHandler implements Exception {
         return DataSource.receiveTimeout.getFailure();
       case DioErrorType.badResponse:
         if (error.response?.statusCode == 401) {
-          // _authenticationService.signOutUser();
+          _authenticationService.signOutUser();
           return DataSource.unauthorized.getFailure();
         } else if (error.response?.statusCode == 403) {
           return DataSource.forbidden.getFailure();

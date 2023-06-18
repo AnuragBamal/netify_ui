@@ -86,9 +86,29 @@ class UserDataTypeScreen extends StatelessWidget {
       BuildContext context, AsyncSnapshot<List<User>> snapshot) {
     if (snapshot.hasData) {
       if (snapshot.data!.isEmpty) {
-        return const Center(
-          child: Text("No data found"),
-        );
+        return Stack(children: [
+          SizedBox(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: const Center(child: Text("No data found"))),
+          Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.08,
+            right: MediaQuery.of(context).size.width * 0.05,
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateUserView(
+                              homepageViewModel: homepageViewModel,
+                              screenTypeIdentity: screenName,
+                              methodNameToExecute: "createUser",
+                            )));
+              },
+              backgroundColor: ColorManager.primaryColor,
+              child: const Icon(Icons.add),
+            ),
+          ),
+        ]);
       } else {
         return Stack(
           children: [

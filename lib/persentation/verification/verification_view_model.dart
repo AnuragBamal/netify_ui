@@ -7,10 +7,11 @@ import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
 import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
+import 'package:rxdart/rxdart.dart';
 
 const defaultCount = 60;
 
-class VerificationViewModel extends BaseViewModel
+class VerificationViewModel
     implements VerificationViewModelInput, VerificationViewModelOutput {
   int _currentCounter = defaultCount;
   Timer? _timer;
@@ -21,8 +22,7 @@ class VerificationViewModel extends BaseViewModel
       StreamController<RegenerateOtp>.broadcast();
   final StreamController _inputActiveSubmitOtpStreamController =
       StreamController<void>.broadcast();
-  final StreamController isVerificationSuccessfullStreamController =
-      StreamController<bool>();
+  final isVerificationSuccessfullStreamController = BehaviorSubject<bool?>();
 
   var verifyOtpObject = VerifyOtpObject("");
 
@@ -31,17 +31,17 @@ class VerificationViewModel extends BaseViewModel
 
   VerificationViewModel(this._verifyOtpUseCase, this._regenerateOtpUseCase);
 
-  @override
   void dispose() {
     _inputOtpStreamController.close();
     _inputRegenerateOtpStreamController.close();
     _inputActiveSubmitOtpStreamController.close();
     isVerificationSuccessfullStreamController.close();
+
+    // super.dispose();
   }
 
-  @override
   void start() {
-    inputState.add(ContentState());
+    //inputState.add(ContentState());
   }
 
   @override
@@ -53,8 +53,8 @@ class VerificationViewModel extends BaseViewModel
 
   @override
   void submitOtp() async {
-    inputState.add(
-        LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
+    // inputState.add(
+    //     LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
     (await _verifyOtpUseCase
             .execute(VerifyOtpUseCaseInput(otp: verifyOtpObject.otp)))
         .fold((failure) => _handleFailureVerifyOtp(failure),
@@ -63,8 +63,8 @@ class VerificationViewModel extends BaseViewModel
 
   @override
   void regenerateOtp() async {
-    inputState.add(
-        LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
+    // inputState.add(
+    //     LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
     (await _regenerateOtpUseCase.execute()).fold(
         (failure) => _handleFailureRegenerateOtp(failure),
         (data) => _handleSuccessRegenerateOtp(data));
@@ -114,28 +114,29 @@ class VerificationViewModel extends BaseViewModel
   }
 
   _handleFailureVerifyOtp(Failure failure) {
-    inputState.add(ErrorState(
-        stateRendrerType: StateRendrerType.popupErrorState,
-        message: failure.message));
+    // inputState.add(ErrorState(
+    //     stateRendrerType: StateRendrerType.popupErrorState,
+    //     message: failure.message));
     isVerificationSuccessfullStreamController.add(false);
   }
 
   _handleSuccessVerifyOtp(GeneralSuccess data) {
-    inputState.add(ContentState());
+    //isVerificationSuccessfull = true;
+    // inputState.add(ContentState());
     isVerificationSuccessfullStreamController.add(true);
   }
 
   _handleFailureRegenerateOtp(Failure failure) {
-    inputState.add(ErrorState(
-        stateRendrerType: StateRendrerType.popupErrorState,
-        message: failure.message));
+    // inputState.add(ErrorState(
+    //     stateRendrerType: StateRendrerType.popupErrorState,
+    //     message: failure.message));
     _disableRegenerateButton();
   }
 
   _handleSuccessRegenerateOtp(GeneralSuccess data) {
-    inputState.add(SuccessState(
-        stateRendrerType: StateRendrerType.popupSuccessState,
-        message: data.data[0].message));
+    // inputState.add(SuccessState(
+    //     stateRendrerType: StateRendrerType.popupSuccessState,
+    //     message: data.data[0].message));
     _disableRegenerateButton();
   }
 }

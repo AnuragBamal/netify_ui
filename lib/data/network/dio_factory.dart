@@ -13,7 +13,6 @@ const String defaultLanguage = "language";
 
 class DioFactory {
   final AppPreferences _appPreferences;
-
   DioFactory(this._appPreferences);
   Future<Dio> getDio() async {
     Dio dio = Dio();
@@ -33,7 +32,7 @@ class DioFactory {
         headers: headers);
 
     if (kReleaseMode) {
-      print("Release Mode. No Logs.");
+      //  print("Release Mode. No Logs.");
     } else {
       dio.interceptors.add(LogInterceptor(
           request: true,

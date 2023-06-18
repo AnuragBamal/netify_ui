@@ -25,15 +25,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 final instance = GetIt.instance;
 
 Future<void> initAppModule() async {
-  final sharedPrefs = await SharedPreferences.getInstance();
   //Shared Preference instance
-  instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
+  if (!instance.isRegistered<SharedPreferences>()) {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
+  }
+  //instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
   //App Preference instance
-  instance.registerLazySingleton<AppPreferences>(
-      () => AppPreferences(instance<SharedPreferences>()));
+  if (!instance.isRegistered<AppPreferences>()) {
+    instance.registerLazySingleton<AppPreferences>(
+        () => AppPreferences(instance<SharedPreferences>()));
+  }
   //Instance of authentication service
-  instance.registerLazySingleton<AuthenticationService>(
-      () => AuthenticationService());
+  if (!instance.isRegistered<AuthenticationService>()) {
+    final authService = AuthenticationService();
+    instance.registerLazySingleton<AuthenticationService>(() => authService);
+  }
+  // final authService = AuthenticationService();
+  // instance.registerLazySingleton<AuthenticationService>(() => authService);
+
   //Instance of network info
   instance.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImplementer(InternetConnectionChecker()));
@@ -46,6 +56,7 @@ Future<void> initAppModule() async {
   instance.registerLazySingleton<ApiServiceClient>(() => ApiServiceClient(dio));
 
   //Instance of remote data source
+
   instance.registerLazySingleton<RemoteDataSource>(
       () => RemoteDataSourceImplementer(instance<ApiServiceClient>()));
 
@@ -111,4 +122,11 @@ resetAllmodules() {
   initVerificationModule();
   initRegistrationModule();
   initForgotPasswordModule();
+}
+
+ungegisterLoginHomePageModule() {
+  instance.unregister<HomepageViewModel>();
+  instance.unregister<GetUserUseCase>();
+  instance.unregister<GetUserListUsecase>();
+  instance.unregister<GetDashboardUseCase>();
 }

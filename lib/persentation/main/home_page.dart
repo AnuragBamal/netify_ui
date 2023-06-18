@@ -20,8 +20,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final HomepageViewModel _homepageViewModel = instance<HomepageViewModel>();
-  // final AuthenticationService _authenticationService =
-  //     instance<AuthenticationService>();
+  final AuthenticationService _authenticationService =
+      instance<AuthenticationService>();
 
   final PageController _pageController =
       PageController(initialPage: 0, viewportFraction: 1.0);
@@ -32,25 +32,34 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Home"),
-        ),
-        body: _getMainWidget(context)
-        // StreamBuilder<bool>(
-        //   stream: _authenticationService.isUserSignedIn,
-        //   builder: (context, snapshot) {
-        //     if (snapshot.hasData && snapshot.data == true) {
-        //       return _getMainWidget(context);
-        //     } else {
-        //       Container();
-        //       SchedulerBinding.instance.addPostFrameCallback((_) {
-        //         Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
-        //       });
-        //     }
-        //     return Container();
-        //   },
-        // )
-        );
+        appBar: AppBar(title: const Text('Home'), actions: [
+          IconButton(
+              onPressed: () {
+                _authenticationService.signOutUser();
+                // SchedulerBinding.instance.addPostFrameCallback((_) {
+                //   Navigator.of(context)
+                //       .pushReplacementNamed(Routes.loginRoute);
+                // });
+              },
+              icon: const Icon(Icons.logout))
+        ]),
+        body: StreamBuilder<bool?>(
+          stream: _authenticationService.isUserSignedIn,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data == true) {
+              return _getMainWidget(context);
+            } else if (snapshot.hasData && snapshot.data == false) {
+              _authenticationService.userSignedOut();
+              ungegisterLoginHomePageModule();
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+              });
+            } else {
+              return const CircularProgressIndicator();
+            }
+            return const CircularProgressIndicator();
+          },
+        ));
   }
 
   Widget _getMainWidget(BuildContext context) {

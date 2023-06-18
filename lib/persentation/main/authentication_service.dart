@@ -4,23 +4,19 @@ import 'package:rxdart/rxdart.dart';
 
 class AuthenticationService {
   // BehaviorSubject that contains the auth token
-  final _isUserSignedIn = BehaviorSubject<bool>.seeded(false);
+  final _isUserSignedIn = BehaviorSubject<bool?>.seeded(false);
   final AppPreferences _appPreferences = instance<AppPreferences>();
 
   AuthenticationService();
-//  AuthenticationService._(this._appPreferences);
-//   static final AuthenticationService _instance =
-//       AuthenticationService._(instance<AppPreferences>());
-//   factory AuthenticationService() => _instance;
+
   // Stream getter
-  Stream<bool> get isUserSignedIn => _isUserSignedIn.stream;
+  Stream<bool?> get isUserSignedIn => _isUserSignedIn.stream;
   // Current value getter
-  bool get token => _isUserSignedIn.value;
+  bool? get userStatus => _isUserSignedIn.valueOrNull;
   //Future<bool> signInUser(String userName, String Password) async {
-  Future<bool> signInUser(String token) async {
+  Future<bool?> signInUser() async {
     //In Future if required we might have to implement the sign in logic here.
     // Store the token in SharedPreferences
-    await _appPreferences.setJwtToken(token);
 
     _isUserSignedIn.add(true);
 
@@ -33,6 +29,11 @@ class AuthenticationService {
 
     // Update the _tokenSubject
     _isUserSignedIn.add(false);
+  }
+
+  Future<void> userSignedOut() async {
+    // Update the _tokenSubject
+    _isUserSignedIn.add(null);
   }
 
   // Future<void> loadToken() async {
