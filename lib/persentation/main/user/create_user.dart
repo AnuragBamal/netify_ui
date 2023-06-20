@@ -2,7 +2,6 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:netify/domain/model/home_model.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
 import 'package:netify/persentation/main/home_page_view_model.dart';
 import 'package:netify/persentation/main/user/create_user_view_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
@@ -108,14 +107,7 @@ class _CreateUserViewState extends State<CreateUserView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.surfaceColor,
-      body: StreamBuilder<FlowState>(
-        stream: _userViewModel.outputState,
-        builder: (context, snapshot) {
-          return snapshot.data?.getScreenWidget(
-                  context, _getContentWidget(context), () {}) ??
-              _getContentWidget(context);
-        },
-      ),
+      body: _getContentWidget(context),
     );
   }
 

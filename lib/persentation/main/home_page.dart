@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/domain/model/model.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
 import 'package:netify/persentation/common/widgets/grid_view_builder.dart';
 import 'package:netify/persentation/common/widgets/list_view_builder.dart';
-import 'package:netify/persentation/main/authentication_service.dart';
+import 'package:netify/services/authentication_service.dart';
 import 'package:netify/persentation/main/home/dashboard_list_page.dart';
 import 'package:netify/persentation/main/home/user_list_page.dart';
 import 'package:netify/persentation/main/home_page_view_model.dart';
-import 'package:netify/persentation/resources/routes_manager.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -36,41 +33,10 @@ class _HomeState extends State<Home> {
           IconButton(
               onPressed: () {
                 _authenticationService.signOutUser();
-                // SchedulerBinding.instance.addPostFrameCallback((_) {
-                //   Navigator.of(context)
-                //       .pushReplacementNamed(Routes.loginRoute);
-                // });
               },
               icon: const Icon(Icons.logout))
         ]),
-        body: StreamBuilder<bool?>(
-          stream: _authenticationService.isUserSignedIn,
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data == true) {
-              return _getMainWidget(context);
-            } else if (snapshot.hasData && snapshot.data == false) {
-              _authenticationService.userSignedOut();
-              ungegisterLoginHomePageModule();
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
-              });
-            } else {
-              return const CircularProgressIndicator();
-            }
-            return const CircularProgressIndicator();
-          },
-        ));
-  }
-
-  Widget _getMainWidget(BuildContext context) {
-    return StreamBuilder<FlowState>(
-      stream: _homepageViewModel.outputState,
-      builder: (context, snapshot) {
-        return snapshot.data
-                ?.getScreenWidget(context, _getContentWidget(context), () {}) ??
-            _getContentWidget(context);
-      },
-    );
+        body: _getContentWidget(context));
   }
 
   Widget _getContentWidget(BuildContext context) {

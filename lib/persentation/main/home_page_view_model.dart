@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:netify/app/di.dart';
 import 'package:netify/data/network/failure.dart';
 import 'package:netify/data/request/request.dart';
 import 'package:netify/domain/model/home_model.dart';
@@ -10,12 +9,12 @@ import 'package:netify/domain/usecase/getdashboard_usecase.dart';
 import 'package:netify/domain/usecase/getuser_usecase.dart';
 import 'package:netify/domain/usecase/getuserlist_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
-import 'package:netify/persentation/main/authentication_service.dart';
+import 'package:netify/services/authentication_service.dart';
+import 'package:netify/services/navigator_service.dart';
+import 'package:netify/persentation/resources/routes_manager.dart';
 import 'package:rxdart/rxdart.dart';
 
-class HomepageViewModel extends BaseViewModel
+class HomepageViewModel extends BaseViewModelInputsOutputs
     implements HomepageViewModelInput, HomepageViewModelOutput {
   final StreamController _sliderDisplayObjectController =
       StreamController<SliderDisplayObject>.broadcast();
@@ -38,9 +37,10 @@ class HomepageViewModel extends BaseViewModel
   final GetUserUseCase _getUserUseCase;
   final GetUserListUsecase _getUserListUsecase;
   final GetDashboardUseCase _getDashboardUseCase;
-  final AuthenticationService _authenticationService =
-      instance<AuthenticationService>();
   late final Map<int, MainPageModel> _screenIndex;
+  late final LoginUserMetaData _loginUserMetaData;
+  final NavigationService _navigationService;
+  final AuthenticationService _authenticationService;
   final Map<String, String> searchFilterCurrentValues = {};
   String _currentFilter = "";
   String _filterSearchValue = "";
@@ -48,14 +48,21 @@ class HomepageViewModel extends BaseViewModel
   int _currentDisplayIndex = 0;
   bool isSearchEnabled = false;
 
-  HomepageViewModel(this._getUserUseCase, this._getUserListUsecase,
-      this._getDashboardUseCase);
+  HomepageViewModel(
+      this._getUserUseCase,
+      this._getUserListUsecase,
+      this._getDashboardUseCase,
+      this._navigationService,
+      this._authenticationService);
 
   @override
   void start() {
     _authenticationService.signInUser();
-    inputState.add(
-        LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
+    _authenticationService.isUserSignedIn.listen((event) {
+      if (event != null && event == false) {
+        _navigationService.replaceRoute(Routes.loginRoute);
+      }
+    });
     _getUserData();
   }
 
@@ -67,8 +74,6 @@ class HomepageViewModel extends BaseViewModel
     _userSearchController.close();
     _dashBoardController.close();
     _searchStateController.close();
-
-    super.dispose();
   }
 
   @override
@@ -107,6 +112,11 @@ class HomepageViewModel extends BaseViewModel
       inputForSearchState.add(false);
       return;
     }
+  }
+
+  navigateToLogin() {
+    // _navigationService.popUntil(Routes.homeRoute);
+    _navigationService.replaceRoute(Routes.loginRoute);
   }
 
   @override
@@ -157,9 +167,7 @@ class HomepageViewModel extends BaseViewModel
   void _getUserData() async {
     final Either<Failure, GetUser> result = await _getUserUseCase.execute();
     result.fold((failure) {
-      inputState.add(ErrorState(
-          stateRendrerType: StateRendrerType.popupErrorState,
-          message: failure.message));
+      // TODO: Handle Error
     }, (success) {
       _intiallizeUserData(success.data[0]);
     });
@@ -187,9 +195,7 @@ class HomepageViewModel extends BaseViewModel
     final Either<Failure, GetUserList> result =
         await _getUserListUsecase.execute(request);
     result.fold((failure) {
-      inputState.add(ErrorState(
-          stateRendrerType: StateRendrerType.popupErrorState,
-          message: failure.message));
+      //TODO: Handle Error
     }, (success) {
       _handleSuccessUserListResponse(success.data[0]);
     });
@@ -211,25 +217,22 @@ class HomepageViewModel extends BaseViewModel
     final Either<Failure, GetDashboardItemList> result =
         await _getDashboardUseCase.execute(request);
     result.fold((failure) {
-      inputState.add(ErrorState(
-          stateRendrerType: StateRendrerType.popupErrorState,
-          message: failure.message));
+      //TODO: Handle Error
     }, (success) {
       _intiallizeDashboardData(success.data);
     });
   }
 
   void _intiallizeDashboardData(List<DashboardItem> getDashboardItemList) {
-    inputState.add(ContentState());
     inputForDashboard.add(getDashboardItemList);
   }
 
   void _intiallizeUserData(GetUserData getUserData) {
     _screenIndex = {};
-    inputState.add(ContentState());
     for (var screen in getUserData.homeScreens) {
       _screenIndex[screen.index] = screen;
     }
+    _loginUserMetaData = LoginUserMetaData.fromGetUserData(getUserData);
     onScreenChange(_currentDisplayIndex);
   }
 
@@ -273,20 +276,91 @@ class SliderDisplayObject {
       required this.currentDisplayIndex});
 }
 
-// class LoginUserMetaData {
-//   String firstname;
-//   String lastName;
-//   String userName;
-//   String email;
-//   String mobileNumber;
-//   String companyName;
-//   String brandName;
-//   String role;
-//   String userId;
+class LoginUserMetaData {
+  String firstName;
+  String lastName;
+  String userName;
+  String email;
+  String mobileNumber;
+  String companyName;
+  String brandName;
+  String role;
+  String userId;
 
-//   String ownerUserName;
-//   String walletId;
-//   List<String> resellerList;
-//   List<String> operatorList;
+  String ownerUserName;
+  String walletId;
+  List<String> resellerList;
+  List<String> operatorList;
+  Map<String, List<String>> resellerOperatorMap;
 
-// }
+  LoginUserMetaData(
+      {required this.firstName,
+      required this.lastName,
+      required this.userName,
+      required this.email,
+      required this.mobileNumber,
+      required this.companyName,
+      required this.brandName,
+      required this.role,
+      required this.userId,
+      required this.ownerUserName,
+      required this.walletId,
+      required this.resellerList,
+      required this.operatorList,
+      required this.resellerOperatorMap});
+
+  factory LoginUserMetaData.fromJson(Map<String, dynamic> json) {
+    return LoginUserMetaData(
+        firstName: json['firstname'],
+        lastName: json['lastName'],
+        userName: json['userName'],
+        email: json['email'],
+        mobileNumber: json['mobileNumber'],
+        companyName: json['companyName'],
+        brandName: json['brandName'],
+        role: json['role'],
+        userId: json['userId'],
+        ownerUserName: json['ownerUserName'],
+        walletId: json['walletId'],
+        resellerList: json['resellerList'].cast<String>(),
+        operatorList: json['operatorList'].cast<String>(),
+        resellerOperatorMap: json['resellerOperatorMap']);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['firstname'] = firstName;
+    data['lastName'] = lastName;
+    data['userName'] = userName;
+    data['email'] = email;
+    data['mobileNumber'] = mobileNumber;
+    data['companyName'] = companyName;
+    data['brandName'] = brandName;
+    data['role'] = role;
+    data['userId'] = userId;
+    data['ownerUserName'] = ownerUserName;
+    data['walletId'] = walletId;
+    data['resellerList'] = resellerList;
+    data['operatorList'] = operatorList;
+    data['resellerOperatorMap'] = resellerOperatorMap;
+    return data;
+  }
+
+  factory LoginUserMetaData.fromGetUserData(GetUserData getUserData) {
+    return LoginUserMetaData(
+        firstName: getUserData.firstName,
+        lastName: getUserData.lastName,
+        userName: getUserData.userName,
+        email: getUserData.email,
+        mobileNumber: getUserData.mobileNumber,
+        companyName: getUserData.companyName,
+        brandName: getUserData.brandName,
+        role: getUserData.role,
+        userId: getUserData.userId,
+        ownerUserName: getUserData.ownerUserName,
+        walletId: getUserData.walletId,
+        resellerList: getUserData.resellerList,
+        operatorList: getUserData.operatorList,
+        resellerOperatorMap: getUserData.resellerOperatorMap);
+  }
+}

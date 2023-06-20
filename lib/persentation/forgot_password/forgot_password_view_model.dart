@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:netify/domain/usecase/forgot_password_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
+import 'package:netify/services/dialog_service.dart';
+import 'package:netify/services/navigator_service.dart';
 
-class ForgotPasswordViewModel extends BaseViewModel
+class ForgotPasswordViewModel extends BaseViewModelInputsOutputs
     implements ForgotPasswordViewModelInput, ForgotPasswordViewModelOutput {
   final StreamController<String> _userNameStreamController =
       StreamController<String>.broadcast();
@@ -26,8 +27,11 @@ class ForgotPasswordViewModel extends BaseViewModel
       ForgotPasswordObject("", "", "", "", false);
 
   final ForgotPasswordUseCase _forgotPasswordUseCase;
+  final NavigationService _navigationService;
+  final DialogService _dialogService;
 
-  ForgotPasswordViewModel(this._forgotPasswordUseCase);
+  ForgotPasswordViewModel(this._forgotPasswordUseCase, this._navigationService,
+      this._dialogService);
 
   //----------------------Input----------------------
 
@@ -91,7 +95,6 @@ class ForgotPasswordViewModel extends BaseViewModel
 
   @override
   void dispose() {
-    super.dispose();
     _userNameStreamController.close();
     _newPasscodeStreamController.close();
     _confirmNewPasscodeStreamController.close();
@@ -102,28 +105,39 @@ class ForgotPasswordViewModel extends BaseViewModel
   }
 
   @override
-  void start() {
-    inputState.add(ContentState());
-  }
+  void start() {}
 
   @override
-  void submitForgotPassword() async {
-    inputState.add(
-        LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
+  void submitForgotPassword(BuildContext context) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
     if (!forgotPasswordObject.isOtpSent) {
       final result =
           await _forgotPasswordUseCase.execute(ForgotPasswordUseCaseInput(
         userName: forgotPasswordObject.userName,
       ));
       result.fold((error) {
-        inputState.add(ErrorState(
-            stateRendrerType: StateRendrerType.popupErrorState,
-            message: error.message));
+        Navigator.of(context).pop();
+        _dialogService.showDialogOnScreen(
+            context,
+            DialogRequest(
+                title: "Error",
+                description: error.message,
+                dialogType: DialogType.error));
+        //Yet to implement
       }, (success) {
-        inputState.add(SuccessState(
-            stateRendrerType: StateRendrerType.popupSuccessState,
-            message: success.data[0].message));
-        setIsOtpSent(true);
+        Navigator.of(context).pop();
+        var successDialouge = _dialogService.showDialogOnScreen(
+            context,
+            DialogRequest(
+                title: "Success",
+                description: success.data[0].message,
+                dialogType: DialogType.info));
+        successDialouge.then((value) => setIsOtpSent(true));
       });
     } else {
       final result = await _forgotPasswordUseCase.execute(
@@ -132,14 +146,26 @@ class ForgotPasswordViewModel extends BaseViewModel
               otp: forgotPasswordObject.otp,
               newPasscode: forgotPasswordObject.newPaasCode));
       result.fold((error) {
-        inputState.add(ErrorState(
-            stateRendrerType: StateRendrerType.popupErrorState,
-            message: error.message));
+        Navigator.of(context).pop();
+        _dialogService.showDialogOnScreen(
+            context,
+            DialogRequest(
+                title: "Error",
+                description: error.message,
+                dialogType: DialogType.error));
       }, (success) {
-        inputState.add(SuccessState(
-            stateRendrerType: StateRendrerType.popupSuccessState,
-            message: success.data[0].message));
-        setPasswordUpdated(true);
+        Navigator.of(context).pop();
+        var successDialouge = _dialogService.showDialogOnScreen(
+            context,
+            DialogRequest(
+                title: "Success",
+                description: success.data[0].message,
+                dialogType: DialogType.info));
+        successDialouge.then((value) {
+          _navigationService.goBack();
+          setPasswordUpdated(true);
+        });
+        //yet to implement
       });
     }
   }
@@ -270,7 +296,7 @@ class ForgotPasswordViewModel extends BaseViewModel
 }
 
 abstract class ForgotPasswordViewModelInput {
-  void submitForgotPassword();
+  void submitForgotPassword(BuildContext context);
   void setUserName(String userName);
   void setOtp(String userName);
   void setNewPasscode(String userName);

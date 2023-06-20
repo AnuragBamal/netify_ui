@@ -16,9 +16,12 @@ import 'package:netify/domain/usecase/otp_usecase.dart';
 import 'package:netify/domain/usecase/signup_usecase.dart';
 import 'package:netify/persentation/forgot_password/forgot_password_view_model.dart';
 import 'package:netify/persentation/login/login_view_model.dart';
-import 'package:netify/persentation/main/authentication_service.dart';
+import 'package:netify/services/authentication_service.dart';
 import 'package:netify/persentation/main/home_page_view_model.dart';
+import 'package:netify/services/dialog_service.dart';
+import 'package:netify/services/navigator_service.dart';
 import 'package:netify/persentation/register/register_view_model.dart';
+import 'package:netify/persentation/splash/splash_view_model.dart';
 import 'package:netify/persentation/verification/verification_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +33,10 @@ Future<void> initAppModule() async {
     final sharedPrefs = await SharedPreferences.getInstance();
     instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
   }
+  if (!instance.isRegistered<NavigationService>()) {
+    instance.registerLazySingleton<NavigationService>(
+        () => NavigationService.instance);
+  }
   //instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
   //App Preference instance
   if (!instance.isRegistered<AppPreferences>()) {
@@ -40,6 +47,10 @@ Future<void> initAppModule() async {
   if (!instance.isRegistered<AuthenticationService>()) {
     final authService = AuthenticationService();
     instance.registerLazySingleton<AuthenticationService>(() => authService);
+  }
+
+  if (!instance.isRegistered<DialogService>()) {
+    instance.registerLazySingleton<DialogService>(() => DialogService());
   }
   // final authService = AuthenticationService();
   // instance.registerLazySingleton<AuthenticationService>(() => authService);
@@ -64,13 +75,21 @@ Future<void> initAppModule() async {
   instance.registerLazySingleton<Repository>(() => RepositoryImplementer(
       instance<RemoteDataSource>(), instance<NetworkInfo>()));
 
+  if (!GetIt.I.isRegistered<SplashViewModel>()) {
+    instance.registerFactory<SplashViewModel>(
+        () => SplashViewModel(instance(), instance()));
+  }
+
   //Instance of authService
 }
+
+initTransportLayer() {}
 
 initLoginModule() {
   if (!GetIt.I.isRegistered<LoginUseCase>()) {
     instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
-    instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
+    instance.registerFactory<LoginViewModel>(
+        () => LoginViewModel(instance(), instance(), instance()));
   }
 }
 
@@ -79,8 +98,8 @@ initVerificationModule() {
     instance
         .registerFactory<VerifyOtpUseCase>(() => VerifyOtpUseCase(instance()));
     instance.registerFactory<GetOtpUseCase>(() => GetOtpUseCase(instance()));
-    instance.registerFactory<VerificationViewModel>(
-        () => VerificationViewModel(instance(), instance()));
+    instance.registerFactory<VerificationViewModel>(() =>
+        VerificationViewModel(instance(), instance(), instance(), instance()));
   }
 }
 
@@ -89,8 +108,8 @@ initRegistrationModule() {
     instance.registerFactory<SignUpUseCase>(() => SignUpUseCase(instance()));
     instance.registerFactory<CheckDomainAvailiabilityUseCase>(
         () => CheckDomainAvailiabilityUseCase(instance()));
-    instance.registerFactory<RegisterViewModel>(
-        () => RegisterViewModel(instance(), instance()));
+    instance.registerFactory<RegisterViewModel>(() =>
+        RegisterViewModel(instance(), instance(), instance(), instance()));
   }
 }
 
@@ -99,7 +118,7 @@ initForgotPasswordModule() {
     instance.registerFactory<ForgotPasswordUseCase>(
         () => ForgotPasswordUseCase(instance()));
     instance.registerFactory<ForgotPasswordViewModel>(
-        () => ForgotPasswordViewModel(instance()));
+        () => ForgotPasswordViewModel(instance(), instance(), instance()));
   }
 }
 
@@ -110,12 +129,12 @@ initHomepageModule() {
         () => GetUserListUsecase(instance()));
     instance.registerFactory<GetDashboardUseCase>(
         () => GetDashboardUseCase(instance()));
-    instance.registerFactory<HomepageViewModel>(
-        () => HomepageViewModel(instance(), instance(), instance()));
+    instance.registerFactory<HomepageViewModel>(() => HomepageViewModel(
+        instance(), instance(), instance(), instance(), instance()));
   }
 }
 
-resetAllmodules() {
+resetAllmodules() async {
   instance.reset(dispose: false);
   initAppModule();
   initLoginModule();

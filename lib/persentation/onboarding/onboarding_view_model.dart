@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:netify/domain/model/model.dart';
+import 'package:netify/services/navigator_service.dart';
+import 'package:netify/persentation/resources/routes_manager.dart';
 import '../base/baseviewmodel.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
@@ -10,6 +12,8 @@ class OnBoardingViewModel extends BaseViewModel
   final StreamController _streamController =
       StreamController<SliderViewObject>();
   late final List<SliderObject> _sliderList;
+  final NavigationService _navigatorService;
+  OnBoardingViewModel(this._navigatorService);
   int _currentPage = 0;
 
   //inputs
@@ -24,6 +28,10 @@ class OnBoardingViewModel extends BaseViewModel
   void dispose() {
     _streamController.close();
     super.dispose();
+  }
+
+  void goToLogin() {
+    _navigatorService.replaceRoute(Routes.loginRoute);
   }
 
   @override

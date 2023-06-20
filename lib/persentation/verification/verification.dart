@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:netify/app/di.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
 import 'package:netify/persentation/resources/assets_manager.dart';
-import 'package:netify/persentation/resources/color_manager.dart';
-import 'package:netify/persentation/resources/routes_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/resources/values_manager.dart';
 import 'package:netify/persentation/verification/verification_view_model.dart';
@@ -26,25 +22,6 @@ class _VerificationState extends State<Verification> {
     _otpController.addListener(() {
       _verificationViewModel.setOtp(_otpController.text);
     });
-    _verificationViewModel.isVerificationSuccessfullStreamController.stream
-        .listen((isSuccess) {
-      if (isSuccess != null && isSuccess) {
-        //navigate to main screen
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context, rootNavigator: true).pop(true);
-          // Future.delayed(const Duration(seconds: 1), () {
-          //   //                 // Navigator.of(context).push(
-          //   //                 // MaterialPageRoute(
-          //   //                 // builder: (context) => NextPage(),
-          //   //                 // ),
-          //   //                 // );
-          //   ////Navigator.of(context, rootNavigator: true).pop(true);
-          //   Navigator.of(context).popUntil((route) => route.isFirst);
-          //   Navigator.pushNamed(context, Routes.homeRoute);
-          // });
-        });
-      }
-    });
   }
 
   @override
@@ -56,38 +33,9 @@ class _VerificationState extends State<Verification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.surfaceColor,
       body: _getContentWidget(context),
     );
   }
-
-  // Widget _main(BuildContext context) {
-  //   return StreamBuilder<bool?>(
-  //       stream:
-  //           _verificationViewModel.isVerificationSuccessfullStreamController,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           if (snapshot.data!) {
-  //             SchedulerBinding.instance.addPostFrameCallback((_) {
-  //               //Navigator.of(context).pop(true);
-  //               //Navigator.of(context).popUntil((route) => route.isFirst);
-  //               // // Navigator.pushNamed(context, Routes.homeRoute);
-  //               Future.delayed(const Duration(seconds: 5), () {
-  //                 // Navigator.of(context).push(
-  //                 // MaterialPageRoute(
-  //                 // builder: (context) => NextPage(),
-  //                 // ),
-  //                 // );
-  //                 Navigator.of(context).pop(true);
-  //               });
-  //             });
-  //             return Container();
-  //           }
-  //           return _getContentWidget(context);
-  //         }
-  //         return _getContentWidget(context);
-  //       });
-  // }
 
   Widget _getContentWidget(BuildContext context) {
     return Container(
@@ -140,7 +88,8 @@ class _VerificationState extends State<Verification> {
                                 return ElevatedButton(
                                     onPressed: (snapshot.data == true)
                                         ? () {
-                                            _verificationViewModel.submitOtp();
+                                            _verificationViewModel
+                                                .submitOtp(context);
                                           }
                                         : null,
                                     child: const Text(AppString.submitOtp));
@@ -159,7 +108,7 @@ class _VerificationState extends State<Verification> {
                                                 true
                                             ? () {
                                                 _verificationViewModel
-                                                    .regenerateOtp();
+                                                    .regenerateOtp(context);
                                               }
                                             : null,
                                     child: (snapshot.data

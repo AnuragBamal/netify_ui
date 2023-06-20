@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/data/network/failure.dart';
-import 'package:netify/persentation/main/authentication_service.dart';
+import 'package:netify/services/authentication_service.dart';
 
 enum DataSource {
   success,

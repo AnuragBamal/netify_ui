@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:netify/app/app_prefs.dart';
 import 'package:netify/app/di.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
 import 'package:netify/persentation/login/login_view_model.dart';
 import 'package:netify/persentation/resources/assets_manager.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
-import 'package:netify/persentation/resources/routes_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/resources/values_manager.dart';
 
@@ -33,36 +30,6 @@ class _LoginViewState extends State<LoginView> {
     _passwordController.addListener(() {
       _loginViewModel.setPassword(_passwordController.text);
     });
-    _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream
-        .listen((isSuccessLoggedIn) {
-      resetAllmodules();
-      if (isSuccessLoggedIn != null && isSuccessLoggedIn) {
-        _loginViewModel.verificationRequiredStreamController.stream
-            .listen((isVerificationRequired) {
-          if (isVerificationRequired != null && isVerificationRequired) {
-            //navigate to verification screen
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              var result = Navigator.of(context, rootNavigator: true)
-                  .pushNamed(Routes.verificationRoute);
-              result.then((value) {
-                _loginViewModel.verificationRequiredStreamController.add(false);
-              });
-            });
-          } else if (isVerificationRequired != null &&
-              !isVerificationRequired) {
-            //navigate to main screen
-            _successfulLogin();
-          }
-        });
-      }
-    });
-  }
-
-  _successfulLogin() {
-    _appPreferences.setUserLoggedIn();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
-    });
   }
 
   @override
@@ -75,53 +42,8 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: ColorManager.surfaceColor,
-        body: StreamBuilder<FlowState>(
-          stream: _loginViewModel.outputState,
-          builder: (context, snapshot) {
-            return snapshot.data
-                    ?.getScreenWidget(context, _getContentWidget(context), () {
-                  _loginViewModel.login();
-                }) ??
-                _getContentWidget(context);
-          },
-        ));
+        body: _getContentWidget(context));
   }
-
-  // Widget _main(BuildContext context) {
-  //   return StreamBuilder<bool?>(
-  //       stream:
-  //           _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.data == null) {
-  //           return _getContentWidget(context);
-  //         } else if (snapshot.data == true) {
-  //           return StreamBuilder<bool?>(
-  //               stream:
-  //                   _loginViewModel.verificationRequiredStreamController.stream,
-  //               builder: (context, snapshot) {
-  //                 if (snapshot.data == null) {
-  //                   return _getContentWidget(context);
-  //                 } else if (snapshot.data == true) {
-  //                   SchedulerBinding.instance.addPostFrameCallback((_) {
-  //                     resetAllmodules();
-  //                     var result = Navigator.of(context)
-  //                         .pushNamed(Routes.verificationRoute);
-  //                     result.then((value) {
-  //                       _loginViewModel.login();
-  //                     });
-  //                   });
-  //                   return Container();
-  //                 } else {
-  //                   resetAllmodules();
-  //                   _successfulLogin();
-  //                   return Container();
-  //                 }
-  //               });
-  //         } else {
-  //           return _getContentWidget(context);
-  //         }
-  //       });
-  // }
 
   Widget _getContentWidget(BuildContext context) {
     return Container(
@@ -203,7 +125,7 @@ class _LoginViewState extends State<LoginView> {
                       child: ElevatedButton(
                         onPressed: (snapshot.data == true)
                             ? () {
-                                _loginViewModel.login();
+                                _loginViewModel.login(context);
                               }
                             : null,
                         child: const Text(AppString.login),
@@ -222,15 +144,14 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, Routes.forgotPasswordRoute);
+                        _loginViewModel.navigateToForgotPassword();
                       },
                       child: Text(AppString.forgotPassword,
                           style: Theme.of(context).textTheme.bodyLarge),
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, Routes.registerRoute);
+                          _loginViewModel.navigateToSignup();
                         },
                         child: Text(AppString.registerText,
                             style: Theme.of(context).textTheme.bodyLarge))

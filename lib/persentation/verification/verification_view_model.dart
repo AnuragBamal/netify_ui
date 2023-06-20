@@ -1,17 +1,18 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:netify/data/network/failure.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/usecase/otp_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:netify/services/dialog_service.dart';
+import 'package:netify/services/navigator_service.dart';
+import 'package:netify/persentation/resources/routes_manager.dart';
 
 const defaultCount = 60;
 
-class VerificationViewModel
+class VerificationViewModel extends BaseViewModelInputsOutputs
     implements VerificationViewModelInput, VerificationViewModelOutput {
   int _currentCounter = defaultCount;
   Timer? _timer;
@@ -22,27 +23,26 @@ class VerificationViewModel
       StreamController<RegenerateOtp>.broadcast();
   final StreamController _inputActiveSubmitOtpStreamController =
       StreamController<void>.broadcast();
-  final isVerificationSuccessfullStreamController = BehaviorSubject<bool?>();
 
   var verifyOtpObject = VerifyOtpObject("");
 
   final VerifyOtpUseCase _verifyOtpUseCase;
   final GetOtpUseCase _regenerateOtpUseCase;
+  final NavigationService _navigatorService;
+  final DialogService _dialogService;
 
-  VerificationViewModel(this._verifyOtpUseCase, this._regenerateOtpUseCase);
+  VerificationViewModel(this._verifyOtpUseCase, this._regenerateOtpUseCase,
+      this._navigatorService, this._dialogService);
 
+  @override
   void dispose() {
     _inputOtpStreamController.close();
     _inputRegenerateOtpStreamController.close();
     _inputActiveSubmitOtpStreamController.close();
-    isVerificationSuccessfullStreamController.close();
-
-    // super.dispose();
   }
 
-  void start() {
-    //inputState.add(ContentState());
-  }
+  @override
+  void start() {}
 
   @override
   setOtp(String otp) {
@@ -52,22 +52,30 @@ class VerificationViewModel
   }
 
   @override
-  void submitOtp() async {
-    // inputState.add(
-    //     LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
+  void submitOtp(BuildContext context) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
     (await _verifyOtpUseCase
             .execute(VerifyOtpUseCaseInput(otp: verifyOtpObject.otp)))
-        .fold((failure) => _handleFailureVerifyOtp(failure),
-            (data) => _handleSuccessVerifyOtp(data));
+        .fold((failure) => _handleFailureVerifyOtp(failure, context),
+            (data) => _handleSuccessVerifyOtp(data, context));
   }
 
   @override
-  void regenerateOtp() async {
-    // inputState.add(
-    //     LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
+  void regenerateOtp(BuildContext context) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
     (await _regenerateOtpUseCase.execute()).fold(
-        (failure) => _handleFailureRegenerateOtp(failure),
-        (data) => _handleSuccessRegenerateOtp(data));
+        (failure) => _handleFailureRegenerateOtp(failure, context),
+        (data) => _handleSuccessRegenerateOtp(data, context));
 
     // _disableRegenerateButton();
   }
@@ -113,30 +121,47 @@ class VerificationViewModel
     });
   }
 
-  _handleFailureVerifyOtp(Failure failure) {
-    // inputState.add(ErrorState(
-    //     stateRendrerType: StateRendrerType.popupErrorState,
-    //     message: failure.message));
-    isVerificationSuccessfullStreamController.add(false);
+  _handleFailureVerifyOtp(Failure failure, BuildContext context) {
+    Navigator.of(context).pop();
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Error",
+            description: failure.message,
+            dialogType: DialogType.error));
   }
 
-  _handleSuccessVerifyOtp(GeneralSuccess data) {
-    //isVerificationSuccessfull = true;
-    // inputState.add(ContentState());
-    isVerificationSuccessfullStreamController.add(true);
+  _handleSuccessVerifyOtp(GeneralSuccess data, BuildContext context) {
+    Navigator.of(context).pop();
+    var successDialouge = _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Success",
+            description: data.data[0].message,
+            dialogType: DialogType.info));
+    successDialouge
+        .then((value) => _navigatorService.replaceRoute(Routes.homeRoute));
   }
 
-  _handleFailureRegenerateOtp(Failure failure) {
-    // inputState.add(ErrorState(
-    //     stateRendrerType: StateRendrerType.popupErrorState,
-    //     message: failure.message));
+  _handleFailureRegenerateOtp(Failure failure, BuildContext context) {
+    Navigator.of(context).pop();
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Error",
+            description: failure.message,
+            dialogType: DialogType.error));
     _disableRegenerateButton();
   }
 
-  _handleSuccessRegenerateOtp(GeneralSuccess data) {
-    // inputState.add(SuccessState(
-    //     stateRendrerType: StateRendrerType.popupSuccessState,
-    //     message: data.data[0].message));
+  _handleSuccessRegenerateOtp(GeneralSuccess data, BuildContext context) {
+    Navigator.of(context).pop();
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Success",
+            description: data.data[0].message,
+            dialogType: DialogType.info));
     _disableRegenerateButton();
   }
 }
@@ -144,8 +169,8 @@ class VerificationViewModel
 abstract class VerificationViewModelInput {
   // 3 Actions user can perform
   setOtp(String otp);
-  void regenerateOtp();
-  void submitOtp();
+  void regenerateOtp(BuildContext context);
+  void submitOtp(BuildContext context);
   Sink get inputOtp;
   Sink get inputActiveSubmitOtp;
   Sink get inputRegenerateOtp;

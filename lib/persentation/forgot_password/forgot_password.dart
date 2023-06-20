@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:netify/app/di.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
 import 'package:netify/persentation/forgot_password/forgot_password_view_model.dart';
 import 'package:netify/persentation/resources/assets_manager.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
@@ -39,27 +37,13 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     _confirmPassCodeController.addListener(() {
       _viewModel.setConfirmNewPasscode(_confirmPassCodeController.text);
     });
-    _viewModel.outputIsPasswordUpdated.listen((isPasswordUpdated) {
-      if (isPasswordUpdated) {
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pop();
-        });
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.surfaceColor,
-      body: StreamBuilder<FlowState>(
-        stream: _viewModel.outputState,
-        builder: (context, snapshot) {
-          return snapshot.data?.getScreenWidget(
-                  context, _getContentWidget(context), () {}) ??
-              _getContentWidget(context);
-        },
-      ),
+      body: _getContentWidget(context),
     );
   }
 
@@ -200,7 +184,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                       child: ElevatedButton(
                         onPressed: (snapshot.data == true)
                             ? () {
-                                _viewModel.submitForgotPassword();
+                                _viewModel.submitForgotPassword(context);
                               }
                             : null,
                         child: const Text(AppString.forgotPasswordSubmit),

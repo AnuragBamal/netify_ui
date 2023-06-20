@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:netify/app/di.dart';
+import 'package:netify/services/navigator_service.dart';
 import 'package:netify/persentation/resources/routes_manager.dart';
 import 'package:netify/persentation/resources/theme_manager.dart';
 
@@ -19,6 +21,7 @@ class NetifyState extends State<Netify> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Netify',
+      navigatorKey: instance<NavigationService>().navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
       onGenerateRoute: RouteGenerator.getRoute,

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:netify/app/app_prefs.dart';
 import 'package:netify/app/di.dart';
+import 'package:netify/services/navigator_service.dart';
 import 'package:netify/persentation/onboarding/onboarding_view_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
@@ -10,7 +11,6 @@ import 'package:netify/persentation/resources/values_manager.dart';
 
 import '../../domain/model/model.dart';
 import '../resources/assets_manager.dart';
-import '../resources/routes_manager.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -21,7 +21,8 @@ class OnboardingView extends StatefulWidget {
 
 class _OnboardingViewState extends State<OnboardingView> {
   final PageController _pageController = PageController(initialPage: 0);
-  final OnBoardingViewModel _onBoardingViewModel = OnBoardingViewModel();
+  final OnBoardingViewModel _onBoardingViewModel =
+      OnBoardingViewModel(instance<NavigationService>());
   final AppPreferences _appPreferences = instance<AppPreferences>();
   _bind() {
     _appPreferences.setOnboardingScreenIsShown();
@@ -94,7 +95,7 @@ class _OnboardingViewState extends State<OnboardingView> {
               onPressed: () {
                 if (sliderViewObject.currentIndex ==
                     sliderViewObject.numberOfSlides - 1) {
-                  Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                  _onBoardingViewModel.goToLogin();
                 } else {
                   _pageController.nextPage(
                       duration: const Duration(milliseconds: 500),

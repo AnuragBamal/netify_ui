@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:netify/app/app_prefs.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/data/network/failure.dart';
@@ -6,11 +7,11 @@ import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/usecase/login_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:netify/services/dialog_service.dart';
+import 'package:netify/services/navigator_service.dart';
+import 'package:netify/persentation/resources/routes_manager.dart';
 
-class LoginViewModel extends BaseViewModel
+class LoginViewModel extends BaseViewModelInputsOutputs
     implements LoginViewModelInput, LoginViewModelOutput {
   final StreamController _userNameStreamController =
       StreamController<String>.broadcast();
@@ -20,32 +21,27 @@ class LoginViewModel extends BaseViewModel
   final StreamController _isAllInputValidStreamController =
       StreamController<void>.broadcast();
 
-  final isUserLoggedInSuccessfullyStreamController = BehaviorSubject<bool?>();
-
-  final verificationRequiredStreamController = BehaviorSubject<bool?>();
-
   final AppPreferences _appPreferences = instance<AppPreferences>();
 
   var loginObject = LoginObject("", "");
 
   final LoginUseCase _loginUseCase;
+  final NavigationService _navigatorService;
+  final DialogService _dialogService;
 
-  LoginViewModel(this._loginUseCase);
+  LoginViewModel(
+      this._loginUseCase, this._navigatorService, this._dialogService);
 
   @override
   void dispose() {
     _userNameStreamController.close();
     _passwordStreamController.close();
     _isAllInputValidStreamController.close();
-    isUserLoggedInSuccessfullyStreamController.close();
-    verificationRequiredStreamController.close();
-    super.dispose();
   }
 
   @override
   void start() {
     // view tells state rendrer, please show the content of the screen.
-    inputState.add(ContentState());
   }
 
   @override
@@ -64,14 +60,27 @@ class LoginViewModel extends BaseViewModel
     _validate();
   }
 
+  navigateToForgotPassword() {
+    _navigatorService.navigateTo(Routes.forgotPasswordRoute);
+  }
+
+  navigateToSignup() {
+    _navigatorService.navigateTo(Routes.registerRoute);
+  }
+
   @override
-  login() async {
-    inputState.add(
-        LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
-    (await _loginUseCase.execute(LoginUseCaseInput(
-            username: loginObject.username, password: loginObject.password)))
-        .fold((failure) => _handleFailure(failure),
-            (data) => _handleSuccess(data));
+  login(BuildContext context) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
+    var result = await _loginUseCase.execute(LoginUseCaseInput(
+        username: loginObject.username, password: loginObject.password));
+
+    result.fold((failure) => _handleFailure(failure, context),
+        (data) => _handleSuccess(data, context));
   }
 
   @override
@@ -121,36 +130,27 @@ class LoginViewModel extends BaseViewModel
     return regex.hasMatch(username);
   }
 
-  _handleFailure(Failure failure) {
-    inputState.add(ErrorState(
-        stateRendrerType: StateRendrerType.popupErrorState,
-        message: failure.message));
-    isUserLoggedInSuccessfullyStreamController.add(false);
+  _handleFailure(Failure failure, BuildContext context) {
+    Navigator.of(context).pop();
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Error",
+            description: failure.message,
+            dialogType: DialogType.error));
   }
 
-  _handleSuccess(Login login) async {
-    // await _appPreferences.setJwtToken(login.data[0].token);
-    // resetAllmodules();
-
+  _handleSuccess(Login login, BuildContext context) async {
+    Navigator.of(context).pop();
     // inputState.add(ContentState());
-    // if (login.data[0].isVerified == false) {
-    //   verificationRequiredStreamController.add(true);
-    // } else {
-    //   verificationRequiredStreamController.add(false);
-    //   final AuthenticationService authenticationService =
-    //       instance();
-    //   await authenticationService.signInUser(login.data[0].token);
-    // }
-    //isUserLoggedInSuccessfullyStreamController.add(true);
     await _appPreferences.setJwtToken(login.data[0].token);
+    await resetAllmodules();
 
-    inputState.add(ContentState());
     if (login.data[0].isVerified == false) {
-      verificationRequiredStreamController.add(true);
+      _navigatorService.replaceRoute(Routes.verificationRoute);
     } else {
-      verificationRequiredStreamController.add(false);
+      _navigatorService.replaceRoute(Routes.homeRoute);
     }
-    isUserLoggedInSuccessfullyStreamController.add(true);
     //navigate to main screen after the login
   }
 }
@@ -159,7 +159,7 @@ abstract class LoginViewModelInput {
   //3 functions for actions
   setUserName(String userName);
   setPassword(String password);
-  login();
+  login(BuildContext context);
   //two sinks for streams
   Sink get inputUserName;
   Sink get inputPassword;

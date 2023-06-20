@@ -6,10 +6,10 @@ import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/usecase/signup_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
+import 'package:netify/services/dialog_service.dart';
+import 'package:netify/services/navigator_service.dart';
 
-class RegisterViewModel extends BaseViewModel
+class RegisterViewModel extends BaseViewModelInputsOutputs
     implements RegisterViewModelInput, RegisterViewModelOutput {
   static const firstNamePattern = r'^[a-zA-Z\s]{3,}$';
   static const lastNamePattern = r'^[a-zA-Z]{3,}$';
@@ -56,15 +56,16 @@ class RegisterViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController _isAllInputValidStreamController =
       StreamController<void>.broadcast();
-  final StreamController isTenantCreatedSuccessfullyStreamController =
-      StreamController<bool>();
 
   final SignUpUseCase _signUpUseCase;
   final CheckDomainAvailiabilityUseCase _checkDomainAvailiabilityUseCase;
+  final NavigationService _navigationService;
+  final DialogService _dialogService;
   var signUpObject = RegisterObject(
       "", "", "", "", "IN", "", "", "", "", "", "", "", "+91", "", "", "");
 
-  RegisterViewModel(this._signUpUseCase, this._checkDomainAvailiabilityUseCase);
+  RegisterViewModel(this._signUpUseCase, this._checkDomainAvailiabilityUseCase,
+      this._navigationService, this._dialogService);
 
   @override
   void dispose() {
@@ -81,21 +82,23 @@ class RegisterViewModel extends BaseViewModel
     _tenancyTypeStreamController.close();
     _domainStreamController.close();
     _userNameStreamController.close();
+    _companyNameStreamController.close();
+    _brandNameStreamController.close();
+
     _isAllInputValidStreamController.close();
-    isTenantCreatedSuccessfullyStreamController.close();
-
-    super.dispose();
   }
 
   @override
-  void start() {
-    inputState.add(ContentState());
-  }
+  void start() {}
 
   @override
-  void submitRegister() async {
-    inputState.add(
-        LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
+  void submitRegister(BuildContext context) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
     final result = await _signUpUseCase.execute(SignUpUseCaseInput(
       firstName: signUpObject.firstName,
       lastName: signUpObject.lastName,
@@ -112,12 +115,12 @@ class RegisterViewModel extends BaseViewModel
       companyName: signUpObject.companyName,
       brandName: signUpObject.brandName,
     ));
-    result.fold((failure) => _handleSubmitFailure(failure),
-        (data) => _handleSubmitSuccess(data));
+    result.fold((failure) => _handleSubmitFailure(failure, context),
+        (data) => _handleSubmitSuccess(data, context));
   }
 
   @override
-  setAadharNumber(String aadharNumber) {
+  void setAadharNumber(String aadharNumber) {
     inputAadharNumber.add(aadharNumber);
     if (_isAadharNumberValid(aadharNumber)) {
       signUpObject = signUpObject.copyWith(aadharNumber: aadharNumber);
@@ -128,7 +131,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setAddress(String address) {
+  void setAddress(String address) {
     inputAddress.add(address);
     if (_isAddressValid(address)) {
       signUpObject = signUpObject.copyWith(address: address);
@@ -139,7 +142,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setCity(String city) {
+  void setCity(String city) {
     inputCity.add(city);
     if (_isCityValid(city)) {
       signUpObject = signUpObject.copyWith(city: city);
@@ -150,7 +153,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setDomain(String domain) {
+  void setDomain(String domain) {
     inputDomain.add(domain);
 
     _checkDomainAvailiability(domain).then((value) {
@@ -167,7 +170,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setEmail(String email) {
+  void setEmail(String email) {
     inputEmail.add(email);
     if (_isEmailValid(email)) {
       signUpObject = signUpObject.copyWith(email: email);
@@ -178,7 +181,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setFirstName(String firstName) {
+  void setFirstName(String firstName) {
     inputFirstName.add(firstName);
     if (_isFirstNameValid(firstName)) {
       signUpObject = signUpObject.copyWith(firstName: firstName);
@@ -189,7 +192,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setLastName(String lastName) {
+  void setLastName(String lastName) {
     inputLastName.add(lastName);
     if (_isLastNameValid(lastName)) {
       signUpObject = signUpObject.copyWith(lastName: lastName);
@@ -200,7 +203,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setMobileNumber(String mobileNumber) {
+  void setMobileNumber(String mobileNumber) {
     inputMobileNumber.add(mobileNumber);
     if (_isMobileNumberValid(mobileNumber)) {
       signUpObject = signUpObject.copyWith(mobileNumber: mobileNumber);
@@ -211,7 +214,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setConfirmPassword(String confirmPassword) {
+  void setConfirmPassword(String confirmPassword) {
     inputConfirmPassword.add(confirmPassword);
     if (_isConfirmPasswordValid(confirmPassword)) {
       signUpObject = signUpObject.copyWith(confirmPassword: confirmPassword);
@@ -221,7 +224,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setPassword(String password) {
+  void setPassword(String password) {
     inputPassword.add(password);
     if (_isPasswordValid(password)) {
       signUpObject = signUpObject.copyWith(password: password);
@@ -232,7 +235,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setCountry(String country) {
+  void setCountry(String country) {
     inputCountry.add(country);
     if (_isCountryValid(country)) {
       signUpObject = signUpObject.copyWith(country: country);
@@ -242,12 +245,12 @@ class RegisterViewModel extends BaseViewModel
     _validateInputs();
   }
 
-  setCountryCode(String countryCode) {
+  void setCountryCode(String countryCode) {
     signUpObject = signUpObject.copyWith(countryCode: countryCode);
   }
 
   @override
-  setTenancyType(String? tenancyType) {
+  void setTenancyType(String? tenancyType) {
     if (tenancyType == null) {
       signUpObject = signUpObject.copyWith(tenancyType: "");
       return;
@@ -260,7 +263,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setUserName(String userName) {
+  void setUserName(String userName) {
     inputUserName.add(userName);
     if (_isUserNameValid(userName)) {
       signUpObject = signUpObject.copyWith(userName: userName);
@@ -271,7 +274,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setCompanyName(String companyName) {
+  void setCompanyName(String companyName) {
     inputCompanyName.add(companyName);
     if (_isCompanyNameValid(companyName)) {
       signUpObject = signUpObject.copyWith(companyName: companyName);
@@ -282,7 +285,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  setBrandName(String brandName) {
+  void setBrandName(String brandName) {
     inputBrandName.add(brandName);
     if (_isBrandNameValid(brandName)) {
       signUpObject = signUpObject.copyWith(brandName: brandName);
@@ -566,17 +569,26 @@ class RegisterViewModel extends BaseViewModel
         confirmPassword == signUpObject.password;
   }
 
-  _handleSubmitFailure(Failure failure) {
-    inputState.add(ErrorState(
-        stateRendrerType: StateRendrerType.popupErrorState,
-        message: failure.message));
+  _handleSubmitFailure(Failure failure, BuildContext context) {
+    Navigator.of(context).pop();
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Error",
+            description: failure.message,
+            dialogType: DialogType.error));
   }
 
-  _handleSubmitSuccess(GeneralSuccess data) {
-    inputState.add(SuccessState(
-        stateRendrerType: StateRendrerType.popupSuccessState,
-        message: data.data[0].message));
-    isTenantCreatedSuccessfullyStreamController.add(true);
+  _handleSubmitSuccess(GeneralSuccess data, BuildContext context) {
+    Navigator.of(context).pop();
+    var successDialouge = _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Success",
+            description: data.data[0].message,
+            dialogType: DialogType.info));
+    successDialouge.then((value) => _navigationService.goBack());
+    //_navigationService.goBack();
   }
 
   bool _isCountryValid(String country) {
@@ -619,7 +631,7 @@ abstract class RegisterViewModelInput {
   setCompanyName(String companyName);
   setBrandName(String brandName);
 
-  void submitRegister();
+  void submitRegister(BuildContext context);
   Sink get inputFirstName;
   Sink get inputLastName;
   Sink get inputEmail;

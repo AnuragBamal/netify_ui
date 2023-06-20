@@ -1,8 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:netify/app/di.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
 import 'package:netify/persentation/register/register_view_model.dart';
 import 'package:netify/persentation/resources/assets_manager.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
@@ -77,36 +75,19 @@ class _RegisterViewState extends State<RegisterView> {
     _brandNameController.addListener(() {
       _registerViewModel.setBrandName(_brandNameController.text);
     });
-    _registerViewModel.isTenantCreatedSuccessfullyStreamController.stream
-        .listen((isSuccessRegistered) {
-      if (isSuccessRegistered) {
-        //navigate to login screen
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pop();
-        });
-      }
-    });
   }
 
   @override
   void initState() {
-    _bind();
     super.initState();
+    _bind();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.surfaceColor,
-      body: StreamBuilder<FlowState>(
-        stream: _registerViewModel.outputState,
-        builder: (context, snapshot) {
-          return snapshot.data?.getScreenWidget(
-                  context, _getContentWidget(context), () {}) ??
-              _getContentWidget(context);
-        },
-      ),
-    );
+        backgroundColor: ColorManager.surfaceColor,
+        body: _getContentWidget(context));
   }
 
   Widget _getContentWidget(BuildContext context) {
@@ -436,7 +417,7 @@ class _RegisterViewState extends State<RegisterView> {
                       child: ElevatedButton(
                         onPressed: (snapshot.data == true)
                             ? () {
-                                _registerViewModel.submitRegister();
+                                _registerViewModel.submitRegister(context);
                               }
                             : null,
                         child: const Text(AppString.registerSignupButton),
@@ -455,6 +436,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   void dispose() {
     _registerViewModel.dispose();
+    // _userNameController.removeListener(_registerViewModel.setUserName);
     _userNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -463,7 +445,7 @@ class _RegisterViewState extends State<RegisterView> {
     _mobileNumberController.dispose();
     _cityController.dispose();
     _addressController.dispose();
-    _aadharNumberController.dispose();
+    _domainNameController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
     _companyNameController.dispose();

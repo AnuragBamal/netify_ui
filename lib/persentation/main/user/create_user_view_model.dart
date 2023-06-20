@@ -1,15 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:netify/data/network/failure.dart';
 import 'package:netify/domain/model/model.dart';
-import 'package:netify/domain/usecase/signup_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer.dart';
-import 'package:netify/persentation/common/state_rendrer/state_rendrer_implementor.dart';
 
-class UserViewModel extends BaseViewModel
+class UserViewModel extends BaseViewModelInputsOutputs
     implements UserViewModelInput, UserViewModelOutput {
   static const firstNamePattern = r'^[a-zA-Z\s]{3,}$';
   static const lastNamePattern = r'^[a-zA-Z]{3,}$';
@@ -72,14 +68,10 @@ class UserViewModel extends BaseViewModel
     _stateAddressStreamController.close();
     _pincodeStreamController.close();
     _gstNumberStreamController.close();
-
-    super.dispose();
   }
 
   @override
-  void start() {
-    inputState.add(ContentState());
-  }
+  void start() {}
 
   @override
   void submitRegister() async {
@@ -567,16 +559,11 @@ class UserViewModel extends BaseViewModel
   }
 
   _handleSubmitFailure(Failure failure) {
-    inputState.add(ErrorState(
-        stateRendrerType: StateRendrerType.popupErrorState,
-        message: failure.message));
+    //Todo: Handle failure
   }
 
   _handleSubmitSuccess(GeneralSuccess data) {
-    // inputState.add(SuccessState(
-    //     stateRendrerType: StateRendrerType.popupSuccessState,
-    //     message: data.data[0].message));
-    // isTenantCreatedSuccessfullyStreamController.add(true);
+    //Todo: Handle success
   }
 
   bool _isCountryValid(String country) {

@@ -66,7 +66,7 @@ class StateRendrer extends StatelessWidget {
           _getRetryButtonWidget(AppString.retryAgain, context)
         ]);
       case StateRendrerType.contentScreenState:
-        return Container(); //TODO: add content screen state
+        return Container(); //add content screen state , one can play around with this
       case StateRendrerType.emptyScreenState:
         return _getItemsInColumn(
             [_getIconWidget(""), _getMessageWidget(message)]);
