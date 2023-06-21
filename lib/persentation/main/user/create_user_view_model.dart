@@ -1,9 +1,18 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:netify/data/network/failure.dart';
+import 'package:netify/data/request/request.dart';
+import 'package:netify/domain/model/enum_model.dart';
+import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
+import 'package:netify/domain/usecase/create_user_usecase.dart';
+import 'package:netify/domain/usecase/getresellermap_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
+import 'package:netify/services/dialog_service.dart';
+import 'package:netify/services/navigator_service.dart';
+import 'package:rxdart/rxdart.dart';
 
 class UserViewModel extends BaseViewModelInputsOutputs
     implements UserViewModelInput, UserViewModelOutput {
@@ -40,15 +49,25 @@ class UserViewModel extends BaseViewModelInputsOutputs
       StreamController<String>.broadcast();
   final StreamController _gstNumberStreamController =
       StreamController<String>.broadcast();
+  final _ownerTypeStreamController = BehaviorSubject<List<String>>();
+  final _userTypeStreamController = BehaviorSubject<List<String>>();
+  final domainNameStreamController = BehaviorSubject<String>.seeded("");
   final StreamController _isAllInputValidStreamController =
       StreamController<void>.broadcast();
   final StreamController isUserCreatedSuccessfullyStreamController =
       StreamController<bool>();
+  final CreateUserUseCase _createUserUseCase;
+  final GetResellerMapUseCase _getResellerMapUseCase;
+  late ResellerOperatorMap resellerOperatorMap;
+  final NavigationService _navigationService;
+  final DialogService _dialogService;
+  late final String screenName;
 
   var createNewUser = CreateNewUserObject(
-      "", "", "", "", "", "+91", "", "", "", "", "", "", "", "", "", "", "");
+      "", "", "", "", "", "+91", "", "", "", "", "IN", "", "", "", "", "", "");
 
-  UserViewModel();
+  UserViewModel(this._createUserUseCase, this._getResellerMapUseCase,
+      this._navigationService, this._dialogService);
 
   @override
   void dispose() {
@@ -68,45 +87,24 @@ class UserViewModel extends BaseViewModelInputsOutputs
     _stateAddressStreamController.close();
     _pincodeStreamController.close();
     _gstNumberStreamController.close();
+    _ownerTypeStreamController.close();
+    _userTypeStreamController.close();
   }
 
   @override
-  void start() {}
-
-  @override
-  void submitRegister() async {
-    // inputState.add(
-    //     LoadingState(stateRendrerType: StateRendrerType.popupLoadingState));
-    // final result = await _signUpUseCase.execute(SignUpUseCaseInput(
-    //   firstName: signUpObject.firstName,
-    //   lastName: signUpObject.lastName,
-    //   email: signUpObject.email,
-    //   mobileNumber: "${signUpObject.countryCode} ${signUpObject.mobileNumber}",
-    //   password: signUpObject.password,
-    //   aadharNumber: signUpObject.aadharNumber,
-    //   country: signUpObject.country,
-    //   city: signUpObject.city,
-    //   address: signUpObject.address,
-    //   tenancyType: signUpObject.tenancyType,
-    //   garudaDomain: signUpObject.garudaDomain,
-    //   userName: signUpObject.userName,
-    //   companyName: signUpObject.companyName,
-    //   brandName: signUpObject.brandName,
-    // ));
-    // result.fold((failure) => _handleSubmitFailure(failure),
-    //     (data) => _handleSubmitSuccess(data));
+  void start() {
+    _getResellerMap();
   }
 
-  // @override
-  // setAadharNumber(String aadharNumber) {
-  //   inputAadharNumber.add(aadharNumber);
-  //   if (_isAadharNumberValid(aadharNumber)) {
-  //     signUpObject = signUpObject.copyWith(aadharNumber: aadharNumber);
-  //   } else {
-  //     signUpObject = signUpObject.copyWith(aadharNumber: "");
-  //   }
-  //   _validateInputs();
-  // }
+  void intiallizeData(String screenName) {
+    this.screenName = screenName;
+    if (screenName == ScreenTypeIdentity.reseller) {
+      _userTypeStreamController.add([Roles.reseller]);
+    } else {
+      _userTypeStreamController.add([Roles.operator]);
+    }
+  }
+
   @override
   setOwneruser(String owner) {
     createNewUser = createNewUser.copyWith(owner: owner);
@@ -135,6 +133,7 @@ class UserViewModel extends BaseViewModelInputsOutputs
     } else {
       createNewUser = createNewUser.copyWith(pincode: "");
     }
+    _validateInputs();
   }
 
   @override
@@ -145,6 +144,7 @@ class UserViewModel extends BaseViewModelInputsOutputs
     } else {
       createNewUser = createNewUser.copyWith(state: "");
     }
+    _validateInputs();
   }
 
   @override
@@ -243,7 +243,8 @@ class UserViewModel extends BaseViewModelInputsOutputs
   setUserName(String userName) {
     inputUserName.add(userName);
     if (_isUserNameValid(userName)) {
-      createNewUser = createNewUser.copyWith(userName: userName);
+      createNewUser = createNewUser.copyWith(
+          userName: "$userName@${resellerOperatorMap.garudaDomain}");
     } else {
       createNewUser = createNewUser.copyWith(userName: "");
     }
@@ -360,6 +361,8 @@ class UserViewModel extends BaseViewModelInputsOutputs
   Stream<String?> get outputErrorLastName => outputIsLastNameValid
       .map((isLastNameValid) => isLastNameValid ? null : "Invalid Last Name");
 
+  Stream<List<String>?> get userType => _userTypeStreamController.stream;
+  Stream<List<String>?> get ownerList => _ownerTypeStreamController.stream;
   // @override
   // Stream<bool> get outputIsAadharNumberValid =>
   //     _aadharNumberStreamController.stream
@@ -558,14 +561,6 @@ class UserViewModel extends BaseViewModelInputsOutputs
         hasSpecialChar;
   }
 
-  _handleSubmitFailure(Failure failure) {
-    //Todo: Handle failure
-  }
-
-  _handleSubmitSuccess(GeneralSuccess data) {
-    //Todo: Handle success
-  }
-
   bool _isCountryValid(String country) {
     return country.isNotEmpty;
   }
@@ -576,6 +571,79 @@ class UserViewModel extends BaseViewModelInputsOutputs
 
   bool _isBrandNameValid(String brandName) {
     return brandName.isNotEmpty;
+  }
+
+//_navigationService.goBack()
+  _getResellerMap() async {
+    await _getResellerMapUseCase.execute().then((value) {
+      value.fold((failure) {}, (success) {
+        resellerOperatorMap = success.data[0];
+        domainNameStreamController.add(resellerOperatorMap.garudaDomain);
+        if (screenName == ScreenTypeIdentity.reseller) {
+          _ownerTypeStreamController
+              .add(["Please Select"] + [resellerOperatorMap.userName]);
+        } else {
+          _ownerTypeStreamController.add(["Please Select"] +
+              resellerOperatorMap.resellerMap.keys.toList());
+        }
+      });
+    });
+  }
+
+  createNewUserSubmit(BuildContext context) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
+    await _createUserUseCase
+        .execute(CreateUserRequest(
+      firstName: createNewUser.firstName,
+      lastName: createNewUser.lastName,
+      email: createNewUser.email,
+      mobileNumber: createNewUser.mobileNumber,
+      password: createNewUser.password,
+      // aadharNumber: aadharNumber,
+      country: createNewUser.country,
+      city: createNewUser.city,
+      address: createNewUser.address,
+      userName: createNewUser.userName,
+      companyName: createNewUser.companyName,
+      brandName: createNewUser.brandName,
+      gstNumber: createNewUser.gstNumber,
+      pincode: createNewUser.pincode,
+      state: createNewUser.state,
+      ownerUserName: createNewUser.owner,
+      role: createNewUser.userType,
+    ))
+        .then((value) {
+      value.fold((failure) => _handleSubmitFailure(failure, context),
+          (success) {
+        _handleSubmitSuccess(success, context);
+      });
+    });
+  }
+
+  _handleSubmitFailure(Failure failure, BuildContext context) {
+    Navigator.of(context).pop();
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Error",
+            description: failure.message,
+            dialogType: DialogType.error));
+  }
+
+  _handleSubmitSuccess(GeneralSuccess data, BuildContext context) {
+    Navigator.of(context).pop();
+    var successDialouge = _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Success",
+            description: data.data[0].message,
+            dialogType: DialogType.info));
+    successDialouge.then((value) => _navigationService.goBack());
   }
 }
 
@@ -597,8 +665,6 @@ abstract class UserViewModelInput {
   setPincode(String pincode);
   setState(String state);
   setGSTNumber(String gstNumber);
-
-  void submitRegister();
   Sink get inputFirstName;
   Sink get inputLastName;
   Sink get inputEmail;

@@ -38,4 +38,10 @@ abstract class ApiServiceClient {
   @GET("/api/v1/tenancy/ui/userscreen")
   Future<GetUserListResponse> getUserListData(
       @Queries() Map<String, dynamic> queryParams);
+
+  @GET("/api/v1/tenancy/ui/getresellermap")
+  Future<GetResellerMapResponse> getResellerMap();
+
+  @POST("/api/v1/tenancy/user")
+  Future<GeneralSuccessResponse> createuser(@Body() Map<String, dynamic> body);
 }

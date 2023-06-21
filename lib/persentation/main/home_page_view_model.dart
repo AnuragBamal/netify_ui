@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:netify/data/network/failure.dart';
 import 'package:netify/data/request/request.dart';
+import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
 import 'package:netify/domain/usecase/getuser_usecase.dart';
 import 'package:netify/domain/usecase/getuserlist_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
+import 'package:netify/persentation/main/user/create_user.dart';
 import 'package:netify/services/authentication_service.dart';
 import 'package:netify/services/navigator_service.dart';
 import 'package:netify/persentation/resources/routes_manager.dart';
@@ -117,6 +119,10 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
   navigateToLogin() {
     // _navigationService.popUntil(Routes.homeRoute);
     _navigationService.replaceRoute(Routes.loginRoute);
+  }
+
+  navigateToCreateUser(CreateUserViewArguments args) {
+    _navigationService.navigateTo(Routes.createuser, arguments: args);
   }
 
   @override

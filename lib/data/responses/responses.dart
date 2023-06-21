@@ -328,3 +328,37 @@ class GetDashboardResponse extends BaseResponse {
 
   GetDashboardResponse({this.data});
 }
+
+@JsonSerializable()
+class ResellerMapResponse {
+  @JsonKey(name: "resellerMap")
+  Map<String, List<String>>? resellerMap;
+  @JsonKey(name: "userName")
+  String? userName;
+  @JsonKey(name: "garudaDomain")
+  String? garudaDomain;
+
+  ResellerMapResponse({
+    this.resellerMap,
+    this.userName,
+    this.garudaDomain,
+  });
+
+  factory ResellerMapResponse.fromJson(Map<String, dynamic> json) =>
+      _$ResellerMapResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ResellerMapResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetResellerMapResponse extends BaseResponse {
+  @JsonKey(name: "data")
+  List<ResellerMapResponse>? data;
+
+  factory GetResellerMapResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetResellerMapResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetResellerMapResponseToJson(this);
+
+  GetResellerMapResponse({this.data});
+}

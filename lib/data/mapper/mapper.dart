@@ -167,3 +167,23 @@ extension GetDashboardResponseExtension on GetDashboardResponse? {
         data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
   }
 }
+
+extension ResellerMapResponseExtension on ResellerMapResponse? {
+  ResellerOperatorMap toDomain() {
+    return ResellerOperatorMap(
+      userName: this?.userName?.nonNull ?? defaultEmptyString,
+      garudaDomain: this?.garudaDomain?.nonNull ?? defaultEmptyString,
+      resellerMap: this?.resellerMap ?? {},
+    );
+  }
+}
+
+extension GetResellerMapResponseExtension on GetResellerMapResponse? {
+  GetResellerMap toDomain() {
+    return GetResellerMap(
+        status: this?.status?.nonNull ?? defaultEmptyString,
+        message: this?.message?.nonNull ?? defaultEmptyString,
+        errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+        data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:netify/data/network/failure.dart';
 import 'package:netify/data/request/request.dart';
+import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 
 abstract class Repository {
@@ -26,4 +27,9 @@ abstract class Repository {
 
   Future<Either<Failure, GetUserList>> getUserListData(
       GetScreenRequest getScreenRequest);
+
+  Future<Either<Failure, GetResellerMap>> getResellerMap();
+
+  Future<Either<Failure, GeneralSuccess>> createuser(
+      CreateUserRequest createUserRequest);
 }

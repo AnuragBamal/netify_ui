@@ -4,16 +4,18 @@ import 'package:netify/persentation/main/home_page_view_model.dart';
 import 'package:shimmer/shimmer.dart';
 
 typedef ItemBuilder<T> = Widget Function(
-    BuildContext context, int index, T? item);
+    BuildContext context, int index, T? item, Function onTap);
 
 class DashboardView extends StatelessWidget {
   final HomepageViewModel homepageViewModel;
   final ItemBuilder<List<DashboardItem>> itemBuilder;
+  final Function onTap;
 
   const DashboardView({
     super.key,
     required this.itemBuilder,
     required this.homepageViewModel,
+    required this.onTap,
   });
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,8 @@ class DashboardView extends StatelessWidget {
                         mainAxisSpacing: 1.0, // Change as per your need
                       ),
                       itemBuilder: (BuildContext context, int index) {
-                        return itemBuilder(context, index, snapshot.data);
+                        return itemBuilder(
+                            context, index, snapshot.data, onTap);
                       }),
                 );
               } else if (snapshot.hasError) {

@@ -1,15 +1,3 @@
-class ScreenTypeIdentity {
-  static const String reseller = "resellerScreen";
-  static const String operator = "operatorScreen";
-  static const String subscriber = "subscriberScreen";
-}
-
-class DataTypeIdentity {
-  static const String user = "user";
-  static const String dashboard = "dashboard";
-  static const String subscriber = "subscriber";
-}
-
 class DashboardItem {
   final String assetName;
   final int assetCount;
@@ -109,54 +97,82 @@ class UserListBlock {
   }
 }
 
+class ResellerOperatorMap {
+  Map<String, List<String>> resellerMap;
+  String userName;
+  String garudaDomain;
+
+  ResellerOperatorMap(
+      {required this.resellerMap,
+      required this.userName,
+      required this.garudaDomain});
+
+  factory ResellerOperatorMap.fromJson(Map<String, dynamic> json) {
+    return ResellerOperatorMap(
+        resellerMap: (json['resellerMap'] as Map<String, List<String>>),
+        userName: json['userName'],
+        garudaDomain: json['garudaDomain']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'resellerMap': resellerMap,
+      'userName': userName,
+      'garudaDomain': garudaDomain
+    };
+  }
+}
+
 //Basic model for home screen
-abstract class ListItem {}
+// abstract class ListItem {}
 
-class ResellerItem implements ListItem {
-  final String name;
-  final int operatorCount;
-  final String companyName;
-  final String phoneNumber;
-  final String email;
-  final String brandName;
+// class ResellerItem implements ListItem {
+//   final String name;
+//   final int operatorCount;
+//   final String companyName;
+//   final String phoneNumber;
+//   final String email;
+//   final String brandName;
 
-  ResellerItem(
-      {required this.name,
-      required this.operatorCount,
-      required this.companyName,
-      required this.phoneNumber,
-      required this.email,
-      required this.brandName});
-}
+//   ResellerItem(
+//       {required this.name,
+//       required this.operatorCount,
+//       required this.companyName,
+//       required this.phoneNumber,
+//       required this.email,
+//       required this.brandName});
+// }
 
-class OperatorItem implements ListItem {
-  final String name;
-  final int operatorCount;
-  final String companyName;
-  final String phoneNumber;
-  final String email;
-  final String brandName;
+// class OperatorItem implements ListItem {
+//   final String name;
+//   final int operatorCount;
+//   final String companyName;
+//   final String phoneNumber;
+//   final String email;
+//   final String brandName;
 
-  OperatorItem(
-      {required this.name,
-      required this.operatorCount,
-      required this.companyName,
-      required this.phoneNumber,
-      required this.email,
-      required this.brandName});
-}
+//   OperatorItem(
+//       {required this.name,
+//       required this.operatorCount,
+//       required this.companyName,
+//       required this.phoneNumber,
+//       required this.email,
+//       required this.brandName});
+// }
 
-class SubscriberItem implements ListItem {
-  final String name;
-  final String userId;
-  final String mobileNumber;
-  final String planInfo;
-  final String ipType;
+// class SubscriberItem implements ListItem {
+//   final String name;
+//   final String userId;
+//   final String mobileNumber;
+//   final String planInfo;
+//   final String ipType;
 
-  SubscriberItem(
-      {required this.name,
-      required this.userId,
-      required this.mobileNumber,
-      required this.planInfo,
-      required this.ipType});
-}
+//   SubscriberItem(
+//       {required this.name,
+//       required this.userId,
+//       required this.mobileNumber,
+//       required this.planInfo,
+//       required this.ipType});
+// }
+
+

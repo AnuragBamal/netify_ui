@@ -23,7 +23,7 @@ class SplashViewModel {
   }
 
   _goNext() async {
-    _appPreferences.clearAll();
+    //_appPreferences.clearAll();
     _appPreferences.isUserLoggedIn().then((isUserLoggedIn) => {
           if (isUserLoggedIn)
             {_navigatorService.replaceRoute(Routes.homeRoute)}

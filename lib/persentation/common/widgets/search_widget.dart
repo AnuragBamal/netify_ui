@@ -20,6 +20,7 @@ class BaseSearchWidget extends StatefulWidget {
 
 class BaseSearchWidgetState extends State<BaseSearchWidget> {
   Filter? _activeFilter;
+
   final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
@@ -50,6 +51,7 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
             Expanded(
               child: TextFormField(
                 controller: _searchController,
+                //focusNode: searchFocusNode,
                 decoration: InputDecoration(
                   labelText:
                       _activeFilter?.label ?? 'Select a filter to search',
@@ -144,6 +146,12 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
               ),
               iconSize: 30.0,
               icon: const Icon(Icons.filter_list),
+              onOpened: () {
+                setState(() {
+                  _searchController.clear();
+                  _activeFilter = null;
+                });
+              },
               onSelected: (Filter value) {
                 setState(() {
                   _activeFilter = value;

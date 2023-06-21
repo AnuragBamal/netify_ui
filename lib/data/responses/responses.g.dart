@@ -319,3 +319,41 @@ Map<String, dynamic> _$GetDashboardResponseToJson(
       'errorCode': instance.errorCode,
       'data': instance.data,
     };
+
+ResellerMapResponse _$ResellerMapResponseFromJson(Map<String, dynamic> json) =>
+    ResellerMapResponse(
+      resellerMap: (json['resellerMap'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+      ),
+      userName: json['userName'] as String?,
+      garudaDomain: json['garudaDomain'] as String?,
+    );
+
+Map<String, dynamic> _$ResellerMapResponseToJson(
+        ResellerMapResponse instance) =>
+    <String, dynamic>{
+      'resellerMap': instance.resellerMap,
+      'userName': instance.userName,
+      'garudaDomain': instance.garudaDomain,
+    };
+
+GetResellerMapResponse _$GetResellerMapResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetResellerMapResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => ResellerMapResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetResellerMapResponseToJson(
+        GetResellerMapResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };

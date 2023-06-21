@@ -3,6 +3,7 @@ import 'package:netify/app/di.dart';
 import 'package:netify/persentation/forgot_password/forgot_password.dart';
 import 'package:netify/persentation/login/login.dart';
 import 'package:netify/persentation/main/home_page.dart';
+import 'package:netify/persentation/main/user/create_user.dart';
 import 'package:netify/persentation/onboarding/onboarding.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/splash/splash.dart';
@@ -17,6 +18,7 @@ class Routes {
   static const String forgotPasswordRoute = "/forgotpassword";
   static const String homeRoute = "/home";
   static const String verificationRoute = "/verification";
+  static const String createuser = "/createuser";
   static const String userops = "/userops";
 }
 
@@ -42,8 +44,15 @@ class RouteGenerator {
       case Routes.homeRoute:
         initHomepageModule();
         return MaterialPageRoute(builder: (_) => const Home());
-      // case Routes.userops:
-      //   return MaterialPageRoute(builder: (_) => const CreateUserView());
+
+      case Routes.createuser:
+        initCreateUserModule();
+        final CreateUserViewArguments args =
+            settings.arguments as CreateUserViewArguments;
+        return MaterialPageRoute(
+            builder: (_) => CreateUserView(
+                  arguments: args,
+                ));
       default:
         return undefinedRoute();
     }

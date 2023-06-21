@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/persentation/common/widgets/search_widget.dart';
@@ -95,14 +96,9 @@ class UserDataTypeScreen extends StatelessWidget {
             right: MediaQuery.of(context).size.width * 0.05,
             child: FloatingActionButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CreateUserView(
-                              homepageViewModel: homepageViewModel,
-                              screenTypeIdentity: screenName,
-                              methodNameToExecute: "createUser",
-                            )));
+                homepageViewModel.navigateToCreateUser(CreateUserViewArguments(
+                  screenTypeIdentity: screenName,
+                ));
               },
               backgroundColor: ColorManager.primaryColor,
               child: const Icon(Icons.add),
@@ -112,15 +108,20 @@ class UserDataTypeScreen extends StatelessWidget {
       } else {
         return Stack(
           children: [
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.8,
-              ),
-              child: ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return itemBuilder(context, index, snapshot.data);
-                },
+            GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.8,
+                ),
+                child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return itemBuilder(context, index, snapshot.data);
+                  },
+                ),
               ),
             ),
             Positioned(
@@ -128,14 +129,10 @@ class UserDataTypeScreen extends StatelessWidget {
               right: MediaQuery.of(context).size.width * 0.05,
               child: FloatingActionButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateUserView(
-                                homepageViewModel: homepageViewModel,
-                                screenTypeIdentity: screenName,
-                                methodNameToExecute: "createUser",
-                              )));
+                  homepageViewModel
+                      .navigateToCreateUser(CreateUserViewArguments(
+                    screenTypeIdentity: screenName,
+                  ));
                 },
                 backgroundColor: ColorManager.primaryColor,
                 child: const Icon(Icons.add),

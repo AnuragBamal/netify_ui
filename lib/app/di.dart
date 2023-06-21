@@ -7,8 +7,10 @@ import 'package:netify/data/network/dio_factory.dart';
 import 'package:netify/data/network/network_info.dart';
 import 'package:netify/data/repository/repository_implementor.dart';
 import 'package:netify/domain/repository/repository.dart';
+import 'package:netify/domain/usecase/create_user_usecase.dart';
 import 'package:netify/domain/usecase/forgot_password_usecase.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
+import 'package:netify/domain/usecase/getresellermap_usecase.dart';
 import 'package:netify/domain/usecase/getuser_usecase.dart';
 import 'package:netify/domain/usecase/getuserlist_usecase.dart';
 import 'package:netify/domain/usecase/login_usecase.dart';
@@ -16,6 +18,7 @@ import 'package:netify/domain/usecase/otp_usecase.dart';
 import 'package:netify/domain/usecase/signup_usecase.dart';
 import 'package:netify/persentation/forgot_password/forgot_password_view_model.dart';
 import 'package:netify/persentation/login/login_view_model.dart';
+import 'package:netify/persentation/main/user/create_user_view_model.dart';
 import 'package:netify/services/authentication_service.dart';
 import 'package:netify/persentation/main/home_page_view_model.dart';
 import 'package:netify/services/dialog_service.dart';
@@ -134,6 +137,21 @@ initHomepageModule() {
   }
 }
 
+initCreateUserModule() {
+  if (!GetIt.I.isRegistered<CreateUserUseCase>()) {
+    instance.registerFactory<CreateUserUseCase>(
+        () => CreateUserUseCase(instance()));
+  }
+  if (!GetIt.I.isRegistered<GetResellerMapUseCase>()) {
+    instance.registerFactory<GetResellerMapUseCase>(
+        () => GetResellerMapUseCase(instance()));
+  }
+  if (!GetIt.I.isRegistered<UserViewModel>()) {
+    instance.registerFactory<UserViewModel>(
+        () => UserViewModel(instance(), instance(), instance(), instance()));
+  }
+}
+
 resetAllmodules() async {
   instance.reset(dispose: false);
   initAppModule();
@@ -148,4 +166,10 @@ ungegisterLoginHomePageModule() {
   instance.unregister<GetUserUseCase>();
   instance.unregister<GetUserListUsecase>();
   instance.unregister<GetDashboardUseCase>();
+}
+
+unregisterCreateUserModule() {
+  instance.unregister<CreateUserUseCase>();
+  instance.unregister<GetResellerMapUseCase>();
+  instance.unregister<UserViewModel>();
 }

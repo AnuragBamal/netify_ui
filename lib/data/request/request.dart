@@ -141,3 +141,62 @@ class GetScreenRequest {
     return data;
   }
 }
+
+class CreateUserRequest {
+  String firstName;
+  String lastName;
+  //String aadharNumber;
+  String email;
+  String country;
+  String city;
+  String address;
+  String mobileNumber;
+  String userName;
+  String password;
+  String companyName;
+  String brandName;
+  String role;
+  String pincode;
+  String state;
+  String gstNumber;
+  String ownerUserName;
+
+  CreateUserRequest(
+      {required this.firstName,
+      required this.lastName,
+      //required this.aadharNumber,
+      required this.email,
+      required this.country,
+      required this.city,
+      required this.address,
+      required this.mobileNumber,
+      required this.userName,
+      required this.password,
+      required this.companyName,
+      required this.brandName,
+      required this.role,
+      required this.pincode,
+      required this.state,
+      required this.gstNumber,
+      required this.ownerUserName});
+
+  Map<String, dynamic> toJson() => {
+        "firstName": firstName,
+        "lastName": lastName,
+        //"aadharNumber": aadharNumber,
+        "email": email,
+        "country": country,
+        "city": city,
+        "address": address,
+        "mobileNumber": mobileNumber,
+        "userName": userName,
+        "password": password,
+        "companyName": companyName,
+        "brandName": brandName,
+        "role": role,
+        "pincode": pincode,
+        "state": state,
+        "gstNumber": gstNumber,
+        "ownerUserName": ownerUserName,
+      };
+}

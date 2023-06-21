@@ -310,3 +310,24 @@ class GetDashboardItemList extends BaseResponse {
         errorCode: json['errorCode']);
   }
 }
+
+class GetResellerMap extends BaseResponse {
+  final List<ResellerOperatorMap> data;
+
+  GetResellerMap(
+      {required this.data,
+      required String status,
+      required String message,
+      required String errorCode})
+      : super(status: status, message: message, errorCode: errorCode);
+
+  factory GetResellerMap.fromJson(Map<String, dynamic> json) {
+    return GetResellerMap(
+        data: (json['data'] as List)
+            .map((e) => ResellerOperatorMap.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}

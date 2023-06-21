@@ -77,4 +77,8 @@ class AppString {
   static const String createResellerScreenTitle = "Create New Reseller";
   static const String createOperatorScreenTitle = "Create New Operator";
   static const String createUserSubmitButton = "Create User";
+  static const String createUserSelectUserTypeHint = "Select User Type";
+  static const String createUserSelectUserType = "User Type";
+  static const String createUserSelectOwnerTypeHint = "Select Owner";
+  static const String createUserSelectOwnerType = "Owner";
 }

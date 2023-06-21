@@ -1,31 +1,35 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:netify/domain/model/home_model.dart';
-import 'package:netify/persentation/main/home_page_view_model.dart';
+import 'package:netify/app/di.dart';
+import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/persentation/main/user/create_user_view_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/resources/values_manager.dart';
 
-class CreateUserView extends StatefulWidget {
-  final HomepageViewModel homepageViewModel;
+class CreateUserViewArguments {
+  //final HomepageViewModel homepageViewModel;
   final String screenTypeIdentity;
-  final String methodNameToExecute;
-  final User? user;
-  const CreateUserView(
-      {super.key,
-      required this.homepageViewModel,
-      required this.screenTypeIdentity,
-      required this.methodNameToExecute,
-      this.user});
+  const CreateUserViewArguments({
+    //required this.homepageViewModel,
+    required this.screenTypeIdentity,
+  });
+}
+
+class CreateUserView extends StatefulWidget {
+  final CreateUserViewArguments arguments;
+  const CreateUserView({
+    super.key,
+    required this.arguments,
+  });
 
   @override
   State<CreateUserView> createState() => _CreateUserViewState();
 }
 
 class _CreateUserViewState extends State<CreateUserView> {
-  final _userViewModel = UserViewModel();
+  final _userViewModel = instance<UserViewModel>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameController = TextEditingController();
@@ -99,8 +103,10 @@ class _CreateUserViewState extends State<CreateUserView> {
 
   @override
   void initState() {
-    _bind();
     super.initState();
+    _bind();
+    _userViewModel.intiallizeData(widget.arguments.screenTypeIdentity);
+    _userViewModel.start();
   }
 
   @override
@@ -120,11 +126,22 @@ class _CreateUserViewState extends State<CreateUserView> {
           child: Column(
             children: [
               Text(
-                AppString.createResellerScreenTitle,
+                widget.arguments.screenTypeIdentity ==
+                        ScreenTypeIdentity.reseller
+                    ? AppString.createResellerScreenTitle
+                    : AppString.createOperatorScreenTitle,
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               const SizedBox(
                 height: AppSize.s32,
+              ),
+              dropDownUserType(context),
+              const SizedBox(
+                height: AppSize.s24,
+              ),
+              dropDownOwnerType(context),
+              const SizedBox(
+                height: AppSize.s24,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -177,6 +194,8 @@ class _CreateUserViewState extends State<CreateUserView> {
                             hintText: AppString.registerUsernameHint,
                             labelText: AppString.registerUsername,
                             errorText: snapshot.data,
+                            suffixText:
+                                "@${_userViewModel.domainNameStreamController.value}",
                           ));
                     }),
               ),
@@ -409,7 +428,7 @@ class _CreateUserViewState extends State<CreateUserView> {
                       child: ElevatedButton(
                         onPressed: (snapshot.data == true)
                             ? () {
-                                _userViewModel.submitRegister();
+                                _userViewModel.createNewUserSubmit(context);
                               }
                             : null,
                         child: const Text(AppString.createUserSubmitButton),
@@ -423,6 +442,80 @@ class _CreateUserViewState extends State<CreateUserView> {
         ),
       ),
     );
+  }
+
+  Widget dropDownUserType(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p24,
+        ),
+        child: StreamBuilder<List<String>?>(
+            stream: _userViewModel.userType,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    hintText: AppString.createUserSelectUserTypeHint,
+                    labelText: AppString.createUserSelectUserType,
+                  ),
+                  // value: _userViewModel.owner,
+                  onChanged: (String? newValue) {
+                    if (newValue != null && newValue != "Please Select") {
+                      _userViewModel.setUserType(newValue);
+                    }
+                  },
+                  items: snapshot.data!
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
+                );
+              } else {
+                return const SizedBox();
+              }
+            }));
+  }
+
+  Widget dropDownOwnerType(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p24,
+        ),
+        child: StreamBuilder<List<String>?>(
+            stream: _userViewModel.ownerList,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    hintText: AppString.createUserSelectOwnerTypeHint,
+                    labelText: AppString.createUserSelectOwnerType,
+                  ),
+                  // value: _userViewModel.owner,
+                  onChanged: (String? newValue) {
+                    if (newValue != null && newValue != "Please Select") {
+                      _userViewModel.setOwneruser(newValue);
+                    }
+                  },
+                  items: snapshot.data!
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
+                );
+              } else {
+                return const SizedBox();
+              }
+            }));
   }
 
   @override
@@ -443,6 +536,7 @@ class _CreateUserViewState extends State<CreateUserView> {
     _gstNumberController.dispose();
     _stateController.dispose();
 
+    unregisterCreateUserModule();
     super.dispose();
   }
 }

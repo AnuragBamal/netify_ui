@@ -16,6 +16,9 @@ abstract class RemoteDataSource {
       GetDashboardRequest getDashboardRequest);
   Future<GetUserListResponse> getUserListData(
       GetScreenRequest getScreenRequest);
+  Future<GetResellerMapResponse> getResellerMap();
+  Future<GeneralSuccessResponse> createuser(
+      CreateUserRequest createUserRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -73,5 +76,16 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<GetUserListResponse> getUserListData(
       GetScreenRequest getScreenRequest) async {
     return await _apiServiceClient.getUserListData(getScreenRequest.toJson());
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createuser(
+      CreateUserRequest createUserRequest) async {
+    return await _apiServiceClient.createuser(createUserRequest.toJson());
+  }
+
+  @override
+  Future<GetResellerMapResponse> getResellerMap() async {
+    return await _apiServiceClient.getResellerMap();
   }
 }

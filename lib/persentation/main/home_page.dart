@@ -21,9 +21,15 @@ class _HomeState extends State<Home> {
       instance<AuthenticationService>();
 
   final PageController _pageController =
-      PageController(initialPage: 0, viewportFraction: 1.0);
+      PageController(initialPage: 0, viewportFraction: 0.5);
   _bind() {
     _homepageViewModel.start();
+  }
+
+  goToPage(int index) {
+    // _pageController.animateToPage(index,
+    //     duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+    _pageController.jumpToPage(index);
   }
 
   @override
@@ -77,6 +83,7 @@ class _HomeState extends State<Home> {
             DashboardView(
               itemBuilder: dashboardGridItemBuilder,
               homepageViewModel: _homepageViewModel,
+              onTap: goToPage,
             ),
           if (mainPageModel.viewType == "listView" &&
               mainPageModel.dataTypeIdentity == "user")
