@@ -1,7 +1,6 @@
 name: netify
 description: A new Flutter project.
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
+
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
@@ -102,10 +101,18 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Righteous
+    - family: Montserrat
       fonts:
-        - asset: assets/fonts/Righteous-Regular.ttf
+        - asset: assets/fonts/Montserrat/static/Montserrat-Regular.ttf
           weight: 400
+        - asset: assets/fonts/Montserrat/static/Montserrat-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Montserrat/static/Montserrat-Italic.ttf
+          style: italic
+    # - family: Righteous
+    #   fonts:
+    #     - asset: assets/fonts/Righteous-Regular.ttf
+    #       weight: 400
         # - asset: assets/fonts/Righteous-Bold.ttf
         #   weight: 700
         # - asset: fonts/Righteous-Italic.ttf

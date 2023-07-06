@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/domain/model/enum_model.dart';
-import 'package:netify/persentation/main/user/create_user_view_model.dart';
+import 'package:netify/persentation/main/home/user/create_user_view_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/resources/values_manager.dart';

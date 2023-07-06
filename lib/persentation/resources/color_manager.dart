@@ -14,7 +14,7 @@ class ColorManager {
   static const Color surfaceColor = Color(0xFFFFFFFF);
   static const Color errorColor = Color(0xFFB00020);
   static const Color shadowColor = Color(0xFFF1F1F1);
-  static const Color disabledColor = Color(0xFFBDBDBD);
+  static const Color disabledColor = Color.fromARGB(255, 139, 119, 119);
   static const Color primaryOpacity70 = Color(0xB30D47A1);
   static const Color blackColor = Color(0xFF000000);
   static const Color transparentColor = Color(0x00000000);

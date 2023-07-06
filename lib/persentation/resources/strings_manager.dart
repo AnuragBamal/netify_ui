@@ -81,4 +81,24 @@ class AppString {
   static const String createUserSelectUserType = "User Type";
   static const String createUserSelectOwnerTypeHint = "Select Owner";
   static const String createUserSelectOwnerType = "Owner";
+  static const String createNewPlanTitle = "Create New Plan";
+  static const String createNewPlanSubmitButton = "Create Plan";
+  static const String createNewPlanPlanName = "Plan Name";
+  static const String createNewPlanPlanNameHint = "Enter Unique Plan Name";
+  static const String createNewPlanDescription = "Plan Description";
+  static const String createNewPlanPlanDescriptionHint = "Plan Description";
+  static const String createNewResellerPlanTitle = "Create New Reseller Plan";
+  static const String createNewResellerPlanPrice = "Price";
+  static const String createNewResellerPlanPriceHInt = "Enter Price";
+  static const String createNewResellerPlanSubmitButton =
+      "Create Reseller Plan";
+  static const String createNewOperatorPlanTitle = "Create New Operator Plan";
+  static const String createNewOperatorPlanSubmitButton =
+      "Create Operator Plan";
+  static const String createNewPlanSelectPlan = "Plan";
+  static const String createNewPlanSelectPlanHint = "Select Plan";
+  static const String createNewPlanSelectReseller = "Reseller";
+  static const String createNewPlanSelectResellerHint = "Select Reseller";
+  static const String createNewPlanSelectOperator = "Operator";
+  static const String createNewPlanSelectOperatorHint = " Reseller's Operator";
 }

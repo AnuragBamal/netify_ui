@@ -58,29 +58,3 @@ Widget customerTrailingData(User user) {
     ],
   );
 }
-
-// Widget expansionPanelBuilder(
-//     BuildContext context, int index, List<User>? data) {
-//   return ExpansionPanelList(
-//     expansionCallback: (int index, bool isExpanded) {
-//       // setState(() {
-//       //   _data[index].isExpanded = !isExpanded;
-//       // });
-//     },
-//     children: [
-//       ExpansionPanel(
-//         headerBuilder: (BuildContext context, bool isExpanded) {
-//           return ListTile(
-//             title: Text(data[index].firstName),
-//           );
-//         },
-//         body: ListTile(
-//           title: Text(data![index].lastName),
-//           subtitle: Text(data[index].email),
-//           trailing: Text(data[index].companyName),
-//         ),
-//         isExpanded: data[index].isExpanded,
-//       ),
-//     ],
-//   );
-// }

@@ -357,3 +357,218 @@ Map<String, dynamic> _$GetResellerMapResponseToJson(
       'errorCode': instance.errorCode,
       'data': instance.data,
     };
+
+PlansResponse _$PlansResponseFromJson(Map<String, dynamic> json) =>
+    PlansResponse(
+      planId: json['planId'] as String?,
+      planName: json['planName'] as String?,
+      planDescription: json['planDescription'] as String?,
+      isPlanActive: json['isActive'] as bool?,
+      planPrice: (json['price'] as num?)?.toDouble(),
+      planStartDate: json['createdAt'] as String?,
+      planUpdatedDate: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$PlansResponseToJson(PlansResponse instance) =>
+    <String, dynamic>{
+      'planId': instance.planId,
+      'planName': instance.planName,
+      'planDescription': instance.planDescription,
+      'isActive': instance.isPlanActive,
+      'price': instance.planPrice,
+      'createdAt': instance.planStartDate,
+      'updatedAt': instance.planUpdatedDate,
+    };
+
+GetPlansResponse _$GetPlansResponseFromJson(Map<String, dynamic> json) =>
+    GetPlansResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => PlansResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetPlansResponseToJson(GetPlansResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+ResellerPriceChartResponse _$ResellerPriceChartResponseFromJson(
+        Map<String, dynamic> json) =>
+    ResellerPriceChartResponse(
+      id: json['id'] as int?,
+      planId: json['planId'] as String?,
+      planName: json['planName'] as String?,
+      resellerId: json['resellerId'] as String?,
+      resellerUserName: json['resellerUserName'] as String?,
+      price: (json['price'] as num?)?.toDouble(),
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$ResellerPriceChartResponseToJson(
+        ResellerPriceChartResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'planId': instance.planId,
+      'planName': instance.planName,
+      'resellerId': instance.resellerId,
+      'resellerUserName': instance.resellerUserName,
+      'price': instance.price,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };
+
+GetResellerPriceChartResponse _$GetResellerPriceChartResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetResellerPriceChartResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              ResellerPriceChartResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetResellerPriceChartResponseToJson(
+        GetResellerPriceChartResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+OperatorPriceChartResponse _$OperatorPriceChartResponseFromJson(
+        Map<String, dynamic> json) =>
+    OperatorPriceChartResponse(
+      id: json['id'] as int?,
+      planId: json['planId'] as String?,
+      planName: json['planName'] as String?,
+      operatorId: json['operatorId'] as String?,
+      operatorUserName: json['operatorUserName'] as String?,
+      resellerId: json['resellerId'] as String?,
+      resellerUserName: json['resellerUserName'] as String?,
+      planPrice: (json['price'] as num?)?.toDouble(),
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$OperatorPriceChartResponseToJson(
+        OperatorPriceChartResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'planId': instance.planId,
+      'planName': instance.planName,
+      'operatorId': instance.operatorId,
+      'operatorUserName': instance.operatorUserName,
+      'resellerId': instance.resellerId,
+      'resellerUserName': instance.resellerUserName,
+      'price': instance.planPrice,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };
+
+GetOperatorPriceChartResponse _$GetOperatorPriceChartResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetOperatorPriceChartResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              OperatorPriceChartResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetOperatorPriceChartResponseToJson(
+        GetOperatorPriceChartResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+PlanProfileMetaPlanResponse _$PlanProfileMetaPlanResponseFromJson(
+        Map<String, dynamic> json) =>
+    PlanProfileMetaPlanResponse(
+      planId: json['planId'] as String?,
+      planName: json['planName'] as String?,
+      planPrice: (json['planPrice'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$PlanProfileMetaPlanResponseToJson(
+        PlanProfileMetaPlanResponse instance) =>
+    <String, dynamic>{
+      'planId': instance.planId,
+      'planName': instance.planName,
+      'planPrice': instance.planPrice,
+    };
+
+PlanProfileMetaResponse _$PlanProfileMetaResponseFromJson(
+        Map<String, dynamic> json) =>
+    PlanProfileMetaResponse(
+      role: json['role'] as String?,
+      ownerUserName: json['ownerUserName'] as String?,
+      userName: json['userName'] as String?,
+      planList: (json['planList'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      resellerOperatorMap:
+          (json['resellerOperatorMap'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+      ),
+      planScreens: (json['planScreens'] as List<dynamic>?)
+          ?.map((e) =>
+              MainPageModelResponseData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      resellerPlanMap: (json['resellerPlanMap'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(
+            k,
+            (e as List<dynamic>)
+                .map((e) => PlanProfileMetaPlanResponse.fromJson(
+                    e as Map<String, dynamic>))
+                .toList()),
+      ),
+    );
+
+Map<String, dynamic> _$PlanProfileMetaResponseToJson(
+        PlanProfileMetaResponse instance) =>
+    <String, dynamic>{
+      'role': instance.role,
+      'ownerUserName': instance.ownerUserName,
+      'userName': instance.userName,
+      'planList': instance.planList,
+      'resellerOperatorMap': instance.resellerOperatorMap,
+      'planScreens': instance.planScreens,
+      'resellerPlanMap': instance.resellerPlanMap,
+    };
+
+GetPlanProfileMetaResponse _$GetPlanProfileMetaResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetPlanProfileMetaResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              PlanProfileMetaResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetPlanProfileMetaResponseToJson(
+        GetPlanProfileMetaResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };

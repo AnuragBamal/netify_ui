@@ -19,6 +19,16 @@ abstract class RemoteDataSource {
   Future<GetResellerMapResponse> getResellerMap();
   Future<GeneralSuccessResponse> createuser(
       CreateUserRequest createUserRequest);
+  Future<GeneralSuccessResponse> createPlan(
+      CreatePlanRequest createPlanRequest);
+  Future<GeneralSuccessResponse> createResellerPriceChart(
+      CreateResellerPriceChartRequest createResellerPriceChartRequest);
+  Future<GeneralSuccessResponse> createOperatorPriceChart(
+      CreateOperatorPriceChartRequest createOperatorPriceChartRequest);
+  Future<GetOperatorPriceChartResponse> getOperatorPriceChart();
+  Future<GetPlansResponse> getPlans();
+  Future<GetResellerPriceChartResponse> getResellerPriceChart();
+  Future<GetPlanProfileMetaResponse> getPlanProfile();
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -87,5 +97,45 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   @override
   Future<GetResellerMapResponse> getResellerMap() async {
     return await _apiServiceClient.getResellerMap();
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createPlan(
+      CreatePlanRequest createPlanRequest) async {
+    return await _apiServiceClient.createPlan(createPlanRequest.toJson());
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createResellerPriceChart(
+      CreateResellerPriceChartRequest createResellerPriceChartRequest) async {
+    return await _apiServiceClient
+        .createResellerPriceChart(createResellerPriceChartRequest.toJson());
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createOperatorPriceChart(
+      CreateOperatorPriceChartRequest createOperatorPriceChartRequest) async {
+    return await _apiServiceClient
+        .createOperatorPriceChart(createOperatorPriceChartRequest.toJson());
+  }
+
+  @override
+  Future<GetOperatorPriceChartResponse> getOperatorPriceChart() async {
+    return await _apiServiceClient.getOperatorPriceChart();
+  }
+
+  @override
+  Future<GetPlansResponse> getPlans() async {
+    return await _apiServiceClient.getPlans();
+  }
+
+  @override
+  Future<GetResellerPriceChartResponse> getResellerPriceChart() async {
+    return await _apiServiceClient.getResellerPriceChart();
+  }
+
+  @override
+  Future<GetPlanProfileMetaResponse> getPlanProfile() async {
+    return await _apiServiceClient.getPlanProfile();
   }
 }

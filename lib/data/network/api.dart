@@ -44,4 +44,27 @@ abstract class ApiServiceClient {
 
   @POST("/api/v1/tenancy/user")
   Future<GeneralSuccessResponse> createuser(@Body() Map<String, dynamic> body);
+
+  @GET("/api/v1/tenancy/plans")
+  Future<GetPlansResponse> getPlans();
+
+  @POST("/api/v1/tenancy/plans")
+  Future<GeneralSuccessResponse> createPlan(@Body() Map<String, dynamic> body);
+
+  @GET("/api/v1/tenancy/operatorpricechart")
+  Future<GetOperatorPriceChartResponse> getOperatorPriceChart();
+
+  @POST("/api/v1/tenancy/operatorpricechart")
+  Future<GeneralSuccessResponse> createOperatorPriceChart(
+      @Body() Map<String, dynamic> body);
+
+  @GET("/api/v1/tenancy/resellerpricechart")
+  Future<GetResellerPriceChartResponse> getResellerPriceChart();
+
+  @POST("/api/v1/tenancy/resellerpricechart")
+  Future<GeneralSuccessResponse> createResellerPriceChart(
+      @Body() Map<String, dynamic> body);
+
+  @GET("/api/v1/tenancy/ui/getplanprofile")
+  Future<GetPlanProfileMetaResponse> getPlanProfile();
 }

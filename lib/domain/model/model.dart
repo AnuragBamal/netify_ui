@@ -189,6 +189,17 @@ class MainPageModel {
   }
 }
 
+class SliderDisplayObject {
+  MainPageModel mainPageModel;
+  int numberOfDisplays;
+  int currentDisplayIndex;
+
+  SliderDisplayObject(
+      {required this.mainPageModel,
+      required this.numberOfDisplays,
+      required this.currentDisplayIndex});
+}
+
 class GetUserData {
   String firstName;
   String lastName;
@@ -329,5 +340,96 @@ class GetResellerMap extends BaseResponse {
         status: json['status'],
         message: json['message'],
         errorCode: json['errorCode']);
+  }
+}
+
+class GetPlans extends BaseResponse {
+  final List<Plans> data;
+
+  GetPlans(
+      {required this.data,
+      required String status,
+      required String message,
+      required String errorCode})
+      : super(status: status, message: message, errorCode: errorCode);
+
+  factory GetPlans.fromJson(Map<String, dynamic> json) {
+    return GetPlans(
+        data: (json['data'] as List).map((e) => Plans.fromJson(e)).toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetResellerPriceChart extends BaseResponse {
+  final List<ResellerPriceChart> data;
+
+  GetResellerPriceChart(
+      {required this.data,
+      required String status,
+      required String message,
+      required String errorCode})
+      : super(status: status, message: message, errorCode: errorCode);
+
+  factory GetResellerPriceChart.fromJson(Map<String, dynamic> json) {
+    return GetResellerPriceChart(
+        data: (json['data'] as List)
+            .map((e) => ResellerPriceChart.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetOperatorPriceChart extends BaseResponse {
+  final List<OperatorPriceChart> data;
+
+  GetOperatorPriceChart(
+      {required this.data,
+      required String status,
+      required String message,
+      required String errorCode})
+      : super(status: status, message: message, errorCode: errorCode);
+
+  factory GetOperatorPriceChart.fromJson(Map<String, dynamic> json) {
+    return GetOperatorPriceChart(
+        data: (json['data'] as List)
+            .map((e) => OperatorPriceChart.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetPlanProfileMeta extends BaseResponse {
+  final List<PlanProfileMeta> data;
+
+  GetPlanProfileMeta(
+      {required this.data,
+      required String status,
+      required String message,
+      required String errorCode})
+      : super(status: status, message: message, errorCode: errorCode);
+
+  factory GetPlanProfileMeta.fromJson(Map<String, dynamic> json) {
+    return GetPlanProfileMeta(
+        data: (json['data'] as List)
+            .map((e) => PlanProfileMeta.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'data': data.map((e) => e.toJson()).toList(),
+      'status': status,
+      'message': message,
+      'errorCode': errorCode
+    };
   }
 }

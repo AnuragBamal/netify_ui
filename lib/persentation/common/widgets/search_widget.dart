@@ -26,6 +26,9 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
   void initState() {
     super.initState();
     _searchController.addListener(() {
+      if (_activeFilter == null) {
+        return;
+      }
       widget.onFilterChanged(_activeFilter!.name, _searchController.text);
     });
   }
@@ -47,87 +50,7 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
       padding: const EdgeInsets.all(16.0),
       child: Row(
         children: <Widget>[
-          if (_activeFilter == null || _activeFilter!.type == FilterType.text)
-            Expanded(
-              child: TextFormField(
-                controller: _searchController,
-                //focusNode: searchFocusNode,
-                decoration: InputDecoration(
-                  labelText:
-                      _activeFilter?.label ?? 'Select a filter to search',
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-            ),
-          if (_activeFilter != null &&
-              _activeFilter!.type == FilterType.dropdown)
-            Expanded(
-              child: Autocomplete<String>(
-                optionsBuilder: (TextEditingValue textEditingValue) {
-                  if (textEditingValue.text == '') {
-                    return _activeFilter!.options;
-                  }
-                  return _activeFilter!.options.where((String option) {
-                    return option.contains(textEditingValue.text);
-                  });
-                },
-                displayStringForOption: (option) => option,
-                onSelected: (
-                  String selection,
-                ) {
-                  handleSelection(selection);
-                },
-                // fieldViewBuilder: (BuildContext context,
-                //     TextEditingController textEditingController,
-                //     FocusNode focusNode,
-                //     VoidCallback onFieldSubmitted) {
-                //   return TextField(
-                //     controller: textEditingController,
-                //     decoration: InputDecoration(
-                //       labelText: 'Enter ${_activeFilter!.label} or Select',
-                //       border: const OutlineInputBorder(),
-                //     ),
-                //   );
-                // },
-                optionsViewBuilder: (BuildContext context,
-                    AutocompleteOnSelected<String> onSelected,
-                    Iterable<String> options) {
-                  return Align(
-                    alignment: Alignment.topLeft,
-                    child: Material(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: 150,
-                          maxWidth: MediaQuery.of(context).size.width * 0.77,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.0),
-                            border: Border.all(
-                              color: ColorManager.primaryColor,
-                              width: 1.0,
-                              style: BorderStyle.solid,
-                            ),
-                          ),
-                          child: ListView.builder(
-                            itemCount: options.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final option = options.elementAt(index);
-                              return GestureDetector(
-                                onTap: () => onSelected(option),
-                                child: ListTile(
-                                  title: Text(option),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+          _searchInput(),
           const SizedBox(width: 10),
           Container(
             decoration: BoxDecoration(
@@ -148,6 +71,7 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
               icon: const Icon(Icons.filter_list),
               onOpened: () {
                 setState(() {
+                  _searchController.text = "Re";
                   _searchController.clear();
                   _activeFilter = null;
                 });
@@ -176,5 +100,99 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
         ],
       ),
     );
+  }
+
+  Widget _searchInput() {
+    if (_activeFilter == null || _activeFilter!.type == FilterType.text) {
+      return Expanded(
+        child: TextFormField(
+          controller: _searchController,
+          //focusNode: searchFocusNode,
+          decoration: InputDecoration(
+            labelText: _activeFilter?.label ?? 'Select a filter to search',
+            border: const OutlineInputBorder(),
+          ),
+        ),
+      );
+    } else if (_activeFilter!.type == FilterType.dropdown) {
+      return Expanded(
+        child: Autocomplete<String>(
+          optionsBuilder: (TextEditingValue textEditingValue) {
+            if (textEditingValue.text == '') {
+              return _activeFilter!.options;
+            }
+            return _activeFilter!.options.where((String option) {
+              return option.contains(textEditingValue.text);
+            });
+          },
+          displayStringForOption: (option) => option,
+          onSelected: (
+            String selection,
+          ) {
+            handleSelection(selection);
+          },
+          // fieldViewBuilder: (BuildContext context,
+          //     TextEditingController textEditingController,
+          //     FocusNode focusNode,
+          //     VoidCallback onFieldSubmitted) {
+          //   return TextField(
+          //     controller: textEditingController,
+          //     decoration: InputDecoration(
+          //       labelText: 'Enter ${_activeFilter!.label} or Select',
+          //       border: const OutlineInputBorder(),
+          //     ),
+          //   );
+          // },
+          optionsViewBuilder: (BuildContext context,
+              AutocompleteOnSelected<String> onSelected,
+              Iterable<String> options) {
+            return Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: 150,
+                    maxWidth: MediaQuery.of(context).size.width * 0.77,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(
+                        color: ColorManager.primaryColor,
+                        width: 1.0,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    child: ListView.builder(
+                      itemCount: options.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final option = options.elementAt(index);
+                        return GestureDetector(
+                          onTap: () => onSelected(option),
+                          child: ListTile(
+                            title: Text(option),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    } else {
+      return Expanded(
+        child: TextFormField(
+          controller: _searchController,
+          //focusNode: searchFocusNode,
+          decoration: InputDecoration(
+            labelText: _activeFilter?.label ?? 'Select a filter to search',
+            border: const OutlineInputBorder(),
+          ),
+        ),
+      );
+    }
   }
 }

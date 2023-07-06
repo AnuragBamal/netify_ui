@@ -362,3 +362,215 @@ class GetResellerMapResponse extends BaseResponse {
 
   GetResellerMapResponse({this.data});
 }
+
+@JsonSerializable()
+class PlansResponse {
+  @JsonKey(name: "planId")
+  String? planId;
+  @JsonKey(name: "planName")
+  String? planName;
+  @JsonKey(name: "planDescription")
+  String? planDescription;
+  @JsonKey(name: "isActive")
+  bool? isPlanActive;
+  @JsonKey(name: "price")
+  double? planPrice;
+  @JsonKey(name: "createdAt")
+  String? planStartDate;
+  @JsonKey(name: "updatedAt")
+  String? planUpdatedDate;
+
+  PlansResponse({
+    this.planId,
+    this.planName,
+    this.planDescription,
+    this.isPlanActive,
+    this.planPrice,
+    this.planStartDate,
+    this.planUpdatedDate,
+  });
+
+  factory PlansResponse.fromJson(Map<String, dynamic> json) =>
+      _$PlansResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlansResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetPlansResponse extends BaseResponse {
+  @JsonKey(name: "data")
+  List<PlansResponse>? data;
+
+  factory GetPlansResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetPlansResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetPlansResponseToJson(this);
+
+  GetPlansResponse({this.data});
+}
+
+@JsonSerializable()
+class ResellerPriceChartResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "planId")
+  String? planId;
+  @JsonKey(name: "planName")
+  String? planName;
+  @JsonKey(name: "resellerId")
+  String? resellerId;
+  @JsonKey(name: "resellerUserName")
+  String? resellerUserName;
+  @JsonKey(name: "price")
+  double? price;
+  @JsonKey(name: "createdAt")
+  String? createdAt;
+  @JsonKey(name: "updatedAt")
+  String? updatedAt;
+
+  ResellerPriceChartResponse({
+    this.id,
+    this.planId,
+    this.planName,
+    this.resellerId,
+    this.resellerUserName,
+    this.price,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory ResellerPriceChartResponse.fromJson(Map<String, dynamic> json) =>
+      _$ResellerPriceChartResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ResellerPriceChartResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetResellerPriceChartResponse extends BaseResponse {
+  @JsonKey(name: "data")
+  List<ResellerPriceChartResponse>? data;
+
+  factory GetResellerPriceChartResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetResellerPriceChartResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetResellerPriceChartResponseToJson(this);
+
+  GetResellerPriceChartResponse({this.data});
+}
+
+@JsonSerializable()
+class OperatorPriceChartResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "planId")
+  String? planId;
+  @JsonKey(name: "planName")
+  String? planName;
+  @JsonKey(name: "operatorId")
+  String? operatorId;
+  @JsonKey(name: "operatorUserName")
+  String? operatorUserName;
+  @JsonKey(name: "resellerId")
+  String? resellerId;
+  @JsonKey(name: "resellerUserName")
+  String? resellerUserName;
+  @JsonKey(name: "price")
+  double? planPrice;
+  @JsonKey(name: "createdAt")
+  String? createdAt;
+  @JsonKey(name: "updatedAt")
+  String? updatedAt;
+
+  OperatorPriceChartResponse({
+    this.id,
+    this.planId,
+    this.planName,
+    this.operatorId,
+    this.operatorUserName,
+    this.resellerId,
+    this.resellerUserName,
+    this.planPrice,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory OperatorPriceChartResponse.fromJson(Map<String, dynamic> json) =>
+      _$OperatorPriceChartResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OperatorPriceChartResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetOperatorPriceChartResponse extends BaseResponse {
+  @JsonKey(name: "data")
+  List<OperatorPriceChartResponse>? data;
+
+  factory GetOperatorPriceChartResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetOperatorPriceChartResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetOperatorPriceChartResponseToJson(this);
+
+  GetOperatorPriceChartResponse({this.data});
+}
+
+@JsonSerializable()
+class PlanProfileMetaPlanResponse {
+  @JsonKey(name: "planId")
+  String? planId;
+  @JsonKey(name: "planName")
+  String? planName;
+  @JsonKey(name: "planPrice")
+  double? planPrice;
+
+  PlanProfileMetaPlanResponse({this.planId, this.planName, this.planPrice});
+
+  factory PlanProfileMetaPlanResponse.fromJson(Map<String, dynamic> json) =>
+      _$PlanProfileMetaPlanResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlanProfileMetaPlanResponseToJson(this);
+}
+
+@JsonSerializable()
+class PlanProfileMetaResponse {
+  @JsonKey(name: "role")
+  String? role;
+  @JsonKey(name: "ownerUserName")
+  String? ownerUserName;
+  @JsonKey(name: "userName")
+  String? userName;
+  @JsonKey(name: "planList")
+  List<String>? planList;
+  @JsonKey(name: "resellerOperatorMap")
+  Map<String, List<String>>? resellerOperatorMap;
+  @JsonKey(name: "planScreens")
+  List<MainPageModelResponseData>? planScreens;
+  @JsonKey(name: "resellerPlanMap")
+  Map<String, List<PlanProfileMetaPlanResponse>>? resellerPlanMap;
+
+  PlanProfileMetaResponse(
+      {this.role,
+      this.ownerUserName,
+      this.userName,
+      this.planList,
+      this.resellerOperatorMap,
+      this.planScreens,
+      this.resellerPlanMap});
+
+  factory PlanProfileMetaResponse.fromJson(Map<String, dynamic> json) =>
+      _$PlanProfileMetaResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlanProfileMetaResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetPlanProfileMetaResponse extends BaseResponse {
+  @JsonKey(name: "data")
+  List<PlanProfileMetaResponse>? data;
+
+  factory GetPlanProfileMetaResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetPlanProfileMetaResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetPlanProfileMetaResponseToJson(this);
+
+  GetPlanProfileMetaResponse({this.data});
+}

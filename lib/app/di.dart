@@ -7,9 +7,16 @@ import 'package:netify/data/network/dio_factory.dart';
 import 'package:netify/data/network/network_info.dart';
 import 'package:netify/data/repository/repository_implementor.dart';
 import 'package:netify/domain/repository/repository.dart';
+import 'package:netify/domain/usecase/create_operatorchart_usecase.dart';
+import 'package:netify/domain/usecase/create_plan_usecase.dart';
+import 'package:netify/domain/usecase/create_resellerchart_usecase.dart';
 import 'package:netify/domain/usecase/create_user_usecase.dart';
 import 'package:netify/domain/usecase/forgot_password_usecase.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
+import 'package:netify/domain/usecase/getoperator_pricechart_usecase.dart';
+import 'package:netify/domain/usecase/getplanprofile_usecase.dart';
+import 'package:netify/domain/usecase/getplans_usecase.dart';
+import 'package:netify/domain/usecase/getreseller_pricechart_usecase.dart';
 import 'package:netify/domain/usecase/getresellermap_usecase.dart';
 import 'package:netify/domain/usecase/getuser_usecase.dart';
 import 'package:netify/domain/usecase/getuserlist_usecase.dart';
@@ -18,9 +25,12 @@ import 'package:netify/domain/usecase/otp_usecase.dart';
 import 'package:netify/domain/usecase/signup_usecase.dart';
 import 'package:netify/persentation/forgot_password/forgot_password_view_model.dart';
 import 'package:netify/persentation/login/login_view_model.dart';
-import 'package:netify/persentation/main/user/create_user_view_model.dart';
+import 'package:netify/persentation/main/home/home_page_view_model.dart';
+import 'package:netify/persentation/main/home/user/create_user_view_model.dart';
+import 'package:netify/persentation/main/plans/plans_view_model.dart';
+import 'package:netify/persentation/main/plans/price_chart/create_price_chart_view_model.dart';
 import 'package:netify/services/authentication_service.dart';
-import 'package:netify/persentation/main/home_page_view_model.dart';
+
 import 'package:netify/services/dialog_service.dart';
 import 'package:netify/services/navigator_service.dart';
 import 'package:netify/persentation/register/register_view_model.dart';
@@ -132,8 +142,23 @@ initHomepageModule() {
         () => GetUserListUsecase(instance()));
     instance.registerFactory<GetDashboardUseCase>(
         () => GetDashboardUseCase(instance()));
+    instance.registerFactory<GetOperatorPriceChartUseCase>(
+        () => GetOperatorPriceChartUseCase(instance()));
+    instance
+        .registerFactory<GetPlansUsecase>(() => GetPlansUsecase(instance()));
+    instance.registerFactory<GetResellerPriceChartUseCase>(
+        () => GetResellerPriceChartUseCase(instance()));
+    instance.registerFactory<GetPlanProfileUseCase>(
+        () => GetPlanProfileUseCase(instance()));
     instance.registerFactory<HomepageViewModel>(() => HomepageViewModel(
         instance(), instance(), instance(), instance(), instance()));
+    instance.registerFactory<PlansPageViewModel>(() => PlansPageViewModel(
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance()));
   }
 }
 
@@ -149,6 +174,29 @@ initCreateUserModule() {
   if (!GetIt.I.isRegistered<UserViewModel>()) {
     instance.registerFactory<UserViewModel>(
         () => UserViewModel(instance(), instance(), instance(), instance()));
+  }
+}
+
+initCreatePlanModule() {
+  if (!GetIt.I.isRegistered<CreateOperatorPriceChartUsecase>()) {
+    instance.registerFactory<CreateOperatorPriceChartUsecase>(
+        () => CreateOperatorPriceChartUsecase(instance()));
+  }
+
+  if (!GetIt.I.isRegistered<CreatePlanUseCase>()) {
+    instance.registerFactory<CreatePlanUseCase>(
+        () => CreatePlanUseCase(instance()));
+  }
+
+  if (!GetIt.I.isRegistered<CreateResellerPriceChartUsecase>()) {
+    instance.registerFactory<CreateResellerPriceChartUsecase>(
+        () => CreateResellerPriceChartUsecase(instance()));
+  }
+
+  if (!GetIt.I.isRegistered<CreatePlanPageViewModel>()) {
+    instance.registerFactory<CreatePlanPageViewModel>(() =>
+        CreatePlanPageViewModel(instance(), instance(), instance(), instance(),
+            instance(), instance()));
   }
 }
 

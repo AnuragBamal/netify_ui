@@ -200,3 +200,52 @@ class CreateUserRequest {
         "ownerUserName": ownerUserName,
       };
 }
+
+class CreatePlanRequest {
+  String planName;
+  String planDescription;
+
+  CreatePlanRequest({required this.planName, required this.planDescription});
+
+  Map<String, dynamic> toJson() => {
+        "planName": planName,
+        "planDescription": planDescription,
+      };
+}
+
+class CreateResellerPriceChartRequest {
+  String resellerUserName;
+  String planName;
+  int price;
+
+  CreateResellerPriceChartRequest(
+      {required this.resellerUserName,
+      required this.planName,
+      required this.price});
+
+  Map<String, dynamic> toJson() => {
+        "resellerUserName": resellerUserName,
+        "planName": planName,
+        "price": price,
+      };
+}
+
+class CreateOperatorPriceChartRequest {
+  String operatorUserName;
+  String resellerUserName;
+  String planName;
+  int price;
+
+  CreateOperatorPriceChartRequest(
+      {required this.planName,
+      required this.operatorUserName,
+      required this.resellerUserName,
+      required this.price});
+
+  Map<String, dynamic> toJson() => {
+        "operatorUserName": operatorUserName,
+        "resellerUserName": resellerUserName,
+        "planName": planName,
+        "price": price,
+      };
+}

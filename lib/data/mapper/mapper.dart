@@ -187,3 +187,119 @@ extension GetResellerMapResponseExtension on GetResellerMapResponse? {
         data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
   }
 }
+
+extension PlansResponseExtension on PlansResponse? {
+  Plans toDomain() {
+    return Plans(
+      planId: this?.planId?.nonNull ?? defaultEmptyString,
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      planDescription: this?.planDescription?.nonNull ?? defaultEmptyString,
+      isPlanActive: this?.isPlanActive ?? false,
+      planStartDate:
+          DateTime.parse(this?.planStartDate?.nonNull ?? defaultEmptyString),
+      planPrice: this?.planPrice ?? 0,
+      planUpdatedDate:
+          DateTime.parse(this?.planUpdatedDate?.nonNull ?? defaultEmptyString),
+    );
+  }
+}
+
+extension GetPlansResponseExtension on GetPlansResponse? {
+  GetPlans toDomain() {
+    return GetPlans(
+        status: this?.status?.nonNull ?? defaultEmptyString,
+        message: this?.message?.nonNull ?? defaultEmptyString,
+        errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+        data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}
+
+extension ResellerPriceChartResponseExtension on ResellerPriceChartResponse? {
+  ResellerPriceChart toDomain() {
+    return ResellerPriceChart(
+      id: this?.id ?? 0,
+      resellerId: this?.resellerId?.nonNull ?? defaultEmptyString,
+      resellerUserName: this?.resellerUserName?.nonNull ?? defaultEmptyString,
+      planId: this?.planId?.nonNull ?? defaultEmptyString,
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      price: this?.price ?? 0,
+      createdAt: DateTime.parse(this?.createdAt?.nonNull ?? defaultEmptyString),
+      updatedAt: DateTime.parse(this?.updatedAt?.nonNull ?? defaultEmptyString),
+    );
+  }
+}
+
+extension GetResellerPriceChartResponseExtension
+    on GetResellerPriceChartResponse? {
+  GetResellerPriceChart toDomain() {
+    return GetResellerPriceChart(
+        status: this?.status?.nonNull ?? defaultEmptyString,
+        message: this?.message?.nonNull ?? defaultEmptyString,
+        errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+        data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}
+
+extension OperatorPriceChartResponseExtension on OperatorPriceChartResponse? {
+  OperatorPriceChart toDomain() {
+    return OperatorPriceChart(
+      id: this?.id ?? 0,
+      resellerId: this?.resellerId?.nonNull ?? defaultEmptyString,
+      resellerUserName: this?.resellerUserName?.nonNull ?? defaultEmptyString,
+      operatorId: this?.operatorId?.nonNull ?? defaultEmptyString,
+      operatorUserName: this?.operatorUserName?.nonNull ?? defaultEmptyString,
+      planId: this?.planId?.nonNull ?? defaultEmptyString,
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      planPrice: this?.planPrice ?? 0,
+      createdAt: DateTime.parse(this?.createdAt?.nonNull ?? defaultEmptyString),
+      updatedAt: DateTime.parse(this?.updatedAt?.nonNull ?? defaultEmptyString),
+    );
+  }
+}
+
+extension GetOperatorPriceChartResponseExtension
+    on GetOperatorPriceChartResponse? {
+  GetOperatorPriceChart toDomain() {
+    return GetOperatorPriceChart(
+        status: this?.status?.nonNull ?? defaultEmptyString,
+        message: this?.message?.nonNull ?? defaultEmptyString,
+        errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+        data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}
+
+extension PlanProfileMetaPlanResponseExtension on PlanProfileMetaPlanResponse? {
+  PlanProfileMetaPlan toDomain() {
+    return PlanProfileMetaPlan(
+      planId: this?.planId?.nonNull ?? defaultEmptyString,
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      planPrice: this?.planPrice ?? 0,
+    );
+  }
+}
+
+extension PlanProfileMetaResponseExtension on PlanProfileMetaResponse? {
+  PlanProfileMeta toDomain() {
+    return PlanProfileMeta(
+      role: this?.role?.nonNull ?? defaultEmptyString,
+      ownerUserName: this?.ownerUserName?.nonNull ?? defaultEmptyString,
+      userName: this?.userName?.nonNull ?? defaultEmptyString,
+      planList: this?.planList?.map((e) => e.toString()).toList() ?? [],
+      resellerMap: this?.resellerOperatorMap ?? {},
+      planScreens: this?.planScreens?.map((e) => e.toDomain()).toList() ?? [],
+      resellerPlanMap: this?.resellerPlanMap?.map(((key, value) =>
+              MapEntry(key, value.map((e) => e.toDomain()).toList()))) ??
+          {},
+    );
+  }
+}
+
+extension GetPlanProfileMetaResponseExtension on GetPlanProfileMetaResponse? {
+  GetPlanProfileMeta toDomain() {
+    return GetPlanProfileMeta(
+        status: this?.status?.nonNull ?? defaultEmptyString,
+        message: this?.message?.nonNull ?? defaultEmptyString,
+        errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+        data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}

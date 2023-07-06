@@ -65,3 +65,21 @@ class CreateNewUserObject with _$CreateNewUserObject {
     String userType,
   ) = _CreateNewUserObject;
 }
+
+@freezed
+class CreatePlan with _$CreatePlan {
+  factory CreatePlan(String planName, String planDescription) = _CreatePlan;
+}
+
+@freezed
+class CreateResellerPriceChart with _$CreateResellerPriceChart {
+  factory CreateResellerPriceChart(
+          String planName, String resellerUserName, int price) =
+      _CreateResellerPriceChart;
+}
+
+@freezed
+class CreateOperatorPriceChart with _$CreateOperatorPriceChart {
+  factory CreateOperatorPriceChart(String planName, String operatorUserName,
+      String resellerUserName, int price) = _CreateOperatorPriceChart;
+}

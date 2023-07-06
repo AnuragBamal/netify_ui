@@ -1392,3 +1392,484 @@ abstract class _CreateNewUserObject implements CreateNewUserObject {
   _$$_CreateNewUserObjectCopyWith<_$_CreateNewUserObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$CreatePlan {
+  String get planName => throw _privateConstructorUsedError;
+  String get planDescription => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CreatePlanCopyWith<CreatePlan> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreatePlanCopyWith<$Res> {
+  factory $CreatePlanCopyWith(
+          CreatePlan value, $Res Function(CreatePlan) then) =
+      _$CreatePlanCopyWithImpl<$Res, CreatePlan>;
+  @useResult
+  $Res call({String planName, String planDescription});
+}
+
+/// @nodoc
+class _$CreatePlanCopyWithImpl<$Res, $Val extends CreatePlan>
+    implements $CreatePlanCopyWith<$Res> {
+  _$CreatePlanCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? planName = null,
+    Object? planDescription = null,
+  }) {
+    return _then(_value.copyWith(
+      planName: null == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
+              as String,
+      planDescription: null == planDescription
+          ? _value.planDescription
+          : planDescription // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreatePlanCopyWith<$Res>
+    implements $CreatePlanCopyWith<$Res> {
+  factory _$$_CreatePlanCopyWith(
+          _$_CreatePlan value, $Res Function(_$_CreatePlan) then) =
+      __$$_CreatePlanCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String planName, String planDescription});
+}
+
+/// @nodoc
+class __$$_CreatePlanCopyWithImpl<$Res>
+    extends _$CreatePlanCopyWithImpl<$Res, _$_CreatePlan>
+    implements _$$_CreatePlanCopyWith<$Res> {
+  __$$_CreatePlanCopyWithImpl(
+      _$_CreatePlan _value, $Res Function(_$_CreatePlan) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? planName = null,
+    Object? planDescription = null,
+  }) {
+    return _then(_$_CreatePlan(
+      null == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == planDescription
+          ? _value.planDescription
+          : planDescription // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreatePlan implements _CreatePlan {
+  _$_CreatePlan(this.planName, this.planDescription);
+
+  @override
+  final String planName;
+  @override
+  final String planDescription;
+
+  @override
+  String toString() {
+    return 'CreatePlan(planName: $planName, planDescription: $planDescription)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreatePlan &&
+            (identical(other.planName, planName) ||
+                other.planName == planName) &&
+            (identical(other.planDescription, planDescription) ||
+                other.planDescription == planDescription));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, planName, planDescription);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreatePlanCopyWith<_$_CreatePlan> get copyWith =>
+      __$$_CreatePlanCopyWithImpl<_$_CreatePlan>(this, _$identity);
+}
+
+abstract class _CreatePlan implements CreatePlan {
+  factory _CreatePlan(final String planName, final String planDescription) =
+      _$_CreatePlan;
+
+  @override
+  String get planName;
+  @override
+  String get planDescription;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreatePlanCopyWith<_$_CreatePlan> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CreateResellerPriceChart {
+  String get planName => throw _privateConstructorUsedError;
+  String get resellerUserName => throw _privateConstructorUsedError;
+  int get price => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CreateResellerPriceChartCopyWith<CreateResellerPriceChart> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateResellerPriceChartCopyWith<$Res> {
+  factory $CreateResellerPriceChartCopyWith(CreateResellerPriceChart value,
+          $Res Function(CreateResellerPriceChart) then) =
+      _$CreateResellerPriceChartCopyWithImpl<$Res, CreateResellerPriceChart>;
+  @useResult
+  $Res call({String planName, String resellerUserName, int price});
+}
+
+/// @nodoc
+class _$CreateResellerPriceChartCopyWithImpl<$Res,
+        $Val extends CreateResellerPriceChart>
+    implements $CreateResellerPriceChartCopyWith<$Res> {
+  _$CreateResellerPriceChartCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? planName = null,
+    Object? resellerUserName = null,
+    Object? price = null,
+  }) {
+    return _then(_value.copyWith(
+      planName: null == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
+              as String,
+      resellerUserName: null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateResellerPriceChartCopyWith<$Res>
+    implements $CreateResellerPriceChartCopyWith<$Res> {
+  factory _$$_CreateResellerPriceChartCopyWith(
+          _$_CreateResellerPriceChart value,
+          $Res Function(_$_CreateResellerPriceChart) then) =
+      __$$_CreateResellerPriceChartCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String planName, String resellerUserName, int price});
+}
+
+/// @nodoc
+class __$$_CreateResellerPriceChartCopyWithImpl<$Res>
+    extends _$CreateResellerPriceChartCopyWithImpl<$Res,
+        _$_CreateResellerPriceChart>
+    implements _$$_CreateResellerPriceChartCopyWith<$Res> {
+  __$$_CreateResellerPriceChartCopyWithImpl(_$_CreateResellerPriceChart _value,
+      $Res Function(_$_CreateResellerPriceChart) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? planName = null,
+    Object? resellerUserName = null,
+    Object? price = null,
+  }) {
+    return _then(_$_CreateResellerPriceChart(
+      null == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateResellerPriceChart implements _CreateResellerPriceChart {
+  _$_CreateResellerPriceChart(this.planName, this.resellerUserName, this.price);
+
+  @override
+  final String planName;
+  @override
+  final String resellerUserName;
+  @override
+  final int price;
+
+  @override
+  String toString() {
+    return 'CreateResellerPriceChart(planName: $planName, resellerUserName: $resellerUserName, price: $price)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateResellerPriceChart &&
+            (identical(other.planName, planName) ||
+                other.planName == planName) &&
+            (identical(other.resellerUserName, resellerUserName) ||
+                other.resellerUserName == resellerUserName) &&
+            (identical(other.price, price) || other.price == price));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, planName, resellerUserName, price);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateResellerPriceChartCopyWith<_$_CreateResellerPriceChart>
+      get copyWith => __$$_CreateResellerPriceChartCopyWithImpl<
+          _$_CreateResellerPriceChart>(this, _$identity);
+}
+
+abstract class _CreateResellerPriceChart implements CreateResellerPriceChart {
+  factory _CreateResellerPriceChart(
+      final String planName,
+      final String resellerUserName,
+      final int price) = _$_CreateResellerPriceChart;
+
+  @override
+  String get planName;
+  @override
+  String get resellerUserName;
+  @override
+  int get price;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateResellerPriceChartCopyWith<_$_CreateResellerPriceChart>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CreateOperatorPriceChart {
+  String get planName => throw _privateConstructorUsedError;
+  String get operatorUserName => throw _privateConstructorUsedError;
+  String get resellerUserName => throw _privateConstructorUsedError;
+  int get price => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CreateOperatorPriceChartCopyWith<CreateOperatorPriceChart> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateOperatorPriceChartCopyWith<$Res> {
+  factory $CreateOperatorPriceChartCopyWith(CreateOperatorPriceChart value,
+          $Res Function(CreateOperatorPriceChart) then) =
+      _$CreateOperatorPriceChartCopyWithImpl<$Res, CreateOperatorPriceChart>;
+  @useResult
+  $Res call(
+      {String planName,
+      String operatorUserName,
+      String resellerUserName,
+      int price});
+}
+
+/// @nodoc
+class _$CreateOperatorPriceChartCopyWithImpl<$Res,
+        $Val extends CreateOperatorPriceChart>
+    implements $CreateOperatorPriceChartCopyWith<$Res> {
+  _$CreateOperatorPriceChartCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? planName = null,
+    Object? operatorUserName = null,
+    Object? resellerUserName = null,
+    Object? price = null,
+  }) {
+    return _then(_value.copyWith(
+      planName: null == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
+              as String,
+      operatorUserName: null == operatorUserName
+          ? _value.operatorUserName
+          : operatorUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      resellerUserName: null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateOperatorPriceChartCopyWith<$Res>
+    implements $CreateOperatorPriceChartCopyWith<$Res> {
+  factory _$$_CreateOperatorPriceChartCopyWith(
+          _$_CreateOperatorPriceChart value,
+          $Res Function(_$_CreateOperatorPriceChart) then) =
+      __$$_CreateOperatorPriceChartCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String planName,
+      String operatorUserName,
+      String resellerUserName,
+      int price});
+}
+
+/// @nodoc
+class __$$_CreateOperatorPriceChartCopyWithImpl<$Res>
+    extends _$CreateOperatorPriceChartCopyWithImpl<$Res,
+        _$_CreateOperatorPriceChart>
+    implements _$$_CreateOperatorPriceChartCopyWith<$Res> {
+  __$$_CreateOperatorPriceChartCopyWithImpl(_$_CreateOperatorPriceChart _value,
+      $Res Function(_$_CreateOperatorPriceChart) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? planName = null,
+    Object? operatorUserName = null,
+    Object? resellerUserName = null,
+    Object? price = null,
+  }) {
+    return _then(_$_CreateOperatorPriceChart(
+      null == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == operatorUserName
+          ? _value.operatorUserName
+          : operatorUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateOperatorPriceChart implements _CreateOperatorPriceChart {
+  _$_CreateOperatorPriceChart(
+      this.planName, this.operatorUserName, this.resellerUserName, this.price);
+
+  @override
+  final String planName;
+  @override
+  final String operatorUserName;
+  @override
+  final String resellerUserName;
+  @override
+  final int price;
+
+  @override
+  String toString() {
+    return 'CreateOperatorPriceChart(planName: $planName, operatorUserName: $operatorUserName, resellerUserName: $resellerUserName, price: $price)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateOperatorPriceChart &&
+            (identical(other.planName, planName) ||
+                other.planName == planName) &&
+            (identical(other.operatorUserName, operatorUserName) ||
+                other.operatorUserName == operatorUserName) &&
+            (identical(other.resellerUserName, resellerUserName) ||
+                other.resellerUserName == resellerUserName) &&
+            (identical(other.price, price) || other.price == price));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, planName, operatorUserName, resellerUserName, price);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateOperatorPriceChartCopyWith<_$_CreateOperatorPriceChart>
+      get copyWith => __$$_CreateOperatorPriceChartCopyWithImpl<
+          _$_CreateOperatorPriceChart>(this, _$identity);
+}
+
+abstract class _CreateOperatorPriceChart implements CreateOperatorPriceChart {
+  factory _CreateOperatorPriceChart(
+      final String planName,
+      final String operatorUserName,
+      final String resellerUserName,
+      final int price) = _$_CreateOperatorPriceChart;
+
+  @override
+  String get planName;
+  @override
+  String get operatorUserName;
+  @override
+  String get resellerUserName;
+  @override
+  int get price;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateOperatorPriceChartCopyWith<_$_CreateOperatorPriceChart>
+      get copyWith => throw _privateConstructorUsedError;
+}

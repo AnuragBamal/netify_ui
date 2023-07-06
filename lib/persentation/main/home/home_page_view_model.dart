@@ -10,7 +10,7 @@ import 'package:netify/domain/usecase/getdashboard_usecase.dart';
 import 'package:netify/domain/usecase/getuser_usecase.dart';
 import 'package:netify/domain/usecase/getuserlist_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
-import 'package:netify/persentation/main/user/create_user.dart';
+import 'package:netify/persentation/main/home/user/create_user.dart';
 import 'package:netify/services/authentication_service.dart';
 import 'package:netify/services/navigator_service.dart';
 import 'package:netify/persentation/resources/routes_manager.dart';
@@ -25,8 +25,7 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
   //     StreamController<List<User>>.broadcast();
   final _resellerScreenController = BehaviorSubject<List<User>>();
 
-  final StreamController _operatorScreenController =
-      StreamController<List<User>>.broadcast();
+  final _operatorScreenController = BehaviorSubject<List<User>>();
 
   final StreamController _userSearchController =
       StreamController<List<User>>.broadcast();
@@ -269,17 +268,6 @@ abstract class HomepageViewModelOutput {
   Stream<List<User>> get outputUserDataTypeSearch;
   Stream<List<DashboardItem>> get outputForDashboard;
   Stream<bool> get outputForSearchState;
-}
-
-class SliderDisplayObject {
-  MainPageModel mainPageModel;
-  int numberOfDisplays;
-  int currentDisplayIndex;
-
-  SliderDisplayObject(
-      {required this.mainPageModel,
-      required this.numberOfDisplays,
-      required this.currentDisplayIndex});
 }
 
 class LoginUserMetaData {

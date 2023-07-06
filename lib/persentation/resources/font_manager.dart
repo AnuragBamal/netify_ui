@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FontConstants {
   FontConstants._();
-  static const String fontFaimly = "Righteous";
+  static const String fontFaimly = "Montserrat";
 }
 
 class FontWeightManager {

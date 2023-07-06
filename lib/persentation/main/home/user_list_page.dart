@@ -3,8 +3,9 @@ import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/persentation/common/widgets/search_widget.dart';
-import 'package:netify/persentation/main/home_page_view_model.dart';
-import 'package:netify/persentation/main/user/create_user.dart';
+import 'package:netify/persentation/main/home/expanded_panel.dart';
+import 'package:netify/persentation/main/home/home_page_view_model.dart';
+import 'package:netify/persentation/main/home/user/create_user.dart';
 
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:shimmer/shimmer.dart';
@@ -28,58 +29,56 @@ class UserDataTypeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          BaseSearchWidget(
-            filters: filterList,
-            onFilterChanged: homepageViewModel.updateSearchFilter,
-          ),
-          StreamBuilder<bool>(
-              stream: homepageViewModel.outputForSearchState,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return snapshot.data!
-                      ? StreamBuilder<List<User>>(
-                          stream: homepageViewModel.outputUserDataTypeSearch,
-                          builder: userPageBuilder,
-                        )
-                      : screenName == ScreenTypeIdentity.reseller
-                          ? StreamBuilder<List<User>>(
-                              stream:
-                                  homepageViewModel.outputForResellerTypeScreen,
-                              builder: userPageBuilder,
-                            )
-                          : StreamBuilder<List<User>>(
-                              stream:
-                                  homepageViewModel.outputForOperatorTypeScreen,
-                              builder: userPageBuilder,
-                            );
-                } else if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
-                } else {
-                  return screenName == ScreenTypeIdentity.reseller
-                      ? StreamBuilder<List<User>>(
-                          stream: homepageViewModel.outputForResellerTypeScreen,
-                          builder: userPageBuilder,
-                        )
-                      : StreamBuilder<List<User>>(
-                          stream: homepageViewModel.outputForOperatorTypeScreen,
-                          builder: userPageBuilder,
-                        );
-                }
-              }),
-          // StreamBuilder<List<User>>(
-          //   stream: homepageViewModel.isSearchEnabled
-          //       ? homepageViewModel.outputUserDataTypeSearch
-          //       : screenName == ScreenTypeIdentity.reseller
-          //           ? homepageViewModel.outputForResellerTypeScreen
-          //           : homepageViewModel.outputForOperatorTypeScreen,
-          //   builder: userPageBuilder,
-          // ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        BaseSearchWidget(
+          filters: filterList,
+          onFilterChanged: homepageViewModel.updateSearchFilter,
+        ),
+        StreamBuilder<bool>(
+            stream: homepageViewModel.outputForSearchState,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return snapshot.data!
+                    ? StreamBuilder<List<User>>(
+                        stream: homepageViewModel.outputUserDataTypeSearch,
+                        builder: userPageBuilder,
+                      )
+                    : screenName == ScreenTypeIdentity.reseller
+                        ? StreamBuilder<List<User>>(
+                            stream:
+                                homepageViewModel.outputForResellerTypeScreen,
+                            builder: userPageBuilder,
+                          )
+                        : StreamBuilder<List<User>>(
+                            stream:
+                                homepageViewModel.outputForOperatorTypeScreen,
+                            builder: userPageBuilder,
+                          );
+              } else if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              } else {
+                return screenName == ScreenTypeIdentity.reseller
+                    ? StreamBuilder<List<User>>(
+                        stream: homepageViewModel.outputForResellerTypeScreen,
+                        builder: userPageBuilder,
+                      )
+                    : StreamBuilder<List<User>>(
+                        stream: homepageViewModel.outputForOperatorTypeScreen,
+                        builder: userPageBuilder,
+                      );
+              }
+            }),
+        // StreamBuilder<List<User>>(
+        //   stream: homepageViewModel.isSearchEnabled
+        //       ? homepageViewModel.outputUserDataTypeSearch
+        //       : screenName == ScreenTypeIdentity.reseller
+        //           ? homepageViewModel.outputForResellerTypeScreen
+        //           : homepageViewModel.outputForOperatorTypeScreen,
+        //   builder: userPageBuilder,
+        // ),
+      ],
     );
   }
 
@@ -89,7 +88,7 @@ class UserDataTypeScreen extends StatelessWidget {
       if (snapshot.data!.isEmpty) {
         return Stack(children: [
           SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.70,
               child: const Center(child: Text("No data found"))),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.08,
@@ -112,16 +111,21 @@ class UserDataTypeScreen extends StatelessWidget {
               onTap: () {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.8,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.70,
+                // constraints: BoxConstraints(
+                //   maxHeight: ,
+                // ),
+                child: ExpandedPanelWidget(
+                  dataTypeIdentity: DataTypeIdentity.user,
+                  userItemSnapshot: snapshot.data,
                 ),
-                child: ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return itemBuilder(context, index, snapshot.data);
-                  },
-                ),
+                // child: ListView.builder(
+                //   itemCount: snapshot.data!.length,
+                //   itemBuilder: (BuildContext context, int index) {
+                //     return itemBuilder(context, index, snapshot.data);
+                //   },
+                // ),
               ),
             ),
             Positioned(
@@ -146,7 +150,7 @@ class UserDataTypeScreen extends StatelessWidget {
     } else {
       return ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
+            maxHeight: MediaQuery.of(context).size.height * 0.70,
           ),
           child: ListView.builder(
             itemCount: 10,
