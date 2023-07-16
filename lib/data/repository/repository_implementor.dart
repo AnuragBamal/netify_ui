@@ -426,4 +426,180 @@ class RepositoryImplementer extends Repository {
       ));
     }
   }
+
+  @override
+  Future<Either<Failure, GeneralSuccess>> createSubscriber(
+      CreateSubscriberRequest createSubscriberRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.createSubscriber(createSubscriberRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GeneralSuccess>> createSubscription(
+      CreateSubscriptionRequest createSubscriptionRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource
+            .createSubscription(createSubscriptionRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetSubscriberListBlock>> getSubscriberList(
+      GetScreenRequest getScreenRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.getSubscriberList(getScreenRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetSubscriptionListBlock>> getSubscriptionList(
+      GetScreenRequest getScreenRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.getSubscriptionList(getScreenRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetUserWallet>> getUserWallet() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getUserWallet();
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GeneralSuccess>> w2wTransfer(
+      W2WTransferRequest w2WTransferRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.w2wTransfer(w2WTransferRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetSubscriptionMeta>> getSubscriptionMetadata() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getSubscriptionMetadata();
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+              code: response.errorCode ?? "X-410",
+              message: response.message ?? "API Error"));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+          code: ResponseCode.noInternetConnection.toString(),
+          message: ResponseMessage.noInternetConnection));
+    }
+  }
 }

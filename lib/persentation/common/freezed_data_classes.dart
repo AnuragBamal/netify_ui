@@ -83,3 +83,54 @@ class CreateOperatorPriceChart with _$CreateOperatorPriceChart {
   factory CreateOperatorPriceChart(String planName, String operatorUserName,
       String resellerUserName, int price) = _CreateOperatorPriceChart;
 }
+
+@freezed
+class CreateNewSubscriber with _$CreateNewSubscriber {
+  factory CreateNewSubscriber(
+    String firstName,
+    String lastName,
+    String email,
+    String userName,
+    String password,
+    String countryCode,
+    String mobileNumber,
+    String gstNumber,
+    String companyName,
+    String brandName,
+    String country,
+    String address,
+    String pincode,
+    String city,
+    String state,
+    String billingCountry,
+    String billingAddress,
+    String billingPincode,
+    String billingCity,
+    String billingState,
+    String resellerUserName,
+    String operatorUserName,
+    bool isSameAsPermanentAddress,
+  ) = _CreateNewSubscriber;
+}
+
+@freezed
+class CreateNewSubscription with _$CreateNewSubscription {
+  factory CreateNewSubscription(
+    String userName,
+    String password,
+    String resellerUserName,
+    String operatorUserName,
+    String subscriberId,
+    String planName,
+    String networkType,
+    String ipType,
+    String assignedIp,
+    bool isInstallationAddressSameAsBilling,
+    bool isInstallationAddressSameAsPermanent,
+    String country,
+    String address,
+    String pincode,
+    String city,
+    String state,
+  ) = _CreateNewSubscription;
+}

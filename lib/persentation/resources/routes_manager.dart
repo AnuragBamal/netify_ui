@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/persentation/forgot_password/forgot_password.dart';
 import 'package:netify/persentation/login/login.dart';
+import 'package:netify/persentation/main/home/subscriber/create_subscriber.dart';
+import 'package:netify/persentation/main/home/subscription/create_subscription.dart';
 import 'package:netify/persentation/main/home/user/create_user.dart';
 import 'package:netify/persentation/main/main.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart.dart';
@@ -22,6 +24,8 @@ class Routes {
   static const String createuser = "/createuser";
   static const String userops = "/userops";
   static const String createplan = "/createplan";
+  static const String createSubscriber = "/createsubscriber";
+  static const String createSubscription = "/createsubscription";
 }
 
 class RouteGenerator {
@@ -55,6 +59,7 @@ class RouteGenerator {
             builder: (_) => CreateUserView(
                   arguments: args,
                 ));
+
       case Routes.createplan:
         initCreatePlanModule();
         final CreatePriceChartArguments args =
@@ -63,6 +68,14 @@ class RouteGenerator {
             builder: (_) => CreatePriceChart(
                   arguments: args,
                 ));
+
+      case Routes.createSubscriber:
+        initCreateSubscriber();
+        return MaterialPageRoute(builder: (_) => const CreateSubscriber());
+
+      case Routes.createSubscription:
+        initCreateSubscription();
+        return MaterialPageRoute(builder: (_) => const CreateNewSubscription());
 
       default:
         return undefinedRoute();

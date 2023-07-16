@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/domain/model/enum_model.dart';
-import 'package:netify/domain/model/home_model.dart';
+import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart_view_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';

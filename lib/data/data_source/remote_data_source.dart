@@ -29,6 +29,18 @@ abstract class RemoteDataSource {
   Future<GetPlansResponse> getPlans();
   Future<GetResellerPriceChartResponse> getResellerPriceChart();
   Future<GetPlanProfileMetaResponse> getPlanProfile();
+  Future<GeneralSuccessResponse> createSubscriber(
+      CreateSubscriberRequest createSubscriberRequest);
+  Future<GeneralSuccessResponse> createSubscription(
+      CreateSubscriptionRequest createSubscriptionRequest);
+  Future<GeneralSuccessResponse> w2wTransfer(
+      W2WTransferRequest w2WTransferRequest);
+  Future<GetSubscriberListBlockResponse> getSubscriberList(
+      GetScreenRequest getScreenRequest);
+  Future<GetSubscriptionListBlockResponse> getSubscriptionList(
+      GetScreenRequest getScreenRequest);
+  Future<GetUserWalletResponse> getUserWallet();
+  Future<GetSubscriptionMetaResponse> getSubscriptionMetadata();
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -137,5 +149,48 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   @override
   Future<GetPlanProfileMetaResponse> getPlanProfile() async {
     return await _apiServiceClient.getPlanProfile();
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createSubscriber(
+      CreateSubscriberRequest createSubscriberRequest) async {
+    return await _apiServiceClient
+        .createSubscriber(createSubscriberRequest.toJson());
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createSubscription(
+      CreateSubscriptionRequest createSubscriptionRequest) async {
+    return await _apiServiceClient
+        .createSubscription(createSubscriptionRequest.toJson());
+  }
+
+  @override
+  Future<GetSubscriberListBlockResponse> getSubscriberList(
+      GetScreenRequest getScreenRequest) async {
+    return await _apiServiceClient.getSubscriberList(getScreenRequest.toJson());
+  }
+
+  @override
+  Future<GetSubscriptionListBlockResponse> getSubscriptionList(
+      GetScreenRequest getScreenRequest) async {
+    return await _apiServiceClient
+        .getSubscriptionList(getScreenRequest.toJson());
+  }
+
+  @override
+  Future<GetUserWalletResponse> getUserWallet() async {
+    return await _apiServiceClient.getUserWallet();
+  }
+
+  @override
+  Future<GeneralSuccessResponse> w2wTransfer(
+      W2WTransferRequest w2WTransferRequest) async {
+    return await _apiServiceClient.w2wTransfer(w2WTransferRequest.toJson());
+  }
+
+  @override
+  Future<GetSubscriptionMetaResponse> getSubscriptionMetadata() async {
+    return await _apiServiceClient.getSubscriptionMetadata();
   }
 }

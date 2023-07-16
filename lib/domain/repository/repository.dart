@@ -48,4 +48,23 @@ abstract class Repository {
   Future<Either<Failure, GetResellerPriceChart>> getResellerPriceChart();
 
   Future<Either<Failure, GetPlanProfileMeta>> getPlanProfile();
+
+  Future<Either<Failure, GeneralSuccess>> createSubscriber(
+      CreateSubscriberRequest createSubscriberRequest);
+
+  Future<Either<Failure, GeneralSuccess>> createSubscription(
+      CreateSubscriptionRequest createSubscriptionRequest);
+
+  Future<Either<Failure, GeneralSuccess>> w2wTransfer(
+      W2WTransferRequest w2WTransferRequest);
+
+  Future<Either<Failure, GetSubscriberListBlock>> getSubscriberList(
+      GetScreenRequest getScreenRequest);
+
+  Future<Either<Failure, GetSubscriptionListBlock>> getSubscriptionList(
+      GetScreenRequest getScreenRequest);
+
+  Future<Either<Failure, GetUserWallet>> getUserWallet();
+
+  Future<Either<Failure, GetSubscriptionMeta>> getSubscriptionMetadata();
 }

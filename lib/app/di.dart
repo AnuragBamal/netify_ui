@@ -10,6 +10,8 @@ import 'package:netify/domain/repository/repository.dart';
 import 'package:netify/domain/usecase/create_operatorchart_usecase.dart';
 import 'package:netify/domain/usecase/create_plan_usecase.dart';
 import 'package:netify/domain/usecase/create_resellerchart_usecase.dart';
+import 'package:netify/domain/usecase/create_subscriber_usecase.dart';
+import 'package:netify/domain/usecase/create_subscription_usecase.dart';
 import 'package:netify/domain/usecase/create_user_usecase.dart';
 import 'package:netify/domain/usecase/forgot_password_usecase.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
@@ -18,6 +20,9 @@ import 'package:netify/domain/usecase/getplanprofile_usecase.dart';
 import 'package:netify/domain/usecase/getplans_usecase.dart';
 import 'package:netify/domain/usecase/getreseller_pricechart_usecase.dart';
 import 'package:netify/domain/usecase/getresellermap_usecase.dart';
+import 'package:netify/domain/usecase/getsubscriber_usecase.dart';
+import 'package:netify/domain/usecase/getsubscription_metadata_usecase.dart';
+import 'package:netify/domain/usecase/getsubscription_usecase.dart';
 import 'package:netify/domain/usecase/getuser_usecase.dart';
 import 'package:netify/domain/usecase/getuserlist_usecase.dart';
 import 'package:netify/domain/usecase/login_usecase.dart';
@@ -26,6 +31,8 @@ import 'package:netify/domain/usecase/signup_usecase.dart';
 import 'package:netify/persentation/forgot_password/forgot_password_view_model.dart';
 import 'package:netify/persentation/login/login_view_model.dart';
 import 'package:netify/persentation/main/home/home_page_view_model.dart';
+import 'package:netify/persentation/main/home/subscriber/subscriber_view_model.dart';
+import 'package:netify/persentation/main/home/subscription/subscription_view_model.dart';
 import 'package:netify/persentation/main/home/user/create_user_view_model.dart';
 import 'package:netify/persentation/main/plans/plans_view_model.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart_view_model.dart';
@@ -150,8 +157,18 @@ initHomepageModule() {
         () => GetResellerPriceChartUseCase(instance()));
     instance.registerFactory<GetPlanProfileUseCase>(
         () => GetPlanProfileUseCase(instance()));
+    instance.registerFactory<GetSubscriberUsecase>(
+        () => GetSubscriberUsecase(instance()));
+    instance.registerFactory<GetSubscriptionUsecase>(
+        () => GetSubscriptionUsecase(instance()));
     instance.registerFactory<HomepageViewModel>(() => HomepageViewModel(
-        instance(), instance(), instance(), instance(), instance()));
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance()));
     instance.registerFactory<PlansPageViewModel>(() => PlansPageViewModel(
         instance(),
         instance(),
@@ -197,6 +214,37 @@ initCreatePlanModule() {
     instance.registerFactory<CreatePlanPageViewModel>(() =>
         CreatePlanPageViewModel(instance(), instance(), instance(), instance(),
             instance(), instance()));
+  }
+}
+
+initCreateSubscriber() {
+  if (!GetIt.I.isRegistered<CreateSubscriberUseCase>()) {
+    instance.registerFactory<CreateSubscriberUseCase>(
+        () => CreateSubscriberUseCase(instance()));
+  }
+  if (!GetIt.I.isRegistered<GetResellerMapUseCase>()) {
+    instance.registerFactory<GetResellerMapUseCase>(
+        () => GetResellerMapUseCase(instance()));
+  }
+
+  if (!GetIt.I.isRegistered<SubscriberViewModel>()) {
+    instance.registerFactory<SubscriberViewModel>(() =>
+        SubscriberViewModel(instance(), instance(), instance(), instance()));
+  }
+}
+
+initCreateSubscription() {
+  if (!GetIt.I.isRegistered<GetSubscriptionMetaUsecase>()) {
+    instance.registerFactory<GetSubscriptionMetaUsecase>(
+        () => GetSubscriptionMetaUsecase(instance()));
+  }
+  if (!GetIt.I.isRegistered<CreateSubscriptionUseCase>()) {
+    instance.registerFactory<CreateSubscriptionUseCase>(
+        () => CreateSubscriptionUseCase(instance()));
+  }
+  if (!GetIt.I.isRegistered<SubscriptionViewModel>()) {
+    instance.registerFactory<SubscriptionViewModel>(() =>
+        SubscriptionViewModel(instance(), instance(), instance(), instance()));
   }
 }
 

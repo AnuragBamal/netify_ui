@@ -1,4 +1,4 @@
-import 'package:netify/domain/model/model.dart';
+import 'package:netify/domain/model/plan_model.dart';
 
 class DashboardItem {
   final String assetName;
@@ -125,203 +125,228 @@ class ResellerOperatorMap {
   }
 }
 
-class Plans {
-  String planId;
-  String planName;
-  String planDescription;
-  bool isPlanActive;
-  double planPrice;
-  DateTime planStartDate;
-  DateTime planUpdatedDate;
+class Address {
+  final String addressId;
+  final String streetAddress;
+  final String addressType;
+  final String city;
+  final String state;
+  final String country;
+  final String postalcode;
+  final DateTime updatedAt;
 
-  Plans(
-      {required this.planId,
-      required this.planName,
-      required this.planDescription,
-      required this.isPlanActive,
-      required this.planStartDate,
-      required this.planPrice,
-      required this.planUpdatedDate});
+  Address(
+      {required this.addressId,
+      required this.streetAddress,
+      required this.addressType,
+      required this.city,
+      required this.state,
+      required this.country,
+      required this.postalcode,
+      required this.updatedAt});
 
-  factory Plans.fromJson(Map<String, dynamic> json) {
-    return Plans(
-        planId: json['planId'],
-        planName: json['planName'],
-        planDescription: json['planDescription'],
-        isPlanActive: json['isPlanActive'],
-        planStartDate: json['planStartDate'],
-        planPrice: json['planPrice'],
-        planUpdatedDate: json['planUpdatedDate']);
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'planId': planId,
-      'planName': planName,
-      'planDescription': planDescription,
-      'isPlanActive': isPlanActive,
-      'planStartDate': planStartDate,
-      'planPrice': planPrice,
-      'planUpdatedDate': planUpdatedDate
-    };
+  factory Address.fromJson(Map<String, dynamic> json) {
+    return Address(
+        addressId: json['addressId'],
+        streetAddress: json['streetAddress'],
+        addressType: json['addressType'],
+        city: json['city'],
+        state: json['state'],
+        country: json['country'],
+        postalcode: json['postalcode'],
+        updatedAt: json['updatedAt']);
   }
 }
 
-class ResellerPriceChart {
-  int id;
-  String resellerId;
-  String resellerUserName;
-  String planId;
-  String planName;
-  double price;
-  DateTime createdAt;
-  DateTime updatedAt;
+class Subscriber {
+  final String userName;
+  final String customerId;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String operatorUserName;
+  final String resellerUserName;
+  final String mobileNumber;
+  final Address permanentAddress;
+  final Address billingAddress;
+  final String companyName;
+  final String brandName;
+  final String gstNumber;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
-  ResellerPriceChart(
-      {required this.id,
-      required this.resellerId,
-      required this.resellerUserName,
-      required this.planId,
-      required this.price,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.planName});
-
-  factory ResellerPriceChart.fromJson(Map<String, dynamic> json) {
-    return ResellerPriceChart(
-        id: json['id'],
-        resellerId: json['resellerId'],
-        resellerUserName: json['resellerUserName'],
-        planId: json['planId'],
-        price: json['price'],
-        createdAt: json['createdAt'],
-        updatedAt: json['updatedAt'],
-        planName: json['planName']);
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'resellerId': resellerId,
-      'resellerUserName': resellerUserName,
-      'planId': planId,
-      'price': price,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-      'planName': planName
-    };
-  }
-}
-
-class OperatorPriceChart {
-  int id;
-  String operatorId;
-  String operatorUserName;
-  String resellerId;
-  String resellerUserName;
-  String planName;
-  double planPrice;
-  String planId;
-
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  OperatorPriceChart(
-      {required this.id,
-      required this.operatorId,
+  Subscriber(
+      {required this.userName,
+      required this.customerId,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
       required this.operatorUserName,
-      required this.resellerId,
       required this.resellerUserName,
-      required this.planName,
-      required this.planPrice,
-      required this.planId,
+      required this.mobileNumber,
+      required this.permanentAddress,
+      required this.billingAddress,
+      required this.companyName,
+      required this.brandName,
+      required this.gstNumber,
       required this.createdAt,
       required this.updatedAt});
 
-  factory OperatorPriceChart.fromJson(Map<String, dynamic> json) {
-    return OperatorPriceChart(
-        id: json['id'],
-        operatorId: json['operatorId'],
+  factory Subscriber.fromJson(Map<String, dynamic> json) {
+    return Subscriber(
+        userName: json['userName'],
+        customerId: json['customerId'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        email: json['email'],
         operatorUserName: json['operatorUserName'],
-        resellerId: json['resellerId'],
         resellerUserName: json['resellerUserName'],
-        planName: json['planName'],
-        planPrice: json['planPrice'],
-        planId: json['planId'],
+        mobileNumber: json['mobileNumber'],
+        permanentAddress: json['permanentAddress'],
+        billingAddress: json['billingAddress'],
+        companyName: json['companyName'],
+        brandName: json['brandName'],
+        gstNumber: json['gstNumber'],
         createdAt: json['createdAt'],
         updatedAt: json['updatedAt']);
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'operatorId': operatorId,
-      'operatorUserName': operatorUserName,
-      'resellerId': resellerId,
-      'resellerUserName': resellerUserName,
-      'planName': planName,
-      'planPrice': planPrice,
-      'planId': planId,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt
-    };
-  }
 }
 
-class PlanProfileMetaPlan {
-  String planId;
-  String planName;
-  double planPrice;
+class Subscription {
+  final String subscriptionId;
+  final String subscriberUserName;
+  final String resellerUserName;
+  final String operatorUserName;
+  final String status;
+  final String planName;
+  final String networkType;
+  final String assignedIp;
+  final String ipType;
+  final DateTime subscriptionDate;
+  final DateTime lastRenewalDate;
+  final DateTime nextRenewalDate;
+  final Address installationAddress;
+  final Address permanentAddress;
+  final Address billingAddress;
 
-  PlanProfileMetaPlan(
-      {required this.planId, required this.planName, required this.planPrice});
+  Subscription(
+      {required this.subscriptionId,
+      required this.subscriberUserName,
+      required this.resellerUserName,
+      required this.operatorUserName,
+      required this.status,
+      required this.planName,
+      required this.networkType,
+      required this.assignedIp,
+      required this.ipType,
+      required this.subscriptionDate,
+      required this.lastRenewalDate,
+      required this.nextRenewalDate,
+      required this.installationAddress,
+      required this.permanentAddress,
+      required this.billingAddress});
 
-  factory PlanProfileMetaPlan.fromJson(Map<String, dynamic> json) {
-    return PlanProfileMetaPlan(
-        planId: json['planId'],
+  factory Subscription.fromJson(Map<String, dynamic> json) {
+    return Subscription(
+        subscriptionId: json['subscriptionId'],
+        subscriberUserName: json['subscriberUserName'],
+        resellerUserName: json['resellerUserName'],
+        operatorUserName: json['operatorUserName'],
+        status: json['status'],
         planName: json['planName'],
-        planPrice: json['planPrice']);
+        networkType: json['networkType'],
+        assignedIp: json['assignedIp'],
+        ipType: json['ipType'],
+        subscriptionDate: json['subscriptionDate'],
+        lastRenewalDate: json['lastRenewalDate'],
+        nextRenewalDate: json['nextRenewalDate'],
+        installationAddress: json['installationAddress'],
+        permanentAddress: json['permanentAddress'],
+        billingAddress: json['billingAddress']);
   }
 }
 
-class PlanProfileMeta {
-  String role;
-  String ownerUserName;
-  String userName;
-  Map<String, List<String>> resellerMap;
-  List<String> planList;
-  List<MainPageModel> planScreens;
-  Map<String, List<PlanProfileMetaPlan>> resellerPlanMap;
-  PlanProfileMeta(
-      {required this.role,
-      required this.ownerUserName,
-      required this.userName,
-      required this.resellerMap,
-      required this.planList,
-      required this.planScreens,
-      required this.resellerPlanMap});
+class SubscriberListBlock {
+  final List<Subscriber> subscribers;
+  final bool isSearch;
+  final String screenTypeIdentity;
 
-  factory PlanProfileMeta.fromJson(Map<String, dynamic> json) {
-    return PlanProfileMeta(
-        role: json['role'],
-        ownerUserName: json['owneruserName'],
-        userName: json['userName'],
-        resellerMap: json['resellerMap'],
-        planList: json['planList'],
-        planScreens: json['planScreens'],
-        resellerPlanMap: json['resellerPlanMap']);
+  SubscriberListBlock(
+      {required this.subscribers,
+      required this.isSearch,
+      required this.screenTypeIdentity});
+
+  factory SubscriberListBlock.fromJson(Map<String, dynamic> json) {
+    return SubscriberListBlock(
+        subscribers: json['subscriberList'],
+        isSearch: json['isSearch'],
+        screenTypeIdentity: json['screenTypeIdentity']);
   }
+}
 
-  Map<String, dynamic> toJson() {
-    return {
-      'role': role,
-      'owneruserName': ownerUserName,
-      'userName': userName,
-      'resellerMap': resellerMap,
-      'planList': planList,
-      'planScreens': planScreens,
-      'resellerPlanMap': resellerPlanMap
-    };
+class SubscriptionListBlock {
+  final List<Subscription> subscriptions;
+  final bool isSearch;
+  final String screenTypeIdentity;
+
+  SubscriptionListBlock(
+      {required this.subscriptions,
+      required this.isSearch,
+      required this.screenTypeIdentity});
+
+  factory SubscriptionListBlock.fromJson(Map<String, dynamic> json) {
+    return SubscriptionListBlock(
+        subscriptions: json['subscriptionList'],
+        isSearch: json['isSearch'],
+        screenTypeIdentity: json['screenTypeIdentity']);
+  }
+}
+
+class SubscriberMapInfo {
+  final String subscriberUserName;
+  final String customerId;
+  final String mobileNumber;
+  final String email;
+
+  SubscriberMapInfo(
+      {required this.subscriberUserName,
+      required this.customerId,
+      required this.mobileNumber,
+      required this.email});
+
+  factory SubscriberMapInfo.fromJson(Map<String, dynamic> json) {
+    return SubscriberMapInfo(
+        subscriberUserName: json['subscriberUserName'],
+        customerId: json['customerId'],
+        mobileNumber: json['mobileNumber'],
+        email: json['email']);
+  }
+}
+
+class SubscriptionMeta {
+  final Map<String, List<String>> resellerOperatorMap;
+  final Map<String, List<PlanProfileMetaPlan>> operatorPlanMap;
+  final Map<String, List<SubscriberMapInfo>> operatorSubscriberMap;
+  final List<String> networkType;
+  final List<String> ipType;
+  final List<String> availiableIps;
+
+  SubscriptionMeta(
+      {required this.resellerOperatorMap,
+      required this.operatorPlanMap,
+      required this.operatorSubscriberMap,
+      required this.networkType,
+      required this.availiableIps,
+      required this.ipType});
+
+  factory SubscriptionMeta.fromJson(Map<String, dynamic> json) {
+    return SubscriptionMeta(
+        resellerOperatorMap: json['resellerOperatorMap'],
+        operatorPlanMap: json['operatorPlanMap'],
+        operatorSubscriberMap: json['operatorSubscriberMap'],
+        networkType: json['networkType'],
+        availiableIps: json['availiableIps'],
+        ipType: json['ipType']);
   }
 }
 //Basic model for home screen
@@ -375,5 +400,4 @@ class PlanProfileMeta {
 //       required this.planInfo,
 //       required this.ipType});
 // }
-
 

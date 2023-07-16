@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:netify/data/request/request.dart';
-import 'package:netify/domain/model/home_model.dart';
+import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/domain/usecase/create_operatorchart_usecase.dart';
 import 'package:netify/domain/usecase/create_plan_usecase.dart';
 import 'package:netify/domain/usecase/create_resellerchart_usecase.dart';

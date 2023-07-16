@@ -57,7 +57,9 @@ class AppString {
   static const String registerMobileNumber = "Mobile Number";
   static const String registerMobileNumberHint = "Enter Mobile Number";
   static const String registerCity = "City";
+  static const String registerCountry = "Country";
   static const String registerCityHint = "Enter Your City";
+  static const String registerCountryHint = "Enter Your Country";
   static const String registerAddress = "Address";
   static const String registerAddressHint = "Enter Address";
   static const String registerTenancyTypeHint = "Select Tenancy Type";
@@ -101,4 +103,19 @@ class AppString {
   static const String createNewPlanSelectResellerHint = "Select Reseller";
   static const String createNewPlanSelectOperator = "Operator";
   static const String createNewPlanSelectOperatorHint = " Reseller's Operator";
+  static const String createNewSubscriber = "Create New Subscriber";
+  static const String isBillingAddSame = "Billing Address Is Same As Above:";
+  static const String installationAddress = "Installation Address";
+  static const String subscriptionStaticIpText = "Static IP";
+  static const String subscriptionStaticIpTextHint = "Select Static IP";
+  static const String subscriptionIpTypeText = "IP Type";
+  static const String subscriptionIpTypeTextHint = "Select IP Type";
+  static const String subscriptionNetworkTypeText = "Network Type";
+  static const String subscriptionNetworkTypeTextHint = "Select Network Type";
+  static const String subscriptionSelectPlanText = "Assign Plan";
+  static const String subscriptionSelectPlanTextHint = "Select Plan";
+  static const String subscriptionSubscriberText = "Subscriber";
+  static const String subscriptionSubscriberTextHint = "Select Subscriber";
+  static const String sameAsBillingAddress = "Same as Billing Address";
+  static const String sameAsPermanentAddress = "Same as Permanent Address";
 }

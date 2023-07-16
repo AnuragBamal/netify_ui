@@ -1873,3 +1873,1066 @@ abstract class _CreateOperatorPriceChart implements CreateOperatorPriceChart {
   _$$_CreateOperatorPriceChartCopyWith<_$_CreateOperatorPriceChart>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$CreateNewSubscriber {
+  String get firstName => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get userName => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get countryCode => throw _privateConstructorUsedError;
+  String get mobileNumber => throw _privateConstructorUsedError;
+  String get gstNumber => throw _privateConstructorUsedError;
+  String get companyName => throw _privateConstructorUsedError;
+  String get brandName => throw _privateConstructorUsedError;
+  String get country => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  String get pincode => throw _privateConstructorUsedError;
+  String get city => throw _privateConstructorUsedError;
+  String get state => throw _privateConstructorUsedError;
+  String get billingCountry => throw _privateConstructorUsedError;
+  String get billingAddress => throw _privateConstructorUsedError;
+  String get billingPincode => throw _privateConstructorUsedError;
+  String get billingCity => throw _privateConstructorUsedError;
+  String get billingState => throw _privateConstructorUsedError;
+  String get resellerUserName => throw _privateConstructorUsedError;
+  String get operatorUserName => throw _privateConstructorUsedError;
+  bool get isSameAsPermanentAddress => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CreateNewSubscriberCopyWith<CreateNewSubscriber> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateNewSubscriberCopyWith<$Res> {
+  factory $CreateNewSubscriberCopyWith(
+          CreateNewSubscriber value, $Res Function(CreateNewSubscriber) then) =
+      _$CreateNewSubscriberCopyWithImpl<$Res, CreateNewSubscriber>;
+  @useResult
+  $Res call(
+      {String firstName,
+      String lastName,
+      String email,
+      String userName,
+      String password,
+      String countryCode,
+      String mobileNumber,
+      String gstNumber,
+      String companyName,
+      String brandName,
+      String country,
+      String address,
+      String pincode,
+      String city,
+      String state,
+      String billingCountry,
+      String billingAddress,
+      String billingPincode,
+      String billingCity,
+      String billingState,
+      String resellerUserName,
+      String operatorUserName,
+      bool isSameAsPermanentAddress});
+}
+
+/// @nodoc
+class _$CreateNewSubscriberCopyWithImpl<$Res, $Val extends CreateNewSubscriber>
+    implements $CreateNewSubscriberCopyWith<$Res> {
+  _$CreateNewSubscriberCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? email = null,
+    Object? userName = null,
+    Object? password = null,
+    Object? countryCode = null,
+    Object? mobileNumber = null,
+    Object? gstNumber = null,
+    Object? companyName = null,
+    Object? brandName = null,
+    Object? country = null,
+    Object? address = null,
+    Object? pincode = null,
+    Object? city = null,
+    Object? state = null,
+    Object? billingCountry = null,
+    Object? billingAddress = null,
+    Object? billingPincode = null,
+    Object? billingCity = null,
+    Object? billingState = null,
+    Object? resellerUserName = null,
+    Object? operatorUserName = null,
+    Object? isSameAsPermanentAddress = null,
+  }) {
+    return _then(_value.copyWith(
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      countryCode: null == countryCode
+          ? _value.countryCode
+          : countryCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      mobileNumber: null == mobileNumber
+          ? _value.mobileNumber
+          : mobileNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      gstNumber: null == gstNumber
+          ? _value.gstNumber
+          : gstNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      companyName: null == companyName
+          ? _value.companyName
+          : companyName // ignore: cast_nullable_to_non_nullable
+              as String,
+      brandName: null == brandName
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      pincode: null == pincode
+          ? _value.pincode
+          : pincode // ignore: cast_nullable_to_non_nullable
+              as String,
+      city: null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String,
+      billingCountry: null == billingCountry
+          ? _value.billingCountry
+          : billingCountry // ignore: cast_nullable_to_non_nullable
+              as String,
+      billingAddress: null == billingAddress
+          ? _value.billingAddress
+          : billingAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      billingPincode: null == billingPincode
+          ? _value.billingPincode
+          : billingPincode // ignore: cast_nullable_to_non_nullable
+              as String,
+      billingCity: null == billingCity
+          ? _value.billingCity
+          : billingCity // ignore: cast_nullable_to_non_nullable
+              as String,
+      billingState: null == billingState
+          ? _value.billingState
+          : billingState // ignore: cast_nullable_to_non_nullable
+              as String,
+      resellerUserName: null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      operatorUserName: null == operatorUserName
+          ? _value.operatorUserName
+          : operatorUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      isSameAsPermanentAddress: null == isSameAsPermanentAddress
+          ? _value.isSameAsPermanentAddress
+          : isSameAsPermanentAddress // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateNewSubscriberCopyWith<$Res>
+    implements $CreateNewSubscriberCopyWith<$Res> {
+  factory _$$_CreateNewSubscriberCopyWith(_$_CreateNewSubscriber value,
+          $Res Function(_$_CreateNewSubscriber) then) =
+      __$$_CreateNewSubscriberCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String firstName,
+      String lastName,
+      String email,
+      String userName,
+      String password,
+      String countryCode,
+      String mobileNumber,
+      String gstNumber,
+      String companyName,
+      String brandName,
+      String country,
+      String address,
+      String pincode,
+      String city,
+      String state,
+      String billingCountry,
+      String billingAddress,
+      String billingPincode,
+      String billingCity,
+      String billingState,
+      String resellerUserName,
+      String operatorUserName,
+      bool isSameAsPermanentAddress});
+}
+
+/// @nodoc
+class __$$_CreateNewSubscriberCopyWithImpl<$Res>
+    extends _$CreateNewSubscriberCopyWithImpl<$Res, _$_CreateNewSubscriber>
+    implements _$$_CreateNewSubscriberCopyWith<$Res> {
+  __$$_CreateNewSubscriberCopyWithImpl(_$_CreateNewSubscriber _value,
+      $Res Function(_$_CreateNewSubscriber) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? email = null,
+    Object? userName = null,
+    Object? password = null,
+    Object? countryCode = null,
+    Object? mobileNumber = null,
+    Object? gstNumber = null,
+    Object? companyName = null,
+    Object? brandName = null,
+    Object? country = null,
+    Object? address = null,
+    Object? pincode = null,
+    Object? city = null,
+    Object? state = null,
+    Object? billingCountry = null,
+    Object? billingAddress = null,
+    Object? billingPincode = null,
+    Object? billingCity = null,
+    Object? billingState = null,
+    Object? resellerUserName = null,
+    Object? operatorUserName = null,
+    Object? isSameAsPermanentAddress = null,
+  }) {
+    return _then(_$_CreateNewSubscriber(
+      null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == countryCode
+          ? _value.countryCode
+          : countryCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == mobileNumber
+          ? _value.mobileNumber
+          : mobileNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == gstNumber
+          ? _value.gstNumber
+          : gstNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == companyName
+          ? _value.companyName
+          : companyName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == brandName
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == pincode
+          ? _value.pincode
+          : pincode // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == billingCountry
+          ? _value.billingCountry
+          : billingCountry // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == billingAddress
+          ? _value.billingAddress
+          : billingAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == billingPincode
+          ? _value.billingPincode
+          : billingPincode // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == billingCity
+          ? _value.billingCity
+          : billingCity // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == billingState
+          ? _value.billingState
+          : billingState // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == operatorUserName
+          ? _value.operatorUserName
+          : operatorUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == isSameAsPermanentAddress
+          ? _value.isSameAsPermanentAddress
+          : isSameAsPermanentAddress // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateNewSubscriber implements _CreateNewSubscriber {
+  _$_CreateNewSubscriber(
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.userName,
+      this.password,
+      this.countryCode,
+      this.mobileNumber,
+      this.gstNumber,
+      this.companyName,
+      this.brandName,
+      this.country,
+      this.address,
+      this.pincode,
+      this.city,
+      this.state,
+      this.billingCountry,
+      this.billingAddress,
+      this.billingPincode,
+      this.billingCity,
+      this.billingState,
+      this.resellerUserName,
+      this.operatorUserName,
+      this.isSameAsPermanentAddress);
+
+  @override
+  final String firstName;
+  @override
+  final String lastName;
+  @override
+  final String email;
+  @override
+  final String userName;
+  @override
+  final String password;
+  @override
+  final String countryCode;
+  @override
+  final String mobileNumber;
+  @override
+  final String gstNumber;
+  @override
+  final String companyName;
+  @override
+  final String brandName;
+  @override
+  final String country;
+  @override
+  final String address;
+  @override
+  final String pincode;
+  @override
+  final String city;
+  @override
+  final String state;
+  @override
+  final String billingCountry;
+  @override
+  final String billingAddress;
+  @override
+  final String billingPincode;
+  @override
+  final String billingCity;
+  @override
+  final String billingState;
+  @override
+  final String resellerUserName;
+  @override
+  final String operatorUserName;
+  @override
+  final bool isSameAsPermanentAddress;
+
+  @override
+  String toString() {
+    return 'CreateNewSubscriber(firstName: $firstName, lastName: $lastName, email: $email, userName: $userName, password: $password, countryCode: $countryCode, mobileNumber: $mobileNumber, gstNumber: $gstNumber, companyName: $companyName, brandName: $brandName, country: $country, address: $address, pincode: $pincode, city: $city, state: $state, billingCountry: $billingCountry, billingAddress: $billingAddress, billingPincode: $billingPincode, billingCity: $billingCity, billingState: $billingState, resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, isSameAsPermanentAddress: $isSameAsPermanentAddress)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateNewSubscriber &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.countryCode, countryCode) ||
+                other.countryCode == countryCode) &&
+            (identical(other.mobileNumber, mobileNumber) ||
+                other.mobileNumber == mobileNumber) &&
+            (identical(other.gstNumber, gstNumber) ||
+                other.gstNumber == gstNumber) &&
+            (identical(other.companyName, companyName) ||
+                other.companyName == companyName) &&
+            (identical(other.brandName, brandName) ||
+                other.brandName == brandName) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.pincode, pincode) || other.pincode == pincode) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.billingCountry, billingCountry) ||
+                other.billingCountry == billingCountry) &&
+            (identical(other.billingAddress, billingAddress) ||
+                other.billingAddress == billingAddress) &&
+            (identical(other.billingPincode, billingPincode) ||
+                other.billingPincode == billingPincode) &&
+            (identical(other.billingCity, billingCity) ||
+                other.billingCity == billingCity) &&
+            (identical(other.billingState, billingState) ||
+                other.billingState == billingState) &&
+            (identical(other.resellerUserName, resellerUserName) ||
+                other.resellerUserName == resellerUserName) &&
+            (identical(other.operatorUserName, operatorUserName) ||
+                other.operatorUserName == operatorUserName) &&
+            (identical(
+                    other.isSameAsPermanentAddress, isSameAsPermanentAddress) ||
+                other.isSameAsPermanentAddress == isSameAsPermanentAddress));
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        firstName,
+        lastName,
+        email,
+        userName,
+        password,
+        countryCode,
+        mobileNumber,
+        gstNumber,
+        companyName,
+        brandName,
+        country,
+        address,
+        pincode,
+        city,
+        state,
+        billingCountry,
+        billingAddress,
+        billingPincode,
+        billingCity,
+        billingState,
+        resellerUserName,
+        operatorUserName,
+        isSameAsPermanentAddress
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateNewSubscriberCopyWith<_$_CreateNewSubscriber> get copyWith =>
+      __$$_CreateNewSubscriberCopyWithImpl<_$_CreateNewSubscriber>(
+          this, _$identity);
+}
+
+abstract class _CreateNewSubscriber implements CreateNewSubscriber {
+  factory _CreateNewSubscriber(
+      final String firstName,
+      final String lastName,
+      final String email,
+      final String userName,
+      final String password,
+      final String countryCode,
+      final String mobileNumber,
+      final String gstNumber,
+      final String companyName,
+      final String brandName,
+      final String country,
+      final String address,
+      final String pincode,
+      final String city,
+      final String state,
+      final String billingCountry,
+      final String billingAddress,
+      final String billingPincode,
+      final String billingCity,
+      final String billingState,
+      final String resellerUserName,
+      final String operatorUserName,
+      final bool isSameAsPermanentAddress) = _$_CreateNewSubscriber;
+
+  @override
+  String get firstName;
+  @override
+  String get lastName;
+  @override
+  String get email;
+  @override
+  String get userName;
+  @override
+  String get password;
+  @override
+  String get countryCode;
+  @override
+  String get mobileNumber;
+  @override
+  String get gstNumber;
+  @override
+  String get companyName;
+  @override
+  String get brandName;
+  @override
+  String get country;
+  @override
+  String get address;
+  @override
+  String get pincode;
+  @override
+  String get city;
+  @override
+  String get state;
+  @override
+  String get billingCountry;
+  @override
+  String get billingAddress;
+  @override
+  String get billingPincode;
+  @override
+  String get billingCity;
+  @override
+  String get billingState;
+  @override
+  String get resellerUserName;
+  @override
+  String get operatorUserName;
+  @override
+  bool get isSameAsPermanentAddress;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateNewSubscriberCopyWith<_$_CreateNewSubscriber> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CreateNewSubscription {
+  String get userName => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get resellerUserName => throw _privateConstructorUsedError;
+  String get operatorUserName => throw _privateConstructorUsedError;
+  String get subscriberId => throw _privateConstructorUsedError;
+  String get planName => throw _privateConstructorUsedError;
+  String get networkType => throw _privateConstructorUsedError;
+  String get ipType => throw _privateConstructorUsedError;
+  String get assignedIp => throw _privateConstructorUsedError;
+  bool get isInstallationAddressSameAsBilling =>
+      throw _privateConstructorUsedError;
+  bool get isInstallationAddressSameAsPermanent =>
+      throw _privateConstructorUsedError;
+  String get country => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  String get pincode => throw _privateConstructorUsedError;
+  String get city => throw _privateConstructorUsedError;
+  String get state => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CreateNewSubscriptionCopyWith<CreateNewSubscription> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateNewSubscriptionCopyWith<$Res> {
+  factory $CreateNewSubscriptionCopyWith(CreateNewSubscription value,
+          $Res Function(CreateNewSubscription) then) =
+      _$CreateNewSubscriptionCopyWithImpl<$Res, CreateNewSubscription>;
+  @useResult
+  $Res call(
+      {String userName,
+      String password,
+      String resellerUserName,
+      String operatorUserName,
+      String subscriberId,
+      String planName,
+      String networkType,
+      String ipType,
+      String assignedIp,
+      bool isInstallationAddressSameAsBilling,
+      bool isInstallationAddressSameAsPermanent,
+      String country,
+      String address,
+      String pincode,
+      String city,
+      String state});
+}
+
+/// @nodoc
+class _$CreateNewSubscriptionCopyWithImpl<$Res,
+        $Val extends CreateNewSubscription>
+    implements $CreateNewSubscriptionCopyWith<$Res> {
+  _$CreateNewSubscriptionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userName = null,
+    Object? password = null,
+    Object? resellerUserName = null,
+    Object? operatorUserName = null,
+    Object? subscriberId = null,
+    Object? planName = null,
+    Object? networkType = null,
+    Object? ipType = null,
+    Object? assignedIp = null,
+    Object? isInstallationAddressSameAsBilling = null,
+    Object? isInstallationAddressSameAsPermanent = null,
+    Object? country = null,
+    Object? address = null,
+    Object? pincode = null,
+    Object? city = null,
+    Object? state = null,
+  }) {
+    return _then(_value.copyWith(
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      resellerUserName: null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      operatorUserName: null == operatorUserName
+          ? _value.operatorUserName
+          : operatorUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      subscriberId: null == subscriberId
+          ? _value.subscriberId
+          : subscriberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      planName: null == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
+              as String,
+      networkType: null == networkType
+          ? _value.networkType
+          : networkType // ignore: cast_nullable_to_non_nullable
+              as String,
+      ipType: null == ipType
+          ? _value.ipType
+          : ipType // ignore: cast_nullable_to_non_nullable
+              as String,
+      assignedIp: null == assignedIp
+          ? _value.assignedIp
+          : assignedIp // ignore: cast_nullable_to_non_nullable
+              as String,
+      isInstallationAddressSameAsBilling: null ==
+              isInstallationAddressSameAsBilling
+          ? _value.isInstallationAddressSameAsBilling
+          : isInstallationAddressSameAsBilling // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isInstallationAddressSameAsPermanent: null ==
+              isInstallationAddressSameAsPermanent
+          ? _value.isInstallationAddressSameAsPermanent
+          : isInstallationAddressSameAsPermanent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      pincode: null == pincode
+          ? _value.pincode
+          : pincode // ignore: cast_nullable_to_non_nullable
+              as String,
+      city: null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateNewSubscriptionCopyWith<$Res>
+    implements $CreateNewSubscriptionCopyWith<$Res> {
+  factory _$$_CreateNewSubscriptionCopyWith(_$_CreateNewSubscription value,
+          $Res Function(_$_CreateNewSubscription) then) =
+      __$$_CreateNewSubscriptionCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String userName,
+      String password,
+      String resellerUserName,
+      String operatorUserName,
+      String subscriberId,
+      String planName,
+      String networkType,
+      String ipType,
+      String assignedIp,
+      bool isInstallationAddressSameAsBilling,
+      bool isInstallationAddressSameAsPermanent,
+      String country,
+      String address,
+      String pincode,
+      String city,
+      String state});
+}
+
+/// @nodoc
+class __$$_CreateNewSubscriptionCopyWithImpl<$Res>
+    extends _$CreateNewSubscriptionCopyWithImpl<$Res, _$_CreateNewSubscription>
+    implements _$$_CreateNewSubscriptionCopyWith<$Res> {
+  __$$_CreateNewSubscriptionCopyWithImpl(_$_CreateNewSubscription _value,
+      $Res Function(_$_CreateNewSubscription) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userName = null,
+    Object? password = null,
+    Object? resellerUserName = null,
+    Object? operatorUserName = null,
+    Object? subscriberId = null,
+    Object? planName = null,
+    Object? networkType = null,
+    Object? ipType = null,
+    Object? assignedIp = null,
+    Object? isInstallationAddressSameAsBilling = null,
+    Object? isInstallationAddressSameAsPermanent = null,
+    Object? country = null,
+    Object? address = null,
+    Object? pincode = null,
+    Object? city = null,
+    Object? state = null,
+  }) {
+    return _then(_$_CreateNewSubscription(
+      null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == operatorUserName
+          ? _value.operatorUserName
+          : operatorUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == subscriberId
+          ? _value.subscriberId
+          : subscriberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == networkType
+          ? _value.networkType
+          : networkType // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == ipType
+          ? _value.ipType
+          : ipType // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == assignedIp
+          ? _value.assignedIp
+          : assignedIp // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == isInstallationAddressSameAsBilling
+          ? _value.isInstallationAddressSameAsBilling
+          : isInstallationAddressSameAsBilling // ignore: cast_nullable_to_non_nullable
+              as bool,
+      null == isInstallationAddressSameAsPermanent
+          ? _value.isInstallationAddressSameAsPermanent
+          : isInstallationAddressSameAsPermanent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == pincode
+          ? _value.pincode
+          : pincode // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateNewSubscription implements _CreateNewSubscription {
+  _$_CreateNewSubscription(
+      this.userName,
+      this.password,
+      this.resellerUserName,
+      this.operatorUserName,
+      this.subscriberId,
+      this.planName,
+      this.networkType,
+      this.ipType,
+      this.assignedIp,
+      this.isInstallationAddressSameAsBilling,
+      this.isInstallationAddressSameAsPermanent,
+      this.country,
+      this.address,
+      this.pincode,
+      this.city,
+      this.state);
+
+  @override
+  final String userName;
+  @override
+  final String password;
+  @override
+  final String resellerUserName;
+  @override
+  final String operatorUserName;
+  @override
+  final String subscriberId;
+  @override
+  final String planName;
+  @override
+  final String networkType;
+  @override
+  final String ipType;
+  @override
+  final String assignedIp;
+  @override
+  final bool isInstallationAddressSameAsBilling;
+  @override
+  final bool isInstallationAddressSameAsPermanent;
+  @override
+  final String country;
+  @override
+  final String address;
+  @override
+  final String pincode;
+  @override
+  final String city;
+  @override
+  final String state;
+
+  @override
+  String toString() {
+    return 'CreateNewSubscription(userName: $userName, password: $password, resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, subscriberId: $subscriberId, planName: $planName, networkType: $networkType, ipType: $ipType, assignedIp: $assignedIp, isInstallationAddressSameAsBilling: $isInstallationAddressSameAsBilling, isInstallationAddressSameAsPermanent: $isInstallationAddressSameAsPermanent, country: $country, address: $address, pincode: $pincode, city: $city, state: $state)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateNewSubscription &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.resellerUserName, resellerUserName) ||
+                other.resellerUserName == resellerUserName) &&
+            (identical(other.operatorUserName, operatorUserName) ||
+                other.operatorUserName == operatorUserName) &&
+            (identical(other.subscriberId, subscriberId) ||
+                other.subscriberId == subscriberId) &&
+            (identical(other.planName, planName) ||
+                other.planName == planName) &&
+            (identical(other.networkType, networkType) ||
+                other.networkType == networkType) &&
+            (identical(other.ipType, ipType) || other.ipType == ipType) &&
+            (identical(other.assignedIp, assignedIp) ||
+                other.assignedIp == assignedIp) &&
+            (identical(other.isInstallationAddressSameAsBilling,
+                    isInstallationAddressSameAsBilling) ||
+                other.isInstallationAddressSameAsBilling ==
+                    isInstallationAddressSameAsBilling) &&
+            (identical(other.isInstallationAddressSameAsPermanent,
+                    isInstallationAddressSameAsPermanent) ||
+                other.isInstallationAddressSameAsPermanent ==
+                    isInstallationAddressSameAsPermanent) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.pincode, pincode) || other.pincode == pincode) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.state, state) || other.state == state));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      userName,
+      password,
+      resellerUserName,
+      operatorUserName,
+      subscriberId,
+      planName,
+      networkType,
+      ipType,
+      assignedIp,
+      isInstallationAddressSameAsBilling,
+      isInstallationAddressSameAsPermanent,
+      country,
+      address,
+      pincode,
+      city,
+      state);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateNewSubscriptionCopyWith<_$_CreateNewSubscription> get copyWith =>
+      __$$_CreateNewSubscriptionCopyWithImpl<_$_CreateNewSubscription>(
+          this, _$identity);
+}
+
+abstract class _CreateNewSubscription implements CreateNewSubscription {
+  factory _CreateNewSubscription(
+      final String userName,
+      final String password,
+      final String resellerUserName,
+      final String operatorUserName,
+      final String subscriberId,
+      final String planName,
+      final String networkType,
+      final String ipType,
+      final String assignedIp,
+      final bool isInstallationAddressSameAsBilling,
+      final bool isInstallationAddressSameAsPermanent,
+      final String country,
+      final String address,
+      final String pincode,
+      final String city,
+      final String state) = _$_CreateNewSubscription;
+
+  @override
+  String get userName;
+  @override
+  String get password;
+  @override
+  String get resellerUserName;
+  @override
+  String get operatorUserName;
+  @override
+  String get subscriberId;
+  @override
+  String get planName;
+  @override
+  String get networkType;
+  @override
+  String get ipType;
+  @override
+  String get assignedIp;
+  @override
+  bool get isInstallationAddressSameAsBilling;
+  @override
+  bool get isInstallationAddressSameAsPermanent;
+  @override
+  String get country;
+  @override
+  String get address;
+  @override
+  String get pincode;
+  @override
+  String get city;
+  @override
+  String get state;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateNewSubscriptionCopyWith<_$_CreateNewSubscription> get copyWith =>
+      throw _privateConstructorUsedError;
+}

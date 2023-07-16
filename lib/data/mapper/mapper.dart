@@ -4,6 +4,8 @@ import 'package:netify/app/extensions.dart';
 import 'package:netify/data/responses/responses.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
+import 'package:netify/domain/model/plan_model.dart';
+import 'package:netify/domain/model/wallet_model.dart';
 
 const String defaultEmptyString = "";
 
@@ -301,5 +303,244 @@ extension GetPlanProfileMetaResponseExtension on GetPlanProfileMetaResponse? {
         message: this?.message?.nonNull ?? defaultEmptyString,
         errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
         data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}
+
+extension AddressResponseExtension on AddressResponse? {
+  Address toDomain() {
+    return Address(
+      addressId: this?.addressId?.nonNull ?? defaultEmptyString,
+      streetAddress: this?.streetAddress?.nonNull ?? defaultEmptyString,
+      addressType: this?.addressType?.nonNull ?? defaultEmptyString,
+      city: this?.city?.nonNull ?? defaultEmptyString,
+      state: this?.state?.nonNull ?? defaultEmptyString,
+      country: this?.country?.nonNull ?? defaultEmptyString,
+      postalcode: this?.postalcode?.nonNull ?? defaultEmptyString,
+      updatedAt: DateTime.parse(this?.updatedAt?.nonNull ?? defaultEmptyString),
+    );
+  }
+}
+
+extension SubscriberResponseExtension on SubscriberResponse? {
+  Subscriber toDomain() {
+    return Subscriber(
+        userName: this?.userName?.nonNull ?? defaultEmptyString,
+        customerId: this?.customerId?.nonNull ?? defaultEmptyString,
+        firstName: this?.firstName?.nonNull ?? defaultEmptyString,
+        lastName: this?.lastName?.nonNull ?? defaultEmptyString,
+        email: this?.email?.nonNull ?? defaultEmptyString,
+        operatorUserName: this?.operatorUserName?.nonNull ?? defaultEmptyString,
+        resellerUserName: this?.resellerUserName?.nonNull ?? defaultEmptyString,
+        mobileNumber: this?.mobileNumber?.nonNull ?? defaultEmptyString,
+        permanentAddress: this?.permanentAddress?.toDomain() ??
+            Address(
+                addressId: defaultEmptyString,
+                streetAddress: defaultEmptyString,
+                addressType: defaultEmptyString,
+                city: defaultEmptyString,
+                state: defaultEmptyString,
+                country: defaultEmptyString,
+                postalcode: defaultEmptyString,
+                updatedAt: DateTime.now()),
+        billingAddress: this?.billingAddress?.toDomain() ??
+            Address(
+                addressId: defaultEmptyString,
+                streetAddress: defaultEmptyString,
+                addressType: defaultEmptyString,
+                city: defaultEmptyString,
+                state: defaultEmptyString,
+                country: defaultEmptyString,
+                postalcode: defaultEmptyString,
+                updatedAt: DateTime.now()),
+        companyName: this?.companyName?.nonNull ?? defaultEmptyString,
+        brandName: this?.brandName?.nonNull ?? defaultEmptyString,
+        gstNumber: this?.gstNumber?.nonNull ?? defaultEmptyString,
+        createdAt:
+            DateTime.parse(this?.createdAt?.nonNull ?? defaultEmptyString),
+        updatedAt:
+            DateTime.parse(this?.updatedAt?.nonNull ?? defaultEmptyString));
+  }
+}
+
+extension SubscriptionResponseExtension on SubscriptionResponse? {
+  Subscription toDomain() {
+    return Subscription(
+      subscriptionId: this?.subscriptionId?.nonNull ?? defaultEmptyString,
+      subscriberUserName:
+          this?.subscriberUserName?.nonNull ?? defaultEmptyString,
+      resellerUserName: this?.resellerUserName?.nonNull ?? defaultEmptyString,
+      operatorUserName: this?.operatorUserName?.nonNull ?? defaultEmptyString,
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      networkType: this?.networkType?.nonNull ?? defaultEmptyString,
+      assignedIp: this?.assignedIp?.nonNull ?? defaultEmptyString,
+      ipType: this?.ipType?.nonNull ?? defaultEmptyString,
+      subscriptionDate:
+          DateTime.parse(this?.subscriptionDate?.nonNull ?? defaultEmptyString),
+      lastRenewalDate:
+          DateTime.parse(this?.lastRenewalDate?.nonNull ?? defaultEmptyString),
+      nextRenewalDate:
+          DateTime.parse(this?.nextRenewalDate?.nonNull ?? defaultEmptyString),
+      installationAddress: this?.installationAddress?.toDomain() ??
+          Address(
+              addressId: defaultEmptyString,
+              streetAddress: defaultEmptyString,
+              addressType: defaultEmptyString,
+              city: defaultEmptyString,
+              state: defaultEmptyString,
+              country: defaultEmptyString,
+              postalcode: defaultEmptyString,
+              updatedAt: DateTime.now()),
+      permanentAddress: this?.permanentAddress?.toDomain() ??
+          Address(
+              addressId: defaultEmptyString,
+              streetAddress: defaultEmptyString,
+              addressType: defaultEmptyString,
+              city: defaultEmptyString,
+              state: defaultEmptyString,
+              country: defaultEmptyString,
+              postalcode: defaultEmptyString,
+              updatedAt: DateTime.now()),
+      billingAddress: this?.billingAddress?.toDomain() ??
+          Address(
+              addressId: defaultEmptyString,
+              streetAddress: defaultEmptyString,
+              addressType: defaultEmptyString,
+              city: defaultEmptyString,
+              state: defaultEmptyString,
+              country: defaultEmptyString,
+              postalcode: defaultEmptyString,
+              updatedAt: DateTime.now()),
+    );
+  }
+}
+
+extension SubscriberListBlockResponseExtension on SubscriberListBlockResponse? {
+  SubscriberListBlock toDomain() {
+    return SubscriberListBlock(
+      subscribers: this?.subscribers?.map((e) => e.toDomain()).toList() ?? [],
+      isSearch: this?.isSearch ?? false,
+      screenTypeIdentity: this?.screenTypeIdentity ?? defaultEmptyString,
+    );
+  }
+}
+
+extension SubscriptionListBlockResponseExtension
+    on SubscriptionListBlockResponse? {
+  SubscriptionListBlock toDomain() {
+    return SubscriptionListBlock(
+      subscriptions:
+          this?.subscriptions?.map((e) => e.toDomain()).toList() ?? [],
+      isSearch: this?.isSearch ?? false,
+      screenTypeIdentity: this?.screenTypeIdentity ?? defaultEmptyString,
+    );
+  }
+}
+
+extension GetSubscriberListBlockResponseExtension
+    on GetSubscriberListBlockResponse? {
+  GetSubscriberListBlock toDomain() {
+    return GetSubscriberListBlock(
+        status: this?.status?.nonNull ?? defaultEmptyString,
+        message: this?.message?.nonNull ?? defaultEmptyString,
+        errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+        data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}
+
+extension GetSubscriptionListBlockResponseExtension
+    on GetSubscriptionListBlockResponse? {
+  GetSubscriptionListBlock toDomain() {
+    return GetSubscriptionListBlock(
+        status: this?.status?.nonNull ?? defaultEmptyString,
+        message: this?.message?.nonNull ?? defaultEmptyString,
+        errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+        data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}
+
+extension PayeeResponseExtension on PayeeResponse? {
+  Payee toDomain() {
+    return Payee(
+      userName: this?.userName?.nonNull ?? defaultEmptyString,
+      userId: this?.userId?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension TransactionResponseExtension on TransactionResponse? {
+  Transaction toDomain() {
+    return Transaction(
+      transactionId: this?.transactionId?.nonNull ?? defaultEmptyString,
+      senderUsername: this?.senderUsername?.nonNull ?? defaultEmptyString,
+      receiverUsername: this?.receiverUsername?.nonNull ?? defaultEmptyString,
+      amount: this?.amount ?? 0,
+      transactionStatus: this?.transactionStatus?.nonNull ?? defaultEmptyString,
+      transactionType: this?.transactionType?.nonNull ?? defaultEmptyString,
+      transactionDate:
+          DateTime.parse(this?.transactionDate?.nonNull ?? defaultEmptyString),
+    );
+  }
+}
+
+extension UserWalletResponseExtension on UserWalletResponse? {
+  UserWallet toDomain() {
+    return UserWallet(
+        balance: this?.balance ?? 0,
+        transactions:
+            this?.transactions?.map((e) => e.toDomain()).toList() ?? [],
+        payee: this?.payee.toDomain() ??
+            Payee(userName: defaultEmptyString, userId: defaultEmptyString));
+  }
+}
+
+extension GetUserWalletResponseExtension on GetUserWalletResponse? {
+  GetUserWallet toDomain() {
+    return GetUserWallet(
+        status: this?.status?.nonNull ?? defaultEmptyString,
+        message: this?.message?.nonNull ?? defaultEmptyString,
+        errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+        data: this?.data?.map((e) => e.toDomain()).toList() ?? []);
+  }
+}
+
+extension SubscriberMapInfoResponseExtension on SubscriberMapInfoResponse? {
+  SubscriberMapInfo toDomain() {
+    return SubscriberMapInfo(
+      subscriberUserName:
+          this?.subscriberUserName?.nonNull ?? defaultEmptyString,
+      customerId: this?.customerId?.nonNull ?? defaultEmptyString,
+      mobileNumber: this?.mobileNumber?.nonNull ?? defaultEmptyString,
+      email: this?.email?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension SubscriptionMetaResponseExtension on SubscriptionMetaResponse? {
+  SubscriptionMeta toDomain() {
+    return SubscriptionMeta(
+      resellerOperatorMap: this?.resellerOperatorMap ?? {},
+      operatorPlanMap: this?.operatorPlanMap?.map(((key, value) =>
+              MapEntry(key, value.map((e) => e.toDomain()).toList()))) ??
+          {},
+      operatorSubscriberMap: this?.operatorSubscriberMap?.map(((key, value) =>
+              MapEntry(key, value.map((e) => e.toDomain()).toList()))) ??
+          {},
+      networkType: this?.networkType?.map((e) => e.toString()).toList() ?? [],
+      availiableIps:
+          this?.availiableIps?.map((e) => e.toString()).toList() ?? [],
+      ipType: this?.ipType?.map((e) => e.toString()).toList() ?? [],
+    );
+  }
+}
+
+extension GetSubscriptionMetaResponseExtension on GetSubscriptionMetaResponse? {
+  GetSubscriptionMeta toDomain() {
+    return GetSubscriptionMeta(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
   }
 }

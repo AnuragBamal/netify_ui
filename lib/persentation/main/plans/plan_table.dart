@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netify/domain/model/enum_model.dart';
-import 'package:netify/domain/model/home_model.dart';
+import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 
 class PlanTable extends StatefulWidget {

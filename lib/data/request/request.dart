@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class LoginRequest {
   String username;
   String password;
@@ -247,5 +249,157 @@ class CreateOperatorPriceChartRequest {
         "resellerUserName": resellerUserName,
         "planName": planName,
         "price": price,
+      };
+}
+
+class CreateSubscriberRequest {
+  String userName;
+  String password;
+  String firstName;
+  String lastName;
+  String email;
+  String operatorUserName;
+  String resellerUserName;
+  String mobileNumber;
+  String streetAddress;
+  String city;
+  String state;
+  String country;
+  String postalCode;
+  bool isSameAsPermanentAddress;
+  String billingStreetAddress;
+  String billingCity;
+  String billingState;
+  String billingCountry;
+  String billingPostalCode;
+  String companyName;
+  String brandName;
+  String gstNumber;
+  List<File> files;
+
+  CreateSubscriberRequest(
+      {required this.userName,
+      required this.password,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.operatorUserName,
+      required this.resellerUserName,
+      required this.mobileNumber,
+      required this.streetAddress,
+      required this.city,
+      required this.state,
+      required this.postalCode,
+      required this.country,
+      required this.isSameAsPermanentAddress,
+      required this.billingStreetAddress,
+      required this.billingCity,
+      required this.billingState,
+      required this.billingCountry,
+      required this.billingPostalCode,
+      required this.companyName,
+      required this.brandName,
+      required this.gstNumber,
+      required this.files});
+
+  Map<String, dynamic> toJson() => {
+        "userName": userName,
+        "password": password,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "operatorUserName": operatorUserName,
+        "resellerUserName": resellerUserName,
+        "mobileNumber": mobileNumber,
+        "streetAddress": streetAddress,
+        "city": city,
+        "state": state,
+        "country": country,
+        "postalCode": postalCode,
+        "isSameAsPermanentAddress": isSameAsPermanentAddress,
+        "billingStreetAddress": billingStreetAddress,
+        "billingCity": billingCity,
+        "billingState": billingState,
+        "billingCountry": billingCountry,
+        "billingPostalCode": billingPostalCode,
+        "companyName": companyName,
+        "brandName": brandName,
+        "gstNumber": gstNumber,
+        "files": files,
+      };
+}
+
+class CreateSubscriptionRequest {
+  String userName;
+  String password;
+  String customerId;
+  String planName;
+  String operatorUserName;
+  String resellerUserName;
+  String networkType;
+  String ipType;
+  String assignedIp;
+  bool installationAddressSameAsBilling;
+  bool installationAddressSameAsPermanent;
+  String installationStreetAddress;
+  String installationCountry;
+  String installationCity;
+  String installationState;
+  String installationPostalCode;
+
+  CreateSubscriptionRequest({
+    required this.userName,
+    required this.password,
+    required this.customerId,
+    required this.planName,
+    required this.operatorUserName,
+    required this.resellerUserName,
+    required this.networkType,
+    required this.ipType,
+    required this.assignedIp,
+    required this.installationAddressSameAsBilling,
+    required this.installationAddressSameAsPermanent,
+    required this.installationStreetAddress,
+    required this.installationCountry,
+    required this.installationCity,
+    required this.installationState,
+    required this.installationPostalCode,
+  });
+
+  Map<String, dynamic> toJson() => {
+        "userName": userName,
+        "password": password,
+        "customerId": customerId,
+        "planName": planName,
+        "operatorUserName": operatorUserName,
+        "resellerUserName": resellerUserName,
+        "networkType": networkType,
+        "ipType": ipType,
+        "assignedIp": assignedIp,
+        "installationAddressSameAsBilling": installationAddressSameAsBilling,
+        "installationAddressSameAsPermanent":
+            installationAddressSameAsPermanent,
+        "installationStreetAddress": installationStreetAddress,
+        "installationAddressType": installationCountry,
+        "installationCity": installationCity,
+        "installationState": installationState,
+        "installationPostalCode": installationPostalCode,
+      };
+}
+
+class W2WTransferRequest {
+  String receiverId;
+  String receiverUsername;
+  double amount;
+
+  W2WTransferRequest(
+      {required this.receiverId,
+      required this.receiverUsername,
+      required this.amount});
+
+  Map<String, dynamic> toJson() => {
+        "receiverId": receiverId,
+        "receiverUsername": receiverUsername,
+        "amount": amount,
       };
 }

@@ -4,6 +4,7 @@ import 'package:netify/data/request/request.dart';
 import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
+import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
 import 'package:netify/domain/usecase/getoperator_pricechart_usecase.dart';
 import 'package:netify/domain/usecase/getplanprofile_usecase.dart';
@@ -255,7 +256,6 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
   _getPlansData(String screenTypeIdentity) async {
     var result = await _getPlansUsecase.execute();
     result.fold((failure) {
-      print("Error: $failure");
       //TODO: Handle Failure
     }, (plans) {
       inputForPlanChartScreen.add(plans.data);

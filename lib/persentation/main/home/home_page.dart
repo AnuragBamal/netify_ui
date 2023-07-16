@@ -6,6 +6,8 @@ import 'package:netify/persentation/common/widgets/grid_view_builder.dart';
 import 'package:netify/persentation/common/widgets/list_view_builder.dart';
 import 'package:netify/persentation/main/home/home_page_view_model.dart';
 import 'package:netify/persentation/common/dashboard_list_page.dart';
+import 'package:netify/persentation/main/home/subscriber_list_page.dart';
+import 'package:netify/persentation/main/home/subscription_list_page.dart';
 import 'package:netify/persentation/main/home/user_list_page.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 
@@ -102,6 +104,21 @@ class _HomeState extends State<Home> {
                   homepageViewModel: _homepageViewModel,
                   screenName: mainPageModel.screenTypeIdentity,
                 ),
+              if (mainPageModel.viewType == ScreenViewType.list &&
+                  mainPageModel.dataTypeIdentity == DataTypeIdentity.subscriber)
+                SubscriberDataTypeScreen(
+                  filterList: mainPageModel.filter,
+                  homepageViewModel: _homepageViewModel,
+                  screenName: mainPageModel.screenTypeIdentity,
+                ),
+              if (mainPageModel.viewType == ScreenViewType.list &&
+                  mainPageModel.dataTypeIdentity ==
+                      DataTypeIdentity.subscription)
+                SubscriptionDataTypeScreen(
+                  filterList: mainPageModel.filter,
+                  homepageViewModel: _homepageViewModel,
+                  screenName: mainPageModel.screenTypeIdentity,
+                )
             ],
           ),
         ),

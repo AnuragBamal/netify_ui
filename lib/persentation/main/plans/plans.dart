@@ -1,9 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/domain/model/enum_model.dart';
-import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
+import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/persentation/common/dashboard_list_page.dart';
 import 'package:netify/persentation/common/widgets/grid_view_builder.dart';
 import 'package:netify/persentation/common/widgets/search_widget.dart';

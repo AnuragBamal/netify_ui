@@ -69,6 +69,23 @@ class _MainState extends State<Main> {
           children: <Widget>[
             FittedBox(
               child: Column(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.bar_chart, color: Colors.white),
+                    onPressed: () => _onItemTapped(0),
+                    tooltip: "Home",
+                  ),
+                  Text(
+                    "Home",
+                    style: getBoldStyle(
+                        color: ColorManager.surfaceColor,
+                        fontSize: AppSize.s12),
+                  )
+                ],
+              ),
+            ),
+            FittedBox(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -112,12 +129,6 @@ class _MainState extends State<Main> {
                 ],
               ),
             ),
-            IconButton(
-                icon: const Icon(
-                  Icons.home,
-                  color: Colors.white,
-                ),
-                onPressed: () => _onItemTapped(0)),
             FittedBox(
               child: Column(
                 children: [
@@ -158,14 +169,14 @@ class _MainState extends State<Main> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _onItemTapped(0),
-        backgroundColor: ColorManager.primaryColor,
-        tooltip: 'Home',
-        child: const Icon(Icons.home),
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => _onItemTapped(0),
+      //   backgroundColor: ColorManager.primaryColor,
+      //   tooltip: 'Home',
+      //   child: const Icon(Icons.home),
+      // ),
+      // floatingActionButtonLocation:
+      //     FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 }

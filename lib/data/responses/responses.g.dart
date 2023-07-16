@@ -572,3 +572,356 @@ Map<String, dynamic> _$GetPlanProfileMetaResponseToJson(
       'errorCode': instance.errorCode,
       'data': instance.data,
     };
+
+AddressResponse _$AddressResponseFromJson(Map<String, dynamic> json) =>
+    AddressResponse(
+      addressId: json['addressId'] as String?,
+      streetAddress: json['streetAddress'] as String?,
+      addressType: json['addressType'] as String?,
+      city: json['city'] as String?,
+      state: json['state'] as String?,
+      country: json['country'] as String?,
+      postalcode: json['postalcode'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$AddressResponseToJson(AddressResponse instance) =>
+    <String, dynamic>{
+      'addressId': instance.addressId,
+      'streetAddress': instance.streetAddress,
+      'addressType': instance.addressType,
+      'city': instance.city,
+      'state': instance.state,
+      'country': instance.country,
+      'postalcode': instance.postalcode,
+      'updatedAt': instance.updatedAt,
+    };
+
+SubscriberResponse _$SubscriberResponseFromJson(Map<String, dynamic> json) =>
+    SubscriberResponse(
+      userName: json['userName'] as String?,
+      customerId: json['customerId'] as String?,
+      firstName: json['firstName'] as String?,
+      lastName: json['lastName'] as String?,
+      email: json['email'] as String?,
+      mobileNumber: json['mobileNumber'] as String?,
+      operatorUserName: json['operatorUserName'] as String?,
+      resellerUserName: json['resellerUserName'] as String?,
+      permanentAddress: json['permanentAddress'] == null
+          ? null
+          : AddressResponse.fromJson(
+              json['permanentAddress'] as Map<String, dynamic>),
+      billingAddress: json['billingAddress'] == null
+          ? null
+          : AddressResponse.fromJson(
+              json['billingAddress'] as Map<String, dynamic>),
+      companyName: json['companyName'] as String?,
+      brandName: json['brandName'] as String?,
+      gstNumber: json['gstNumber'] as String?,
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$SubscriberResponseToJson(SubscriberResponse instance) =>
+    <String, dynamic>{
+      'userName': instance.userName,
+      'customerId': instance.customerId,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'email': instance.email,
+      'mobileNumber': instance.mobileNumber,
+      'operatorUserName': instance.operatorUserName,
+      'resellerUserName': instance.resellerUserName,
+      'permanentAddress': instance.permanentAddress,
+      'billingAddress': instance.billingAddress,
+      'companyName': instance.companyName,
+      'brandName': instance.brandName,
+      'gstNumber': instance.gstNumber,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };
+
+SubscriptionResponse _$SubscriptionResponseFromJson(
+        Map<String, dynamic> json) =>
+    SubscriptionResponse(
+      subscriptionId: json['subscriptionId'] as String?,
+      subscriberUserName: json['subscriberUserName'] as String?,
+      resellerUserName: json['resellerUserName'] as String?,
+      operatorUserName: json['operatorUserName'] as String?,
+      status: json['status'] as String?,
+      planName: json['planName'] as String?,
+      networkType: json['networkType'] as String?,
+      assignedIp: json['assignedIp'] as String?,
+      ipType: json['ipType'] as String?,
+      subscriptionDate: json['subscriptionDate'] as String?,
+      lastRenewalDate: json['lastRenewalDate'] as String?,
+      nextRenewalDate: json['nextRenewalDate'] as String?,
+      installationAddress: json['installationAddress'] == null
+          ? null
+          : AddressResponse.fromJson(
+              json['installationAddress'] as Map<String, dynamic>),
+      permanentAddress: json['permanentAddress'] == null
+          ? null
+          : AddressResponse.fromJson(
+              json['permanentAddress'] as Map<String, dynamic>),
+      billingAddress: json['billingAddress'] == null
+          ? null
+          : AddressResponse.fromJson(
+              json['billingAddress'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$SubscriptionResponseToJson(
+        SubscriptionResponse instance) =>
+    <String, dynamic>{
+      'subscriptionId': instance.subscriptionId,
+      'subscriberUserName': instance.subscriberUserName,
+      'resellerUserName': instance.resellerUserName,
+      'operatorUserName': instance.operatorUserName,
+      'status': instance.status,
+      'planName': instance.planName,
+      'networkType': instance.networkType,
+      'assignedIp': instance.assignedIp,
+      'ipType': instance.ipType,
+      'subscriptionDate': instance.subscriptionDate,
+      'lastRenewalDate': instance.lastRenewalDate,
+      'nextRenewalDate': instance.nextRenewalDate,
+      'installationAddress': instance.installationAddress,
+      'permanentAddress': instance.permanentAddress,
+      'billingAddress': instance.billingAddress,
+    };
+
+SubscriberListBlockResponse _$SubscriberListBlockResponseFromJson(
+        Map<String, dynamic> json) =>
+    SubscriberListBlockResponse(
+      subscribers: (json['subscribers'] as List<dynamic>?)
+          ?.map((e) => SubscriberResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      isSearch: json['isSearch'] as bool?,
+      screenTypeIdentity: json['screenTypeIdentity'] as String?,
+    );
+
+Map<String, dynamic> _$SubscriberListBlockResponseToJson(
+        SubscriberListBlockResponse instance) =>
+    <String, dynamic>{
+      'subscribers': instance.subscribers,
+      'isSearch': instance.isSearch,
+      'screenTypeIdentity': instance.screenTypeIdentity,
+    };
+
+SubscriptionListBlockResponse _$SubscriptionListBlockResponseFromJson(
+        Map<String, dynamic> json) =>
+    SubscriptionListBlockResponse(
+      subscriptions: (json['subscriptions'] as List<dynamic>?)
+          ?.map((e) => SubscriptionResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      isSearch: json['isSearch'] as bool?,
+      screenTypeIdentity: json['screenTypeIdentity'] as String?,
+    );
+
+Map<String, dynamic> _$SubscriptionListBlockResponseToJson(
+        SubscriptionListBlockResponse instance) =>
+    <String, dynamic>{
+      'subscriptions': instance.subscriptions,
+      'isSearch': instance.isSearch,
+      'screenTypeIdentity': instance.screenTypeIdentity,
+    };
+
+GetSubscriberListBlockResponse _$GetSubscriberListBlockResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetSubscriberListBlockResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              SubscriberListBlockResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetSubscriberListBlockResponseToJson(
+        GetSubscriberListBlockResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+GetSubscriptionListBlockResponse _$GetSubscriptionListBlockResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetSubscriptionListBlockResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              SubscriptionListBlockResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetSubscriptionListBlockResponseToJson(
+        GetSubscriptionListBlockResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+PayeeResponse _$PayeeResponseFromJson(Map<String, dynamic> json) =>
+    PayeeResponse(
+      userName: json['userName'] as String?,
+      userId: json['userId'] as String?,
+    );
+
+Map<String, dynamic> _$PayeeResponseToJson(PayeeResponse instance) =>
+    <String, dynamic>{
+      'userName': instance.userName,
+      'userId': instance.userId,
+    };
+
+TransactionResponse _$TransactionResponseFromJson(Map<String, dynamic> json) =>
+    TransactionResponse(
+      transactionId: json['transactionId'] as String?,
+      senderUsername: json['senderUsername'] as String?,
+      receiverUsername: json['receiverUsername'] as String?,
+      amount: (json['amount'] as num?)?.toDouble(),
+      transactionStatus: json['transactionStatus'] as String?,
+      transactionType: json['transactionType'] as String?,
+      transactionDate: json['transactionDate'] as String?,
+    );
+
+Map<String, dynamic> _$TransactionResponseToJson(
+        TransactionResponse instance) =>
+    <String, dynamic>{
+      'transactionId': instance.transactionId,
+      'senderUsername': instance.senderUsername,
+      'receiverUsername': instance.receiverUsername,
+      'amount': instance.amount,
+      'transactionStatus': instance.transactionStatus,
+      'transactionType': instance.transactionType,
+      'transactionDate': instance.transactionDate,
+    };
+
+UserWalletResponse _$UserWalletResponseFromJson(Map<String, dynamic> json) =>
+    UserWalletResponse(
+      balance: (json['balance'] as num?)?.toDouble(),
+      transactions: (json['transactions'] as List<dynamic>?)
+          ?.map((e) => TransactionResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      payee: json['payee'] == null
+          ? null
+          : PayeeResponse.fromJson(json['payee'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UserWalletResponseToJson(UserWalletResponse instance) =>
+    <String, dynamic>{
+      'balance': instance.balance,
+      'transactions': instance.transactions,
+      'payee': instance.payee,
+    };
+
+GetUserWalletResponse _$GetUserWalletResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetUserWalletResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => UserWalletResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetUserWalletResponseToJson(
+        GetUserWalletResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+SubscriberMapInfoResponse _$SubscriberMapInfoResponseFromJson(
+        Map<String, dynamic> json) =>
+    SubscriberMapInfoResponse(
+      subscriberUserName: json['subscriberUserName'] as String?,
+      customerId: json['customerId'] as String?,
+      email: json['email'] as String?,
+      mobileNumber: json['mobileNumber'] as String?,
+    );
+
+Map<String, dynamic> _$SubscriberMapInfoResponseToJson(
+        SubscriberMapInfoResponse instance) =>
+    <String, dynamic>{
+      'subscriberUserName': instance.subscriberUserName,
+      'customerId': instance.customerId,
+      'mobileNumber': instance.mobileNumber,
+      'email': instance.email,
+    };
+
+SubscriptionMetaResponse _$SubscriptionMetaResponseFromJson(
+        Map<String, dynamic> json) =>
+    SubscriptionMetaResponse(
+      resellerOperatorMap:
+          (json['resellerOperatorMap'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+      ),
+      operatorSubscriberMap:
+          (json['operatorSubscriberMap'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(
+            k,
+            (e as List<dynamic>)
+                .map((e) => SubscriberMapInfoResponse.fromJson(
+                    e as Map<String, dynamic>))
+                .toList()),
+      ),
+      operatorPlanMap: (json['operatorPlanMap'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(
+            k,
+            (e as List<dynamic>)
+                .map((e) => PlanProfileMetaPlanResponse.fromJson(
+                    e as Map<String, dynamic>))
+                .toList()),
+      ),
+      networkType: (json['networkType'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      ipType:
+          (json['ipType'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      availiableIps: (json['availiableIps'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$SubscriptionMetaResponseToJson(
+        SubscriptionMetaResponse instance) =>
+    <String, dynamic>{
+      'resellerOperatorMap': instance.resellerOperatorMap,
+      'operatorPlanMap': instance.operatorPlanMap,
+      'operatorSubscriberMap': instance.operatorSubscriberMap,
+      'networkType': instance.networkType,
+      'ipType': instance.ipType,
+      'availiableIps': instance.availiableIps,
+    };
+
+GetSubscriptionMetaResponse _$GetSubscriptionMetaResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetSubscriptionMetaResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              SubscriptionMetaResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetSubscriptionMetaResponseToJson(
+        GetSubscriptionMetaResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };

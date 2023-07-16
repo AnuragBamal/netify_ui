@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:netify/app/constant.dart';
 import 'package:netify/data/responses/responses.dart';
+import 'package:netify/domain/model/model.dart';
 import 'package:retrofit/retrofit.dart';
 part 'api.g.dart';
 
@@ -67,4 +68,29 @@ abstract class ApiServiceClient {
 
   @GET("/api/v1/tenancy/ui/getplanprofile")
   Future<GetPlanProfileMetaResponse> getPlanProfile();
+
+  @POST("/api/v1/subs/subscriber")
+  Future<GeneralSuccessResponse> createSubscriber(
+      @Body() Map<String, dynamic> body);
+
+  @POST("/api/v1/subs/subscription")
+  Future<GeneralSuccessResponse> createSubscription(
+      @Body() Map<String, dynamic> body);
+
+  @POST("/api/v1/tenancy/wallet/transfer")
+  Future<GeneralSuccessResponse> w2wTransfer(@Body() Map<String, dynamic> body);
+
+  @GET("/api/v1/tenancy/wallet/")
+  Future<GetUserWalletResponse> getUserWallet();
+
+  @GET("/api/v1/subs/subscriberlist")
+  Future<GetSubscriberListBlockResponse> getSubscriberList(
+      @Queries() Map<String, dynamic> queryParams);
+
+  @GET("/api/v1/subs/subscriptionlist")
+  Future<GetSubscriptionListBlockResponse> getSubscriptionList(
+      @Queries() Map<String, dynamic> queryParams);
+
+  @GET("/api/v1/tenancy/ui/getsubscriptionmeta")
+  Future<GetSubscriptionMetaResponse> getSubscriptionMetadata();
 }

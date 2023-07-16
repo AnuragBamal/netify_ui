@@ -54,8 +54,6 @@ class UserViewModel extends BaseViewModelInputsOutputs
   final domainNameStreamController = BehaviorSubject<String>.seeded("");
   final StreamController _isAllInputValidStreamController =
       StreamController<void>.broadcast();
-  final StreamController isUserCreatedSuccessfullyStreamController =
-      StreamController<bool>();
   final CreateUserUseCase _createUserUseCase;
   final GetResellerMapUseCase _getResellerMapUseCase;
   late ResellerOperatorMap resellerOperatorMap;
@@ -83,12 +81,14 @@ class UserViewModel extends BaseViewModelInputsOutputs
 
     _userNameStreamController.close();
     _isAllInputValidStreamController.close();
-    isUserCreatedSuccessfullyStreamController.close();
+    _companyNameStreamController.close();
     _stateAddressStreamController.close();
     _pincodeStreamController.close();
     _gstNumberStreamController.close();
     _ownerTypeStreamController.close();
     _userTypeStreamController.close();
+    _brandNameStreamController.close();
+    domainNameStreamController.close();
   }
 
   @override

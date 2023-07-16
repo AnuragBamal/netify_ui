@@ -1,4 +1,6 @@
 import 'package:netify/domain/model/home_model.dart';
+import 'package:netify/domain/model/plan_model.dart';
+import 'package:netify/domain/model/wallet_model.dart';
 
 class SliderObject {
   final String title;
@@ -431,5 +433,87 @@ class GetPlanProfileMeta extends BaseResponse {
       'message': message,
       'errorCode': errorCode
     };
+  }
+}
+
+class GetSubscriberListBlock extends BaseResponse {
+  final List<SubscriberListBlock> data;
+
+  GetSubscriberListBlock(
+      {required this.data,
+      required String status,
+      required String message,
+      required String errorCode})
+      : super(status: status, message: message, errorCode: errorCode);
+
+  factory GetSubscriberListBlock.fromJson(Map<String, dynamic> json) {
+    return GetSubscriberListBlock(
+        data: (json['data'] as List)
+            .map((e) => SubscriberListBlock.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetSubscriptionListBlock extends BaseResponse {
+  final List<SubscriptionListBlock> data;
+
+  GetSubscriptionListBlock(
+      {required this.data,
+      required String status,
+      required String message,
+      required String errorCode})
+      : super(status: status, message: message, errorCode: errorCode);
+
+  factory GetSubscriptionListBlock.fromJson(Map<String, dynamic> json) {
+    return GetSubscriptionListBlock(
+        data: (json['data'] as List)
+            .map((e) => SubscriptionListBlock.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetUserWallet extends BaseResponse {
+  final List<UserWallet> data;
+
+  GetUserWallet(
+      {required this.data,
+      required String status,
+      required String message,
+      required String errorCode})
+      : super(status: status, message: message, errorCode: errorCode);
+
+  factory GetUserWallet.fromJson(Map<String, dynamic> json) {
+    return GetUserWallet(
+        data:
+            (json['data'] as List).map((e) => UserWallet.fromJson(e)).toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetSubscriptionMeta extends BaseResponse {
+  final List<SubscriptionMeta> data;
+
+  GetSubscriptionMeta(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetSubscriptionMeta.fromJson(Map<String, dynamic> json) {
+    return GetSubscriptionMeta(
+        data: (json['data'] as List)
+            .map((e) => SubscriptionMeta.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
   }
 }

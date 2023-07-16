@@ -7,6 +7,8 @@ import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
+import 'package:netify/domain/usecase/getsubscriber_usecase.dart';
+import 'package:netify/domain/usecase/getsubscription_usecase.dart';
 import 'package:netify/domain/usecase/getuser_usecase.dart';
 import 'package:netify/domain/usecase/getuserlist_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
@@ -27,8 +29,18 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
 
   final _operatorScreenController = BehaviorSubject<List<User>>();
 
+  final _subscriberScreenController = BehaviorSubject<List<Subscriber>>();
+
+  final _subscriptionScreenController = BehaviorSubject<List<Subscription>>();
+
   final StreamController _userSearchController =
       StreamController<List<User>>.broadcast();
+
+  final StreamController _subscriberSearchController =
+      StreamController<List<Subscriber>>.broadcast();
+
+  final StreamController _subscriptionSearchController =
+      StreamController<List<Subscription>>.broadcast();
 
   final StreamController _dashBoardController =
       StreamController<List<DashboardItem>>.broadcast();
@@ -38,6 +50,8 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
   final GetUserUseCase _getUserUseCase;
   final GetUserListUsecase _getUserListUsecase;
   final GetDashboardUseCase _getDashboardUseCase;
+  final GetSubscriberUsecase _getSubscriberUsecase;
+  final GetSubscriptionUsecase _getSubscriptionUsecase;
   late final Map<int, MainPageModel> _screenIndex;
   late final LoginUserMetaData _loginUserMetaData;
   final NavigationService _navigationService;
@@ -50,11 +64,14 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
   bool isSearchEnabled = false;
 
   HomepageViewModel(
-      this._getUserUseCase,
-      this._getUserListUsecase,
-      this._getDashboardUseCase,
-      this._navigationService,
-      this._authenticationService);
+    this._getUserUseCase,
+    this._getUserListUsecase,
+    this._getDashboardUseCase,
+    this._navigationService,
+    this._authenticationService,
+    this._getSubscriberUsecase,
+    this._getSubscriptionUsecase,
+  );
 
   @override
   void start() {
@@ -75,6 +92,10 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
     _userSearchController.close();
     _dashBoardController.close();
     _searchStateController.close();
+    _subscriberScreenController.close();
+    _subscriptionScreenController.close();
+    _subscriberSearchController.close();
+    _subscriptionSearchController.close();
   }
 
   @override
@@ -90,6 +111,13 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
     }
     if (_screenIndex[index]!.dataTypeIdentity == DataTypeIdentity.dashboard) {
       _getDashboardData(_screenIndex[index]!.screenTypeIdentity);
+    }
+    if (_screenIndex[index]!.dataTypeIdentity == DataTypeIdentity.subscriber) {
+      _getSubscriberListData(_screenIndex[index]!.screenTypeIdentity);
+    }
+    if (_screenIndex[index]!.dataTypeIdentity ==
+        DataTypeIdentity.subscription) {
+      _getSubscriptionListData(_screenIndex[index]!.screenTypeIdentity);
     }
     _postDataToView();
   }
@@ -115,6 +143,46 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
     }
   }
 
+  void updateSubscriberSearchFilter(String? filterName, String? value) {
+    if (filterName == null || filterName.isEmpty || value == null) {
+      return;
+    }
+    searchFilterCurrentValues[_currentFilter] = value;
+    if (value.length > 2) {
+      isSearchEnabled = true;
+      inputForSearchState.add(true);
+      _filterSearchValue = value;
+      _currentFilter = filterName;
+      _getSubscriberListData(
+        _screenIndex[_currentDisplayIndex]!.screenTypeIdentity,
+      );
+    } else {
+      isSearchEnabled = false;
+      inputForSearchState.add(false);
+      return;
+    }
+  }
+
+  void updateSubscriptionSearchFilter(String? filterName, String? value) {
+    if (filterName == null || filterName.isEmpty || value == null) {
+      return;
+    }
+    searchFilterCurrentValues[_currentFilter] = value;
+    if (value.length > 2) {
+      isSearchEnabled = true;
+      inputForSearchState.add(true);
+      _filterSearchValue = value;
+      _currentFilter = filterName;
+      _getSubscriptionListData(
+        _screenIndex[_currentDisplayIndex]!.screenTypeIdentity,
+      );
+    } else {
+      isSearchEnabled = false;
+      inputForSearchState.add(false);
+      return;
+    }
+  }
+
   navigateToLogin() {
     // _navigationService.popUntil(Routes.homeRoute);
     _navigationService.replaceRoute(Routes.loginRoute);
@@ -122,6 +190,14 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
 
   navigateToCreateUser(CreateUserViewArguments args) {
     _navigationService.navigateTo(Routes.createuser, arguments: args);
+  }
+
+  navigateToCreateSubscriber() {
+    _navigationService.navigateTo(Routes.createSubscriber);
+  }
+
+  navigateToCreateSubscription() {
+    _navigationService.navigateTo(Routes.createSubscription);
   }
 
   @override
@@ -138,6 +214,15 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
 
   @override
   Sink get inputForSearchState => _searchStateController.sink;
+
+  Sink get inputForSubscriberTypeScreen => _subscriberScreenController.sink;
+
+  Sink get inputForSubscriptionTypeScreen => _subscriptionScreenController.sink;
+
+  Sink get inputSubscriberDataTypeSearch => _subscriberSearchController.sink;
+
+  Sink get inputSubscriptionDataTypeSearch =>
+      _subscriptionSearchController.sink;
 
   @override
   Stream<bool> get outputForSearchState =>
@@ -166,6 +251,22 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
   @override
   Stream<List<User>> get outputForResellerTypeScreen =>
       _resellerScreenController.stream.map((resellerScreen) => resellerScreen);
+
+  Stream<List<Subscriber>> get outputForSubscriberTypeScreen =>
+      _subscriberScreenController.stream
+          .map((subscriberScreen) => subscriberScreen);
+
+  Stream<List<Subscription>> get outputForSubscriptionTypeScreen =>
+      _subscriptionScreenController.stream
+          .map((subscriptionScreen) => subscriptionScreen);
+
+  Stream<List<Subscriber>> get outputSubscriberDataTypeSearch =>
+      _subscriberSearchController.stream
+          .map((subscriberSearch) => subscriberSearch);
+
+  Stream<List<Subscription>> get outputSubscriptionDataTypeSearch =>
+      _subscriptionSearchController.stream
+          .map((subscriptionSearch) => subscriptionSearch);
 
 //----------------Private Methods----------------//
 
@@ -213,6 +314,79 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
       inputForResellerTypeScreen.add(getUserList.users);
     } else if (getUserList.screenTypeIdentity == ScreenTypeIdentity.operator) {
       inputForOperatorTypeScreen.add(getUserList.users);
+    }
+  }
+
+  _getSubscriberListData(String screenTypeIdentity) async {
+    GetScreenRequest request;
+    if (isSearchEnabled &&
+        _currentFilter.isNotEmpty &&
+        _filterSearchValue.isNotEmpty) {
+      request = GetScreenRequest(
+          isSearch: true,
+          pageNumber: 0,
+          pageSize: 10,
+          screenTypeIdentity: screenTypeIdentity,
+          searchFilter: _currentFilter,
+          searchValue: _filterSearchValue);
+    } else {
+      request = GetScreenRequest(
+          isSearch: false,
+          pageNumber: 0,
+          pageSize: 10,
+          screenTypeIdentity: screenTypeIdentity);
+    }
+    final Either<Failure, GetSubscriberListBlock> result =
+        await _getSubscriberUsecase.execute(request);
+    result.fold((failure) {
+      //TODO: Handle Error
+    }, (success) {
+      _handleSuccessSubscriberListResponse(success.data[0]);
+    });
+  }
+
+  _handleSuccessSubscriberListResponse(SubscriberListBlock getSubscriberList) {
+    if (getSubscriberList.isSearch == true) {
+      inputSubscriberDataTypeSearch.add(getSubscriberList.subscribers);
+    } else {
+      inputForSubscriberTypeScreen.add(getSubscriberList.subscribers);
+    }
+  }
+
+  _getSubscriptionListData(String screenTypeIdentity) async {
+    GetScreenRequest request;
+    if (isSearchEnabled &&
+        _currentFilter.isNotEmpty &&
+        _filterSearchValue.isNotEmpty) {
+      request = GetScreenRequest(
+          isSearch: true,
+          pageNumber: 0,
+          pageSize: 10,
+          screenTypeIdentity: screenTypeIdentity,
+          searchFilter: _currentFilter,
+          searchValue: _filterSearchValue);
+    } else {
+      request = GetScreenRequest(
+          isSearch: false,
+          pageNumber: 0,
+          pageSize: 10,
+          screenTypeIdentity: screenTypeIdentity);
+    }
+    final Either<Failure, GetSubscriptionListBlock> result =
+        await _getSubscriptionUsecase.execute(request);
+    result.fold((failure) {
+      //TODO: Handle Error
+    }, (success) {
+      _handleSuccessSubscriptionListResponse(success.data[0]);
+    });
+  }
+
+  _handleSuccessSubscriptionListResponse(
+      SubscriptionListBlock getSubscriptionList) {
+    if (getSubscriptionList.isSearch == true) {
+      inputSubscriptionDataTypeSearch.add(getSubscriptionList.subscriptions);
+    } else {
+      inputForSubscriptionTypeScreen.add(getSubscriptionList.subscriptions);
     }
   }
 
