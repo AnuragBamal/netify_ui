@@ -1397,6 +1397,29 @@ abstract class _CreateNewUserObject implements CreateNewUserObject {
 mixin _$CreatePlan {
   String get planName => throw _privateConstructorUsedError;
   String get planDescription => throw _privateConstructorUsedError;
+  String get planType => throw _privateConstructorUsedError;
+  double get planBasicCost => throw _privateConstructorUsedError;
+  double get planOfferedCost => throw _privateConstructorUsedError;
+  double get planEnteredCost => throw _privateConstructorUsedError;
+  double get taxAmount => throw _privateConstructorUsedError;
+  int get planValidity => throw _privateConstructorUsedError;
+  String get planValidityUnit => throw _privateConstructorUsedError;
+  int get downloadSpeed => throw _privateConstructorUsedError;
+  String get downloadSpeedUnit => throw _privateConstructorUsedError;
+  int get uploadSpeed => throw _privateConstructorUsedError;
+  String get uploadSpeedUnit => throw _privateConstructorUsedError;
+  int get dataLimit => throw _privateConstructorUsedError;
+  String get dataLimitUnit => throw _privateConstructorUsedError;
+  int get downloadSpeedFUP => throw _privateConstructorUsedError;
+  int get uploadSpeedFUP => throw _privateConstructorUsedError;
+  String get downloadSpeedFUPUnit => throw _privateConstructorUsedError;
+  String get uploadSpeedFUPUnit => throw _privateConstructorUsedError;
+  int get dataLimitFUP => throw _privateConstructorUsedError;
+  String get dataLimitFUPUnit => throw _privateConstructorUsedError;
+  int get maxSessionTimeInsec => throw _privateConstructorUsedError;
+  int get maxDataTransferInSession => throw _privateConstructorUsedError;
+  int get maxSimultaneousUser => throw _privateConstructorUsedError;
+  int get gracePeriodInDays => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreatePlanCopyWith<CreatePlan> get copyWith =>
@@ -1409,7 +1432,32 @@ abstract class $CreatePlanCopyWith<$Res> {
           CreatePlan value, $Res Function(CreatePlan) then) =
       _$CreatePlanCopyWithImpl<$Res, CreatePlan>;
   @useResult
-  $Res call({String planName, String planDescription});
+  $Res call(
+      {String planName,
+      String planDescription,
+      String planType,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount,
+      int planValidity,
+      String planValidityUnit,
+      int downloadSpeed,
+      String downloadSpeedUnit,
+      int uploadSpeed,
+      String uploadSpeedUnit,
+      int dataLimit,
+      String dataLimitUnit,
+      int downloadSpeedFUP,
+      int uploadSpeedFUP,
+      String downloadSpeedFUPUnit,
+      String uploadSpeedFUPUnit,
+      int dataLimitFUP,
+      String dataLimitFUPUnit,
+      int maxSessionTimeInsec,
+      int maxDataTransferInSession,
+      int maxSimultaneousUser,
+      int gracePeriodInDays});
 }
 
 /// @nodoc
@@ -1427,6 +1475,29 @@ class _$CreatePlanCopyWithImpl<$Res, $Val extends CreatePlan>
   $Res call({
     Object? planName = null,
     Object? planDescription = null,
+    Object? planType = null,
+    Object? planBasicCost = null,
+    Object? planOfferedCost = null,
+    Object? planEnteredCost = null,
+    Object? taxAmount = null,
+    Object? planValidity = null,
+    Object? planValidityUnit = null,
+    Object? downloadSpeed = null,
+    Object? downloadSpeedUnit = null,
+    Object? uploadSpeed = null,
+    Object? uploadSpeedUnit = null,
+    Object? dataLimit = null,
+    Object? dataLimitUnit = null,
+    Object? downloadSpeedFUP = null,
+    Object? uploadSpeedFUP = null,
+    Object? downloadSpeedFUPUnit = null,
+    Object? uploadSpeedFUPUnit = null,
+    Object? dataLimitFUP = null,
+    Object? dataLimitFUPUnit = null,
+    Object? maxSessionTimeInsec = null,
+    Object? maxDataTransferInSession = null,
+    Object? maxSimultaneousUser = null,
+    Object? gracePeriodInDays = null,
   }) {
     return _then(_value.copyWith(
       planName: null == planName
@@ -1437,6 +1508,98 @@ class _$CreatePlanCopyWithImpl<$Res, $Val extends CreatePlan>
           ? _value.planDescription
           : planDescription // ignore: cast_nullable_to_non_nullable
               as String,
+      planType: null == planType
+          ? _value.planType
+          : planType // ignore: cast_nullable_to_non_nullable
+              as String,
+      planBasicCost: null == planBasicCost
+          ? _value.planBasicCost
+          : planBasicCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      planOfferedCost: null == planOfferedCost
+          ? _value.planOfferedCost
+          : planOfferedCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      planEnteredCost: null == planEnteredCost
+          ? _value.planEnteredCost
+          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      taxAmount: null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      planValidity: null == planValidity
+          ? _value.planValidity
+          : planValidity // ignore: cast_nullable_to_non_nullable
+              as int,
+      planValidityUnit: null == planValidityUnit
+          ? _value.planValidityUnit
+          : planValidityUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      downloadSpeed: null == downloadSpeed
+          ? _value.downloadSpeed
+          : downloadSpeed // ignore: cast_nullable_to_non_nullable
+              as int,
+      downloadSpeedUnit: null == downloadSpeedUnit
+          ? _value.downloadSpeedUnit
+          : downloadSpeedUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      uploadSpeed: null == uploadSpeed
+          ? _value.uploadSpeed
+          : uploadSpeed // ignore: cast_nullable_to_non_nullable
+              as int,
+      uploadSpeedUnit: null == uploadSpeedUnit
+          ? _value.uploadSpeedUnit
+          : uploadSpeedUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      dataLimit: null == dataLimit
+          ? _value.dataLimit
+          : dataLimit // ignore: cast_nullable_to_non_nullable
+              as int,
+      dataLimitUnit: null == dataLimitUnit
+          ? _value.dataLimitUnit
+          : dataLimitUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      downloadSpeedFUP: null == downloadSpeedFUP
+          ? _value.downloadSpeedFUP
+          : downloadSpeedFUP // ignore: cast_nullable_to_non_nullable
+              as int,
+      uploadSpeedFUP: null == uploadSpeedFUP
+          ? _value.uploadSpeedFUP
+          : uploadSpeedFUP // ignore: cast_nullable_to_non_nullable
+              as int,
+      downloadSpeedFUPUnit: null == downloadSpeedFUPUnit
+          ? _value.downloadSpeedFUPUnit
+          : downloadSpeedFUPUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      uploadSpeedFUPUnit: null == uploadSpeedFUPUnit
+          ? _value.uploadSpeedFUPUnit
+          : uploadSpeedFUPUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      dataLimitFUP: null == dataLimitFUP
+          ? _value.dataLimitFUP
+          : dataLimitFUP // ignore: cast_nullable_to_non_nullable
+              as int,
+      dataLimitFUPUnit: null == dataLimitFUPUnit
+          ? _value.dataLimitFUPUnit
+          : dataLimitFUPUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      maxSessionTimeInsec: null == maxSessionTimeInsec
+          ? _value.maxSessionTimeInsec
+          : maxSessionTimeInsec // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxDataTransferInSession: null == maxDataTransferInSession
+          ? _value.maxDataTransferInSession
+          : maxDataTransferInSession // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxSimultaneousUser: null == maxSimultaneousUser
+          ? _value.maxSimultaneousUser
+          : maxSimultaneousUser // ignore: cast_nullable_to_non_nullable
+              as int,
+      gracePeriodInDays: null == gracePeriodInDays
+          ? _value.gracePeriodInDays
+          : gracePeriodInDays // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -1449,7 +1612,32 @@ abstract class _$$_CreatePlanCopyWith<$Res>
       __$$_CreatePlanCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String planName, String planDescription});
+  $Res call(
+      {String planName,
+      String planDescription,
+      String planType,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount,
+      int planValidity,
+      String planValidityUnit,
+      int downloadSpeed,
+      String downloadSpeedUnit,
+      int uploadSpeed,
+      String uploadSpeedUnit,
+      int dataLimit,
+      String dataLimitUnit,
+      int downloadSpeedFUP,
+      int uploadSpeedFUP,
+      String downloadSpeedFUPUnit,
+      String uploadSpeedFUPUnit,
+      int dataLimitFUP,
+      String dataLimitFUPUnit,
+      int maxSessionTimeInsec,
+      int maxDataTransferInSession,
+      int maxSimultaneousUser,
+      int gracePeriodInDays});
 }
 
 /// @nodoc
@@ -1465,6 +1653,29 @@ class __$$_CreatePlanCopyWithImpl<$Res>
   $Res call({
     Object? planName = null,
     Object? planDescription = null,
+    Object? planType = null,
+    Object? planBasicCost = null,
+    Object? planOfferedCost = null,
+    Object? planEnteredCost = null,
+    Object? taxAmount = null,
+    Object? planValidity = null,
+    Object? planValidityUnit = null,
+    Object? downloadSpeed = null,
+    Object? downloadSpeedUnit = null,
+    Object? uploadSpeed = null,
+    Object? uploadSpeedUnit = null,
+    Object? dataLimit = null,
+    Object? dataLimitUnit = null,
+    Object? downloadSpeedFUP = null,
+    Object? uploadSpeedFUP = null,
+    Object? downloadSpeedFUPUnit = null,
+    Object? uploadSpeedFUPUnit = null,
+    Object? dataLimitFUP = null,
+    Object? dataLimitFUPUnit = null,
+    Object? maxSessionTimeInsec = null,
+    Object? maxDataTransferInSession = null,
+    Object? maxSimultaneousUser = null,
+    Object? gracePeriodInDays = null,
   }) {
     return _then(_$_CreatePlan(
       null == planName
@@ -1475,6 +1686,98 @@ class __$$_CreatePlanCopyWithImpl<$Res>
           ? _value.planDescription
           : planDescription // ignore: cast_nullable_to_non_nullable
               as String,
+      null == planType
+          ? _value.planType
+          : planType // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == planBasicCost
+          ? _value.planBasicCost
+          : planBasicCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planOfferedCost
+          ? _value.planOfferedCost
+          : planOfferedCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planEnteredCost
+          ? _value.planEnteredCost
+          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planValidity
+          ? _value.planValidity
+          : planValidity // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == planValidityUnit
+          ? _value.planValidityUnit
+          : planValidityUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == downloadSpeed
+          ? _value.downloadSpeed
+          : downloadSpeed // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == downloadSpeedUnit
+          ? _value.downloadSpeedUnit
+          : downloadSpeedUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == uploadSpeed
+          ? _value.uploadSpeed
+          : uploadSpeed // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == uploadSpeedUnit
+          ? _value.uploadSpeedUnit
+          : uploadSpeedUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == dataLimit
+          ? _value.dataLimit
+          : dataLimit // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == dataLimitUnit
+          ? _value.dataLimitUnit
+          : dataLimitUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == downloadSpeedFUP
+          ? _value.downloadSpeedFUP
+          : downloadSpeedFUP // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == uploadSpeedFUP
+          ? _value.uploadSpeedFUP
+          : uploadSpeedFUP // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == downloadSpeedFUPUnit
+          ? _value.downloadSpeedFUPUnit
+          : downloadSpeedFUPUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == uploadSpeedFUPUnit
+          ? _value.uploadSpeedFUPUnit
+          : uploadSpeedFUPUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == dataLimitFUP
+          ? _value.dataLimitFUP
+          : dataLimitFUP // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == dataLimitFUPUnit
+          ? _value.dataLimitFUPUnit
+          : dataLimitFUPUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == maxSessionTimeInsec
+          ? _value.maxSessionTimeInsec
+          : maxSessionTimeInsec // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == maxDataTransferInSession
+          ? _value.maxDataTransferInSession
+          : maxDataTransferInSession // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == maxSimultaneousUser
+          ? _value.maxSimultaneousUser
+          : maxSimultaneousUser // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == gracePeriodInDays
+          ? _value.gracePeriodInDays
+          : gracePeriodInDays // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1482,16 +1785,87 @@ class __$$_CreatePlanCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_CreatePlan implements _CreatePlan {
-  _$_CreatePlan(this.planName, this.planDescription);
+  _$_CreatePlan(
+      this.planName,
+      this.planDescription,
+      this.planType,
+      this.planBasicCost,
+      this.planOfferedCost,
+      this.planEnteredCost,
+      this.taxAmount,
+      this.planValidity,
+      this.planValidityUnit,
+      this.downloadSpeed,
+      this.downloadSpeedUnit,
+      this.uploadSpeed,
+      this.uploadSpeedUnit,
+      this.dataLimit,
+      this.dataLimitUnit,
+      this.downloadSpeedFUP,
+      this.uploadSpeedFUP,
+      this.downloadSpeedFUPUnit,
+      this.uploadSpeedFUPUnit,
+      this.dataLimitFUP,
+      this.dataLimitFUPUnit,
+      this.maxSessionTimeInsec,
+      this.maxDataTransferInSession,
+      this.maxSimultaneousUser,
+      this.gracePeriodInDays);
 
   @override
   final String planName;
   @override
   final String planDescription;
+  @override
+  final String planType;
+  @override
+  final double planBasicCost;
+  @override
+  final double planOfferedCost;
+  @override
+  final double planEnteredCost;
+  @override
+  final double taxAmount;
+  @override
+  final int planValidity;
+  @override
+  final String planValidityUnit;
+  @override
+  final int downloadSpeed;
+  @override
+  final String downloadSpeedUnit;
+  @override
+  final int uploadSpeed;
+  @override
+  final String uploadSpeedUnit;
+  @override
+  final int dataLimit;
+  @override
+  final String dataLimitUnit;
+  @override
+  final int downloadSpeedFUP;
+  @override
+  final int uploadSpeedFUP;
+  @override
+  final String downloadSpeedFUPUnit;
+  @override
+  final String uploadSpeedFUPUnit;
+  @override
+  final int dataLimitFUP;
+  @override
+  final String dataLimitFUPUnit;
+  @override
+  final int maxSessionTimeInsec;
+  @override
+  final int maxDataTransferInSession;
+  @override
+  final int maxSimultaneousUser;
+  @override
+  final int gracePeriodInDays;
 
   @override
   String toString() {
-    return 'CreatePlan(planName: $planName, planDescription: $planDescription)';
+    return 'CreatePlan(planName: $planName, planDescription: $planDescription, planType: $planType, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount, planValidity: $planValidity, planValidityUnit: $planValidityUnit, downloadSpeed: $downloadSpeed, downloadSpeedUnit: $downloadSpeedUnit, uploadSpeed: $uploadSpeed, uploadSpeedUnit: $uploadSpeedUnit, dataLimit: $dataLimit, dataLimitUnit: $dataLimitUnit, downloadSpeedFUP: $downloadSpeedFUP, uploadSpeedFUP: $uploadSpeedFUP, downloadSpeedFUPUnit: $downloadSpeedFUPUnit, uploadSpeedFUPUnit: $uploadSpeedFUPUnit, dataLimitFUP: $dataLimitFUP, dataLimitFUPUnit: $dataLimitFUPUnit, maxSessionTimeInsec: $maxSessionTimeInsec, maxDataTransferInSession: $maxDataTransferInSession, maxSimultaneousUser: $maxSimultaneousUser, gracePeriodInDays: $gracePeriodInDays)';
   }
 
   @override
@@ -1502,11 +1876,85 @@ class _$_CreatePlan implements _CreatePlan {
             (identical(other.planName, planName) ||
                 other.planName == planName) &&
             (identical(other.planDescription, planDescription) ||
-                other.planDescription == planDescription));
+                other.planDescription == planDescription) &&
+            (identical(other.planType, planType) ||
+                other.planType == planType) &&
+            (identical(other.planBasicCost, planBasicCost) ||
+                other.planBasicCost == planBasicCost) &&
+            (identical(other.planOfferedCost, planOfferedCost) ||
+                other.planOfferedCost == planOfferedCost) &&
+            (identical(other.planEnteredCost, planEnteredCost) ||
+                other.planEnteredCost == planEnteredCost) &&
+            (identical(other.taxAmount, taxAmount) ||
+                other.taxAmount == taxAmount) &&
+            (identical(other.planValidity, planValidity) ||
+                other.planValidity == planValidity) &&
+            (identical(other.planValidityUnit, planValidityUnit) ||
+                other.planValidityUnit == planValidityUnit) &&
+            (identical(other.downloadSpeed, downloadSpeed) ||
+                other.downloadSpeed == downloadSpeed) &&
+            (identical(other.downloadSpeedUnit, downloadSpeedUnit) ||
+                other.downloadSpeedUnit == downloadSpeedUnit) &&
+            (identical(other.uploadSpeed, uploadSpeed) ||
+                other.uploadSpeed == uploadSpeed) &&
+            (identical(other.uploadSpeedUnit, uploadSpeedUnit) ||
+                other.uploadSpeedUnit == uploadSpeedUnit) &&
+            (identical(other.dataLimit, dataLimit) ||
+                other.dataLimit == dataLimit) &&
+            (identical(other.dataLimitUnit, dataLimitUnit) ||
+                other.dataLimitUnit == dataLimitUnit) &&
+            (identical(other.downloadSpeedFUP, downloadSpeedFUP) ||
+                other.downloadSpeedFUP == downloadSpeedFUP) &&
+            (identical(other.uploadSpeedFUP, uploadSpeedFUP) ||
+                other.uploadSpeedFUP == uploadSpeedFUP) &&
+            (identical(other.downloadSpeedFUPUnit, downloadSpeedFUPUnit) ||
+                other.downloadSpeedFUPUnit == downloadSpeedFUPUnit) &&
+            (identical(other.uploadSpeedFUPUnit, uploadSpeedFUPUnit) ||
+                other.uploadSpeedFUPUnit == uploadSpeedFUPUnit) &&
+            (identical(other.dataLimitFUP, dataLimitFUP) ||
+                other.dataLimitFUP == dataLimitFUP) &&
+            (identical(other.dataLimitFUPUnit, dataLimitFUPUnit) ||
+                other.dataLimitFUPUnit == dataLimitFUPUnit) &&
+            (identical(other.maxSessionTimeInsec, maxSessionTimeInsec) ||
+                other.maxSessionTimeInsec == maxSessionTimeInsec) &&
+            (identical(
+                    other.maxDataTransferInSession, maxDataTransferInSession) ||
+                other.maxDataTransferInSession == maxDataTransferInSession) &&
+            (identical(other.maxSimultaneousUser, maxSimultaneousUser) ||
+                other.maxSimultaneousUser == maxSimultaneousUser) &&
+            (identical(other.gracePeriodInDays, gracePeriodInDays) ||
+                other.gracePeriodInDays == gracePeriodInDays));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, planName, planDescription);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        planName,
+        planDescription,
+        planType,
+        planBasicCost,
+        planOfferedCost,
+        planEnteredCost,
+        taxAmount,
+        planValidity,
+        planValidityUnit,
+        downloadSpeed,
+        downloadSpeedUnit,
+        uploadSpeed,
+        uploadSpeedUnit,
+        dataLimit,
+        dataLimitUnit,
+        downloadSpeedFUP,
+        uploadSpeedFUP,
+        downloadSpeedFUPUnit,
+        uploadSpeedFUPUnit,
+        dataLimitFUP,
+        dataLimitFUPUnit,
+        maxSessionTimeInsec,
+        maxDataTransferInSession,
+        maxSimultaneousUser,
+        gracePeriodInDays
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -1516,13 +1964,83 @@ class _$_CreatePlan implements _CreatePlan {
 }
 
 abstract class _CreatePlan implements CreatePlan {
-  factory _CreatePlan(final String planName, final String planDescription) =
-      _$_CreatePlan;
+  factory _CreatePlan(
+      final String planName,
+      final String planDescription,
+      final String planType,
+      final double planBasicCost,
+      final double planOfferedCost,
+      final double planEnteredCost,
+      final double taxAmount,
+      final int planValidity,
+      final String planValidityUnit,
+      final int downloadSpeed,
+      final String downloadSpeedUnit,
+      final int uploadSpeed,
+      final String uploadSpeedUnit,
+      final int dataLimit,
+      final String dataLimitUnit,
+      final int downloadSpeedFUP,
+      final int uploadSpeedFUP,
+      final String downloadSpeedFUPUnit,
+      final String uploadSpeedFUPUnit,
+      final int dataLimitFUP,
+      final String dataLimitFUPUnit,
+      final int maxSessionTimeInsec,
+      final int maxDataTransferInSession,
+      final int maxSimultaneousUser,
+      final int gracePeriodInDays) = _$_CreatePlan;
 
   @override
   String get planName;
   @override
   String get planDescription;
+  @override
+  String get planType;
+  @override
+  double get planBasicCost;
+  @override
+  double get planOfferedCost;
+  @override
+  double get planEnteredCost;
+  @override
+  double get taxAmount;
+  @override
+  int get planValidity;
+  @override
+  String get planValidityUnit;
+  @override
+  int get downloadSpeed;
+  @override
+  String get downloadSpeedUnit;
+  @override
+  int get uploadSpeed;
+  @override
+  String get uploadSpeedUnit;
+  @override
+  int get dataLimit;
+  @override
+  String get dataLimitUnit;
+  @override
+  int get downloadSpeedFUP;
+  @override
+  int get uploadSpeedFUP;
+  @override
+  String get downloadSpeedFUPUnit;
+  @override
+  String get uploadSpeedFUPUnit;
+  @override
+  int get dataLimitFUP;
+  @override
+  String get dataLimitFUPUnit;
+  @override
+  int get maxSessionTimeInsec;
+  @override
+  int get maxDataTransferInSession;
+  @override
+  int get maxSimultaneousUser;
+  @override
+  int get gracePeriodInDays;
   @override
   @JsonKey(ignore: true)
   _$$_CreatePlanCopyWith<_$_CreatePlan> get copyWith =>
@@ -1533,7 +2051,10 @@ abstract class _CreatePlan implements CreatePlan {
 mixin _$CreateResellerPriceChart {
   String get planName => throw _privateConstructorUsedError;
   String get resellerUserName => throw _privateConstructorUsedError;
-  int get price => throw _privateConstructorUsedError;
+  double get planBasicCost => throw _privateConstructorUsedError;
+  double get planOfferedCost => throw _privateConstructorUsedError;
+  double get planEnteredCost => throw _privateConstructorUsedError;
+  double get taxAmount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreateResellerPriceChartCopyWith<CreateResellerPriceChart> get copyWith =>
@@ -1546,7 +2067,13 @@ abstract class $CreateResellerPriceChartCopyWith<$Res> {
           $Res Function(CreateResellerPriceChart) then) =
       _$CreateResellerPriceChartCopyWithImpl<$Res, CreateResellerPriceChart>;
   @useResult
-  $Res call({String planName, String resellerUserName, int price});
+  $Res call(
+      {String planName,
+      String resellerUserName,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount});
 }
 
 /// @nodoc
@@ -1565,7 +2092,10 @@ class _$CreateResellerPriceChartCopyWithImpl<$Res,
   $Res call({
     Object? planName = null,
     Object? resellerUserName = null,
-    Object? price = null,
+    Object? planBasicCost = null,
+    Object? planOfferedCost = null,
+    Object? planEnteredCost = null,
+    Object? taxAmount = null,
   }) {
     return _then(_value.copyWith(
       planName: null == planName
@@ -1576,10 +2106,22 @@ class _$CreateResellerPriceChartCopyWithImpl<$Res,
           ? _value.resellerUserName
           : resellerUserName // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as int,
+      planBasicCost: null == planBasicCost
+          ? _value.planBasicCost
+          : planBasicCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      planOfferedCost: null == planOfferedCost
+          ? _value.planOfferedCost
+          : planOfferedCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      planEnteredCost: null == planEnteredCost
+          ? _value.planEnteredCost
+          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      taxAmount: null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -1593,7 +2135,13 @@ abstract class _$$_CreateResellerPriceChartCopyWith<$Res>
       __$$_CreateResellerPriceChartCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String planName, String resellerUserName, int price});
+  $Res call(
+      {String planName,
+      String resellerUserName,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount});
 }
 
 /// @nodoc
@@ -1610,7 +2158,10 @@ class __$$_CreateResellerPriceChartCopyWithImpl<$Res>
   $Res call({
     Object? planName = null,
     Object? resellerUserName = null,
-    Object? price = null,
+    Object? planBasicCost = null,
+    Object? planOfferedCost = null,
+    Object? planEnteredCost = null,
+    Object? taxAmount = null,
   }) {
     return _then(_$_CreateResellerPriceChart(
       null == planName
@@ -1621,10 +2172,22 @@ class __$$_CreateResellerPriceChartCopyWithImpl<$Res>
           ? _value.resellerUserName
           : resellerUserName // ignore: cast_nullable_to_non_nullable
               as String,
-      null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as int,
+      null == planBasicCost
+          ? _value.planBasicCost
+          : planBasicCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planOfferedCost
+          ? _value.planOfferedCost
+          : planOfferedCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planEnteredCost
+          ? _value.planEnteredCost
+          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -1632,18 +2195,30 @@ class __$$_CreateResellerPriceChartCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_CreateResellerPriceChart implements _CreateResellerPriceChart {
-  _$_CreateResellerPriceChart(this.planName, this.resellerUserName, this.price);
+  _$_CreateResellerPriceChart(
+      this.planName,
+      this.resellerUserName,
+      this.planBasicCost,
+      this.planOfferedCost,
+      this.planEnteredCost,
+      this.taxAmount);
 
   @override
   final String planName;
   @override
   final String resellerUserName;
   @override
-  final int price;
+  final double planBasicCost;
+  @override
+  final double planOfferedCost;
+  @override
+  final double planEnteredCost;
+  @override
+  final double taxAmount;
 
   @override
   String toString() {
-    return 'CreateResellerPriceChart(planName: $planName, resellerUserName: $resellerUserName, price: $price)';
+    return 'CreateResellerPriceChart(planName: $planName, resellerUserName: $resellerUserName, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount)';
   }
 
   @override
@@ -1655,12 +2230,19 @@ class _$_CreateResellerPriceChart implements _CreateResellerPriceChart {
                 other.planName == planName) &&
             (identical(other.resellerUserName, resellerUserName) ||
                 other.resellerUserName == resellerUserName) &&
-            (identical(other.price, price) || other.price == price));
+            (identical(other.planBasicCost, planBasicCost) ||
+                other.planBasicCost == planBasicCost) &&
+            (identical(other.planOfferedCost, planOfferedCost) ||
+                other.planOfferedCost == planOfferedCost) &&
+            (identical(other.planEnteredCost, planEnteredCost) ||
+                other.planEnteredCost == planEnteredCost) &&
+            (identical(other.taxAmount, taxAmount) ||
+                other.taxAmount == taxAmount));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, planName, resellerUserName, price);
+  int get hashCode => Object.hash(runtimeType, planName, resellerUserName,
+      planBasicCost, planOfferedCost, planEnteredCost, taxAmount);
 
   @JsonKey(ignore: true)
   @override
@@ -1674,14 +2256,23 @@ abstract class _CreateResellerPriceChart implements CreateResellerPriceChart {
   factory _CreateResellerPriceChart(
       final String planName,
       final String resellerUserName,
-      final int price) = _$_CreateResellerPriceChart;
+      final double planBasicCost,
+      final double planOfferedCost,
+      final double planEnteredCost,
+      final double taxAmount) = _$_CreateResellerPriceChart;
 
   @override
   String get planName;
   @override
   String get resellerUserName;
   @override
-  int get price;
+  double get planBasicCost;
+  @override
+  double get planOfferedCost;
+  @override
+  double get planEnteredCost;
+  @override
+  double get taxAmount;
   @override
   @JsonKey(ignore: true)
   _$$_CreateResellerPriceChartCopyWith<_$_CreateResellerPriceChart>
@@ -1693,7 +2284,10 @@ mixin _$CreateOperatorPriceChart {
   String get planName => throw _privateConstructorUsedError;
   String get operatorUserName => throw _privateConstructorUsedError;
   String get resellerUserName => throw _privateConstructorUsedError;
-  int get price => throw _privateConstructorUsedError;
+  double get planBasicCost => throw _privateConstructorUsedError;
+  double get planOfferedCost => throw _privateConstructorUsedError;
+  double get planEnteredCost => throw _privateConstructorUsedError;
+  double get taxAmount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreateOperatorPriceChartCopyWith<CreateOperatorPriceChart> get copyWith =>
@@ -1710,7 +2304,10 @@ abstract class $CreateOperatorPriceChartCopyWith<$Res> {
       {String planName,
       String operatorUserName,
       String resellerUserName,
-      int price});
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount});
 }
 
 /// @nodoc
@@ -1730,7 +2327,10 @@ class _$CreateOperatorPriceChartCopyWithImpl<$Res,
     Object? planName = null,
     Object? operatorUserName = null,
     Object? resellerUserName = null,
-    Object? price = null,
+    Object? planBasicCost = null,
+    Object? planOfferedCost = null,
+    Object? planEnteredCost = null,
+    Object? taxAmount = null,
   }) {
     return _then(_value.copyWith(
       planName: null == planName
@@ -1745,10 +2345,22 @@ class _$CreateOperatorPriceChartCopyWithImpl<$Res,
           ? _value.resellerUserName
           : resellerUserName // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as int,
+      planBasicCost: null == planBasicCost
+          ? _value.planBasicCost
+          : planBasicCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      planOfferedCost: null == planOfferedCost
+          ? _value.planOfferedCost
+          : planOfferedCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      planEnteredCost: null == planEnteredCost
+          ? _value.planEnteredCost
+          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      taxAmount: null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -1766,7 +2378,10 @@ abstract class _$$_CreateOperatorPriceChartCopyWith<$Res>
       {String planName,
       String operatorUserName,
       String resellerUserName,
-      int price});
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount});
 }
 
 /// @nodoc
@@ -1784,7 +2399,10 @@ class __$$_CreateOperatorPriceChartCopyWithImpl<$Res>
     Object? planName = null,
     Object? operatorUserName = null,
     Object? resellerUserName = null,
-    Object? price = null,
+    Object? planBasicCost = null,
+    Object? planOfferedCost = null,
+    Object? planEnteredCost = null,
+    Object? taxAmount = null,
   }) {
     return _then(_$_CreateOperatorPriceChart(
       null == planName
@@ -1799,10 +2417,22 @@ class __$$_CreateOperatorPriceChartCopyWithImpl<$Res>
           ? _value.resellerUserName
           : resellerUserName // ignore: cast_nullable_to_non_nullable
               as String,
-      null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as int,
+      null == planBasicCost
+          ? _value.planBasicCost
+          : planBasicCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planOfferedCost
+          ? _value.planOfferedCost
+          : planOfferedCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planEnteredCost
+          ? _value.planEnteredCost
+          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -1811,7 +2441,13 @@ class __$$_CreateOperatorPriceChartCopyWithImpl<$Res>
 
 class _$_CreateOperatorPriceChart implements _CreateOperatorPriceChart {
   _$_CreateOperatorPriceChart(
-      this.planName, this.operatorUserName, this.resellerUserName, this.price);
+      this.planName,
+      this.operatorUserName,
+      this.resellerUserName,
+      this.planBasicCost,
+      this.planOfferedCost,
+      this.planEnteredCost,
+      this.taxAmount);
 
   @override
   final String planName;
@@ -1820,11 +2456,17 @@ class _$_CreateOperatorPriceChart implements _CreateOperatorPriceChart {
   @override
   final String resellerUserName;
   @override
-  final int price;
+  final double planBasicCost;
+  @override
+  final double planOfferedCost;
+  @override
+  final double planEnteredCost;
+  @override
+  final double taxAmount;
 
   @override
   String toString() {
-    return 'CreateOperatorPriceChart(planName: $planName, operatorUserName: $operatorUserName, resellerUserName: $resellerUserName, price: $price)';
+    return 'CreateOperatorPriceChart(planName: $planName, operatorUserName: $operatorUserName, resellerUserName: $resellerUserName, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount)';
   }
 
   @override
@@ -1838,12 +2480,26 @@ class _$_CreateOperatorPriceChart implements _CreateOperatorPriceChart {
                 other.operatorUserName == operatorUserName) &&
             (identical(other.resellerUserName, resellerUserName) ||
                 other.resellerUserName == resellerUserName) &&
-            (identical(other.price, price) || other.price == price));
+            (identical(other.planBasicCost, planBasicCost) ||
+                other.planBasicCost == planBasicCost) &&
+            (identical(other.planOfferedCost, planOfferedCost) ||
+                other.planOfferedCost == planOfferedCost) &&
+            (identical(other.planEnteredCost, planEnteredCost) ||
+                other.planEnteredCost == planEnteredCost) &&
+            (identical(other.taxAmount, taxAmount) ||
+                other.taxAmount == taxAmount));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, planName, operatorUserName, resellerUserName, price);
+      runtimeType,
+      planName,
+      operatorUserName,
+      resellerUserName,
+      planBasicCost,
+      planOfferedCost,
+      planEnteredCost,
+      taxAmount);
 
   @JsonKey(ignore: true)
   @override
@@ -1858,7 +2514,10 @@ abstract class _CreateOperatorPriceChart implements CreateOperatorPriceChart {
       final String planName,
       final String operatorUserName,
       final String resellerUserName,
-      final int price) = _$_CreateOperatorPriceChart;
+      final double planBasicCost,
+      final double planOfferedCost,
+      final double planEnteredCost,
+      final double taxAmount) = _$_CreateOperatorPriceChart;
 
   @override
   String get planName;
@@ -1867,7 +2526,13 @@ abstract class _CreateOperatorPriceChart implements CreateOperatorPriceChart {
   @override
   String get resellerUserName;
   @override
-  int get price;
+  double get planBasicCost;
+  @override
+  double get planOfferedCost;
+  @override
+  double get planEnteredCost;
+  @override
+  double get taxAmount;
   @override
   @JsonKey(ignore: true)
   _$$_CreateOperatorPriceChartCopyWith<_$_CreateOperatorPriceChart>
@@ -2499,6 +3164,10 @@ mixin _$CreateNewSubscription {
   String get pincode => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
   String get state => throw _privateConstructorUsedError;
+  double get planBasicCost => throw _privateConstructorUsedError;
+  double get planOfferedCost => throw _privateConstructorUsedError;
+  double get planEnteredCost => throw _privateConstructorUsedError;
+  double get taxAmount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreateNewSubscriptionCopyWith<CreateNewSubscription> get copyWith =>
@@ -2527,7 +3196,11 @@ abstract class $CreateNewSubscriptionCopyWith<$Res> {
       String address,
       String pincode,
       String city,
-      String state});
+      String state,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount});
 }
 
 /// @nodoc
@@ -2560,6 +3233,10 @@ class _$CreateNewSubscriptionCopyWithImpl<$Res,
     Object? pincode = null,
     Object? city = null,
     Object? state = null,
+    Object? planBasicCost = null,
+    Object? planOfferedCost = null,
+    Object? planEnteredCost = null,
+    Object? taxAmount = null,
   }) {
     return _then(_value.copyWith(
       userName: null == userName
@@ -2628,6 +3305,22 @@ class _$CreateNewSubscriptionCopyWithImpl<$Res,
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String,
+      planBasicCost: null == planBasicCost
+          ? _value.planBasicCost
+          : planBasicCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      planOfferedCost: null == planOfferedCost
+          ? _value.planOfferedCost
+          : planOfferedCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      planEnteredCost: null == planEnteredCost
+          ? _value.planEnteredCost
+          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      taxAmount: null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -2656,7 +3349,11 @@ abstract class _$$_CreateNewSubscriptionCopyWith<$Res>
       String address,
       String pincode,
       String city,
-      String state});
+      String state,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount});
 }
 
 /// @nodoc
@@ -2686,6 +3383,10 @@ class __$$_CreateNewSubscriptionCopyWithImpl<$Res>
     Object? pincode = null,
     Object? city = null,
     Object? state = null,
+    Object? planBasicCost = null,
+    Object? planOfferedCost = null,
+    Object? planEnteredCost = null,
+    Object? taxAmount = null,
   }) {
     return _then(_$_CreateNewSubscription(
       null == userName
@@ -2752,6 +3453,22 @@ class __$$_CreateNewSubscriptionCopyWithImpl<$Res>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String,
+      null == planBasicCost
+          ? _value.planBasicCost
+          : planBasicCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planOfferedCost
+          ? _value.planOfferedCost
+          : planOfferedCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == planEnteredCost
+          ? _value.planEnteredCost
+          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -2775,7 +3492,11 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
       this.address,
       this.pincode,
       this.city,
-      this.state);
+      this.state,
+      this.planBasicCost,
+      this.planOfferedCost,
+      this.planEnteredCost,
+      this.taxAmount);
 
   @override
   final String userName;
@@ -2809,10 +3530,18 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
   final String city;
   @override
   final String state;
+  @override
+  final double planBasicCost;
+  @override
+  final double planOfferedCost;
+  @override
+  final double planEnteredCost;
+  @override
+  final double taxAmount;
 
   @override
   String toString() {
-    return 'CreateNewSubscription(userName: $userName, password: $password, resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, subscriberId: $subscriberId, planName: $planName, networkType: $networkType, ipType: $ipType, assignedIp: $assignedIp, isInstallationAddressSameAsBilling: $isInstallationAddressSameAsBilling, isInstallationAddressSameAsPermanent: $isInstallationAddressSameAsPermanent, country: $country, address: $address, pincode: $pincode, city: $city, state: $state)';
+    return 'CreateNewSubscription(userName: $userName, password: $password, resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, subscriberId: $subscriberId, planName: $planName, networkType: $networkType, ipType: $ipType, assignedIp: $assignedIp, isInstallationAddressSameAsBilling: $isInstallationAddressSameAsBilling, isInstallationAddressSameAsPermanent: $isInstallationAddressSameAsPermanent, country: $country, address: $address, pincode: $pincode, city: $city, state: $state, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount)';
   }
 
   @override
@@ -2849,28 +3578,41 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.pincode, pincode) || other.pincode == pincode) &&
             (identical(other.city, city) || other.city == city) &&
-            (identical(other.state, state) || other.state == state));
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.planBasicCost, planBasicCost) ||
+                other.planBasicCost == planBasicCost) &&
+            (identical(other.planOfferedCost, planOfferedCost) ||
+                other.planOfferedCost == planOfferedCost) &&
+            (identical(other.planEnteredCost, planEnteredCost) ||
+                other.planEnteredCost == planEnteredCost) &&
+            (identical(other.taxAmount, taxAmount) ||
+                other.taxAmount == taxAmount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      userName,
-      password,
-      resellerUserName,
-      operatorUserName,
-      subscriberId,
-      planName,
-      networkType,
-      ipType,
-      assignedIp,
-      isInstallationAddressSameAsBilling,
-      isInstallationAddressSameAsPermanent,
-      country,
-      address,
-      pincode,
-      city,
-      state);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        userName,
+        password,
+        resellerUserName,
+        operatorUserName,
+        subscriberId,
+        planName,
+        networkType,
+        ipType,
+        assignedIp,
+        isInstallationAddressSameAsBilling,
+        isInstallationAddressSameAsPermanent,
+        country,
+        address,
+        pincode,
+        city,
+        state,
+        planBasicCost,
+        planOfferedCost,
+        planEnteredCost,
+        taxAmount
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -2897,7 +3639,11 @@ abstract class _CreateNewSubscription implements CreateNewSubscription {
       final String address,
       final String pincode,
       final String city,
-      final String state) = _$_CreateNewSubscription;
+      final String state,
+      final double planBasicCost,
+      final double planOfferedCost,
+      final double planEnteredCost,
+      final double taxAmount) = _$_CreateNewSubscription;
 
   @override
   String get userName;
@@ -2931,6 +3677,14 @@ abstract class _CreateNewSubscription implements CreateNewSubscription {
   String get city;
   @override
   String get state;
+  @override
+  double get planBasicCost;
+  @override
+  double get planOfferedCost;
+  @override
+  double get planEnteredCost;
+  @override
+  double get taxAmount;
   @override
   @JsonKey(ignore: true)
   _$$_CreateNewSubscriptionCopyWith<_$_CreateNewSubscription> get copyWith =>

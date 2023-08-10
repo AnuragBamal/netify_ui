@@ -41,6 +41,12 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
 
   final _isStaticIpController = BehaviorSubject<bool>.seeded(false);
 
+  final StreamController _planBasePriceController =
+      StreamController<String?>.broadcast();
+
+  final StreamController _planOfferPriceController =
+      StreamController<OfferPrice?>.broadcast();
+
   late final Map<String, List<String>> resellermap;
   late final Map<String, List<SubscriberMapInfo>> operatorSubscriberMap;
   late final Map<String, List<PlanProfileMetaPlan>> operatorPlanMap;
@@ -52,10 +58,13 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   final DialogService _dialogService;
   final CreateSubscriptionUseCase _subscriptionUseCase;
 
+  bool isTaxIncluded = false;
+  late final double taxRate;
+
   SubscriptionViewModel(this._subscriptionMetaUsecase, this._navigationService,
       this._dialogService, this._subscriptionUseCase);
-  var createNewSubscription = CreateNewSubscription(
-      "", "", "", "", "", "", "", "", "", false, false, "", "", "", "", "");
+  var createNewSubscription = CreateNewSubscription("", "", "", "", "", "", "",
+      "", "", false, false, "", "", "", "", "", 0, 0, 0, 0);
   @override
   void dispose() {
     _userNameController.close();
@@ -69,6 +78,13 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
     isBillingSameController.close();
     _resellerController.close();
     _operatorController.close();
+    _subscriberController.close();
+    _planController.close();
+    _networkTypeController.close();
+    _ipTypeController.close();
+    _availiableIpController.close();
+    _isStaticIpController.close();
+    _planOfferPriceController.close();
   }
 
   @override
@@ -178,8 +194,8 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
         createNewSubscription.copyWith(operatorUserName: "");
     createNewSubscription = createNewSubscription.copyWith(subscriberId: "");
     createNewSubscription = createNewSubscription.copyWith(planName: "");
-    _operatorController.sink.add(resellermap[reseller]!);
-
+    _subscriberController.sink.add(null);
+    _planController.sink.add(null);
     _operatorController.sink.add(resellermap[reseller]!);
     _validateForm();
   }
@@ -227,6 +243,42 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
     _validateForm();
   }
 
+  setPlanEnteredPrice(String value) {
+    double price = double.tryParse(value) ?? 0;
+    if (_validateBasePrice(price)) {
+      createNewSubscription =
+          createNewSubscription.copyWith(planEnteredCost: price);
+      calculateOfferPrice();
+    } else {
+      createNewSubscription =
+          createNewSubscription.copyWith(planEnteredCost: 0);
+      inputPlanOfferPrice.add(null);
+    }
+    _validateForm();
+  }
+
+  setPlanOfferPrice(double value) {
+    createNewSubscription =
+        createNewSubscription.copyWith(planOfferedCost: value);
+    _validateForm();
+  }
+
+  setPlanBasePriceCost(double value) {
+    createNewSubscription =
+        createNewSubscription.copyWith(planBasicCost: value);
+    _validateForm();
+  }
+
+  setTaxAmount(double value) {
+    createNewSubscription = createNewSubscription.copyWith(taxAmount: value);
+    _validateForm();
+  }
+
+  setIsTaxIncluded(bool value) {
+    isTaxIncluded = value;
+    calculateOfferPrice();
+  }
+
   createNewSubscriptionSubmit(BuildContext context) {
     _submitForm(context);
   }
@@ -239,6 +291,9 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   Sink get inputState => _stateController.sink;
   Sink get inputCountry => _countryController.sink;
   Sink get inputPinCode => _pinCodeController.sink;
+  Sink get inputPlanBasePrice => _planBasePriceController.sink;
+
+  Sink get inputPlanOfferPrice => _planOfferPriceController.sink;
 
   Stream<String?> get outputUserName => _userNameController.stream;
   Stream<String?> get outputPassword => _passwordController.stream;
@@ -265,6 +320,11 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
       _availiableIpController.stream;
   Stream<bool> get outputIsStaticIpSelected => _isStaticIpController.stream;
 
+  Stream<String?> get outputPlanBasePrice =>
+      _planBasePriceController.stream.map((event) => event);
+  Stream<OfferPrice?> get outputPlanOfferPrice =>
+      _planOfferPriceController.stream.map((event) => event);
+  // Stream<List<String>> get outputBillingCycle => _billingCycleController.stream;
   bool _validateUserName(String userName) {
     if (userName.isEmpty) {
       _userNameController.add('User Name is required');
@@ -276,6 +336,15 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
       _userNameController.add(null);
       return true;
     }
+  }
+
+  _validateBasePrice(double? value) {
+    if (value == null || value <= 0) {
+      inputPlanBasePrice.add("Please enter plan base price.");
+      return false;
+    }
+    inputPlanBasePrice.add(null);
+    return true;
   }
 
   bool _validatePassword(String password) {
@@ -356,6 +425,69 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
     }
   }
 
+  calculateOfferPrice() {
+    if (createNewSubscription.planEnteredCost > 0 ||
+        createNewSubscription.planEnteredCost > 0) {
+      if (createNewSubscription.planEnteredCost > 0) {
+        if (isTaxIncluded) {
+          var finalAmount = createNewSubscription.planEnteredCost;
+          var basePrice = finalAmount / (1 + (taxRate / 100));
+          var taxAmount = finalAmount - basePrice;
+          inputPlanOfferPrice.add(OfferPrice(
+              offerPrice: finalAmount,
+              taxAmount: taxAmount,
+              basePrice: basePrice,
+              taxPercentage: taxRate));
+          setPlanOfferPrice(finalAmount);
+          setPlanBasePriceCost(basePrice);
+          setTaxAmount(taxAmount);
+        } else {
+          var finalAmount = createNewSubscription.planEnteredCost +
+              (createNewSubscription.planEnteredCost * (taxRate / 100));
+          var basePrice = createNewSubscription.planEnteredCost;
+          var taxAmount = finalAmount - basePrice;
+          inputPlanOfferPrice.add(OfferPrice(
+              offerPrice: finalAmount,
+              taxAmount: taxAmount,
+              basePrice: basePrice,
+              taxPercentage: taxRate));
+          setPlanOfferPrice(finalAmount);
+          setPlanBasePriceCost(basePrice);
+          setTaxAmount(taxAmount);
+        }
+      } else {
+        if (isTaxIncluded) {
+          var finalAmount = createNewSubscription.planEnteredCost;
+          var basePrice = finalAmount / (1 + (taxRate / 100));
+          var taxAmount = finalAmount - basePrice;
+          inputPlanOfferPrice.add(OfferPrice(
+              offerPrice: finalAmount,
+              taxAmount: taxAmount,
+              basePrice: basePrice,
+              taxPercentage: taxRate));
+          setPlanOfferPrice(finalAmount);
+          setPlanBasePriceCost(basePrice);
+          setTaxAmount(taxAmount);
+        } else {
+          var finalAmount = createNewSubscription.planEnteredCost +
+              (createNewSubscription.planEnteredCost * (taxRate / 100));
+          var basePrice = createNewSubscription.planEnteredCost;
+          var taxAmount = finalAmount - basePrice;
+          inputPlanOfferPrice.add(OfferPrice(
+              offerPrice: finalAmount,
+              taxAmount: taxAmount,
+              basePrice: basePrice,
+              taxPercentage: taxRate));
+          setPlanOfferPrice(finalAmount);
+          setPlanBasePriceCost(basePrice);
+          setTaxAmount(taxAmount);
+        }
+      }
+    } else {
+      inputPlanOfferPrice.add(null);
+    }
+  }
+
   _validateForm() {
     if (createNewSubscription.userName.isNotEmpty &&
         createNewSubscription.password.isNotEmpty &&
@@ -372,6 +504,9 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
         createNewSubscription.planName.isNotEmpty &&
         createNewSubscription.networkType.isNotEmpty &&
         createNewSubscription.ipType.isNotEmpty &&
+        createNewSubscription.planBasicCost > 0 &&
+        createNewSubscription.planOfferedCost > 0 &&
+        createNewSubscription.taxAmount > 0 &&
         ((createNewSubscription.ipType.toLowerCase() == 'static' &&
                 createNewSubscription.assignedIp.isNotEmpty) ||
             createNewSubscription.ipType.toLowerCase() != 'static')) {
@@ -395,6 +530,7 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
       networkType = success.data[0].networkType;
       ipType = success.data[0].ipType;
       availiableIps = success.data[0].availiableIps;
+      taxRate = success.data[0].taxRate;
     });
   }
 
@@ -406,24 +542,28 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
             description: "Loading",
             dialogType: DialogType.loading));
     var result = await _subscriptionUseCase.execute(CreateSubscriptionRequest(
-        userName: createNewSubscription.userName,
-        password: createNewSubscription.password,
-        installationStreetAddress: createNewSubscription.address,
-        installationCity: createNewSubscription.city,
-        installationState: createNewSubscription.state,
-        installationCountry: createNewSubscription.country,
-        installationPostalCode: createNewSubscription.pincode,
-        installationAddressSameAsBilling:
-            createNewSubscription.isInstallationAddressSameAsBilling,
-        installationAddressSameAsPermanent:
-            createNewSubscription.isInstallationAddressSameAsPermanent,
-        resellerUserName: createNewSubscription.resellerUserName,
-        customerId: createNewSubscription.subscriberId,
-        operatorUserName: createNewSubscription.operatorUserName,
-        planName: createNewSubscription.planName,
-        networkType: createNewSubscription.networkType,
-        ipType: createNewSubscription.ipType,
-        assignedIp: createNewSubscription.assignedIp));
+      userName: createNewSubscription.userName,
+      password: createNewSubscription.password,
+      installationStreetAddress: createNewSubscription.address,
+      installationCity: createNewSubscription.city,
+      installationState: createNewSubscription.state,
+      installationCountry: createNewSubscription.country,
+      installationPostalCode: createNewSubscription.pincode,
+      installationAddressSameAsBilling:
+          createNewSubscription.isInstallationAddressSameAsBilling,
+      installationAddressSameAsPermanent:
+          createNewSubscription.isInstallationAddressSameAsPermanent,
+      resellerUserName: createNewSubscription.resellerUserName,
+      customerId: createNewSubscription.subscriberId,
+      operatorUserName: createNewSubscription.operatorUserName,
+      planId: createNewSubscription.planName,
+      networkType: createNewSubscription.networkType,
+      ipType: createNewSubscription.ipType,
+      assignedIp: createNewSubscription.assignedIp,
+      basePrice: createNewSubscription.planBasicCost,
+      offeredPrice: createNewSubscription.planOfferedCost,
+      taxAmount: createNewSubscription.taxAmount,
+    ));
     result.fold((failure) {
       Navigator.of(context).pop();
       _dialogService.showDialogOnScreen(
@@ -443,4 +583,17 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
       successDialouge.then((value) => _navigationService.goBack());
     });
   }
+}
+
+class OfferPrice {
+  double offerPrice;
+  double taxAmount;
+  double basePrice;
+  double taxPercentage;
+
+  OfferPrice(
+      {required this.offerPrice,
+      required this.taxAmount,
+      required this.basePrice,
+      required this.taxPercentage});
 }

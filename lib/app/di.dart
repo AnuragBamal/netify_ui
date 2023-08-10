@@ -34,6 +34,7 @@ import 'package:netify/persentation/main/home/home_page_view_model.dart';
 import 'package:netify/persentation/main/home/subscriber/subscriber_view_model.dart';
 import 'package:netify/persentation/main/home/subscription/subscription_view_model.dart';
 import 'package:netify/persentation/main/home/user/create_user_view_model.dart';
+import 'package:netify/persentation/main/plans/create_plan/create_plan_view_model.dart';
 import 'package:netify/persentation/main/plans/plans_view_model.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart_view_model.dart';
 import 'package:netify/services/authentication_service.dart';
@@ -212,8 +213,8 @@ initCreatePlanModule() {
 
   if (!GetIt.I.isRegistered<CreatePlanPageViewModel>()) {
     instance.registerFactory<CreatePlanPageViewModel>(() =>
-        CreatePlanPageViewModel(instance(), instance(), instance(), instance(),
-            instance(), instance()));
+        CreatePlanPageViewModel(
+            instance(), instance(), instance(), instance(), instance()));
   }
 }
 
@@ -245,6 +246,17 @@ initCreateSubscription() {
   if (!GetIt.I.isRegistered<SubscriptionViewModel>()) {
     instance.registerFactory<SubscriptionViewModel>(() =>
         SubscriptionViewModel(instance(), instance(), instance(), instance()));
+  }
+}
+
+initCreateNewPlan() {
+  if (!GetIt.I.isRegistered<CreatePlanUseCase>()) {
+    instance.registerFactory<CreatePlanUseCase>(
+        () => CreatePlanUseCase(instance()));
+  }
+  if (!GetIt.I.isRegistered<CreatePlanViewModel>()) {
+    instance.registerFactory<CreatePlanViewModel>(() =>
+        CreatePlanViewModel(instance(), instance(), instance(), instance()));
   }
 }
 

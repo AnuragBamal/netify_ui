@@ -538,8 +538,18 @@ class PlanProfileMetaResponse {
   String? ownerUserName;
   @JsonKey(name: "userName")
   String? userName;
+  @JsonKey(name: "taxRate")
+  double? taxRate;
   @JsonKey(name: "planList")
-  List<String>? planList;
+  List<PlanProfileMetaPlanResponse>? planList;
+  @JsonKey(name: "planSpeedUnit")
+  List<String>? planSpeedUnit;
+  @JsonKey(name: "planDataLimitUnit")
+  List<String>? planDataLimitUnit;
+  @JsonKey(name: "planValidityUnit")
+  List<String>? planValidityUnit;
+  @JsonKey(name: "planType")
+  List<String>? planType;
   @JsonKey(name: "resellerOperatorMap")
   Map<String, List<String>>? resellerOperatorMap;
   @JsonKey(name: "planScreens")
@@ -698,6 +708,10 @@ class SubscriptionResponse {
   AddressResponse? permanentAddress;
   @JsonKey(name: "billingAddress")
   AddressResponse? billingAddress;
+  @JsonKey(name: "basePrice")
+  double? basePrice;
+  @JsonKey(name: "offeredPrice")
+  double? offeredPrice;
 
   SubscriptionResponse(
       {this.subscriptionId,
@@ -714,7 +728,9 @@ class SubscriptionResponse {
       this.nextRenewalDate,
       this.installationAddress,
       this.permanentAddress,
-      this.billingAddress});
+      this.billingAddress,
+      this.basePrice,
+      this.offeredPrice});
 
   factory SubscriptionResponse.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionResponseFromJson(json);
@@ -900,6 +916,8 @@ class SubscriptionMetaResponse {
   List<String>? ipType;
   @JsonKey(name: "availiableIps")
   List<String>? availiableIps;
+  @JsonKey(name: "taxRate")
+  double? taxRate;
 
   SubscriptionMetaResponse(
       {this.resellerOperatorMap,
@@ -907,7 +925,8 @@ class SubscriptionMetaResponse {
       this.operatorPlanMap,
       this.networkType,
       this.ipType,
-      this.availiableIps});
+      this.availiableIps,
+      this.taxRate});
 
   factory SubscriptionMetaResponse.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionMetaResponseFromJson(json);

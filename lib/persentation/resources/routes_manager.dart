@@ -6,6 +6,7 @@ import 'package:netify/persentation/main/home/subscriber/create_subscriber.dart'
 import 'package:netify/persentation/main/home/subscription/create_subscription.dart';
 import 'package:netify/persentation/main/home/user/create_user.dart';
 import 'package:netify/persentation/main/main.dart';
+import 'package:netify/persentation/main/plans/create_plan/create_plan.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart.dart';
 import 'package:netify/persentation/onboarding/onboarding.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
@@ -23,7 +24,8 @@ class Routes {
   static const String verificationRoute = "/verification";
   static const String createuser = "/createuser";
   static const String userops = "/userops";
-  static const String createplan = "/createplan";
+  static const String createpricechart = "/createpricechart";
+  static const String createPlan = "/createplan";
   static const String createSubscriber = "/createsubscriber";
   static const String createSubscription = "/createsubscription";
 }
@@ -59,8 +61,11 @@ class RouteGenerator {
             builder: (_) => CreateUserView(
                   arguments: args,
                 ));
+      case Routes.createPlan:
+        initCreateNewPlan();
+        return MaterialPageRoute(builder: (_) => const CreateNewPlan());
 
-      case Routes.createplan:
+      case Routes.createpricechart:
         initCreatePlanModule();
         final CreatePriceChartArguments args =
             settings.arguments as CreatePriceChartArguments;

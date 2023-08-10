@@ -204,7 +204,13 @@ class _ExpandedPanelWidgetState extends State<ExpandedPanelWidget> {
                     style: const TextStyle(color: ColorManager.primaryColor),
                   ),
                   subtitle: Text(subscription.networkType),
-                  trailing: Text(subscription.planName),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(subscription.planName),
+                      Text("Rs ${subscription.offeredPrice}")
+                    ],
+                  ),
                 );
               },
               body: _expandedSubscriptionBody(subscription),
@@ -267,6 +273,22 @@ class _ExpandedPanelWidgetState extends State<ExpandedPanelWidget> {
                 children: [
                   TextSpan(
                       text: subscription.planName,
+                      style: Theme.of(context).textTheme.labelMedium)
+                ])),
+            Text.rich(TextSpan(
+                text: "PlanBasePrice: ",
+                style: Theme.of(context).textTheme.labelLarge,
+                children: [
+                  TextSpan(
+                      text: subscription.basePrice.toString(),
+                      style: Theme.of(context).textTheme.labelMedium)
+                ])),
+            Text.rich(TextSpan(
+                text: "PlanOfferedPrice: ",
+                style: Theme.of(context).textTheme.labelLarge,
+                children: [
+                  TextSpan(
+                      text: subscription.offeredPrice.toString(),
                       style: Theme.of(context).textTheme.labelMedium)
                 ])),
             Text.rich(TextSpan(

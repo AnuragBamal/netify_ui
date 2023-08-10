@@ -26,7 +26,7 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
       children: [
         BaseSearchWidget(
           filters: filterList,
-          onFilterChanged: homepageViewModel.updateSubscriberSearchFilter,
+          onFilterChanged: homepageViewModel.updateSubscriptionSearchFilter,
         ),
         StreamBuilder<bool>(
             stream: homepageViewModel.outputForSearchState,

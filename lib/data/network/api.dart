@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:netify/app/constant.dart';
 import 'package:netify/data/responses/responses.dart';
-import 'package:netify/domain/model/model.dart';
 import 'package:retrofit/retrofit.dart';
 part 'api.g.dart';
 
@@ -83,11 +82,11 @@ abstract class ApiServiceClient {
   @GET("/api/v1/tenancy/wallet/")
   Future<GetUserWalletResponse> getUserWallet();
 
-  @GET("/api/v1/subs/subscriberlist")
+  @GET("/api/v1/tenancy/ui/subscriberscreen")
   Future<GetSubscriberListBlockResponse> getSubscriberList(
       @Queries() Map<String, dynamic> queryParams);
 
-  @GET("/api/v1/subs/subscriptionlist")
+  @GET("/api/v1/tenancy/ui/subscriptionscreen")
   Future<GetSubscriptionListBlockResponse> getSubscriptionList(
       @Queries() Map<String, dynamic> queryParams);
 

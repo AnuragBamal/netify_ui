@@ -33,6 +33,12 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+
+  bool isTaxIncluded = false;
+
+  final TextEditingController searchResellerController =
+      TextEditingController();
 
   _bind() {
     _subcriptionViewModel.start();
@@ -62,6 +68,14 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
     _stateController.addListener(() {
       _subcriptionViewModel.setState(_stateController.text);
     });
+
+    _priceController.addListener(() {
+      if (_priceController.text.isNotEmpty) {
+        _subcriptionViewModel.setPlanEnteredPrice(_priceController.text);
+      } else {
+        _subcriptionViewModel.setPlanEnteredPrice("0");
+      }
+    });
   }
 
   @override
@@ -89,26 +103,29 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
             children: [
               Center(
                 child: Text(
-                  AppString.createNewSubscriber,
+                  AppString.createNewSubscription,
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
               const SizedBox(
                 height: AppSize.s32,
               ),
-              dropDownResellerList(context),
+              //dropDownResellerList(context),
+              StreamBuilder<List<String>?>(
+                  stream: _subcriptionViewModel.outputResellerList,
+                  builder: autoCompleteSearchResellerList),
               const SizedBox(
                 height: AppSize.s24,
               ),
               StreamBuilder<List<String>?>(
                   stream: _subcriptionViewModel.outputOperatorList,
-                  builder: dropDownOperatorList),
+                  builder: autoCompleteSearchOperatorList),
               const SizedBox(
                 height: AppSize.s24,
               ),
               StreamBuilder<List<SubscriberMapInfo>?>(
                   stream: _subcriptionViewModel.outputSubscriberList,
-                  builder: dropDownSubscriberList),
+                  builder: autoCompleteSubscriberList),
               const SizedBox(
                 height: AppSize.s24,
               ),
@@ -118,6 +135,13 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
               const SizedBox(
                 height: AppSize.s24,
               ),
+
+              // StreamBuilder<List<String>?>(
+              //     stream: _subcriptionViewModel.outputBillingCycle,
+              //     builder: dropDownBillingCycle),
+              // const SizedBox(
+              //   height: AppSize.s24,
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppPadding.p24,
@@ -128,8 +152,8 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
                       return TextFormField(
                           controller: _userNameController,
                           decoration: InputDecoration(
-                            hintText: AppString.registerUsernameHint,
-                            labelText: AppString.registerUsername,
+                            hintText: AppString.cpeDeviceIdHint,
+                            labelText: AppString.cpeDeviceId,
                             errorText: snapshot.data,
                           ));
                     }),
@@ -147,8 +171,8 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
                       return TextFormField(
                           controller: _passwordController,
                           decoration: InputDecoration(
-                            hintText: AppString.registerPasswordHint,
-                            labelText: AppString.registerPassword,
+                            hintText: AppString.cpeDevicePasswordHint,
+                            labelText: AppString.cpeDevicePassword,
                             errorText: snapshot.data,
                           ));
                     }),
@@ -187,7 +211,7 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
                       horizontal: AppPadding.p24,
                     ),
                     child: Text(
-                      AppString.sameAsPermanentAddress,
+                      AppString.installationSameAsPermanentAddress,
                       style: TextStyle(
                           fontSize: AppSize.s14,
                           color: ColorManager.primaryColor),
@@ -225,7 +249,7 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
                       horizontal: AppPadding.p24,
                     ),
                     child: Text(
-                      AppString.sameAsBillingAddress,
+                      AppString.installationSameAsBillingAddress,
                       style: TextStyle(
                           fontSize: AppSize.s14,
                           color: ColorManager.primaryColor),
@@ -289,42 +313,208 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
     );
   }
 
-  Widget dropDownResellerList(BuildContext context) {
-    return Padding(
+  Widget autoCompleteSearchResellerList(
+      BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
+    if (snapshot.hasData) {
+      return Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppPadding.p24,
         ),
-        child: StreamBuilder<List<String>?>(
-            stream: _subcriptionViewModel.outputResellerList,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(
-                    hintText: AppString.createNewPlanSelectResellerHint,
-                    labelText: AppString.createNewPlanSelectReseller,
-                  ),
-                  // value: _userViewModel.owner,
-                  onChanged: (String? newValue) {
-                    if (newValue != null && newValue != "Please Select") {
-                      _subcriptionViewModel.setReseller(newValue);
-                    }
-                    _dropDownOperatorKey.currentState?.reset();
-                  },
-                  items: snapshot.data!
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    );
-                  }).toList(),
+        child: Autocomplete<String>(
+          optionsBuilder: (TextEditingValue textEditingValue) {
+            if (textEditingValue.text == '') {
+              return const Iterable<String>.empty();
+              //return snapshot.data!;
+            }
+            return snapshot.data!.where((String option) {
+              return option
+                  .toLowerCase()
+                  .contains(textEditingValue.text.toLowerCase());
+            });
+          },
+          onSelected: (String selection) {
+            _subcriptionViewModel.setReseller(selection);
+            _dropDownOperatorKey.currentState?.reset();
+          },
+          displayStringForOption: (String option) => option,
+          fieldViewBuilder:
+              (context, textEditingController, focusNode, onFieldSubmitted) {
+            return TextFormField(
+                controller: textEditingController,
+                focusNode: focusNode,
+                onEditingComplete: onFieldSubmitted,
+                decoration: const InputDecoration(
+                  hintText: AppString.createNewPlanSelectResellerHint,
+                  labelText: AppString.createNewPlanSelectReseller,
+                ),
+                onChanged: (value) {
+                  _dropDownOperatorKey.currentState?.reset();
+                  _dropDownSubscriberKey.currentState?.reset();
+                  _dropDownPlanKey.currentState?.reset();
+                }
+
+                // onChanged: (String value) {
+                //   _subcriptionViewModel.setReseller(value);
+                // },
                 );
-              } else {
-                return const SizedBox();
-              }
-            }));
+          },
+          optionsViewBuilder: (context, onSelected, options) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 48),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Material(
+                  elevation: 18.0,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight:
+                            // MediaQuery.of(context).size.height * 0.33),
+                            (options.length + 1) * 48.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "${options.length} suggestions",
+                          style: const TextStyle(
+                              fontSize: AppSize.s14,
+                              fontWeight: FontWeight.bold,
+                              color: ColorManager.primaryColor),
+                        ),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxHeight:
+                                  //MediaQuery.of(context).size.height *0.3
+                                  options.length * 52.0),
+                          //height: 200.0,
+                          child: ListView.builder(
+                            padding: const EdgeInsets.all(8.0),
+                            itemCount: options.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final String option = options.elementAt(index);
+                              return GestureDetector(
+                                onTap: () {
+                                  onSelected(option);
+                                },
+                                child: ListTile(
+                                  title: Text(option),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  Widget autoCompleteSearchOperatorList(
+      BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
+    if (snapshot.hasData) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p24,
+        ),
+        child: Autocomplete<String>(
+          optionsBuilder: (TextEditingValue textEditingValue) {
+            if (textEditingValue.text == '') {
+              return const Iterable<String>.empty();
+              //return snapshot.data!;
+            }
+            return snapshot.data!.where((String option) {
+              return option
+                  .toLowerCase()
+                  .contains(textEditingValue.text.toLowerCase());
+            });
+          },
+          onSelected: (String selection) {
+            _dropDownSubscriberKey.currentState?.reset();
+            _dropDownPlanKey.currentState?.reset();
+            _subcriptionViewModel.setOperator(selection);
+          },
+          displayStringForOption: (String option) => option,
+          fieldViewBuilder:
+              (context, textEditingController, focusNode, onFieldSubmitted) {
+            return TextFormField(
+                controller: textEditingController,
+                focusNode: focusNode,
+                onEditingComplete: onFieldSubmitted,
+                decoration: const InputDecoration(
+                  hintText: AppString.createNewPlanSelectOperatorHint,
+                  labelText: AppString.createNewPlanSelectOperator,
+                ),
+                onChanged: (value) {
+                  _dropDownSubscriberKey.currentState?.reset();
+                  _dropDownPlanKey.currentState?.reset();
+                }
+
+                // onChanged: (String value) {
+                //   _subcriptionViewModel.setOperator(value);
+                // },
+                );
+          },
+          optionsViewBuilder: (context, onSelected, options) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 48),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Material(
+                  elevation: 18.0,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight:
+                            // MediaQuery.of(context).size.height * 0.33),
+                            (options.length + 1) * 48.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "${options.length} suggestions",
+                          style: const TextStyle(
+                              fontSize: AppSize.s14,
+                              fontWeight: FontWeight.bold,
+                              color: ColorManager.primaryColor),
+                        ),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxHeight:
+                                  //MediaQuery.of(context).size.height *0.3
+                                  options.length * 52.0),
+                          //height: 200.0,
+                          child: ListView.builder(
+                            padding: const EdgeInsets.all(8.0),
+                            itemCount: options.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final String option = options.elementAt(index);
+                              return GestureDetector(
+                                onTap: () {
+                                  onSelected(option);
+                                },
+                                child: ListTile(
+                                  title: Text(option),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 
   Widget dropDownOperatorList(
@@ -364,6 +554,106 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
     }
   }
 
+  Widget autoCompleteSubscriberList(
+      BuildContext context, AsyncSnapshot<List<SubscriberMapInfo>?> snapshot) {
+    if (snapshot.hasData) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p24,
+        ),
+        child: Autocomplete<SubscriberMapInfo>(
+          optionsBuilder: (TextEditingValue textEditingValue) {
+            if (textEditingValue.text == '') {
+              return const Iterable<SubscriberMapInfo>.empty();
+              //return snapshot.data!;
+            }
+            return snapshot.data!.where((SubscriberMapInfo option) {
+              return option.subscriberUserName
+                  .toLowerCase()
+                  .contains(textEditingValue.text.toLowerCase());
+            });
+          },
+          onSelected: (SubscriberMapInfo selection) {
+            _subcriptionViewModel.setSubscriber(selection.customerId);
+          },
+          displayStringForOption: (SubscriberMapInfo option) =>
+              option.subscriberUserName,
+          fieldViewBuilder:
+              (context, textEditingController, focusNode, onFieldSubmitted) {
+            return TextFormField(
+                controller: textEditingController,
+                focusNode: focusNode,
+                onEditingComplete: onFieldSubmitted,
+                decoration: const InputDecoration(
+                  hintText: AppString.subscriptionSubscriberTextHint,
+                  labelText: AppString.subscriptionSubscriberText,
+                ),
+                onChanged: (value) {
+                  _dropDownPlanKey.currentState?.reset();
+                }
+
+                // onChanged: (String value) {
+                //   _subcriptionViewModel.setOperator(value);
+                // },
+                );
+          },
+          optionsViewBuilder: (context, onSelected, options) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 48),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Material(
+                  elevation: 18.0,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight:
+                            // MediaQuery.of(context).size.height * 0.33),
+                            (options.length + 1) * 48.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "${options.length} suggestions",
+                          style: const TextStyle(
+                              fontSize: AppSize.s14,
+                              fontWeight: FontWeight.bold,
+                              color: ColorManager.primaryColor),
+                        ),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxHeight:
+                                  //MediaQuery.of(context).size.height *0.3
+                                  options.length * 52.0),
+                          //height: 200.0,
+                          child: ListView.builder(
+                            padding: const EdgeInsets.all(8.0),
+                            itemCount: options.length,
+                            itemBuilder: (context, index) {
+                              final option = options.elementAt(index);
+                              return GestureDetector(
+                                onTap: () {
+                                  onSelected(option);
+                                },
+                                child: ListTile(
+                                  title: Text(option.subscriberUserName),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+
   Widget dropDownSubscriberList(
       BuildContext context, AsyncSnapshot<List<SubscriberMapInfo>?> snapshot) {
     if (snapshot.hasData) {
@@ -380,7 +670,7 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
           // value: _userViewModel.owner,
           onChanged: (String? newValue) {
             if (newValue != null && newValue != "Please Select") {
-              _subcriptionViewModel.setOperator(newValue);
+              _subcriptionViewModel.setSubscriber(newValue);
             }
           },
           items: snapshot.data!
@@ -403,33 +693,96 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
   Widget dropDownPlanList(BuildContext context,
       AsyncSnapshot<List<PlanProfileMetaPlan>?> snapshot) {
     if (snapshot.hasData) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppPadding.p24,
-        ),
-        child: DropdownButtonFormField<String>(
-          key: _dropDownPlanKey,
-          decoration: const InputDecoration(
-            hintText: AppString.subscriptionSelectPlanTextHint,
-            labelText: AppString.subscriptionSelectPlanText,
-          ),
-          // value: _userViewModel.owner,
-          onChanged: (String? newValue) {
-            if (newValue != null && newValue != "Please Select") {
-              _subcriptionViewModel.setPlanName(newValue);
-            }
-          },
-          items: snapshot.data!
-              .map<DropdownMenuItem<String>>((PlanProfileMetaPlan value) {
-            return DropdownMenuItem<String>(
-              value: value.planName,
-              child: Text(
-                value.planName,
-                style: const TextStyle(color: Colors.black),
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppPadding.p24,
+            ),
+            child: DropdownButtonFormField<String>(
+              key: _dropDownPlanKey,
+              decoration: const InputDecoration(
+                hintText: AppString.subscriptionSelectPlanTextHint,
+                labelText: AppString.subscriptionSelectPlanText,
               ),
-            );
-          }).toList(),
-        ),
+              // value: _userViewModel.owner,
+              onChanged: (String? newValue) {
+                if (newValue != null && newValue != "Please Select") {
+                  _subcriptionViewModel.setPlanName(newValue);
+                }
+              },
+              items: snapshot.data!
+                  .map<DropdownMenuItem<String>>((PlanProfileMetaPlan value) {
+                return DropdownMenuItem<String>(
+                  value: value.planId,
+                  child: Text(
+                    "${"${value.planName}(${value.planPrice}"})",
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          const SizedBox(
+            height: AppSize.s24,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppPadding.p24,
+            ),
+            child: StreamBuilder<String?>(
+                stream: _subcriptionViewModel.outputPlanBasePrice,
+                builder: (context, snapshot) {
+                  return TextFormField(
+                      controller: _priceController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: AppString.planBasePriceHint,
+                        labelText: AppString.planBasePrice,
+                        errorText: snapshot.data,
+                      ));
+                }),
+          ),
+          const SizedBox(
+            height: AppSize.s1,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+            child: Row(
+              children: [
+                Checkbox(
+                    activeColor: ColorManager.primaryColor,
+                    value: isTaxIncluded,
+                    onChanged: (bool? value) {
+                      _subcriptionViewModel.setIsTaxIncluded(value!);
+                      setState(() {
+                        isTaxIncluded = value;
+                      });
+                    }),
+                const Text(AppString.planTaxIncluded,
+                    style: TextStyle(
+                        fontSize: AppSize.s12,
+                        color: ColorManager.primaryColor)),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+            child: StreamBuilder<OfferPrice?>(
+              stream: _subcriptionViewModel.outputPlanOfferPrice,
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  return offerPriceWidget(context, snapshot.data!);
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ),
+          const SizedBox(
+            height: AppSize.s24,
+          ),
+        ],
       );
     } else {
       return const SizedBox();
@@ -655,6 +1008,68 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
     }
   }
 
+  Widget offerPriceWidget(BuildContext context, OfferPrice offerPrice) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text.rich(
+          TextSpan(
+            text: "${AppString.planOfferPrice} : ",
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
+            children: [
+              TextSpan(
+                text: offerPrice.offerPrice.toStringAsFixed(2),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.blackColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: AppSize.s8,
+        ),
+        Text.rich(
+          TextSpan(
+            text: "${AppString.planTaxAmount}(${offerPrice.taxPercentage}%) : ",
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
+            children: [
+              TextSpan(
+                text: offerPrice.taxAmount.toStringAsFixed(2),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.blackColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: AppSize.s8,
+        ),
+        Text.rich(
+          TextSpan(
+            text: "${AppString.planBasePrice} : ",
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
+            children: [
+              TextSpan(
+                text: offerPrice.basePrice.toStringAsFixed(2),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.blackColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   void dispose() {
     _subcriptionViewModel.dispose();
@@ -665,6 +1080,37 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
     _cityController.dispose();
     _stateController.dispose();
     _countryController.dispose();
+    _priceController.dispose();
     super.dispose();
   }
+  //Unused Code for future reference uncomment if needed
+// Widget dropDownResellerList(
+//       BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
+//     if (snapshot.hasData) {
+//       return DropdownButtonFormField<String>(
+//         decoration: const InputDecoration(
+//           hintText: AppString.createNewPlanSelectResellerHint,
+//           labelText: AppString.createNewPlanSelectReseller,
+//         ),
+//         // value: _userViewModel.owner,
+//         onChanged: (String? newValue) {
+//           if (newValue != null && newValue != "Please Select") {
+//             _subcriptionViewModel.setReseller(newValue);
+//           }
+//           _dropDownOperatorKey.currentState?.reset();
+//         },
+//         items: snapshot.data!.map<DropdownMenuItem<String>>((String value) {
+//           return DropdownMenuItem<String>(
+//             value: value,
+//             child: Text(
+//               value,
+//               style: const TextStyle(color: Colors.black),
+//             ),
+//           );
+//         }).toList(),
+//       );
+//     } else {
+//       return const SizedBox();
+//     }
+//   }
 }

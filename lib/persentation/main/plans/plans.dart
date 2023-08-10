@@ -217,7 +217,7 @@ class _PlansState extends State<PlansView> {
                   child: FloatingActionButton(
                     heroTag: "operatorScreen",
                     onPressed: () {
-                      _plansPageViewModel.navigateToCreatePlan(
+                      _plansPageViewModel.navigateToCreatePriceChart(
                           const CreatePriceChartArguments(
                               screenTypeIdentity:
                                   ScreenTypeIdentity.operatorPriceChart));
@@ -250,7 +250,7 @@ class _PlansState extends State<PlansView> {
                     child: FloatingActionButton(
                       heroTag: "operatorScreen",
                       onPressed: () {
-                        _plansPageViewModel.navigateToCreatePlan(
+                        _plansPageViewModel.navigateToCreatePriceChart(
                             const CreatePriceChartArguments(
                                 screenTypeIdentity:
                                     ScreenTypeIdentity.operatorPriceChart));
@@ -287,7 +287,7 @@ class _PlansState extends State<PlansView> {
                   child: FloatingActionButton(
                     heroTag: "resellerScreen",
                     onPressed: () {
-                      _plansPageViewModel.navigateToCreatePlan(
+                      _plansPageViewModel.navigateToCreatePriceChart(
                           const CreatePriceChartArguments(
                               screenTypeIdentity:
                                   ScreenTypeIdentity.resellerPriceChart));
@@ -320,7 +320,7 @@ class _PlansState extends State<PlansView> {
                     child: FloatingActionButton(
                       heroTag: "resellerScreen",
                       onPressed: () {
-                        _plansPageViewModel.navigateToCreatePlan(
+                        _plansPageViewModel.navigateToCreatePriceChart(
                             const CreatePriceChartArguments(
                                 screenTypeIdentity:
                                     ScreenTypeIdentity.resellerPriceChart));
@@ -358,9 +358,7 @@ class _PlansState extends State<PlansView> {
                     child: FloatingActionButton(
                       heroTag: "plansScreen",
                       onPressed: () {
-                        _plansPageViewModel.navigateToCreatePlan(
-                            const CreatePriceChartArguments(
-                                screenTypeIdentity: ScreenTypeIdentity.plans));
+                        _plansPageViewModel.navigateToCreatePlan();
                       },
                       backgroundColor: ColorManager.primaryColor,
                       child: const Icon(Icons.add),
@@ -391,10 +389,7 @@ class _PlansState extends State<PlansView> {
                       child: FloatingActionButton(
                         heroTag: "plansScreen",
                         onPressed: () {
-                          _plansPageViewModel.navigateToCreatePlan(
-                              const CreatePriceChartArguments(
-                                  screenTypeIdentity:
-                                      ScreenTypeIdentity.plans));
+                          _plansPageViewModel.navigateToCreatePlan();
                         },
                         backgroundColor: ColorManager.primaryColor,
                         child: const Icon(Icons.add),

@@ -131,18 +131,19 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
           ) {
             handleSelection(selection);
           },
-          // fieldViewBuilder: (BuildContext context,
-          //     TextEditingController textEditingController,
-          //     FocusNode focusNode,
-          //     VoidCallback onFieldSubmitted) {
-          //   return TextField(
-          //     controller: textEditingController,
-          //     decoration: InputDecoration(
-          //       labelText: 'Enter ${_activeFilter!.label} or Select',
-          //       border: const OutlineInputBorder(),
-          //     ),
-          //   );
-          // },
+          fieldViewBuilder:
+              (context, textEditingController, focusNode, onFieldSubmitted) {
+            return TextField(
+              controller: textEditingController,
+              focusNode: focusNode,
+              onEditingComplete: onFieldSubmitted,
+              decoration: InputDecoration(
+                hintText: 'Enter ${_activeFilter!.label} or Select',
+                labelText: '${_activeFilter!.label} ',
+                //  border: const OutlineInputBorder(),
+              ),
+            );
+          },
           optionsViewBuilder: (BuildContext context,
               AutocompleteOnSelected<String> onSelected,
               Iterable<String> options) {

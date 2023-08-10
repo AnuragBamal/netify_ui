@@ -564,7 +564,7 @@ class _ApiServiceClient implements ApiServiceClient {
     )
             .compose(
               _dio.options,
-              '/api/v1/subs/subscriberlist',
+              '/api/v1/tenancy/ui/subscriberscreen',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -589,7 +589,7 @@ class _ApiServiceClient implements ApiServiceClient {
     )
             .compose(
               _dio.options,
-              '/api/v1/subs/subscriptionlist',
+              '/api/v1/tenancy/ui/subscriptionscreen',
               queryParameters: queryParameters,
               data: _data,
             )

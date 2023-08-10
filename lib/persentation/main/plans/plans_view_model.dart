@@ -178,8 +178,12 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
     _postDataToView();
   }
 
-  navigateToCreatePlan(CreatePriceChartArguments args) {
-    _navigationService.navigateTo(Routes.createplan, arguments: args);
+  navigateToCreatePriceChart(CreatePriceChartArguments args) {
+    _navigationService.navigateTo(Routes.createpricechart, arguments: args);
+  }
+
+  navigateToCreatePlan() {
+    _navigationService.navigateTo(Routes.createPlan);
   }
 
   @override

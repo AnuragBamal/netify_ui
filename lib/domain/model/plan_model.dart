@@ -163,14 +163,25 @@ class PlanProfileMeta {
   String role;
   String ownerUserName;
   String userName;
+  List<String> planSpeedUnit;
+  List<String> planDataLimitUnit;
+  List<String> planValidityUnit;
+  List<String> planType;
+  double taxRate;
   Map<String, List<String>> resellerMap;
-  List<String> planList;
+  List<PlanProfileMetaPlan> planList;
   List<MainPageModel> planScreens;
   Map<String, List<PlanProfileMetaPlan>> resellerPlanMap;
+
   PlanProfileMeta(
       {required this.role,
       required this.ownerUserName,
       required this.userName,
+      required this.planSpeedUnit,
+      required this.planDataLimitUnit,
+      required this.planValidityUnit,
+      required this.planType,
+      required this.taxRate,
       required this.resellerMap,
       required this.planList,
       required this.planScreens,
@@ -179,8 +190,13 @@ class PlanProfileMeta {
   factory PlanProfileMeta.fromJson(Map<String, dynamic> json) {
     return PlanProfileMeta(
         role: json['role'],
-        ownerUserName: json['owneruserName'],
+        ownerUserName: json['ownerUserName'],
         userName: json['userName'],
+        planSpeedUnit: json['planSpeedUnit'],
+        planDataLimitUnit: json['planDataLimitUnit'],
+        planValidityUnit: json['planValidityUnit'],
+        planType: json['planType'],
+        taxRate: json['taxRate'],
         resellerMap: json['resellerMap'],
         planList: json['planList'],
         planScreens: json['planScreens'],
@@ -190,8 +206,13 @@ class PlanProfileMeta {
   Map<String, dynamic> toJson() {
     return {
       'role': role,
-      'owneruserName': ownerUserName,
+      'ownerUserName': ownerUserName,
       'userName': userName,
+      'planSpeedUnit': planSpeedUnit,
+      'planDataLimitUnit': planDataLimitUnit,
+      'planValidityUnit': planValidityUnit,
+      'planType': planType,
+      'taxRate': taxRate,
       'resellerMap': resellerMap,
       'planList': planList,
       'planScreens': planScreens,

@@ -6,6 +6,7 @@ import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/domain/model/wallet_model.dart';
+import 'package:intl/intl.dart';
 
 const String defaultEmptyString = "";
 
@@ -286,7 +287,15 @@ extension PlanProfileMetaResponseExtension on PlanProfileMetaResponse? {
       role: this?.role?.nonNull ?? defaultEmptyString,
       ownerUserName: this?.ownerUserName?.nonNull ?? defaultEmptyString,
       userName: this?.userName?.nonNull ?? defaultEmptyString,
-      planList: this?.planList?.map((e) => e.toString()).toList() ?? [],
+      taxRate: this?.taxRate ?? 0,
+      planSpeedUnit:
+          this?.planSpeedUnit?.map((e) => e.toString()).toList() ?? [],
+      planDataLimitUnit:
+          this?.planDataLimitUnit?.map((e) => e.toString()).toList() ?? [],
+      planValidityUnit:
+          this?.planValidityUnit?.map((e) => e.toString()).toList() ?? [],
+      planType: this?.planType?.map((e) => e.toString()).toList() ?? [],
+      planList: this?.planList?.map((e) => e.toDomain()).toList() ?? [],
       resellerMap: this?.resellerOperatorMap ?? {},
       planScreens: this?.planScreens?.map((e) => e.toDomain()).toList() ?? [],
       resellerPlanMap: this?.resellerPlanMap?.map(((key, value) =>
@@ -364,6 +373,8 @@ extension SubscriberResponseExtension on SubscriberResponse? {
 
 extension SubscriptionResponseExtension on SubscriptionResponse? {
   Subscription toDomain() {
+    //DateFormat dateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    DateFormat dateFormat = DateFormat("dd-MM-yyyy");
     return Subscription(
       subscriptionId: this?.subscriptionId?.nonNull ?? defaultEmptyString,
       subscriberUserName:
@@ -375,12 +386,14 @@ extension SubscriptionResponseExtension on SubscriptionResponse? {
       networkType: this?.networkType?.nonNull ?? defaultEmptyString,
       assignedIp: this?.assignedIp?.nonNull ?? defaultEmptyString,
       ipType: this?.ipType?.nonNull ?? defaultEmptyString,
+      basePrice: this?.basePrice ?? 0,
+      offeredPrice: this?.offeredPrice ?? 0,
       subscriptionDate:
           DateTime.parse(this?.subscriptionDate?.nonNull ?? defaultEmptyString),
       lastRenewalDate:
-          DateTime.parse(this?.lastRenewalDate?.nonNull ?? defaultEmptyString),
+          dateFormat.parse(this?.lastRenewalDate?.nonNull ?? "01-01-0001"),
       nextRenewalDate:
-          DateTime.parse(this?.nextRenewalDate?.nonNull ?? defaultEmptyString),
+          dateFormat.parse(this?.nextRenewalDate?.nonNull ?? "01-01-0001"),
       installationAddress: this?.installationAddress?.toDomain() ??
           Address(
               addressId: defaultEmptyString,
@@ -530,6 +543,7 @@ extension SubscriptionMetaResponseExtension on SubscriptionMetaResponse? {
       availiableIps:
           this?.availiableIps?.map((e) => e.toString()).toList() ?? [],
       ipType: this?.ipType?.map((e) => e.toString()).toList() ?? [],
+      taxRate: this?.taxRate ?? 0,
     );
   }
 }

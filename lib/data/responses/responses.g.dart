@@ -519,7 +519,8 @@ PlanProfileMetaResponse _$PlanProfileMetaResponseFromJson(
       ownerUserName: json['ownerUserName'] as String?,
       userName: json['userName'] as String?,
       planList: (json['planList'] as List<dynamic>?)
-          ?.map((e) => e as String)
+          ?.map((e) =>
+              PlanProfileMetaPlanResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       resellerOperatorMap:
           (json['resellerOperatorMap'] as Map<String, dynamic>?)?.map(
@@ -538,7 +539,20 @@ PlanProfileMetaResponse _$PlanProfileMetaResponseFromJson(
                     e as Map<String, dynamic>))
                 .toList()),
       ),
-    );
+    )
+      ..taxRate = (json['taxRate'] as num?)?.toDouble()
+      ..planSpeedUnit = (json['planSpeedUnit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..planDataLimitUnit = (json['planDataLimitUnit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..planValidityUnit = (json['planValidityUnit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..planType = (json['planType'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList();
 
 Map<String, dynamic> _$PlanProfileMetaResponseToJson(
         PlanProfileMetaResponse instance) =>
@@ -546,7 +560,12 @@ Map<String, dynamic> _$PlanProfileMetaResponseToJson(
       'role': instance.role,
       'ownerUserName': instance.ownerUserName,
       'userName': instance.userName,
+      'taxRate': instance.taxRate,
       'planList': instance.planList,
+      'planSpeedUnit': instance.planSpeedUnit,
+      'planDataLimitUnit': instance.planDataLimitUnit,
+      'planValidityUnit': instance.planValidityUnit,
+      'planType': instance.planType,
       'resellerOperatorMap': instance.resellerOperatorMap,
       'planScreens': instance.planScreens,
       'resellerPlanMap': instance.resellerPlanMap,
@@ -668,6 +687,8 @@ SubscriptionResponse _$SubscriptionResponseFromJson(
           ? null
           : AddressResponse.fromJson(
               json['billingAddress'] as Map<String, dynamic>),
+      basePrice: (json['basePrice'] as num?)?.toDouble(),
+      offeredPrice: (json['offeredPrice'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$SubscriptionResponseToJson(
@@ -688,6 +709,8 @@ Map<String, dynamic> _$SubscriptionResponseToJson(
       'installationAddress': instance.installationAddress,
       'permanentAddress': instance.permanentAddress,
       'billingAddress': instance.billingAddress,
+      'basePrice': instance.basePrice,
+      'offeredPrice': instance.offeredPrice,
     };
 
 SubscriberListBlockResponse _$SubscriberListBlockResponseFromJson(
@@ -892,6 +915,7 @@ SubscriptionMetaResponse _$SubscriptionMetaResponseFromJson(
       availiableIps: (json['availiableIps'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      taxRate: (json['taxRate'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$SubscriptionMetaResponseToJson(
@@ -903,6 +927,7 @@ Map<String, dynamic> _$SubscriptionMetaResponseToJson(
       'networkType': instance.networkType,
       'ipType': instance.ipType,
       'availiableIps': instance.availiableIps,
+      'taxRate': instance.taxRate,
     };
 
 GetSubscriptionMetaResponse _$GetSubscriptionMetaResponseFromJson(

@@ -99,11 +99,51 @@ class AppString {
       "Create Operator Plan";
   static const String createNewPlanSelectPlan = "Plan";
   static const String createNewPlanSelectPlanHint = "Select Plan";
+  static const String selectPlan = "Plan Type";
+  static const String selectPlanHint = "Select Plan Type";
+  static const String planValidity = "Validity";
+  static const String planValidityHint = "Enter Validity";
+  static const String planValidityType = "Validity Type";
+  static const String planBasePrice = "Base Price";
+  static const String planBasePriceHint = "Enter Base Price";
+  static const String planOfferPrice = "Offer Price";
+  static const String planTaxAmount = "TaxAmount";
+  static const String planTaxIncluded = "Is Tax Included in above price?";
+  static const String planMaxSessionTimeInHours = "Max-Session Time";
+  static const String planMaxSessionTimeInHoursHint =
+      "Enter Max-Session Time In Hours";
+  static const String planMaxDataInSession = "Max-Data Transfer In Session ";
+  static const String planMaxDataInSessionHint =
+      "Enter Max-Data Transfer In Session in GB";
+  static const String planMaxSimultaneousSessionOfUser =
+      "Max-Concurrent Session";
+  static const String planMaxSimultaneousSessionOfUserHint =
+      "Enter Max-Concurrent Session of User";
+  static const String planValidityTypeHint = "Select Validity Type";
+  static const String uploadSpeed = "Upload Speed";
+  static const String uploadSpeedHint = "Enter Upload Speed";
+  static const String downloadSpeed = "Download Speed";
+  static const String downloadSpeedHint = "Enter Download Speed";
+  static const String speedUnit = "Speed Type";
+  static const String speedUnitHint = "Select Speed Unit";
+  static const String dataLimit = "Data Limit";
+  static const String dataLimitHint = "Enter Data Limit";
+  static const String dataLimitUnit = "Data Limit In";
+  static const String dataLimitUnitHint = "Select Data Limit Unit";
+  static const String fupUploadSpeed = "FUP Upload Speed";
+  static const String fupUploadSpeedHint = "Enter FUP Upload Speed";
+  static const String fupDownloadSpeed = "FUP Download Speed";
+  static const String fupDownloadSpeedHint = "Enter FUP Download Speed";
+  static const String fupDataLimit = "FUP Data Limit";
+  static const String fupDataLimitHint = "Enter FUP Data Limit";
+
   static const String createNewPlanSelectReseller = "Reseller";
   static const String createNewPlanSelectResellerHint = "Select Reseller";
   static const String createNewPlanSelectOperator = "Operator";
   static const String createNewPlanSelectOperatorHint = " Reseller's Operator";
   static const String createNewSubscriber = "Create New Subscriber";
+  static const String createNewSubscription = "Create New Subscription";
+
   static const String isBillingAddSame = "Billing Address Is Same As Above:";
   static const String installationAddress = "Installation Address";
   static const String subscriptionStaticIpText = "Static IP";
@@ -116,6 +156,17 @@ class AppString {
   static const String subscriptionSelectPlanTextHint = "Select Plan";
   static const String subscriptionSubscriberText = "Subscriber";
   static const String subscriptionSubscriberTextHint = "Select Subscriber";
+  static const String subscriptionBillingCycleHint = "Select Billing Cycle";
+  static const String subscriptionBillingCycle = "Billing Cycle";
   static const String sameAsBillingAddress = "Same as Billing Address";
   static const String sameAsPermanentAddress = "Same as Permanent Address";
+
+  static const String installationSameAsBillingAddress =
+      "Installation Same as Billing Address";
+  static const String installationSameAsPermanentAddress =
+      "Installation Same as Permanent Address";
+  static const String cpeDeviceId = "CPE Device Username";
+  static const String cpeDeviceIdHint = "Enter CPE Device Username";
+  static const String cpeDevicePassword = "CPE Device Password";
+  static const String cpeDevicePasswordHint = "Enter CPE Device Password";
 }

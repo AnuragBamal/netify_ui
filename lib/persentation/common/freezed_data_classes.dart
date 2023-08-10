@@ -68,20 +68,55 @@ class CreateNewUserObject with _$CreateNewUserObject {
 
 @freezed
 class CreatePlan with _$CreatePlan {
-  factory CreatePlan(String planName, String planDescription) = _CreatePlan;
+  factory CreatePlan(
+      String planName,
+      String planDescription,
+      String planType,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount,
+      int planValidity,
+      String planValidityUnit,
+      int downloadSpeed,
+      String downloadSpeedUnit,
+      int uploadSpeed,
+      String uploadSpeedUnit,
+      int dataLimit,
+      String dataLimitUnit,
+      int downloadSpeedFUP,
+      int uploadSpeedFUP,
+      String downloadSpeedFUPUnit,
+      String uploadSpeedFUPUnit,
+      int dataLimitFUP,
+      String dataLimitFUPUnit,
+      int maxSessionTimeInsec,
+      int maxDataTransferInSession,
+      int maxSimultaneousUser,
+      int gracePeriodInDays) = _CreatePlan;
 }
 
 @freezed
 class CreateResellerPriceChart with _$CreateResellerPriceChart {
   factory CreateResellerPriceChart(
-          String planName, String resellerUserName, int price) =
-      _CreateResellerPriceChart;
+      String planName,
+      String resellerUserName,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount) = _CreateResellerPriceChart;
 }
 
 @freezed
 class CreateOperatorPriceChart with _$CreateOperatorPriceChart {
-  factory CreateOperatorPriceChart(String planName, String operatorUserName,
-      String resellerUserName, int price) = _CreateOperatorPriceChart;
+  factory CreateOperatorPriceChart(
+      String planName,
+      String operatorUserName,
+      String resellerUserName,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount) = _CreateOperatorPriceChart;
 }
 
 @freezed
@@ -116,21 +151,24 @@ class CreateNewSubscriber with _$CreateNewSubscriber {
 @freezed
 class CreateNewSubscription with _$CreateNewSubscription {
   factory CreateNewSubscription(
-    String userName,
-    String password,
-    String resellerUserName,
-    String operatorUserName,
-    String subscriberId,
-    String planName,
-    String networkType,
-    String ipType,
-    String assignedIp,
-    bool isInstallationAddressSameAsBilling,
-    bool isInstallationAddressSameAsPermanent,
-    String country,
-    String address,
-    String pincode,
-    String city,
-    String state,
-  ) = _CreateNewSubscription;
+      String userName,
+      String password,
+      String resellerUserName,
+      String operatorUserName,
+      String subscriberId,
+      String planName,
+      String networkType,
+      String ipType,
+      String assignedIp,
+      bool isInstallationAddressSameAsBilling,
+      bool isInstallationAddressSameAsPermanent,
+      String country,
+      String address,
+      String pincode,
+      String city,
+      String state,
+      double planBasicCost,
+      double planOfferedCost,
+      double planEnteredCost,
+      double taxAmount) = _CreateNewSubscription;
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:netify/data/request/request.dart';
 import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/domain/usecase/create_operatorchart_usecase.dart';
-import 'package:netify/domain/usecase/create_plan_usecase.dart';
 import 'package:netify/domain/usecase/create_resellerchart_usecase.dart';
 import 'package:netify/domain/usecase/getplanprofile_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
@@ -13,10 +12,6 @@ import 'package:netify/services/dialog_service.dart';
 import 'package:netify/services/navigator_service.dart';
 
 class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
-  final StreamController _planNameController =
-      StreamController<String?>.broadcast();
-  final StreamController _planDescriptionController =
-      StreamController<String?>.broadcast();
   final StreamController _planPriceController =
       StreamController<int?>.broadcast();
   final StreamController _resellerUsernameController =
@@ -31,7 +26,7 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
       StreamController<bool>.broadcast();
 
   final _listOfPlansStreamController =
-      StreamController<List<String>>.broadcast();
+      StreamController<List<PlanProfileMetaPlan>>.broadcast();
   final _listOfResellerPlansStreamController =
       StreamController<List<PlanProfileMetaPlan>>.broadcast();
   final _listOfResellerStreamController =
@@ -39,29 +34,34 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
   final _listOfOperatorStreamController =
       StreamController<List<String>>.broadcast();
 
+  final StreamController _planOfferPriceController =
+      StreamController<OfferPrice?>.broadcast();
+
   final GetPlanProfileUseCase _getPlanProfileUseCase;
   final DialogService _dialogService;
   final NavigationService _navigationService;
   final CreateOperatorPriceChartUsecase _createOperatorPriceChartUsecase;
-  final CreatePlanUseCase _createPlanUseCase;
   final CreateResellerPriceChartUsecase _createResellerPriceChartUsecase;
   late final Map<String, List<String>> resellermap;
   late final Map<String, List<PlanProfileMetaPlan>> resellerPlanMap;
-  var createNewPlan = CreatePlan("", "");
-  var createNewOperatorPriceChart = CreateOperatorPriceChart("", "", "", 0);
-  var createNewResellerPriceChart = CreateResellerPriceChart("", "", 0);
+
+  var createNewOperatorPriceChart =
+      CreateOperatorPriceChart("", "", "", 0, 0, 0, 0);
+  var createNewResellerPriceChart =
+      CreateResellerPriceChart("", "", 0, 0, 0, 0);
+
+  bool isTaxIncluded = false;
+
+  late final double taxRate;
   CreatePlanPageViewModel(
       this._getPlanProfileUseCase,
       this._navigationService,
       this._createOperatorPriceChartUsecase,
-      this._createPlanUseCase,
       this._createResellerPriceChartUsecase,
       this._dialogService);
 
   @override
   void dispose() {
-    _planNameController.close();
-    _planDescriptionController.close();
     _planPriceController.close();
     _resellerUsernameController.close();
     _operatorUsernameController.close();
@@ -72,6 +72,7 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
     _listOfResellerPlansStreamController.close();
     _listOfResellerStreamController.close();
     _listOfOperatorStreamController.close();
+    _planOfferPriceController.close();
   }
 
   @override
@@ -79,30 +80,16 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
     _getPlansMetaData();
   }
 
-  setPlanName(String value) {
-    _planNameController.sink.add(value);
-    if (_validatePlanName(value) == null) {
-      createNewPlan = createNewPlan.copyWith(planName: value);
-    }
-    _validateCreatePlan();
-  }
-
-  setPlanDescription(String value) {
-    _planDescriptionController.sink.add(value);
-    if (_validatePlanDescription(value) == null) {
-      createNewPlan = createNewPlan.copyWith(planDescription: value);
-    }
-    _validateCreatePlan();
-  }
-
   setPlanPrice(int value) {
+    var enteredCost = double.tryParse(value.toString()) ?? 0;
     _planPriceController.sink.add(value);
     if (_validatePlanPrice(value) == null) {
       createNewResellerPriceChart =
-          createNewResellerPriceChart.copyWith(price: value);
+          createNewResellerPriceChart.copyWith(planEnteredCost: enteredCost);
       createNewOperatorPriceChart =
-          createNewOperatorPriceChart.copyWith(price: value);
+          createNewOperatorPriceChart.copyWith(planEnteredCost: enteredCost);
     }
+    calculateOfferPrice();
     _validateCreateOperatorPriceChart();
     _validateCreateResellerPriceChart();
   }
@@ -133,8 +120,36 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
     _validateCreateOperatorPriceChart();
   }
 
-  createNewPlanSubmit(BuildContext context) {
-    _createPlan(context);
+  setPlanOfferPrice(double value) {
+    createNewResellerPriceChart =
+        createNewResellerPriceChart.copyWith(planOfferedCost: value);
+    createNewOperatorPriceChart =
+        createNewOperatorPriceChart.copyWith(planOfferedCost: value);
+    _validateCreateOperatorPriceChart();
+    _validateCreateResellerPriceChart();
+  }
+
+  setPlanBasePriceCost(double value) {
+    createNewResellerPriceChart =
+        createNewResellerPriceChart.copyWith(planBasicCost: value);
+    createNewOperatorPriceChart =
+        createNewOperatorPriceChart.copyWith(planBasicCost: value);
+    _validateCreateOperatorPriceChart();
+    _validateCreateResellerPriceChart();
+  }
+
+  setTaxAmount(double value) {
+    createNewResellerPriceChart =
+        createNewResellerPriceChart.copyWith(taxAmount: value);
+    createNewOperatorPriceChart =
+        createNewOperatorPriceChart.copyWith(taxAmount: value);
+    _validateCreateOperatorPriceChart();
+    _validateCreateResellerPriceChart();
+  }
+
+  setIsTaxIncluded(bool value) {
+    isTaxIncluded = value;
+    calculateOfferPrice();
   }
 
   createNewResellerPriceChartSubmit(BuildContext context) {
@@ -145,17 +160,11 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
     _createOperatorPriceChart(context);
   }
 
-  Sink get planName => _planNameController.sink;
-  Sink get planDescription => _planDescriptionController.sink;
   Sink get planPrice => _planPriceController.sink;
   Sink get resellerUsername => _resellerUsernameController.sink;
   Sink get operatorUsername => _operatorUsernameController.sink;
+  Sink get inputPlanOfferPrice => _planOfferPriceController.sink;
 
-  Stream<String?> get outputErrorPlanNameStream =>
-      _planNameController.stream.map((event) => _validatePlanName(event));
-  Stream<String?> get outputErrorPlanDescriptionStream =>
-      _planDescriptionController.stream
-          .map((event) => _validatePlanDescription(event));
   Stream<String?> get outputErrorPlanPriceStream =>
       _planPriceController.stream.map((event) => _validatePlanPrice(event));
 
@@ -170,7 +179,7 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
       _operatorPriceControllerValid.stream.map(
         (event) => event,
       );
-  Stream<List<String>> get listOfPlansStream =>
+  Stream<List<PlanProfileMetaPlan>> get listOfPlansStream =>
       _listOfPlansStreamController.stream.map((event) => event);
   Stream<List<PlanProfileMetaPlan>> get listOfResellerPlansStream =>
       _listOfResellerPlansStreamController.stream.map((event) => event);
@@ -179,19 +188,8 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
   Stream<List<String>> get listOfOperatorStream =>
       _listOfOperatorStreamController.stream.map((event) => event);
 
-  _validatePlanName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter plan name';
-    }
-    return null;
-  }
-
-  _validatePlanDescription(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter plan description';
-    }
-    return null;
-  }
+  Stream<OfferPrice?> get outputPlanOfferPrice =>
+      _planOfferPriceController.stream.map((event) => event);
 
   _validatePlanPrice(int? value) {
     if (value == null || value < 1) {
@@ -200,18 +198,74 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
     return null;
   }
 
-  _validateCreatePlan() {
-    if (createNewPlan.planName.isEmpty ||
-        createNewPlan.planDescription.isEmpty) {
-      _planControllerValid.sink.add(false);
+  calculateOfferPrice() {
+    if (createNewResellerPriceChart.planEnteredCost > 0 ||
+        createNewOperatorPriceChart.planEnteredCost > 0) {
+      if (createNewResellerPriceChart.planEnteredCost > 0) {
+        if (isTaxIncluded) {
+          var finalAmount = createNewResellerPriceChart.planEnteredCost;
+          var basePrice = finalAmount / (1 + (taxRate / 100));
+          var taxAmount = finalAmount - basePrice;
+          inputPlanOfferPrice.add(OfferPrice(
+              offerPrice: finalAmount,
+              taxAmount: taxAmount,
+              basePrice: basePrice,
+              taxPercentage: taxRate));
+          setPlanOfferPrice(finalAmount);
+          setPlanBasePriceCost(basePrice);
+          setTaxAmount(taxAmount);
+        } else {
+          var finalAmount = createNewResellerPriceChart.planEnteredCost +
+              (createNewResellerPriceChart.planEnteredCost * (taxRate / 100));
+          var basePrice = createNewResellerPriceChart.planEnteredCost;
+          var taxAmount = finalAmount - basePrice;
+          inputPlanOfferPrice.add(OfferPrice(
+              offerPrice: finalAmount,
+              taxAmount: taxAmount,
+              basePrice: basePrice,
+              taxPercentage: taxRate));
+          setPlanOfferPrice(finalAmount);
+          setPlanBasePriceCost(basePrice);
+          setTaxAmount(taxAmount);
+        }
+      } else {
+        if (isTaxIncluded) {
+          var finalAmount = createNewOperatorPriceChart.planEnteredCost;
+          var basePrice = finalAmount / (1 + (taxRate / 100));
+          var taxAmount = finalAmount - basePrice;
+          inputPlanOfferPrice.add(OfferPrice(
+              offerPrice: finalAmount,
+              taxAmount: taxAmount,
+              basePrice: basePrice,
+              taxPercentage: taxRate));
+          setPlanOfferPrice(finalAmount);
+          setPlanBasePriceCost(basePrice);
+          setTaxAmount(taxAmount);
+        } else {
+          var finalAmount = createNewOperatorPriceChart.planEnteredCost +
+              (createNewOperatorPriceChart.planEnteredCost * (taxRate / 100));
+          var basePrice = createNewOperatorPriceChart.planEnteredCost;
+          var taxAmount = finalAmount - basePrice;
+          inputPlanOfferPrice.add(OfferPrice(
+              offerPrice: finalAmount,
+              taxAmount: taxAmount,
+              basePrice: basePrice,
+              taxPercentage: taxRate));
+          setPlanOfferPrice(finalAmount);
+          setPlanBasePriceCost(basePrice);
+          setTaxAmount(taxAmount);
+        }
+      }
     } else {
-      _planControllerValid.sink.add(true);
+      inputPlanOfferPrice.add(null);
     }
   }
 
   _validateCreateResellerPriceChart() {
     if (createNewResellerPriceChart.resellerUserName.isEmpty ||
-        createNewResellerPriceChart.price < 1 ||
+        createNewResellerPriceChart.planBasicCost < 1 ||
+        createNewResellerPriceChart.planOfferedCost < 1 ||
+        createNewResellerPriceChart.taxAmount < 1 ||
         createNewResellerPriceChart.planName.isEmpty) {
       _resellerPriceControllerValid.sink.add(false);
     } else {
@@ -221,7 +275,9 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
 
   _validateCreateOperatorPriceChart() {
     if (createNewOperatorPriceChart.operatorUserName.isEmpty ||
-        createNewOperatorPriceChart.price < 1 ||
+        createNewOperatorPriceChart.planBasicCost < 1 ||
+        createNewOperatorPriceChart.planOfferedCost < 1 ||
+        createNewOperatorPriceChart.taxAmount < 1 ||
         createNewOperatorPriceChart.planName.isEmpty ||
         createNewOperatorPriceChart.resellerUserName.isEmpty) {
       _operatorPriceControllerValid.sink.add(false);
@@ -240,41 +296,12 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
   }
 
   _intiallizePlanSectionMetadata(PlanProfileMeta planProfile) {
+    taxRate = planProfile.taxRate;
     _listOfPlansStreamController.sink.add(planProfile.planList);
     _listOfResellerStreamController.sink
         .add(planProfile.resellerMap.keys.toList());
     resellermap = planProfile.resellerMap;
     resellerPlanMap = planProfile.resellerPlanMap;
-  }
-
-  _createPlan(BuildContext context) async {
-    _dialogService.showDialogOnScreen(
-        context,
-        DialogRequest(
-            title: "Loading",
-            description: "Loading",
-            dialogType: DialogType.loading));
-    var result = await _createPlanUseCase.execute(CreatePlanRequest(
-        planName: createNewPlan.planName,
-        planDescription: createNewPlan.planDescription));
-    result.fold((failure) {
-      Navigator.of(context).pop();
-      _dialogService.showDialogOnScreen(
-          context,
-          DialogRequest(
-              title: "Error",
-              description: failure.message,
-              dialogType: DialogType.error));
-    }, (success) {
-      Navigator.of(context).pop();
-      var successDialouge = _dialogService.showDialogOnScreen(
-          context,
-          DialogRequest(
-              title: "Success",
-              description: success.data[0].message,
-              dialogType: DialogType.info));
-      successDialouge.then((value) => _navigationService.goBack());
-    });
   }
 
   _createResellerPriceChart(BuildContext context) async {
@@ -288,7 +315,9 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
         CreateResellerPriceChartRequest(
             planName: createNewResellerPriceChart.planName,
             resellerUserName: createNewResellerPriceChart.resellerUserName,
-            price: createNewResellerPriceChart.price));
+            planBasicCost: createNewResellerPriceChart.planBasicCost,
+            planOfferedCost: createNewResellerPriceChart.planOfferedCost,
+            taxAmount: createNewResellerPriceChart.taxAmount));
     result.fold((failure) {
       Navigator.of(context).pop();
       _dialogService.showDialogOnScreen(
@@ -321,7 +350,9 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
             planName: createNewOperatorPriceChart.planName,
             resellerUserName: createNewOperatorPriceChart.resellerUserName,
             operatorUserName: createNewOperatorPriceChart.operatorUserName,
-            price: createNewOperatorPriceChart.price));
+            planBasicCost: createNewOperatorPriceChart.planBasicCost,
+            planOfferedCost: createNewOperatorPriceChart.planOfferedCost,
+            taxAmount: createNewOperatorPriceChart.taxAmount));
 
     result.fold((failure) {
       Navigator.of(context).pop();
@@ -342,4 +373,17 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
       successDialouge.then((value) => _navigationService.goBack());
     });
   }
+}
+
+class OfferPrice {
+  double offerPrice;
+  double taxAmount;
+  double basePrice;
+  double taxPercentage;
+
+  OfferPrice(
+      {required this.offerPrice,
+      required this.taxAmount,
+      required this.basePrice,
+      required this.taxPercentage});
 }

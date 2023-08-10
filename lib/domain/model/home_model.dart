@@ -228,6 +228,8 @@ class Subscription {
   final Address installationAddress;
   final Address permanentAddress;
   final Address billingAddress;
+  final double basePrice;
+  final double offeredPrice;
 
   Subscription(
       {required this.subscriptionId,
@@ -244,7 +246,9 @@ class Subscription {
       required this.nextRenewalDate,
       required this.installationAddress,
       required this.permanentAddress,
-      required this.billingAddress});
+      required this.billingAddress,
+      required this.basePrice,
+      required this.offeredPrice});
 
   factory Subscription.fromJson(Map<String, dynamic> json) {
     return Subscription(
@@ -262,7 +266,9 @@ class Subscription {
         nextRenewalDate: json['nextRenewalDate'],
         installationAddress: json['installationAddress'],
         permanentAddress: json['permanentAddress'],
-        billingAddress: json['billingAddress']);
+        billingAddress: json['billingAddress'],
+        basePrice: json['basePrice'],
+        offeredPrice: json['offeredPrice']);
   }
 }
 
@@ -330,14 +336,17 @@ class SubscriptionMeta {
   final List<String> networkType;
   final List<String> ipType;
   final List<String> availiableIps;
+  double taxRate;
 
-  SubscriptionMeta(
-      {required this.resellerOperatorMap,
-      required this.operatorPlanMap,
-      required this.operatorSubscriberMap,
-      required this.networkType,
-      required this.availiableIps,
-      required this.ipType});
+  SubscriptionMeta({
+    required this.resellerOperatorMap,
+    required this.operatorPlanMap,
+    required this.operatorSubscriberMap,
+    required this.networkType,
+    required this.availiableIps,
+    required this.ipType,
+    required this.taxRate,
+  });
 
   factory SubscriptionMeta.fromJson(Map<String, dynamic> json) {
     return SubscriptionMeta(
@@ -346,7 +355,8 @@ class SubscriptionMeta {
         operatorSubscriberMap: json['operatorSubscriberMap'],
         networkType: json['networkType'],
         availiableIps: json['availiableIps'],
-        ipType: json['ipType']);
+        ipType: json['ipType'],
+        taxRate: json['taxRate']);
   }
 }
 //Basic model for home screen

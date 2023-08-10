@@ -23,16 +23,9 @@ class CreatePriceChart extends StatefulWidget {
 class _CreatePriceChartState extends State<CreatePriceChart> {
   final _plansPageViewModel = instance<CreatePlanPageViewModel>();
   final _formKey = GlobalKey<FormState>();
-  final _planNameController = TextEditingController();
-  final _planDescriptionController = TextEditingController();
   final _planpriceController = TextEditingController();
+  bool isTaxIncluded = false;
   _bind() {
-    _planNameController.addListener(() {
-      _plansPageViewModel.setPlanName(_planNameController.text);
-    });
-    _planDescriptionController.addListener(() {
-      _plansPageViewModel.setPlanDescription(_planDescriptionController.text);
-    });
     _planpriceController.addListener(() {
       _plansPageViewModel.setPlanPrice(_planpriceController.text == ""
           ? 0
@@ -49,8 +42,6 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
 
   @override
   void dispose() {
-    _planNameController.dispose();
-    _planDescriptionController.dispose();
     _planpriceController.dispose();
     _plansPageViewModel.dispose();
     super.dispose();
@@ -65,97 +56,12 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
   }
 
   Widget _getContentWidget(BuildContext context) {
-    if (widget.arguments.screenTypeIdentity == ScreenTypeIdentity.plans) {
-      return _buildPlanForm(context);
-    } else if (widget.arguments.screenTypeIdentity ==
+    if (widget.arguments.screenTypeIdentity ==
         ScreenTypeIdentity.resellerPriceChart) {
       return _buildResellerPriceChartForm(context);
     } else {
       return _buildOperatorPriceChartForm(context);
     }
-  }
-
-  Widget _buildPlanForm(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: AppPadding.p100),
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                AppString.createNewPlanTitle,
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              const SizedBox(
-                height: AppSize.s200,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p24,
-                ),
-                child: StreamBuilder<String?>(
-                    stream: _plansPageViewModel.outputErrorPlanNameStream,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          controller: _planNameController,
-                          decoration: InputDecoration(
-                            hintText: AppString.createNewPlanPlanNameHint,
-                            labelText: AppString.createNewPlanPlanName,
-                            errorText: snapshot.data,
-                          ));
-                    }),
-              ),
-              const SizedBox(
-                height: AppSize.s24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p24,
-                ),
-                child: StreamBuilder<String?>(
-                    stream:
-                        _plansPageViewModel.outputErrorPlanDescriptionStream,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          controller: _planDescriptionController,
-                          decoration: InputDecoration(
-                            hintText:
-                                AppString.createNewPlanPlanDescriptionHint,
-                            labelText: AppString.createNewPlanDescription,
-                            errorText: snapshot.data,
-                          ));
-                    }),
-              ),
-              const SizedBox(
-                height: AppSize.s24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
-                child: StreamBuilder<bool>(
-                  stream: _plansPageViewModel.isAllPlanInputValid,
-                  builder: (context, snapshot) {
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: (snapshot.data == true)
-                            ? () {
-                                _plansPageViewModel
-                                    .createNewPlanSubmit(context);
-                              }
-                            : null,
-                        child: const Text(AppString.createNewPlanSubmitButton),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Widget _buildResellerPriceChartForm(BuildContext context) {
@@ -199,6 +105,42 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
                             errorText: snapshot.data,
                           ));
                     }),
+              ),
+              const SizedBox(
+                height: AppSize.s1,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                child: Row(
+                  children: [
+                    Checkbox(
+                        activeColor: ColorManager.primaryColor,
+                        value: isTaxIncluded,
+                        onChanged: (bool? value) {
+                          _plansPageViewModel.setIsTaxIncluded(value!);
+                          setState(() {
+                            isTaxIncluded = value;
+                          });
+                        }),
+                    const Text(AppString.planTaxIncluded,
+                        style: TextStyle(
+                            fontSize: AppSize.s12,
+                            color: ColorManager.primaryColor)),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                child: StreamBuilder<OfferPrice?>(
+                  stream: _plansPageViewModel.outputPlanOfferPrice,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return offerPriceWidget(context, snapshot.data!);
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
               ),
               const SizedBox(
                 height: AppSize.s24,
@@ -277,6 +219,42 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
                     }),
               ),
               const SizedBox(
+                height: AppSize.s1,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                child: Row(
+                  children: [
+                    Checkbox(
+                        activeColor: ColorManager.primaryColor,
+                        value: isTaxIncluded,
+                        onChanged: (bool? value) {
+                          _plansPageViewModel.setIsTaxIncluded(value!);
+                          setState(() {
+                            isTaxIncluded = value;
+                          });
+                        }),
+                    const Text(AppString.planTaxIncluded,
+                        style: TextStyle(
+                            fontSize: AppSize.s12,
+                            color: ColorManager.primaryColor)),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                child: StreamBuilder<OfferPrice?>(
+                  stream: _plansPageViewModel.outputPlanOfferPrice,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return offerPriceWidget(context, snapshot.data!);
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(
                 height: AppSize.s24,
               ),
               Padding(
@@ -307,12 +285,13 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
     );
   }
 
-  Widget dropDownPlans(BuildContext context, Stream<List<String>> stream) {
+  Widget dropDownPlans(
+      BuildContext context, Stream<List<PlanProfileMetaPlan>> stream) {
     return Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppPadding.p24,
         ),
-        child: StreamBuilder<List<String>?>(
+        child: StreamBuilder<List<PlanProfileMetaPlan>?>(
             stream: stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -327,12 +306,12 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
                       _plansPageViewModel.setSelectedPlan(newValue);
                     }
                   },
-                  items: snapshot.data!
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: snapshot.data!.map<DropdownMenuItem<String>>(
+                      (PlanProfileMetaPlan value) {
                     return DropdownMenuItem<String>(
-                      value: value,
+                      value: value.planName,
                       child: Text(
-                        value,
+                        "${value.planName}(${value.planPrice})",
                         style: const TextStyle(color: Colors.black),
                       ),
                     );
@@ -370,7 +349,7 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
                     return DropdownMenuItem<String>(
                       value: value.planName,
                       child: Text(
-                        value.planName,
+                        "${value.planName}(${value.planPrice})",
                         style: const TextStyle(color: Colors.black),
                       ),
                     );
@@ -455,4 +434,66 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
               }
             }));
   }
+}
+
+Widget offerPriceWidget(BuildContext context, OfferPrice offerPrice) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text.rich(
+        TextSpan(
+          text: "${AppString.planOfferPrice} : ",
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
+          children: [
+            TextSpan(
+              text: offerPrice.offerPrice.toStringAsFixed(2),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ColorManager.blackColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(
+        height: AppSize.s8,
+      ),
+      Text.rich(
+        TextSpan(
+          text: "${AppString.planTaxAmount}(${offerPrice.taxPercentage}%) : ",
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
+          children: [
+            TextSpan(
+              text: offerPrice.taxAmount.toStringAsFixed(2),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ColorManager.blackColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(
+        height: AppSize.s8,
+      ),
+      Text.rich(
+        TextSpan(
+          text: "${AppString.planBasePrice} : ",
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
+          children: [
+            TextSpan(
+              text: offerPrice.basePrice.toStringAsFixed(2),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ColorManager.blackColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
 }

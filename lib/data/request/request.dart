@@ -206,29 +206,103 @@ class CreateUserRequest {
 class CreatePlanRequest {
   String planName;
   String planDescription;
+  String planType;
+  int planValidity;
+  String planValidityUnit;
+  double planBasicCost;
+  double planOfferedCost;
+  double taxAmount;
+  int downloadSpeed;
+  String downloadSpeedUnit;
+  int uploadSpeed;
+  String uploadSpeedUnit;
+  int dataLimit;
+  String dataLimitUnit;
+  int downloadSpeedFUP;
+  int uploadSpeedFUP;
+  String downloadSpeedFUPUnit;
+  String uploadSpeedFUPUnit;
+  int dataLimitFUP;
+  String dataLimitFUPUnit;
+  int maxSessionTimeInsec;
+  int maxDataTransferInSession;
+  int maxSimultaneousUser;
+  int gracePeriodInDays;
 
-  CreatePlanRequest({required this.planName, required this.planDescription});
+  CreatePlanRequest(
+      {required this.planName,
+      required this.planDescription,
+      required this.planType,
+      required this.planValidity,
+      required this.planValidityUnit,
+      required this.planBasicCost,
+      required this.planOfferedCost,
+      required this.taxAmount,
+      required this.downloadSpeed,
+      required this.downloadSpeedUnit,
+      required this.uploadSpeed,
+      required this.uploadSpeedUnit,
+      required this.dataLimit,
+      required this.dataLimitUnit,
+      required this.downloadSpeedFUP,
+      required this.uploadSpeedFUP,
+      required this.downloadSpeedFUPUnit,
+      required this.uploadSpeedFUPUnit,
+      required this.dataLimitFUP,
+      required this.dataLimitFUPUnit,
+      required this.maxSessionTimeInsec,
+      required this.maxDataTransferInSession,
+      required this.maxSimultaneousUser,
+      required this.gracePeriodInDays});
 
   Map<String, dynamic> toJson() => {
         "planName": planName,
         "planDescription": planDescription,
+        "planType": planType,
+        "planValidity": planValidity,
+        "planValidityUnit": planValidityUnit,
+        "planBasicCost": planBasicCost,
+        "planOfferedCost": planOfferedCost,
+        "taxAmount": taxAmount,
+        "downloadSpeed": downloadSpeed,
+        "downloadSpeedUnit": downloadSpeedUnit,
+        "uploadSpeed": uploadSpeed,
+        "uploadSpeedUnit": uploadSpeedUnit,
+        "dataLimit": dataLimit,
+        "dataLimitUnit": dataLimitUnit,
+        "downloadSpeedFUP": downloadSpeedFUP,
+        "uploadSpeedFUP": uploadSpeedFUP,
+        "downloadSpeedFUPUnit": downloadSpeedFUPUnit,
+        "uploadSpeedFUPUnit": uploadSpeedFUPUnit,
+        "dataLimitFUP": dataLimitFUP,
+        "dataLimitFUPUnit": dataLimitFUPUnit,
+        "maxSessionTimeInsec": maxSessionTimeInsec,
+        "maxDataTransferInSession": maxDataTransferInSession,
+        "maxSimultaneousUser": maxSimultaneousUser,
+        "gracePeriodInDays": gracePeriodInDays,
       };
 }
 
 class CreateResellerPriceChartRequest {
   String resellerUserName;
   String planName;
-  int price;
+  double planBasicCost;
+  double planOfferedCost;
+  double taxAmount;
 
   CreateResellerPriceChartRequest(
-      {required this.resellerUserName,
-      required this.planName,
-      required this.price});
+      {required this.planName,
+      required this.resellerUserName,
+      required this.planBasicCost,
+      required this.planOfferedCost,
+      required this.taxAmount});
 
   Map<String, dynamic> toJson() => {
         "resellerUserName": resellerUserName,
         "planName": planName,
-        "price": price,
+        "planBasicCost": planBasicCost,
+        "planOfferedCost": planOfferedCost,
+        "taxAmount": taxAmount,
       };
 }
 
@@ -236,19 +310,25 @@ class CreateOperatorPriceChartRequest {
   String operatorUserName;
   String resellerUserName;
   String planName;
-  int price;
+  double planBasicCost;
+  double planOfferedCost;
+  double taxAmount;
 
   CreateOperatorPriceChartRequest(
       {required this.planName,
       required this.operatorUserName,
       required this.resellerUserName,
-      required this.price});
+      required this.planBasicCost,
+      required this.planOfferedCost,
+      required this.taxAmount});
 
   Map<String, dynamic> toJson() => {
         "operatorUserName": operatorUserName,
         "resellerUserName": resellerUserName,
         "planName": planName,
-        "price": price,
+        "planBasicCost": planBasicCost,
+        "planOfferedCost": planOfferedCost,
+        "taxAmount": taxAmount,
       };
 }
 
@@ -333,7 +413,7 @@ class CreateSubscriptionRequest {
   String userName;
   String password;
   String customerId;
-  String planName;
+  String planId;
   String operatorUserName;
   String resellerUserName;
   String networkType;
@@ -346,12 +426,15 @@ class CreateSubscriptionRequest {
   String installationCity;
   String installationState;
   String installationPostalCode;
+  double offeredPrice;
+  double basePrice;
+  double taxAmount;
 
   CreateSubscriptionRequest({
     required this.userName,
     required this.password,
     required this.customerId,
-    required this.planName,
+    required this.planId,
     required this.operatorUserName,
     required this.resellerUserName,
     required this.networkType,
@@ -364,13 +447,16 @@ class CreateSubscriptionRequest {
     required this.installationCity,
     required this.installationState,
     required this.installationPostalCode,
+    required this.offeredPrice,
+    required this.basePrice,
+    required this.taxAmount,
   });
 
   Map<String, dynamic> toJson() => {
         "userName": userName,
         "password": password,
         "customerId": customerId,
-        "planName": planName,
+        "planId": planId,
         "operatorUserName": operatorUserName,
         "resellerUserName": resellerUserName,
         "networkType": networkType,
@@ -384,6 +470,9 @@ class CreateSubscriptionRequest {
         "installationCity": installationCity,
         "installationState": installationState,
         "installationPostalCode": installationPostalCode,
+        "offeredPrice": offeredPrice,
+        "basePrice": basePrice,
+        "taxAmount": taxAmount,
       };
 }
 
