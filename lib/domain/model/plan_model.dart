@@ -6,6 +6,15 @@ class Plans {
   String planDescription;
   bool isPlanActive;
   double planPrice;
+  double basePrice;
+  String planType;
+  String downloadSpeed;
+  String uploadSpeed;
+  String dataLimit;
+  String dataLimitFUP;
+  String downloadSpeedFUP;
+  String uploadSpeedFUP;
+  String planValidity;
   DateTime planStartDate;
   DateTime planUpdatedDate;
 
@@ -16,7 +25,16 @@ class Plans {
       required this.isPlanActive,
       required this.planStartDate,
       required this.planPrice,
-      required this.planUpdatedDate});
+      required this.planUpdatedDate,
+      required this.basePrice,
+      required this.planType,
+      required this.downloadSpeed,
+      required this.uploadSpeed,
+      required this.dataLimit,
+      required this.dataLimitFUP,
+      required this.downloadSpeedFUP,
+      required this.uploadSpeedFUP,
+      required this.planValidity});
 
   factory Plans.fromJson(Map<String, dynamic> json) {
     return Plans(
@@ -26,7 +44,16 @@ class Plans {
         isPlanActive: json['isPlanActive'],
         planStartDate: json['planStartDate'],
         planPrice: json['planPrice'],
-        planUpdatedDate: json['planUpdatedDate']);
+        planUpdatedDate: json['planUpdatedDate'],
+        basePrice: json['basePrice'],
+        planType: json['planType'],
+        downloadSpeed: json['downloadSpeed'],
+        uploadSpeed: json['uploadSpeed'],
+        dataLimit: json['dataLimit'],
+        dataLimitFUP: json['dataLimitFUP'],
+        downloadSpeedFUP: json['downloadSpeedFUP'],
+        uploadSpeedFUP: json['uploadSpeedFUP'],
+        planValidity: json['planValidity']);
   }
 
   Map<String, dynamic> toJson() {
@@ -37,7 +64,16 @@ class Plans {
       'isPlanActive': isPlanActive,
       'planStartDate': planStartDate,
       'planPrice': planPrice,
-      'planUpdatedDate': planUpdatedDate
+      'planUpdatedDate': planUpdatedDate,
+      'basePrice': basePrice,
+      'planType': planType,
+      'downloadSpeed': downloadSpeed,
+      'uploadSpeed': uploadSpeed,
+      'dataLimit': dataLimit,
+      'dataLimitFUP': dataLimitFUP,
+      'downloadSpeedFUP': downloadSpeedFUP,
+      'uploadSpeedFUP': uploadSpeedFUP,
+      'planValidity': planValidity
     };
   }
 }

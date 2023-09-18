@@ -369,6 +369,46 @@ class _PlanTableState extends State<PlanTable> {
                     style: Theme.of(context).textTheme.labelMedium)
               ])),
           Text.rich(TextSpan(
+              text: "Plan Type: ",
+              style: Theme.of(context).textTheme.labelLarge,
+              children: [
+                TextSpan(
+                    text: plan.planType,
+                    style: Theme.of(context).textTheme.labelMedium)
+              ])),
+          Text.rich(TextSpan(
+              text: "Plan Validity: ",
+              style: Theme.of(context).textTheme.labelLarge,
+              children: [
+                TextSpan(
+                    text: plan.planValidity.toString(),
+                    style: Theme.of(context).textTheme.labelMedium)
+              ])),
+          Text.rich(TextSpan(
+              text: "Plan Data Limit: ",
+              style: Theme.of(context).textTheme.labelLarge,
+              children: [
+                TextSpan(
+                    text: plan.dataLimit.toString(),
+                    style: Theme.of(context).textTheme.labelMedium)
+              ])),
+          Text.rich(TextSpan(
+              text: "Plan Upload Speed: ",
+              style: Theme.of(context).textTheme.labelLarge,
+              children: [
+                TextSpan(
+                    text: plan.uploadSpeed.toString(),
+                    style: Theme.of(context).textTheme.labelMedium)
+              ])),
+          Text.rich(TextSpan(
+              text: "Plan Download Speed: ",
+              style: Theme.of(context).textTheme.labelLarge,
+              children: [
+                TextSpan(
+                    text: plan.downloadSpeed.toString(),
+                    style: Theme.of(context).textTheme.labelMedium)
+              ])),
+          Text.rich(TextSpan(
               text: "PlanCreatedOn: ",
               style: Theme.of(context).textTheme.labelLarge,
               children: [

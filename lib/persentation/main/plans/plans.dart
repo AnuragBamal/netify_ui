@@ -4,12 +4,14 @@ import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/persentation/common/dashboard_list_page.dart';
+import 'package:netify/persentation/common/widgets/dashboard_page_widget.dart';
 import 'package:netify/persentation/common/widgets/grid_view_builder.dart';
 import 'package:netify/persentation/common/widgets/search_widget.dart';
 import 'package:netify/persentation/main/plans/plan_table.dart';
 import 'package:netify/persentation/main/plans/plans_view_model.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
+import 'package:netify/persentation/resources/values_manager.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PlansView extends StatefulWidget {
@@ -41,47 +43,12 @@ class _PlansState extends State<PlansView> {
   }
 
   Widget _getContentWidget(BuildContext context) {
-    return Center(
-        child: StreamBuilder<SliderDisplayObject>(
-      stream: _plansPageViewModel.outputSliderDisplayObject,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return GestureDetector(
-            onHorizontalDragEnd: (DragEndDetails details) {
-              if (details.velocity.pixelsPerSecond.dx > 100) {
-                _pageController.previousPage(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                );
-              } else if (details.velocity.pixelsPerSecond.dx < -100) {
-                _pageController.nextPage(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                );
-              }
-            },
-            child: PageView.builder(
-              //allowImplicitScrolling: false,
-              //dragStartBehavior: DragStartBehavior.down,
-              //pageSnapping: true,
-              //clipBehavior: Clip.hardEdge,
-              controller: _pageController,
-              itemCount: snapshot.data!.numberOfDisplays,
-              itemBuilder: (context, index) {
-                return _planPageWidget(context, snapshot.data!.mainPageModel);
-              },
-              onPageChanged: (index) {
-                _plansPageViewModel.onScreenChange(index);
-              },
-            ),
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    ));
+    return mainDashboardWidget(
+        context,
+        _pageController,
+        _plansPageViewModel.outputSliderDisplayObject,
+        _plansPageViewModel.onScreenChange,
+        _planPageWidget);
   }
 
   Widget _planPageWidget(BuildContext context, MainPageModel mainPageModel) {
@@ -90,6 +57,13 @@ class _PlansState extends State<PlansView> {
         children: [
           Text(mainPageModel.title,
               style: Theme.of(context).textTheme.titleSmall),
+          const SizedBox(
+            height: AppSize.s12,
+          ),
+          const Divider(
+            color: ColorManager.primaryColor,
+            thickness: 2,
+          ),
           if (mainPageModel.viewType == ScreenViewType.grid &&
               mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
             DashboardView(

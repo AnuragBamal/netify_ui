@@ -18,4 +18,10 @@ class ColorManager {
   static const Color primaryOpacity70 = Color(0xB30D47A1);
   static const Color blackColor = Color(0xFF000000);
   static const Color transparentColor = Color(0x00000000);
+  static const Color whiteColor = Color(0xFFFFFFFF);
+  static const Color greyColor = Color(0xFF9E9E9E);
+  static const Color greyColorLight = Color(0xFFE0E0E0);
+  static const Color greyColorDark = Color(0xFF212121);
+  static const Color paymentIn = Color(0xFF00BFA5);
+  static const Color paymentOut = Color(0xFFEF5350);
 }

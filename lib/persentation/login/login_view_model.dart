@@ -145,11 +145,16 @@ class LoginViewModel extends BaseViewModelInputsOutputs
     // inputState.add(ContentState());
     await _appPreferences.setJwtToken(login.data[0].token);
     await resetAllmodules();
-
+    var loginInfo = LoginUserInfoArgument(
+        firstName: login.data[0].firstName,
+        lastName: login.data[0].lastName,
+        roleId: login.data[0].roleId,
+        userName: login.data[0].userName);
     if (login.data[0].isVerified == false) {
-      _navigatorService.replaceRoute(Routes.verificationRoute);
+      _navigatorService.replaceRoute(Routes.verificationRoute,
+          arguments: loginInfo);
     } else {
-      _navigatorService.replaceRoute(Routes.homeRoute);
+      _navigatorService.replaceRoute(Routes.homeRoute, arguments: loginInfo);
     }
     //navigate to main screen after the login
   }

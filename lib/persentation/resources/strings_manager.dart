@@ -169,4 +169,28 @@ class AppString {
   static const String cpeDeviceIdHint = "Enter CPE Device Username";
   static const String cpeDevicePassword = "CPE Device Password";
   static const String cpeDevicePasswordHint = "Enter CPE Device Password";
+
+  static const String createNewNas = "Enter NAS Details";
+  static const String nasName = "NAS Name";
+  static const String nasNameHint = "Enter NAS Name (IP or DNS)";
+  static const String nasShortName = "Name";
+  static const String nasShortNameHint = "Enter Name Identifier ";
+  static const String nasType = "NAS Type(Device Vendor)";
+  static const String nasTypeHint = "Select NAS Type";
+  static const String nasPorts = "Ports";
+  static const String nasPortsHint = "Enter Ports";
+  static const String nasServer = "Server";
+  static const String nasServerHint = "Enter Server";
+  static const String nasCommunity = "Community";
+  static const String nasCommunityHint = "Enter Community";
+  static const String nasDescription = "Description";
+  static const String nasDescriptionHint = "Enter Description";
+  static const String nasSecret = "Secret";
+  static const String nasSecretHint = "Enter NAS Secret";
+  static const String nasSubmitButton = "Create NAS";
+  static const String walletBalance = "Wallet Balance";
+  static const String w2wTransfer = "Wallet-To-Wallet Transfer";
+  static const String payee = "Pay To";
+  static const String transferAmount = "Transfer Amount";
+  static const String transferButton = "Transfer";
 }

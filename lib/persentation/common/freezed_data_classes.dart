@@ -172,3 +172,23 @@ class CreateNewSubscription with _$CreateNewSubscription {
       double planEnteredCost,
       double taxAmount) = _CreateNewSubscription;
 }
+
+@freezed
+class CreateNewNas with _$CreateNewNas {
+  factory CreateNewNas(
+      String nasName,
+      String shortName,
+      String nasType,
+      int ports,
+      String nasSecret,
+      String nasDescription,
+      String server,
+      String community) = _CreateNewNas;
+}
+
+@freezed
+class W2wTransferObject with _$W2wTransferObject {
+  factory W2wTransferObject(
+          double amount, String receiverUserName, String receiverUserId) =
+      _W2wTransferObject;
+}

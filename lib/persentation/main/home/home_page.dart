@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/model.dart';
+import 'package:netify/persentation/common/widgets/dashboard_page_widget.dart';
 import 'package:netify/persentation/common/widgets/grid_view_builder.dart';
 import 'package:netify/persentation/common/widgets/list_view_builder.dart';
 import 'package:netify/persentation/main/home/home_page_view_model.dart';
@@ -10,6 +11,7 @@ import 'package:netify/persentation/main/home/subscriber_list_page.dart';
 import 'package:netify/persentation/main/home/subscription_list_page.dart';
 import 'package:netify/persentation/main/home/user_list_page.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
+import 'package:netify/persentation/resources/values_manager.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -43,42 +45,12 @@ class _HomeState extends State<Home> {
   }
 
   Widget _getContentWidget(BuildContext context) {
-    return Center(
-        child: StreamBuilder<SliderDisplayObject>(
-      stream: _homepageViewModel.outputSliderDisplayObject,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return GestureDetector(
-            onHorizontalDragEnd: (DragEndDetails details) {
-              if (details.velocity.pixelsPerSecond.dx > 0) {
-                _pageController.previousPage(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                );
-              } else if (details.velocity.pixelsPerSecond.dx < 0) {
-                _pageController.nextPage(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                );
-              }
-            },
-            child: PageView.builder(
-                pageSnapping: false,
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _pageController,
-                itemCount: snapshot.data!.numberOfDisplays,
-                onPageChanged: (index) {
-                  _homepageViewModel.onScreenChange(index);
-                },
-                itemBuilder: (context, index) {
-                  return _homePageWidget(context, snapshot.data!.mainPageModel);
-                }),
-          );
-        } else {
-          return Container();
-        }
-      },
-    ));
+    return mainDashboardWidget(
+        context,
+        _pageController,
+        _homepageViewModel.outputSliderDisplayObject,
+        _homepageViewModel.onScreenChange,
+        _homePageWidget);
   }
 
   Widget _homePageWidget(BuildContext context, MainPageModel mainPageModel) {
@@ -86,6 +58,13 @@ class _HomeState extends State<Home> {
       children: [
         Text(mainPageModel.title,
             style: Theme.of(context).textTheme.titleSmall),
+        const SizedBox(
+          height: AppSize.s12,
+        ),
+        const Divider(
+          color: ColorManager.primaryColor,
+          thickness: 2,
+        ),
         SingleChildScrollView(
           child: Column(
             children: [
@@ -140,3 +119,43 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 }
+
+// Old _getContentWidget function.
+//  Widget _getContentWidget(BuildContext context) {
+    // return Center(
+    //     child: StreamBuilder<SliderDisplayObject>(
+    //   stream: _homepageViewModel.outputSliderDisplayObject,
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasData) {
+    //       return GestureDetector(
+    //         onHorizontalDragEnd: (DragEndDetails details) {
+    //           if (details.velocity.pixelsPerSecond.dx > 0) {
+    //             _pageController.previousPage(
+    //               duration: const Duration(milliseconds: 200),
+    //               curve: Curves.easeInOut,
+    //             );
+    //           } else if (details.velocity.pixelsPerSecond.dx < 0) {
+    //             _pageController.nextPage(
+    //               duration: const Duration(milliseconds: 200),
+    //               curve: Curves.easeInOut,
+    //             );
+    //           }
+    //         },
+    //         child: PageView.builder(
+    //             pageSnapping: false,
+    //             physics: const NeverScrollableScrollPhysics(),
+    //             controller: _pageController,
+    //             itemCount: snapshot.data!.numberOfDisplays,
+    //             onPageChanged: (index) {
+    //               _homepageViewModel.onScreenChange(index);
+    //             },
+    //             itemBuilder: (context, index) {
+    //               return _homePageWidget(context, snapshot.data!.mainPageModel);
+    //             }),
+    //       );
+    //     } else {
+    //       return dashboardShimmer(context);
+    //     }
+    //   },
+    // ));
+  // }

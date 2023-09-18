@@ -5,6 +5,7 @@ import 'package:netify/data/responses/responses.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/model/plan_model.dart';
+import 'package:netify/domain/model/settings_model.dart';
 import 'package:netify/domain/model/wallet_model.dart';
 import 'package:intl/intl.dart';
 
@@ -13,11 +14,13 @@ const String defaultEmptyString = "";
 extension LoginDataResponseExtension on LoginDataResponse? {
   LoginData toDomain() {
     return LoginData(
-        token: this?.token?.nonNull ?? defaultEmptyString,
-        isVerified: this?.isVerified?.nonNull ?? false,
-        firstName: this?.firstName?.nonNull ?? defaultEmptyString,
-        lastName: this?.lastName?.nonNull ?? defaultEmptyString,
-        userName: this?.userName?.nonNull ?? defaultEmptyString);
+      token: this?.token?.nonNull ?? defaultEmptyString,
+      isVerified: this?.isVerified?.nonNull ?? false,
+      firstName: this?.firstName?.nonNull ?? defaultEmptyString,
+      lastName: this?.lastName?.nonNull ?? defaultEmptyString,
+      userName: this?.userName?.nonNull ?? defaultEmptyString,
+      roleId: this?.roleId?.nonNull ?? -1,
+    );
   }
 }
 
@@ -203,6 +206,15 @@ extension PlansResponseExtension on PlansResponse? {
       planPrice: this?.planPrice ?? 0,
       planUpdatedDate:
           DateTime.parse(this?.planUpdatedDate?.nonNull ?? defaultEmptyString),
+      planValidity: this?.planValidity?.nonNull ?? defaultEmptyString,
+      downloadSpeed: this?.downloadSpeed?.nonNull ?? defaultEmptyString,
+      uploadSpeed: this?.uploadSpeed?.nonNull ?? defaultEmptyString,
+      dataLimit: this?.dataLimit?.nonNull ?? defaultEmptyString,
+      planType: this?.planType?.nonNull ?? defaultEmptyString,
+      dataLimitFUP: this?.dataLimitFUP?.nonNull ?? defaultEmptyString,
+      downloadSpeedFUP: this?.downloadSpeedFUP?.nonNull ?? defaultEmptyString,
+      uploadSpeedFUP: this?.uploadSpeedFUP?.nonNull ?? defaultEmptyString,
+      basePrice: this?.basePrice ?? 0,
     );
   }
 }
@@ -502,8 +514,7 @@ extension UserWalletResponseExtension on UserWalletResponse? {
         balance: this?.balance ?? 0,
         transactions:
             this?.transactions?.map((e) => e.toDomain()).toList() ?? [],
-        payee: this?.payee.toDomain() ??
-            Payee(userName: defaultEmptyString, userId: defaultEmptyString));
+        payee: this?.payee?.map((e) => e.toDomain()).toList() ?? []);
   }
 }
 
@@ -551,6 +562,131 @@ extension SubscriptionMetaResponseExtension on SubscriptionMetaResponse? {
 extension GetSubscriptionMetaResponseExtension on GetSubscriptionMetaResponse? {
   GetSubscriptionMeta toDomain() {
     return GetSubscriptionMeta(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension SettingsProfileMetaResponseExtension on SettingsProfileMetaResponse? {
+  SettingsProfileMeta toDomain() {
+    return SettingsProfileMeta(
+      role: this?.role?.nonNull ?? defaultEmptyString,
+      ownerUserName: this?.ownerUserName?.nonNull ?? defaultEmptyString,
+      userName: this?.userName?.nonNull ?? defaultEmptyString,
+      settingScreens:
+          this?.settingScreens?.map((e) => e.toDomain()).toList() ?? [],
+      tenantId: this?.tenantId?.nonNull ?? defaultEmptyString,
+      supportedNasType:
+          this?.supportedNasType?.map((e) => e.toString()).toList() ?? [],
+    );
+  }
+}
+
+extension GetSettingsProfileMetaResponseExtension
+    on GetSettingsProfileMetaResponse? {
+  GetSettingsProfileMeta toDomain() {
+    return GetSettingsProfileMeta(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension PaymentProfileMetaResponseExtension on PaymentProfileMetaResponse? {
+  PaymentProfileMeta toDomain() {
+    return PaymentProfileMeta(
+      role: this?.role?.nonNull ?? defaultEmptyString,
+      ownerUserName: this?.ownerUserName?.nonNull ?? defaultEmptyString,
+      userName: this?.userName?.nonNull ?? defaultEmptyString,
+      paymentScreens:
+          this?.paymentScreens?.map((e) => e.toDomain()).toList() ?? [],
+    );
+  }
+}
+
+extension GetPaymentProfileMetaResponseExtension
+    on GetPaymentProfileMetaResponse? {
+  GetPaymentProfileMeta toDomain() {
+    return GetPaymentProfileMeta(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension ServiceResponseExtension on ServiceResponse? {
+  Service toDomain() {
+    return Service(
+      serviceId: this?.serviceId?.nonNull ?? defaultEmptyString,
+      serviceName: this?.serviceName?.nonNull ?? defaultEmptyString,
+      serviceDescription:
+          this?.serviceDescription?.nonNull ?? defaultEmptyString,
+      serviceCost: this?.serviceCost ?? 0,
+    );
+  }
+}
+
+extension SubscribedServiceResponseExtension on SubscribedServiceResponse? {
+  SubscribedService toDomain() {
+    return SubscribedService(
+      tenantId: this?.tenantId?.nonNull ?? defaultEmptyString,
+      subscriptionId: this?.subscriptionId?.nonNull ?? defaultEmptyString,
+      serviceId: this?.serviceId?.nonNull ?? defaultEmptyString,
+      startDate: DateTime.parse(this?.startDate?.nonNull ?? defaultEmptyString),
+      endDate: DateTime.parse(this?.endDate?.nonNull ?? defaultEmptyString),
+      subscriptionData: this?.subscriptionData ?? {},
+      status: this?.status?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension ServiceInfoResponseExtension on ServiceInfoResponse? {
+  ServicesInfo toDomain() {
+    return ServicesInfo(
+        services: this?.services?.map(((e) => e.toDomain())).toList() ?? [],
+        subscribedServices:
+            this?.subscribedServices?.map(((e) => e.toDomain())).toList() ??
+                []);
+  }
+}
+
+extension GetServicesInfoResponseExtension on GetServicesInfoResponse? {
+  GetServicesInfo toDomain() {
+    return GetServicesInfo(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension NasResponseExtension on NasResponse? {
+  Nas toDomain() {
+    return Nas(
+      id: this?.id?.nonNull ?? defaultEmptyString,
+      nasname: this?.nasname?.nonNull ?? defaultEmptyString,
+      shortname: this?.shortname?.nonNull ?? defaultEmptyString,
+      secret: this?.secret?.nonNull ?? defaultEmptyString,
+      type: this?.type?.nonNull ?? defaultEmptyString,
+      ports: this?.ports ?? 0,
+      description: this?.description?.nonNull ?? defaultEmptyString,
+      community: this?.community?.nonNull ?? defaultEmptyString,
+      server: this?.community?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension GetNasListResponseExtension on GetNasListResponse? {
+  GetNasList toDomain() {
+    return GetNasList(
       data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
       status: this?.status?.nonNull ?? defaultEmptyString,
       message: this?.message?.nonNull ?? defaultEmptyString,

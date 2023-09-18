@@ -67,4 +67,18 @@ abstract class Repository {
   Future<Either<Failure, GetUserWallet>> getUserWallet();
 
   Future<Either<Failure, GetSubscriptionMeta>> getSubscriptionMetadata();
+
+  Future<Either<Failure, GetPaymentProfileMeta>> getPaymentsMetadata();
+
+  Future<Either<Failure, GetSettingsProfileMeta>> getSettingsMetadata();
+
+  Future<Either<Failure, GetNasList>> getNasInfo();
+
+  Future<Either<Failure, GetServicesInfo>> getServiceInfo();
+
+  Future<Either<Failure, GeneralSuccess>> createServiceSubscription(
+      ServiceSubscriptionRequest newSubscriptionRequest);
+
+  Future<Either<Failure, GeneralSuccess>> createNasEntry(
+      NasEntryRequest newNasEntryRequest);
 }

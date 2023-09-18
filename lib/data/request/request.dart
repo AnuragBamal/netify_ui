@@ -492,3 +492,55 @@ class W2WTransferRequest {
         "amount": amount,
       };
 }
+
+class ServiceSubscriptionRequest {
+  String tenantId;
+  String serviceId;
+  String serviceType;
+  Map<String, dynamic> subscriptionData;
+
+  ServiceSubscriptionRequest(
+      {required this.tenantId,
+      required this.serviceId,
+      required this.serviceType,
+      required this.subscriptionData});
+
+  Map<String, dynamic> toJson() => {
+        "tenantId": tenantId,
+        "serviceId": serviceId,
+        "serviceType": serviceType,
+        "subscriptionData": subscriptionData,
+      };
+}
+
+class NasEntryRequest {
+  String nasname;
+  String shortname;
+  String secret;
+  String type;
+  int? ports;
+  String? description;
+  String? community;
+  String? server;
+
+  NasEntryRequest(
+      {required this.nasname,
+      required this.shortname,
+      required this.secret,
+      required this.type,
+      this.ports,
+      this.description,
+      this.community,
+      this.server});
+
+  Map<String, dynamic> toJson() => {
+        "nasname": nasname,
+        "shortname": shortname,
+        "secret": secret,
+        "type": type,
+        "ports": ports,
+        "description": description,
+        "community": community,
+        "server": server,
+      };
+}

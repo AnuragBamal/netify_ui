@@ -7,6 +7,8 @@ import 'package:netify/data/network/dio_factory.dart';
 import 'package:netify/data/network/network_info.dart';
 import 'package:netify/data/repository/repository_implementor.dart';
 import 'package:netify/domain/repository/repository.dart';
+import 'package:netify/domain/usecase/create_newnasentry_usecase.dart';
+import 'package:netify/domain/usecase/create_newservicesubscription_usecase.dart';
 import 'package:netify/domain/usecase/create_operatorchart_usecase.dart';
 import 'package:netify/domain/usecase/create_plan_usecase.dart';
 import 'package:netify/domain/usecase/create_resellerchart_usecase.dart';
@@ -14,6 +16,10 @@ import 'package:netify/domain/usecase/create_subscriber_usecase.dart';
 import 'package:netify/domain/usecase/create_subscription_usecase.dart';
 import 'package:netify/domain/usecase/create_user_usecase.dart';
 import 'package:netify/domain/usecase/forgot_password_usecase.dart';
+import 'package:netify/domain/usecase/get_nasinfo_usecase.dart';
+import 'package:netify/domain/usecase/get_payment_metadata_usecase.dart';
+import 'package:netify/domain/usecase/get_serviceinfo_usecase.dart';
+import 'package:netify/domain/usecase/get_settings_metadata_usecase.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
 import 'package:netify/domain/usecase/getoperator_pricechart_usecase.dart';
 import 'package:netify/domain/usecase/getplanprofile_usecase.dart';
@@ -25,18 +31,26 @@ import 'package:netify/domain/usecase/getsubscription_metadata_usecase.dart';
 import 'package:netify/domain/usecase/getsubscription_usecase.dart';
 import 'package:netify/domain/usecase/getuser_usecase.dart';
 import 'package:netify/domain/usecase/getuserlist_usecase.dart';
+import 'package:netify/domain/usecase/getuserwallet_usecase.dart';
 import 'package:netify/domain/usecase/login_usecase.dart';
 import 'package:netify/domain/usecase/otp_usecase.dart';
 import 'package:netify/domain/usecase/signup_usecase.dart';
+import 'package:netify/domain/usecase/w2w_transfer_usecase.dart';
 import 'package:netify/persentation/forgot_password/forgot_password_view_model.dart';
 import 'package:netify/persentation/login/login_view_model.dart';
+import 'package:netify/persentation/main/billing/billing_view_model.dart';
 import 'package:netify/persentation/main/home/home_page_view_model.dart';
 import 'package:netify/persentation/main/home/subscriber/subscriber_view_model.dart';
 import 'package:netify/persentation/main/home/subscription/subscription_view_model.dart';
 import 'package:netify/persentation/main/home/user/create_user_view_model.dart';
+import 'package:netify/persentation/main/payments/payments_view_model.dart';
 import 'package:netify/persentation/main/plans/create_plan/create_plan_view_model.dart';
 import 'package:netify/persentation/main/plans/plans_view_model.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart_view_model.dart';
+import 'package:netify/persentation/main/reports/report_view_model.dart';
+import 'package:netify/persentation/main/settings/nas/create_nas_view_model.dart';
+import 'package:netify/persentation/main/settings/settings.dart';
+import 'package:netify/persentation/main/settings/settings_view_model.dart';
 import 'package:netify/services/authentication_service.dart';
 
 import 'package:netify/services/dialog_service.dart';
@@ -162,6 +176,20 @@ initHomepageModule() {
         () => GetSubscriberUsecase(instance()));
     instance.registerFactory<GetSubscriptionUsecase>(
         () => GetSubscriptionUsecase(instance()));
+    instance.registerFactory<GetSettingsProfileMetadataUseCase>(
+        () => GetSettingsProfileMetadataUseCase(instance()));
+    instance.registerFactory<GetPaymentMetadataUseCase>(
+        () => GetPaymentMetadataUseCase(instance()));
+    instance.registerFactory<GetServiceInfoUseCase>(
+        () => GetServiceInfoUseCase(instance()));
+    instance.registerFactory<GetNasInfoUseCase>(
+        () => GetNasInfoUseCase(instance()));
+    instance.registerFactory<ServiceSubscriptionUseCase>(
+        () => ServiceSubscriptionUseCase(instance()));
+    instance.registerFactory<GetUserWalletUseCase>(
+        () => GetUserWalletUseCase(instance()));
+    instance.registerFactory<W2WTransferUsecase>(
+        () => W2WTransferUsecase(instance()));
     instance.registerFactory<HomepageViewModel>(() => HomepageViewModel(
         instance(),
         instance(),
@@ -177,6 +205,33 @@ initHomepageModule() {
         instance(),
         instance(),
         instance()));
+
+    instance.registerFactory<SettingsPageViewModel>(() => SettingsPageViewModel(
+          instance(),
+          instance(),
+          instance(),
+          instance(),
+          instance(),
+          instance(),
+        ));
+
+    instance.registerFactory<PaymentsPageViewModel>(() => PaymentsPageViewModel(
+          instance(),
+          instance(),
+          instance(),
+          instance(),
+          instance(),
+          instance(),
+        ));
+
+    instance.registerFactory<BillingPageViewModel>(() => BillingPageViewModel(
+          instance(),
+        ));
+
+    instance
+        .registerFactory<ReportingPageViewModel>(() => ReportingPageViewModel(
+              instance(),
+            ));
   }
 }
 
@@ -257,6 +312,17 @@ initCreateNewPlan() {
   if (!GetIt.I.isRegistered<CreatePlanViewModel>()) {
     instance.registerFactory<CreatePlanViewModel>(() =>
         CreatePlanViewModel(instance(), instance(), instance(), instance()));
+  }
+}
+
+initCreateNas() {
+  if (!GetIt.I.isRegistered<NasEntryUsecase>()) {
+    instance
+        .registerFactory<NasEntryUsecase>(() => NasEntryUsecase(instance()));
+  }
+  if (!GetIt.I.isRegistered<NasEntryViewModel>()) {
+    instance.registerFactory<NasEntryViewModel>(
+        () => NasEntryViewModel(instance(), instance(), instance()));
   }
 }
 

@@ -602,4 +602,152 @@ class RepositoryImplementer extends Repository {
           message: ResponseMessage.noInternetConnection));
     }
   }
+
+  @override
+  Future<Either<Failure, GetPaymentProfileMeta>> getPaymentsMetadata() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getPaymentsMetadata();
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetSettingsProfileMeta>> getSettingsMetadata() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getSettingsMetadata();
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GeneralSuccess>> createNasEntry(
+      NasEntryRequest newNasEntryRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.createNasEntry(newNasEntryRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GeneralSuccess>> createServiceSubscription(
+      ServiceSubscriptionRequest newSubscriptionRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource
+            .createServiceSubscription(newSubscriptionRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetNasList>> getNasInfo() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getNasInfo();
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetServicesInfo>> getServiceInfo() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getServiceInfo();
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
 }

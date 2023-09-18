@@ -41,6 +41,18 @@ abstract class RemoteDataSource {
       GetScreenRequest getScreenRequest);
   Future<GetUserWalletResponse> getUserWallet();
   Future<GetSubscriptionMetaResponse> getSubscriptionMetadata();
+  Future<GetSettingsProfileMetaResponse> getSettingsMetadata();
+  Future<GetPaymentProfileMetaResponse> getPaymentsMetadata();
+
+  Future<GeneralSuccessResponse> createNasEntry(
+      NasEntryRequest nasEntryRequest);
+
+  Future<GeneralSuccessResponse> createServiceSubscription(
+      ServiceSubscriptionRequest serviceSubscriptionRequest);
+
+  Future<GetServicesInfoResponse> getServiceInfo();
+
+  Future<GetNasListResponse> getNasInfo();
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -192,5 +204,38 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   @override
   Future<GetSubscriptionMetaResponse> getSubscriptionMetadata() async {
     return await _apiServiceClient.getSubscriptionMetadata();
+  }
+
+  @override
+  Future<GetPaymentProfileMetaResponse> getPaymentsMetadata() async {
+    return await _apiServiceClient.getPaymentsMeta();
+  }
+
+  @override
+  Future<GetSettingsProfileMetaResponse> getSettingsMetadata() async {
+    return await _apiServiceClient.getSettingsProfileMeta();
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createNasEntry(
+      NasEntryRequest nasEntryRequest) async {
+    return await _apiServiceClient.createNasEntry(nasEntryRequest.toJson());
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createServiceSubscription(
+      ServiceSubscriptionRequest serviceSubscriptionRequest) async {
+    return await _apiServiceClient
+        .createServiceSubscription(serviceSubscriptionRequest.toJson());
+  }
+
+  @override
+  Future<GetNasListResponse> getNasInfo() async {
+    return await _apiServiceClient.getNasInfo();
+  }
+
+  @override
+  Future<GetServicesInfoResponse> getServiceInfo() async {
+    return await _apiServiceClient.getServiceInfo();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netify/app/di.dart';
+import 'package:netify/domain/model/model.dart';
 import 'package:netify/persentation/forgot_password/forgot_password.dart';
 import 'package:netify/persentation/login/login.dart';
 import 'package:netify/persentation/main/home/subscriber/create_subscriber.dart';
@@ -8,6 +9,7 @@ import 'package:netify/persentation/main/home/user/create_user.dart';
 import 'package:netify/persentation/main/main.dart';
 import 'package:netify/persentation/main/plans/create_plan/create_plan.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart.dart';
+import 'package:netify/persentation/main/settings/nas/create_nas.dart';
 import 'package:netify/persentation/onboarding/onboarding.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/splash/splash.dart';
@@ -28,6 +30,7 @@ class Routes {
   static const String createPlan = "/createplan";
   static const String createSubscriber = "/createsubscriber";
   static const String createSubscription = "/createsubscription";
+  static const String createNas = "/createnas";
 }
 
 class RouteGenerator {
@@ -42,7 +45,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.verificationRoute:
         initVerificationModule();
-        return MaterialPageRoute(builder: (_) => const Verification());
+        final LoginUserInfoArgument args =
+            settings.arguments as LoginUserInfoArgument;
+        return MaterialPageRoute(
+            builder: (_) => Verification(
+                  argument: args,
+                ));
       case Routes.registerRoute:
         initRegistrationModule();
         return MaterialPageRoute(builder: (_) => const RegisterView());
@@ -51,7 +59,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
       case Routes.homeRoute:
         initHomepageModule();
-        return MaterialPageRoute(builder: (_) => const Main());
+        final LoginUserInfoArgument args =
+            settings.arguments as LoginUserInfoArgument;
+        return MaterialPageRoute(
+            builder: (_) => Main(
+                  argument: args,
+                ));
 
       case Routes.createuser:
         initCreateUserModule();
@@ -81,6 +94,14 @@ class RouteGenerator {
       case Routes.createSubscription:
         initCreateSubscription();
         return MaterialPageRoute(builder: (_) => const CreateNewSubscription());
+
+      case Routes.createNas:
+        initCreateNas();
+        List<String> supportedNasType = settings.arguments as List<String>;
+        return MaterialPageRoute(
+            builder: (_) => CreateNewNas(
+                  supportedNasType: supportedNasType,
+                ));
 
       default:
         return undefinedRoute();

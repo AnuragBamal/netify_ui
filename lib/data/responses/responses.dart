@@ -24,7 +24,8 @@ class LoginDataResponse {
   String? lastName;
   @JsonKey(name: "userName")
   String? userName;
-
+  @JsonKey(name: "roleId")
+  int? roleId;
   factory LoginDataResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginDataResponseFromJson(json);
 
@@ -35,7 +36,8 @@ class LoginDataResponse {
       this.isVerified,
       this.firstName,
       this.lastName,
-      this.userName});
+      this.userName,
+      this.roleId});
 }
 
 @JsonSerializable()
@@ -375,6 +377,25 @@ class PlansResponse {
   bool? isPlanActive;
   @JsonKey(name: "price")
   double? planPrice;
+  @JsonKey(name: "basePrice")
+  double? basePrice;
+  @JsonKey(name: "planType")
+  String? planType;
+  @JsonKey(name: "downloadSpeed")
+  String? downloadSpeed;
+  @JsonKey(name: "uploadSpeed")
+  String? uploadSpeed;
+  @JsonKey(name: "dataLimit")
+  String? dataLimit;
+  @JsonKey(name: "dataLimitFUP")
+  String? dataLimitFUP;
+  @JsonKey(name: "downloadSpeedFUP")
+  String? downloadSpeedFUP;
+  @JsonKey(name: "uploadSpeedFUP")
+  String? uploadSpeedFUP;
+  @JsonKey(name: "planValidity")
+  String? planValidity;
+
   @JsonKey(name: "createdAt")
   String? planStartDate;
   @JsonKey(name: "updatedAt")
@@ -388,6 +409,15 @@ class PlansResponse {
     this.planPrice,
     this.planStartDate,
     this.planUpdatedDate,
+    this.basePrice,
+    this.planType,
+    this.downloadSpeed,
+    this.uploadSpeed,
+    this.dataLimit,
+    this.dataLimitFUP,
+    this.downloadSpeedFUP,
+    this.uploadSpeedFUP,
+    this.planValidity,
   });
 
   factory PlansResponse.fromJson(Map<String, dynamic> json) =>
@@ -856,7 +886,7 @@ class UserWalletResponse {
   @JsonKey(name: 'transactions')
   List<TransactionResponse>? transactions;
   @JsonKey(name: 'payee')
-  PayeeResponse? payee;
+  List<PayeeResponse>? payee;
 
   UserWalletResponse({this.balance, this.transactions, this.payee});
 
@@ -945,4 +975,213 @@ class GetSubscriptionMetaResponse extends BaseResponse {
       _$GetSubscriptionMetaResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetSubscriptionMetaResponseToJson(this);
+}
+
+@JsonSerializable()
+class SettingsProfileMetaResponse {
+  @JsonKey(name: 'role')
+  String? role;
+  @JsonKey(name: 'ownerUserName')
+  String? ownerUserName;
+  @JsonKey(name: 'userName')
+  String? userName;
+  @JsonKey(name: 'settingScreens')
+  List<MainPageModelResponseData>? settingScreens;
+  @JsonKey(name: 'tenantId')
+  String? tenantId;
+  @JsonKey(name: 'supportedNasType')
+  List<String>? supportedNasType;
+
+  SettingsProfileMetaResponse(
+      {this.role,
+      this.ownerUserName,
+      this.userName,
+      this.settingScreens,
+      this.tenantId,
+      this.supportedNasType});
+
+  factory SettingsProfileMetaResponse.fromJson(Map<String, dynamic> json) =>
+      _$SettingsProfileMetaResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SettingsProfileMetaResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetSettingsProfileMetaResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  List<SettingsProfileMetaResponse>? data;
+
+  GetSettingsProfileMetaResponse({this.data});
+
+  factory GetSettingsProfileMetaResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetSettingsProfileMetaResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetSettingsProfileMetaResponseToJson(this);
+}
+
+@JsonSerializable()
+class PaymentProfileMetaResponse {
+  @JsonKey(name: 'role')
+  String? role;
+  @JsonKey(name: 'ownerUserName')
+  String? ownerUserName;
+  @JsonKey(name: 'userName')
+  String? userName;
+  @JsonKey(name: 'paymentScreens')
+  List<MainPageModelResponseData>? paymentScreens;
+
+  PaymentProfileMetaResponse(
+      {this.role, this.ownerUserName, this.userName, this.paymentScreens});
+
+  factory PaymentProfileMetaResponse.fromJson(Map<String, dynamic> json) =>
+      _$PaymentProfileMetaResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PaymentProfileMetaResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetPaymentProfileMetaResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  List<PaymentProfileMetaResponse>? data;
+
+  GetPaymentProfileMetaResponse({this.data});
+
+  factory GetPaymentProfileMetaResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetPaymentProfileMetaResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetPaymentProfileMetaResponseToJson(this);
+}
+
+@JsonSerializable()
+class ServiceResponse {
+  @JsonKey(name: 'serviceId')
+  String? serviceId;
+  @JsonKey(name: 'serviceName')
+  String? serviceName;
+  @JsonKey(name: 'serviceDescription')
+  String? serviceDescription;
+  @JsonKey(name: 'serviceType')
+  double? serviceCost;
+
+  ServiceResponse(
+      {this.serviceId,
+      this.serviceName,
+      this.serviceDescription,
+      this.serviceCost});
+
+  factory ServiceResponse.fromJson(Map<String, dynamic> json) =>
+      _$ServiceResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ServiceResponseToJson(this);
+}
+
+@JsonSerializable()
+class SubscribedServiceResponse {
+  @JsonKey(name: 'tenantId')
+  String? tenantId;
+  @JsonKey(name: 'subscriptionId')
+  String? subscriptionId;
+  @JsonKey(name: 'serviceId')
+  String? serviceId;
+  @JsonKey(name: 'startDate')
+  String? startDate;
+  @JsonKey(name: 'endDate')
+  String? endDate;
+  @JsonKey(name: 'subscriptionData')
+  Map<String, dynamic>? subscriptionData;
+  @JsonKey(name: 'status')
+  String? status;
+
+  SubscribedServiceResponse(
+      {this.tenantId,
+      this.subscriptionId,
+      this.serviceId,
+      this.startDate,
+      this.endDate,
+      this.subscriptionData,
+      this.status});
+
+  factory SubscribedServiceResponse.fromJson(Map<String, dynamic> json) =>
+      _$SubscribedServiceResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SubscribedServiceResponseToJson(this);
+}
+
+@JsonSerializable()
+class NasResponse {
+  @JsonKey(name: 'id')
+  String? id;
+  @JsonKey(name: 'nasname')
+  String? nasname;
+  @JsonKey(name: 'shortname')
+  String? shortname;
+  @JsonKey(name: 'secret')
+  String? secret;
+  @JsonKey(name: 'type')
+  String? type;
+  @JsonKey(name: 'ports')
+  int? ports;
+  @JsonKey(name: 'description')
+  String? description;
+  @JsonKey(name: 'community')
+  String? community;
+  @JsonKey(name: 'server')
+  String? server;
+
+  NasResponse(
+      {this.id,
+      this.nasname,
+      this.shortname,
+      this.secret,
+      this.type,
+      this.ports,
+      this.description,
+      this.community,
+      this.server});
+
+  factory NasResponse.fromJson(Map<String, dynamic> json) =>
+      _$NasResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$NasResponseToJson(this);
+}
+
+@JsonSerializable()
+class ServiceInfoResponse {
+  @JsonKey(name: "services")
+  List<ServiceResponse>? services;
+  @JsonKey(name: "subscribedServices")
+  List<SubscribedServiceResponse>? subscribedServices;
+
+  ServiceInfoResponse({this.services, this.subscribedServices});
+
+  factory ServiceInfoResponse.fromJson(Map<String, dynamic> json) =>
+      _$ServiceInfoResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ServiceInfoResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetServicesInfoResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  List<ServiceInfoResponse>? data;
+
+  GetServicesInfoResponse({this.data});
+
+  factory GetServicesInfoResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetServicesInfoResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetServicesInfoResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetNasListResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  List<NasResponse>? data;
+
+  GetNasListResponse({this.data});
+
+  factory GetNasListResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetNasListResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetNasListResponseToJson(this);
 }

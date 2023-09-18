@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:netify/app/di.dart';
+import 'package:netify/domain/model/model.dart';
 import 'package:netify/persentation/resources/assets_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
 import 'package:netify/persentation/resources/values_manager.dart';
 import 'package:netify/persentation/verification/verification_view_model.dart';
 
 class Verification extends StatefulWidget {
-  const Verification({super.key});
+  final LoginUserInfoArgument argument;
+  const Verification({
+    super.key,
+    required this.argument,
+  });
 
   @override
   State<Verification> createState() => _VerificationState();
@@ -88,8 +93,8 @@ class _VerificationState extends State<Verification> {
                                 return ElevatedButton(
                                     onPressed: (snapshot.data == true)
                                         ? () {
-                                            _verificationViewModel
-                                                .submitOtp(context);
+                                            _verificationViewModel.submitOtp(
+                                                context, widget.argument);
                                           }
                                         : null,
                                     child: const Text(AppString.submitOtp));

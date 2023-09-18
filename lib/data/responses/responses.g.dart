@@ -25,6 +25,7 @@ LoginDataResponse _$LoginDataResponseFromJson(Map<String, dynamic> json) =>
       firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
       userName: json['userName'] as String?,
+      roleId: json['roleId'] as int?,
     );
 
 Map<String, dynamic> _$LoginDataResponseToJson(LoginDataResponse instance) =>
@@ -34,6 +35,7 @@ Map<String, dynamic> _$LoginDataResponseToJson(LoginDataResponse instance) =>
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'userName': instance.userName,
+      'roleId': instance.roleId,
     };
 
 SuccessMessageResponse _$SuccessMessageResponseFromJson(
@@ -367,6 +369,15 @@ PlansResponse _$PlansResponseFromJson(Map<String, dynamic> json) =>
       planPrice: (json['price'] as num?)?.toDouble(),
       planStartDate: json['createdAt'] as String?,
       planUpdatedDate: json['updatedAt'] as String?,
+      basePrice: (json['basePrice'] as num?)?.toDouble(),
+      planType: json['planType'] as String?,
+      downloadSpeed: json['downloadSpeed'] as String?,
+      uploadSpeed: json['uploadSpeed'] as String?,
+      dataLimit: json['dataLimit'] as String?,
+      dataLimitFUP: json['dataLimitFUP'] as String?,
+      downloadSpeedFUP: json['downloadSpeedFUP'] as String?,
+      uploadSpeedFUP: json['uploadSpeedFUP'] as String?,
+      planValidity: json['planValidity'] as String?,
     );
 
 Map<String, dynamic> _$PlansResponseToJson(PlansResponse instance) =>
@@ -376,6 +387,15 @@ Map<String, dynamic> _$PlansResponseToJson(PlansResponse instance) =>
       'planDescription': instance.planDescription,
       'isActive': instance.isPlanActive,
       'price': instance.planPrice,
+      'basePrice': instance.basePrice,
+      'planType': instance.planType,
+      'downloadSpeed': instance.downloadSpeed,
+      'uploadSpeed': instance.uploadSpeed,
+      'dataLimit': instance.dataLimit,
+      'dataLimitFUP': instance.dataLimitFUP,
+      'downloadSpeedFUP': instance.downloadSpeedFUP,
+      'uploadSpeedFUP': instance.uploadSpeedFUP,
+      'planValidity': instance.planValidity,
       'createdAt': instance.planStartDate,
       'updatedAt': instance.planUpdatedDate,
     };
@@ -832,9 +852,9 @@ UserWalletResponse _$UserWalletResponseFromJson(Map<String, dynamic> json) =>
       transactions: (json['transactions'] as List<dynamic>?)
           ?.map((e) => TransactionResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      payee: json['payee'] == null
-          ? null
-          : PayeeResponse.fromJson(json['payee'] as Map<String, dynamic>),
+      payee: (json['payee'] as List<dynamic>?)
+          ?.map((e) => PayeeResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UserWalletResponseToJson(UserWalletResponse instance) =>
@@ -944,6 +964,217 @@ GetSubscriptionMetaResponse _$GetSubscriptionMetaResponseFromJson(
 
 Map<String, dynamic> _$GetSubscriptionMetaResponseToJson(
         GetSubscriptionMetaResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+SettingsProfileMetaResponse _$SettingsProfileMetaResponseFromJson(
+        Map<String, dynamic> json) =>
+    SettingsProfileMetaResponse(
+      role: json['role'] as String?,
+      ownerUserName: json['ownerUserName'] as String?,
+      userName: json['userName'] as String?,
+      settingScreens: (json['settingScreens'] as List<dynamic>?)
+          ?.map((e) =>
+              MainPageModelResponseData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      tenantId: json['tenantId'] as String?,
+      supportedNasType: (json['supportedNasType'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$SettingsProfileMetaResponseToJson(
+        SettingsProfileMetaResponse instance) =>
+    <String, dynamic>{
+      'role': instance.role,
+      'ownerUserName': instance.ownerUserName,
+      'userName': instance.userName,
+      'settingScreens': instance.settingScreens,
+      'tenantId': instance.tenantId,
+      'supportedNasType': instance.supportedNasType,
+    };
+
+GetSettingsProfileMetaResponse _$GetSettingsProfileMetaResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetSettingsProfileMetaResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              SettingsProfileMetaResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetSettingsProfileMetaResponseToJson(
+        GetSettingsProfileMetaResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+PaymentProfileMetaResponse _$PaymentProfileMetaResponseFromJson(
+        Map<String, dynamic> json) =>
+    PaymentProfileMetaResponse(
+      role: json['role'] as String?,
+      ownerUserName: json['ownerUserName'] as String?,
+      userName: json['userName'] as String?,
+      paymentScreens: (json['paymentScreens'] as List<dynamic>?)
+          ?.map((e) =>
+              MainPageModelResponseData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$PaymentProfileMetaResponseToJson(
+        PaymentProfileMetaResponse instance) =>
+    <String, dynamic>{
+      'role': instance.role,
+      'ownerUserName': instance.ownerUserName,
+      'userName': instance.userName,
+      'paymentScreens': instance.paymentScreens,
+    };
+
+GetPaymentProfileMetaResponse _$GetPaymentProfileMetaResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetPaymentProfileMetaResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              PaymentProfileMetaResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetPaymentProfileMetaResponseToJson(
+        GetPaymentProfileMetaResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+ServiceResponse _$ServiceResponseFromJson(Map<String, dynamic> json) =>
+    ServiceResponse(
+      serviceId: json['serviceId'] as String?,
+      serviceName: json['serviceName'] as String?,
+      serviceDescription: json['serviceDescription'] as String?,
+      serviceCost: (json['serviceType'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$ServiceResponseToJson(ServiceResponse instance) =>
+    <String, dynamic>{
+      'serviceId': instance.serviceId,
+      'serviceName': instance.serviceName,
+      'serviceDescription': instance.serviceDescription,
+      'serviceType': instance.serviceCost,
+    };
+
+SubscribedServiceResponse _$SubscribedServiceResponseFromJson(
+        Map<String, dynamic> json) =>
+    SubscribedServiceResponse(
+      tenantId: json['tenantId'] as String?,
+      subscriptionId: json['subscriptionId'] as String?,
+      serviceId: json['serviceId'] as String?,
+      startDate: json['startDate'] as String?,
+      endDate: json['endDate'] as String?,
+      subscriptionData: json['subscriptionData'] as Map<String, dynamic>?,
+      status: json['status'] as String?,
+    );
+
+Map<String, dynamic> _$SubscribedServiceResponseToJson(
+        SubscribedServiceResponse instance) =>
+    <String, dynamic>{
+      'tenantId': instance.tenantId,
+      'subscriptionId': instance.subscriptionId,
+      'serviceId': instance.serviceId,
+      'startDate': instance.startDate,
+      'endDate': instance.endDate,
+      'subscriptionData': instance.subscriptionData,
+      'status': instance.status,
+    };
+
+NasResponse _$NasResponseFromJson(Map<String, dynamic> json) => NasResponse(
+      id: json['id'] as String?,
+      nasname: json['nasname'] as String?,
+      shortname: json['shortname'] as String?,
+      secret: json['secret'] as String?,
+      type: json['type'] as String?,
+      ports: json['ports'] as int?,
+      description: json['description'] as String?,
+      community: json['community'] as String?,
+      server: json['server'] as String?,
+    );
+
+Map<String, dynamic> _$NasResponseToJson(NasResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'nasname': instance.nasname,
+      'shortname': instance.shortname,
+      'secret': instance.secret,
+      'type': instance.type,
+      'ports': instance.ports,
+      'description': instance.description,
+      'community': instance.community,
+      'server': instance.server,
+    };
+
+ServiceInfoResponse _$ServiceInfoResponseFromJson(Map<String, dynamic> json) =>
+    ServiceInfoResponse(
+      services: (json['services'] as List<dynamic>?)
+          ?.map((e) => ServiceResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      subscribedServices: (json['subscribedServices'] as List<dynamic>?)
+          ?.map((e) =>
+              SubscribedServiceResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ServiceInfoResponseToJson(
+        ServiceInfoResponse instance) =>
+    <String, dynamic>{
+      'services': instance.services,
+      'subscribedServices': instance.subscribedServices,
+    };
+
+GetServicesInfoResponse _$GetServicesInfoResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetServicesInfoResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => ServiceInfoResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetServicesInfoResponseToJson(
+        GetServicesInfoResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+GetNasListResponse _$GetNasListResponseFromJson(Map<String, dynamic> json) =>
+    GetNasListResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => NasResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetNasListResponseToJson(GetNasListResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
       'message': instance.message,

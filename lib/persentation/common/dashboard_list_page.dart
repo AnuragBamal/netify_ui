@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netify/domain/model/home_model.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:netify/persentation/common/widgets/dashboard_page_widget.dart';
 
 typedef ItemBuilder<T> = Widget Function(
     BuildContext context, int index, T? item, Function onTap);
@@ -28,7 +28,7 @@ class DashboardView extends StatelessWidget {
               if (snapshot.hasData) {
                 return ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.8,
+                    maxHeight: MediaQuery.of(context).size.height * 0.78,
                   ),
                   child: GridView.builder(
                       padding: const EdgeInsets.all(25.0),
@@ -49,29 +49,7 @@ class DashboardView extends StatelessWidget {
               } else if (snapshot.hasError) {
                 return Text("Error: ${snapshot.error}");
               } else {
-                return ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.8,
-                  ),
-                  child: GridView.builder(
-                    padding: const EdgeInsets.all(25.0),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
-                            crossAxisSpacing: 5.0,
-                            mainAxisSpacing: 5.0,
-                            childAspectRatio: 5 / 2),
-                    itemCount: 4,
-                    itemBuilder: (_, __) => Shimmer.fromColors(
-                      baseColor: const Color.fromARGB(255, 184, 183, 183),
-                      highlightColor: const Color.fromARGB(255, 87, 85, 85),
-                      child: Container(
-                        margin: const EdgeInsets.all(8.0),
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                );
+                return dashboardShimmer(context);
               }
             },
           ) // some widget at the top

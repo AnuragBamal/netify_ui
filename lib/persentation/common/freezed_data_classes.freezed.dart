@@ -3690,3 +3690,416 @@ abstract class _CreateNewSubscription implements CreateNewSubscription {
   _$$_CreateNewSubscriptionCopyWith<_$_CreateNewSubscription> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$CreateNewNas {
+  String get nasName => throw _privateConstructorUsedError;
+  String get shortName => throw _privateConstructorUsedError;
+  String get nasType => throw _privateConstructorUsedError;
+  int get ports => throw _privateConstructorUsedError;
+  String get nasSecret => throw _privateConstructorUsedError;
+  String get nasDescription => throw _privateConstructorUsedError;
+  String get server => throw _privateConstructorUsedError;
+  String get community => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CreateNewNasCopyWith<CreateNewNas> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateNewNasCopyWith<$Res> {
+  factory $CreateNewNasCopyWith(
+          CreateNewNas value, $Res Function(CreateNewNas) then) =
+      _$CreateNewNasCopyWithImpl<$Res, CreateNewNas>;
+  @useResult
+  $Res call(
+      {String nasName,
+      String shortName,
+      String nasType,
+      int ports,
+      String nasSecret,
+      String nasDescription,
+      String server,
+      String community});
+}
+
+/// @nodoc
+class _$CreateNewNasCopyWithImpl<$Res, $Val extends CreateNewNas>
+    implements $CreateNewNasCopyWith<$Res> {
+  _$CreateNewNasCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? nasName = null,
+    Object? shortName = null,
+    Object? nasType = null,
+    Object? ports = null,
+    Object? nasSecret = null,
+    Object? nasDescription = null,
+    Object? server = null,
+    Object? community = null,
+  }) {
+    return _then(_value.copyWith(
+      nasName: null == nasName
+          ? _value.nasName
+          : nasName // ignore: cast_nullable_to_non_nullable
+              as String,
+      shortName: null == shortName
+          ? _value.shortName
+          : shortName // ignore: cast_nullable_to_non_nullable
+              as String,
+      nasType: null == nasType
+          ? _value.nasType
+          : nasType // ignore: cast_nullable_to_non_nullable
+              as String,
+      ports: null == ports
+          ? _value.ports
+          : ports // ignore: cast_nullable_to_non_nullable
+              as int,
+      nasSecret: null == nasSecret
+          ? _value.nasSecret
+          : nasSecret // ignore: cast_nullable_to_non_nullable
+              as String,
+      nasDescription: null == nasDescription
+          ? _value.nasDescription
+          : nasDescription // ignore: cast_nullable_to_non_nullable
+              as String,
+      server: null == server
+          ? _value.server
+          : server // ignore: cast_nullable_to_non_nullable
+              as String,
+      community: null == community
+          ? _value.community
+          : community // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateNewNasCopyWith<$Res>
+    implements $CreateNewNasCopyWith<$Res> {
+  factory _$$_CreateNewNasCopyWith(
+          _$_CreateNewNas value, $Res Function(_$_CreateNewNas) then) =
+      __$$_CreateNewNasCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String nasName,
+      String shortName,
+      String nasType,
+      int ports,
+      String nasSecret,
+      String nasDescription,
+      String server,
+      String community});
+}
+
+/// @nodoc
+class __$$_CreateNewNasCopyWithImpl<$Res>
+    extends _$CreateNewNasCopyWithImpl<$Res, _$_CreateNewNas>
+    implements _$$_CreateNewNasCopyWith<$Res> {
+  __$$_CreateNewNasCopyWithImpl(
+      _$_CreateNewNas _value, $Res Function(_$_CreateNewNas) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? nasName = null,
+    Object? shortName = null,
+    Object? nasType = null,
+    Object? ports = null,
+    Object? nasSecret = null,
+    Object? nasDescription = null,
+    Object? server = null,
+    Object? community = null,
+  }) {
+    return _then(_$_CreateNewNas(
+      null == nasName
+          ? _value.nasName
+          : nasName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == shortName
+          ? _value.shortName
+          : shortName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == nasType
+          ? _value.nasType
+          : nasType // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == ports
+          ? _value.ports
+          : ports // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == nasSecret
+          ? _value.nasSecret
+          : nasSecret // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == nasDescription
+          ? _value.nasDescription
+          : nasDescription // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == server
+          ? _value.server
+          : server // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == community
+          ? _value.community
+          : community // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateNewNas implements _CreateNewNas {
+  _$_CreateNewNas(this.nasName, this.shortName, this.nasType, this.ports,
+      this.nasSecret, this.nasDescription, this.server, this.community);
+
+  @override
+  final String nasName;
+  @override
+  final String shortName;
+  @override
+  final String nasType;
+  @override
+  final int ports;
+  @override
+  final String nasSecret;
+  @override
+  final String nasDescription;
+  @override
+  final String server;
+  @override
+  final String community;
+
+  @override
+  String toString() {
+    return 'CreateNewNas(nasName: $nasName, shortName: $shortName, nasType: $nasType, ports: $ports, nasSecret: $nasSecret, nasDescription: $nasDescription, server: $server, community: $community)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateNewNas &&
+            (identical(other.nasName, nasName) || other.nasName == nasName) &&
+            (identical(other.shortName, shortName) ||
+                other.shortName == shortName) &&
+            (identical(other.nasType, nasType) || other.nasType == nasType) &&
+            (identical(other.ports, ports) || other.ports == ports) &&
+            (identical(other.nasSecret, nasSecret) ||
+                other.nasSecret == nasSecret) &&
+            (identical(other.nasDescription, nasDescription) ||
+                other.nasDescription == nasDescription) &&
+            (identical(other.server, server) || other.server == server) &&
+            (identical(other.community, community) ||
+                other.community == community));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, nasName, shortName, nasType,
+      ports, nasSecret, nasDescription, server, community);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateNewNasCopyWith<_$_CreateNewNas> get copyWith =>
+      __$$_CreateNewNasCopyWithImpl<_$_CreateNewNas>(this, _$identity);
+}
+
+abstract class _CreateNewNas implements CreateNewNas {
+  factory _CreateNewNas(
+      final String nasName,
+      final String shortName,
+      final String nasType,
+      final int ports,
+      final String nasSecret,
+      final String nasDescription,
+      final String server,
+      final String community) = _$_CreateNewNas;
+
+  @override
+  String get nasName;
+  @override
+  String get shortName;
+  @override
+  String get nasType;
+  @override
+  int get ports;
+  @override
+  String get nasSecret;
+  @override
+  String get nasDescription;
+  @override
+  String get server;
+  @override
+  String get community;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateNewNasCopyWith<_$_CreateNewNas> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$W2wTransferObject {
+  double get amount => throw _privateConstructorUsedError;
+  String get receiverUserName => throw _privateConstructorUsedError;
+  String get receiverUserId => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $W2wTransferObjectCopyWith<W2wTransferObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $W2wTransferObjectCopyWith<$Res> {
+  factory $W2wTransferObjectCopyWith(
+          W2wTransferObject value, $Res Function(W2wTransferObject) then) =
+      _$W2wTransferObjectCopyWithImpl<$Res, W2wTransferObject>;
+  @useResult
+  $Res call({double amount, String receiverUserName, String receiverUserId});
+}
+
+/// @nodoc
+class _$W2wTransferObjectCopyWithImpl<$Res, $Val extends W2wTransferObject>
+    implements $W2wTransferObjectCopyWith<$Res> {
+  _$W2wTransferObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? amount = null,
+    Object? receiverUserName = null,
+    Object? receiverUserId = null,
+  }) {
+    return _then(_value.copyWith(
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      receiverUserName: null == receiverUserName
+          ? _value.receiverUserName
+          : receiverUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      receiverUserId: null == receiverUserId
+          ? _value.receiverUserId
+          : receiverUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_W2wTransferObjectCopyWith<$Res>
+    implements $W2wTransferObjectCopyWith<$Res> {
+  factory _$$_W2wTransferObjectCopyWith(_$_W2wTransferObject value,
+          $Res Function(_$_W2wTransferObject) then) =
+      __$$_W2wTransferObjectCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({double amount, String receiverUserName, String receiverUserId});
+}
+
+/// @nodoc
+class __$$_W2wTransferObjectCopyWithImpl<$Res>
+    extends _$W2wTransferObjectCopyWithImpl<$Res, _$_W2wTransferObject>
+    implements _$$_W2wTransferObjectCopyWith<$Res> {
+  __$$_W2wTransferObjectCopyWithImpl(
+      _$_W2wTransferObject _value, $Res Function(_$_W2wTransferObject) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? amount = null,
+    Object? receiverUserName = null,
+    Object? receiverUserId = null,
+  }) {
+    return _then(_$_W2wTransferObject(
+      null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == receiverUserName
+          ? _value.receiverUserName
+          : receiverUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == receiverUserId
+          ? _value.receiverUserId
+          : receiverUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_W2wTransferObject implements _W2wTransferObject {
+  _$_W2wTransferObject(this.amount, this.receiverUserName, this.receiverUserId);
+
+  @override
+  final double amount;
+  @override
+  final String receiverUserName;
+  @override
+  final String receiverUserId;
+
+  @override
+  String toString() {
+    return 'W2wTransferObject(amount: $amount, receiverUserName: $receiverUserName, receiverUserId: $receiverUserId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_W2wTransferObject &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.receiverUserName, receiverUserName) ||
+                other.receiverUserName == receiverUserName) &&
+            (identical(other.receiverUserId, receiverUserId) ||
+                other.receiverUserId == receiverUserId));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, amount, receiverUserName, receiverUserId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_W2wTransferObjectCopyWith<_$_W2wTransferObject> get copyWith =>
+      __$$_W2wTransferObjectCopyWithImpl<_$_W2wTransferObject>(
+          this, _$identity);
+}
+
+abstract class _W2wTransferObject implements W2wTransferObject {
+  factory _W2wTransferObject(final double amount, final String receiverUserName,
+      final String receiverUserId) = _$_W2wTransferObject;
+
+  @override
+  double get amount;
+  @override
+  String get receiverUserName;
+  @override
+  String get receiverUserId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_W2wTransferObjectCopyWith<_$_W2wTransferObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -1,3 +1,5 @@
+import 'package:netify/domain/model/model.dart';
+
 class Transaction {
   final String transactionId;
   final String senderUsername;
@@ -42,7 +44,7 @@ class Payee {
 class UserWallet {
   final double balance;
   final List<Transaction> transactions;
-  final Payee payee;
+  final List<Payee> payee;
 
   UserWallet(
       {required this.balance, required this.transactions, required this.payee});
@@ -53,6 +55,29 @@ class UserWallet {
         transactions: (json['transactions'] as List)
             .map((e) => Transaction.fromJson(e))
             .toList(),
-        payee: Payee.fromJson(json['payee']));
+        payee: (json['payee'] as List).map((e) => Payee.fromJson(e)).toList());
+  }
+}
+
+class PaymentProfileMeta {
+  final String role;
+  final String ownerUserName;
+  final String userName;
+  List<MainPageModel> paymentScreens;
+
+  PaymentProfileMeta(
+      {required this.role,
+      required this.ownerUserName,
+      required this.userName,
+      required this.paymentScreens});
+
+  factory PaymentProfileMeta.fromJson(Map<String, dynamic> json) {
+    return PaymentProfileMeta(
+        role: json['role'],
+        ownerUserName: json['ownerUserName'],
+        userName: json['userName'],
+        paymentScreens: (json['paymentScreens'] as List)
+            .map((e) => MainPageModel.fromJson(e))
+            .toList());
   }
 }

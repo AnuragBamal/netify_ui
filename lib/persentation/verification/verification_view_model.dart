@@ -52,7 +52,8 @@ class VerificationViewModel extends BaseViewModelInputsOutputs
   }
 
   @override
-  void submitOtp(BuildContext context) async {
+  void submitOtp(
+      BuildContext context, LoginUserInfoArgument loginUserDetails) async {
     _dialogService.showDialogOnScreen(
         context,
         DialogRequest(
@@ -62,7 +63,7 @@ class VerificationViewModel extends BaseViewModelInputsOutputs
     (await _verifyOtpUseCase
             .execute(VerifyOtpUseCaseInput(otp: verifyOtpObject.otp)))
         .fold((failure) => _handleFailureVerifyOtp(failure, context),
-            (data) => _handleSuccessVerifyOtp(data, context));
+            (data) => _handleSuccessVerifyOtp(data, context, loginUserDetails));
   }
 
   @override
@@ -131,7 +132,8 @@ class VerificationViewModel extends BaseViewModelInputsOutputs
             dialogType: DialogType.error));
   }
 
-  _handleSuccessVerifyOtp(GeneralSuccess data, BuildContext context) {
+  _handleSuccessVerifyOtp(GeneralSuccess data, BuildContext context,
+      LoginUserInfoArgument loginUserDetails) {
     Navigator.of(context).pop();
     var successDialouge = _dialogService.showDialogOnScreen(
         context,
@@ -139,8 +141,8 @@ class VerificationViewModel extends BaseViewModelInputsOutputs
             title: "Success",
             description: data.data[0].message,
             dialogType: DialogType.info));
-    successDialouge
-        .then((value) => _navigatorService.replaceRoute(Routes.homeRoute));
+    successDialouge.then((value) => _navigatorService
+        .replaceRoute(Routes.homeRoute, arguments: loginUserDetails));
   }
 
   _handleFailureRegenerateOtp(Failure failure, BuildContext context) {
@@ -170,7 +172,7 @@ abstract class VerificationViewModelInput {
   // 3 Actions user can perform
   setOtp(String otp);
   void regenerateOtp(BuildContext context);
-  void submitOtp(BuildContext context);
+  void submitOtp(BuildContext context, LoginUserInfoArgument loginUserDetails);
   Sink get inputOtp;
   Sink get inputActiveSubmitOtp;
   Sink get inputRegenerateOtp;

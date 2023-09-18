@@ -1,5 +1,6 @@
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/plan_model.dart';
+import 'package:netify/domain/model/settings_model.dart';
 import 'package:netify/domain/model/wallet_model.dart';
 
 class SliderObject {
@@ -32,13 +33,15 @@ class LoginData {
   final String firstName;
   final String lastName;
   final String userName;
+  final int roleId;
 
   LoginData(
       {required this.token,
       required this.isVerified,
       required this.firstName,
       required this.lastName,
-      required this.userName});
+      required this.userName,
+      required this.roleId});
 
   factory LoginData.fromJson(Map<String, dynamic> json) {
     return LoginData(
@@ -46,7 +49,8 @@ class LoginData {
         isVerified: json['isVerified'],
         firstName: json['firstName'],
         lastName: json['lastName'],
-        userName: json['userName']);
+        userName: json['userName'],
+        roleId: json['roleId']);
   }
 }
 
@@ -70,6 +74,19 @@ class Login {
         data:
             (json['data'] as List).map((e) => LoginData.fromJson(e)).toList());
   }
+}
+
+class LoginUserInfoArgument {
+  final int roleId;
+  final String firstName;
+  final String lastName;
+  final String userName;
+
+  LoginUserInfoArgument(
+      {required this.roleId,
+      required this.firstName,
+      required this.lastName,
+      required this.userName});
 }
 
 class DeviceInfo {
@@ -511,6 +528,84 @@ class GetSubscriptionMeta extends BaseResponse {
     return GetSubscriptionMeta(
         data: (json['data'] as List)
             .map((e) => SubscriptionMeta.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetPaymentProfileMeta extends BaseResponse {
+  final List<PaymentProfileMeta> data;
+
+  GetPaymentProfileMeta(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetPaymentProfileMeta.fromJson(Map<String, dynamic> json) {
+    return GetPaymentProfileMeta(
+        data: (json['data'] as List)
+            .map((e) => PaymentProfileMeta.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetSettingsProfileMeta extends BaseResponse {
+  final List<SettingsProfileMeta> data;
+
+  GetSettingsProfileMeta(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetSettingsProfileMeta.fromJson(Map<String, dynamic> json) {
+    return GetSettingsProfileMeta(
+        data: (json['data'] as List)
+            .map((e) => SettingsProfileMeta.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetNasList extends BaseResponse {
+  final List<Nas> data;
+
+  GetNasList(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetNasList.fromJson(Map<String, dynamic> json) {
+    return GetNasList(
+        data: (json['data'] as List).map((e) => Nas.fromJson(e)).toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetServicesInfo extends BaseResponse {
+  final List<ServicesInfo> data;
+
+  GetServicesInfo(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetServicesInfo.fromJson(Map<String, dynamic> json) {
+    return GetServicesInfo(
+        data: (json['data'] as List)
+            .map((e) => ServicesInfo.fromJson(e))
             .toList(),
         status: json['status'],
         message: json['message'],

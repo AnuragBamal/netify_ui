@@ -92,4 +92,24 @@ abstract class ApiServiceClient {
 
   @GET("/api/v1/tenancy/ui/getsubscriptionmeta")
   Future<GetSubscriptionMetaResponse> getSubscriptionMetadata();
+
+  @GET("/api/v1/tenancy/ui/getsettingsmeta")
+  Future<GetSettingsProfileMetaResponse> getSettingsProfileMeta();
+
+  @GET("/api/v1/tenancy/ui/getpaymentsmeta")
+  Future<GetPaymentProfileMetaResponse> getPaymentsMeta();
+
+  @GET("/api/v1/infra/nasInfo")
+  Future<GetNasListResponse> getNasInfo();
+
+  @GET("/api/v1/infra/getservicesinfo")
+  Future<GetServicesInfoResponse> getServiceInfo();
+
+  @POST("/api/v1/infra/nasInfo")
+  Future<GeneralSuccessResponse> createNasEntry(
+      @Body() Map<String, dynamic> body);
+
+  @POST("/api/v1/infra/subscription")
+  Future<GeneralSuccessResponse> createServiceSubscription(
+      @Body() Map<String, dynamic> body);
 }
