@@ -193,4 +193,14 @@ class AppString {
   static const String payee = "Pay To";
   static const String transferAmount = "Transfer Amount";
   static const String transferButton = "Transfer";
+  static const String billerTitle = "Biller";
+  static const String subscription = "Subscription";
+  static const String subscriptionHint = "Select Subscription";
+  static const String billerSubmitButton = "Generate Bill";
+  static const String securityDeposit = "Security Deposit";
+  static const String securityDepositHint = "Enter Security Deposit";
+  static const String securityDepositError =
+      "Enter Value Greater Than or equal to 0";
+  static const String installationCost = "Installation Cost";
+  static const String installationCostHint = "Enter Installation Cost";
 }

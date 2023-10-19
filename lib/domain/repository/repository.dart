@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:netify/data/network/failure.dart';
 import 'package:netify/data/request/request.dart';
+import 'package:netify/domain/model/billing_model.dart';
 import 'package:netify/domain/model/model.dart';
 
 abstract class Repository {
@@ -72,6 +73,8 @@ abstract class Repository {
 
   Future<Either<Failure, GetSettingsProfileMeta>> getSettingsMetadata();
 
+  Future<Either<Failure, GetBillingProfileMeta>> getBillingMetadata();
+
   Future<Either<Failure, GetNasList>> getNasInfo();
 
   Future<Either<Failure, GetServicesInfo>> getServiceInfo();
@@ -81,4 +84,12 @@ abstract class Repository {
 
   Future<Either<Failure, GeneralSuccess>> createNasEntry(
       NasEntryRequest newNasEntryRequest);
+
+  Future<Either<Failure, GetUpcomingRenewals>> getRenewals(
+      GetRenewalsRequest getRenewalsRequest);
+
+  Future<Either<Failure, GetBills>> getBills(GetBillRequest getBillRequest);
+
+  Future<Either<Failure, GeneralSuccess>> createBills(
+      GenerateBillRequest generateBillRequest);
 }

@@ -292,6 +292,22 @@ class _ExpandedPanelWidgetState extends State<ExpandedPanelWidget> {
                       style: Theme.of(context).textTheme.labelMedium)
                 ])),
             Text.rich(TextSpan(
+                text: "Security Deposit: ",
+                style: Theme.of(context).textTheme.labelLarge,
+                children: [
+                  TextSpan(
+                      text: subscription.securityDeposit.toString(),
+                      style: Theme.of(context).textTheme.labelMedium)
+                ])),
+            Text.rich(TextSpan(
+                text: "Installation Cost: ",
+                style: Theme.of(context).textTheme.labelLarge,
+                children: [
+                  TextSpan(
+                      text: subscription.installationCharge.toString(),
+                      style: Theme.of(context).textTheme.labelMedium)
+                ])),
+            Text.rich(TextSpan(
                 text: "NetworkType: ",
                 style: Theme.of(context).textTheme.labelLarge,
                 children: [

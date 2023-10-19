@@ -53,6 +53,16 @@ abstract class RemoteDataSource {
   Future<GetServicesInfoResponse> getServiceInfo();
 
   Future<GetNasListResponse> getNasInfo();
+
+  Future<GetBillingProfileMetaResponse> getBillingMetadata();
+
+  Future<GeneralSuccessResponse> createBill(
+      GenerateBillRequest generateBillRequest);
+
+  Future<GetBillsResponse> getBills(GetBillRequest getBillRequest);
+
+  Future<GetUpcomingRenewalsResponse> getRenewals(
+      GetRenewalsRequest getRenewalRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -237,5 +247,27 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   @override
   Future<GetServicesInfoResponse> getServiceInfo() async {
     return await _apiServiceClient.getServiceInfo();
+  }
+
+  @override
+  Future<GetBillingProfileMetaResponse> getBillingMetadata() async {
+    return await _apiServiceClient.getBillingMetadata();
+  }
+
+  @override
+  Future<GeneralSuccessResponse> createBill(
+      GenerateBillRequest generateBillRequest) async {
+    return await _apiServiceClient.createBill(generateBillRequest.toJson());
+  }
+
+  @override
+  Future<GetBillsResponse> getBills(GetBillRequest getBillRequest) async {
+    return await _apiServiceClient.getBills(getBillRequest.toJson());
+  }
+
+  @override
+  Future<GetUpcomingRenewalsResponse> getRenewals(
+      GetRenewalsRequest getRenewalRequest) async {
+    return await _apiServiceClient.getRenewals(getRenewalRequest.toJson());
   }
 }

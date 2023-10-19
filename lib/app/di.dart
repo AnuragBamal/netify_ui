@@ -7,6 +7,7 @@ import 'package:netify/data/network/dio_factory.dart';
 import 'package:netify/data/network/network_info.dart';
 import 'package:netify/data/repository/repository_implementor.dart';
 import 'package:netify/domain/repository/repository.dart';
+import 'package:netify/domain/usecase/create_bill_usecase.dart';
 import 'package:netify/domain/usecase/create_newnasentry_usecase.dart';
 import 'package:netify/domain/usecase/create_newservicesubscription_usecase.dart';
 import 'package:netify/domain/usecase/create_operatorchart_usecase.dart';
@@ -16,8 +17,11 @@ import 'package:netify/domain/usecase/create_subscriber_usecase.dart';
 import 'package:netify/domain/usecase/create_subscription_usecase.dart';
 import 'package:netify/domain/usecase/create_user_usecase.dart';
 import 'package:netify/domain/usecase/forgot_password_usecase.dart';
+import 'package:netify/domain/usecase/get_billing_metadata_usecase.dart';
+import 'package:netify/domain/usecase/get_bills_usecase.dart';
 import 'package:netify/domain/usecase/get_nasinfo_usecase.dart';
 import 'package:netify/domain/usecase/get_payment_metadata_usecase.dart';
+import 'package:netify/domain/usecase/get_renewals_usecase.dart';
 import 'package:netify/domain/usecase/get_serviceinfo_usecase.dart';
 import 'package:netify/domain/usecase/get_settings_metadata_usecase.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
@@ -49,7 +53,6 @@ import 'package:netify/persentation/main/plans/plans_view_model.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart_view_model.dart';
 import 'package:netify/persentation/main/reports/report_view_model.dart';
 import 'package:netify/persentation/main/settings/nas/create_nas_view_model.dart';
-import 'package:netify/persentation/main/settings/settings.dart';
 import 'package:netify/persentation/main/settings/settings_view_model.dart';
 import 'package:netify/services/authentication_service.dart';
 
@@ -190,6 +193,15 @@ initHomepageModule() {
         () => GetUserWalletUseCase(instance()));
     instance.registerFactory<W2WTransferUsecase>(
         () => W2WTransferUsecase(instance()));
+    instance.registerFactory<GetBillingProfileMetadataUseCase>(
+        () => GetBillingProfileMetadataUseCase(instance()));
+    instance.registerFactory<CreateBillsUseCase>(
+        () => CreateBillsUseCase(instance()));
+    instance
+        .registerFactory<GetBillsUsecase>(() => GetBillsUsecase(instance()));
+    instance.registerFactory<GetRenewalsUsecase>(
+        () => GetRenewalsUsecase(instance()));
+
     instance.registerFactory<HomepageViewModel>(() => HomepageViewModel(
         instance(),
         instance(),
@@ -225,8 +237,7 @@ initHomepageModule() {
         ));
 
     instance.registerFactory<BillingPageViewModel>(() => BillingPageViewModel(
-          instance(),
-        ));
+        instance(), instance(), instance(), instance(), instance()));
 
     instance
         .registerFactory<ReportingPageViewModel>(() => ReportingPageViewModel(

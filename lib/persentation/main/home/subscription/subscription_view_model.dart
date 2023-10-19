@@ -64,7 +64,7 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   SubscriptionViewModel(this._subscriptionMetaUsecase, this._navigationService,
       this._dialogService, this._subscriptionUseCase);
   var createNewSubscription = CreateNewSubscription("", "", "", "", "", "", "",
-      "", "", false, false, "", "", "", "", "", 0, 0, 0, 0);
+      "", "", false, false, "", "", "", "", "", 0, 0, 0, 0, 0, 0);
   @override
   void dispose() {
     _userNameController.close();
@@ -85,6 +85,7 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
     _availiableIpController.close();
     _isStaticIpController.close();
     _planOfferPriceController.close();
+    _planBasePriceController.close();
   }
 
   @override
@@ -277,6 +278,18 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   setIsTaxIncluded(bool value) {
     isTaxIncluded = value;
     calculateOfferPrice();
+  }
+
+  setSecurityDeposit(double value) {
+    createNewSubscription =
+        createNewSubscription.copyWith(securityDeposit: value);
+    _validateForm();
+  }
+
+  setInstallationCost(double value) {
+    createNewSubscription =
+        createNewSubscription.copyWith(installationCost: value);
+    _validateForm();
   }
 
   createNewSubscriptionSubmit(BuildContext context) {
@@ -507,6 +520,8 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
         createNewSubscription.planBasicCost > 0 &&
         createNewSubscription.planOfferedCost > 0 &&
         createNewSubscription.taxAmount > 0 &&
+        createNewSubscription.securityDeposit >= 0 &&
+        createNewSubscription.installationCost >= 0 &&
         ((createNewSubscription.ipType.toLowerCase() == 'static' &&
                 createNewSubscription.assignedIp.isNotEmpty) ||
             createNewSubscription.ipType.toLowerCase() != 'static')) {
@@ -563,6 +578,8 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
       basePrice: createNewSubscription.planBasicCost,
       offeredPrice: createNewSubscription.planOfferedCost,
       taxAmount: createNewSubscription.taxAmount,
+      securityDeposit: createNewSubscription.securityDeposit,
+      installationCharge: createNewSubscription.installationCost,
     ));
     result.fold((failure) {
       Navigator.of(context).pop();

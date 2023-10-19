@@ -20,13 +20,21 @@ Widget dashboardGridItemBuilder(BuildContext context, int index,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(data[index].assetCount.toString(),
-                      style: getBoldStyle(color: Colors.white, fontSize: 45)),
-                  Text(
-                    data[index].assetName,
-                    style: getSemiBoldStyle(
-                        color: ColorManager.surfaceColor, fontSize: 20),
-                  ),
+                  if (data[index].assetCount >= 0)
+                    Text(data[index].assetCount.toString(),
+                        style: getBoldStyle(color: Colors.white, fontSize: 45)),
+                  if (data[index].assetCount >= 0)
+                    Text(
+                      data[index].assetName,
+                      style: getSemiBoldStyle(
+                          color: ColorManager.surfaceColor, fontSize: 20),
+                    ),
+                  if (data[index].assetCount < 0)
+                    Text(
+                      data[index].assetName,
+                      style: getSemiBoldStyle(
+                          color: ColorManager.surfaceColor, fontSize: 30),
+                    ),
                 ]),
           )),
     ),

@@ -3168,6 +3168,8 @@ mixin _$CreateNewSubscription {
   double get planOfferedCost => throw _privateConstructorUsedError;
   double get planEnteredCost => throw _privateConstructorUsedError;
   double get taxAmount => throw _privateConstructorUsedError;
+  double get installationCost => throw _privateConstructorUsedError;
+  double get securityDeposit => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreateNewSubscriptionCopyWith<CreateNewSubscription> get copyWith =>
@@ -3200,7 +3202,9 @@ abstract class $CreateNewSubscriptionCopyWith<$Res> {
       double planBasicCost,
       double planOfferedCost,
       double planEnteredCost,
-      double taxAmount});
+      double taxAmount,
+      double installationCost,
+      double securityDeposit});
 }
 
 /// @nodoc
@@ -3237,6 +3241,8 @@ class _$CreateNewSubscriptionCopyWithImpl<$Res,
     Object? planOfferedCost = null,
     Object? planEnteredCost = null,
     Object? taxAmount = null,
+    Object? installationCost = null,
+    Object? securityDeposit = null,
   }) {
     return _then(_value.copyWith(
       userName: null == userName
@@ -3321,6 +3327,14 @@ class _$CreateNewSubscriptionCopyWithImpl<$Res,
           ? _value.taxAmount
           : taxAmount // ignore: cast_nullable_to_non_nullable
               as double,
+      installationCost: null == installationCost
+          ? _value.installationCost
+          : installationCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      securityDeposit: null == securityDeposit
+          ? _value.securityDeposit
+          : securityDeposit // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -3353,7 +3367,9 @@ abstract class _$$_CreateNewSubscriptionCopyWith<$Res>
       double planBasicCost,
       double planOfferedCost,
       double planEnteredCost,
-      double taxAmount});
+      double taxAmount,
+      double installationCost,
+      double securityDeposit});
 }
 
 /// @nodoc
@@ -3387,6 +3403,8 @@ class __$$_CreateNewSubscriptionCopyWithImpl<$Res>
     Object? planOfferedCost = null,
     Object? planEnteredCost = null,
     Object? taxAmount = null,
+    Object? installationCost = null,
+    Object? securityDeposit = null,
   }) {
     return _then(_$_CreateNewSubscription(
       null == userName
@@ -3469,6 +3487,14 @@ class __$$_CreateNewSubscriptionCopyWithImpl<$Res>
           ? _value.taxAmount
           : taxAmount // ignore: cast_nullable_to_non_nullable
               as double,
+      null == installationCost
+          ? _value.installationCost
+          : installationCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == securityDeposit
+          ? _value.securityDeposit
+          : securityDeposit // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -3496,7 +3522,9 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
       this.planBasicCost,
       this.planOfferedCost,
       this.planEnteredCost,
-      this.taxAmount);
+      this.taxAmount,
+      this.installationCost,
+      this.securityDeposit);
 
   @override
   final String userName;
@@ -3538,10 +3566,14 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
   final double planEnteredCost;
   @override
   final double taxAmount;
+  @override
+  final double installationCost;
+  @override
+  final double securityDeposit;
 
   @override
   String toString() {
-    return 'CreateNewSubscription(userName: $userName, password: $password, resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, subscriberId: $subscriberId, planName: $planName, networkType: $networkType, ipType: $ipType, assignedIp: $assignedIp, isInstallationAddressSameAsBilling: $isInstallationAddressSameAsBilling, isInstallationAddressSameAsPermanent: $isInstallationAddressSameAsPermanent, country: $country, address: $address, pincode: $pincode, city: $city, state: $state, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount)';
+    return 'CreateNewSubscription(userName: $userName, password: $password, resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, subscriberId: $subscriberId, planName: $planName, networkType: $networkType, ipType: $ipType, assignedIp: $assignedIp, isInstallationAddressSameAsBilling: $isInstallationAddressSameAsBilling, isInstallationAddressSameAsPermanent: $isInstallationAddressSameAsPermanent, country: $country, address: $address, pincode: $pincode, city: $city, state: $state, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount, installationCost: $installationCost, securityDeposit: $securityDeposit)';
   }
 
   @override
@@ -3586,7 +3618,11 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
             (identical(other.planEnteredCost, planEnteredCost) ||
                 other.planEnteredCost == planEnteredCost) &&
             (identical(other.taxAmount, taxAmount) ||
-                other.taxAmount == taxAmount));
+                other.taxAmount == taxAmount) &&
+            (identical(other.installationCost, installationCost) ||
+                other.installationCost == installationCost) &&
+            (identical(other.securityDeposit, securityDeposit) ||
+                other.securityDeposit == securityDeposit));
   }
 
   @override
@@ -3611,7 +3647,9 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
         planBasicCost,
         planOfferedCost,
         planEnteredCost,
-        taxAmount
+        taxAmount,
+        installationCost,
+        securityDeposit
       ]);
 
   @JsonKey(ignore: true)
@@ -3643,7 +3681,9 @@ abstract class _CreateNewSubscription implements CreateNewSubscription {
       final double planBasicCost,
       final double planOfferedCost,
       final double planEnteredCost,
-      final double taxAmount) = _$_CreateNewSubscription;
+      final double taxAmount,
+      final double installationCost,
+      final double securityDeposit) = _$_CreateNewSubscription;
 
   @override
   String get userName;
@@ -3685,6 +3725,10 @@ abstract class _CreateNewSubscription implements CreateNewSubscription {
   double get planEnteredCost;
   @override
   double get taxAmount;
+  @override
+  double get installationCost;
+  @override
+  double get securityDeposit;
   @override
   @JsonKey(ignore: true)
   _$$_CreateNewSubscriptionCopyWith<_$_CreateNewSubscription> get copyWith =>
@@ -4101,5 +4145,188 @@ abstract class _W2wTransferObject implements W2wTransferObject {
   @override
   @JsonKey(ignore: true)
   _$$_W2wTransferObjectCopyWith<_$_W2wTransferObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$BillerData {
+  String get resellerUserName => throw _privateConstructorUsedError;
+  String get operatorUserName => throw _privateConstructorUsedError;
+  String get subscriberId => throw _privateConstructorUsedError;
+  String get subscriptionId => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $BillerDataCopyWith<BillerData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BillerDataCopyWith<$Res> {
+  factory $BillerDataCopyWith(
+          BillerData value, $Res Function(BillerData) then) =
+      _$BillerDataCopyWithImpl<$Res, BillerData>;
+  @useResult
+  $Res call(
+      {String resellerUserName,
+      String operatorUserName,
+      String subscriberId,
+      String subscriptionId});
+}
+
+/// @nodoc
+class _$BillerDataCopyWithImpl<$Res, $Val extends BillerData>
+    implements $BillerDataCopyWith<$Res> {
+  _$BillerDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? resellerUserName = null,
+    Object? operatorUserName = null,
+    Object? subscriberId = null,
+    Object? subscriptionId = null,
+  }) {
+    return _then(_value.copyWith(
+      resellerUserName: null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      operatorUserName: null == operatorUserName
+          ? _value.operatorUserName
+          : operatorUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      subscriberId: null == subscriberId
+          ? _value.subscriberId
+          : subscriberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      subscriptionId: null == subscriptionId
+          ? _value.subscriptionId
+          : subscriptionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_BillerDataCopyWith<$Res>
+    implements $BillerDataCopyWith<$Res> {
+  factory _$$_BillerDataCopyWith(
+          _$_BillerData value, $Res Function(_$_BillerData) then) =
+      __$$_BillerDataCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String resellerUserName,
+      String operatorUserName,
+      String subscriberId,
+      String subscriptionId});
+}
+
+/// @nodoc
+class __$$_BillerDataCopyWithImpl<$Res>
+    extends _$BillerDataCopyWithImpl<$Res, _$_BillerData>
+    implements _$$_BillerDataCopyWith<$Res> {
+  __$$_BillerDataCopyWithImpl(
+      _$_BillerData _value, $Res Function(_$_BillerData) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? resellerUserName = null,
+    Object? operatorUserName = null,
+    Object? subscriberId = null,
+    Object? subscriptionId = null,
+  }) {
+    return _then(_$_BillerData(
+      null == resellerUserName
+          ? _value.resellerUserName
+          : resellerUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == operatorUserName
+          ? _value.operatorUserName
+          : operatorUserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == subscriberId
+          ? _value.subscriberId
+          : subscriberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == subscriptionId
+          ? _value.subscriptionId
+          : subscriptionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_BillerData implements _BillerData {
+  _$_BillerData(this.resellerUserName, this.operatorUserName, this.subscriberId,
+      this.subscriptionId);
+
+  @override
+  final String resellerUserName;
+  @override
+  final String operatorUserName;
+  @override
+  final String subscriberId;
+  @override
+  final String subscriptionId;
+
+  @override
+  String toString() {
+    return 'BillerData(resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, subscriberId: $subscriberId, subscriptionId: $subscriptionId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_BillerData &&
+            (identical(other.resellerUserName, resellerUserName) ||
+                other.resellerUserName == resellerUserName) &&
+            (identical(other.operatorUserName, operatorUserName) ||
+                other.operatorUserName == operatorUserName) &&
+            (identical(other.subscriberId, subscriberId) ||
+                other.subscriberId == subscriberId) &&
+            (identical(other.subscriptionId, subscriptionId) ||
+                other.subscriptionId == subscriptionId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, resellerUserName,
+      operatorUserName, subscriberId, subscriptionId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BillerDataCopyWith<_$_BillerData> get copyWith =>
+      __$$_BillerDataCopyWithImpl<_$_BillerData>(this, _$identity);
+}
+
+abstract class _BillerData implements BillerData {
+  factory _BillerData(
+      final String resellerUserName,
+      final String operatorUserName,
+      final String subscriberId,
+      final String subscriptionId) = _$_BillerData;
+
+  @override
+  String get resellerUserName;
+  @override
+  String get operatorUserName;
+  @override
+  String get subscriberId;
+  @override
+  String get subscriptionId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_BillerDataCopyWith<_$_BillerData> get copyWith =>
       throw _privateConstructorUsedError;
 }

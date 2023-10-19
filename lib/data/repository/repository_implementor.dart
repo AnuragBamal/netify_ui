@@ -750,4 +750,105 @@ class RepositoryImplementer extends Repository {
       ));
     }
   }
+
+  @override
+  Future<Either<Failure, GetBillingProfileMeta>> getBillingMetadata() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getBillingMetadata();
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GeneralSuccess>> createBills(
+      GenerateBillRequest generateBillRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.createBill(generateBillRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetBills>> getBills(
+      GetBillRequest getBillRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getBills(getBillRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetUpcomingRenewals>> getRenewals(
+      GetRenewalsRequest getRenewalsRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.getRenewals(getRenewalsRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
 }

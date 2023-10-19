@@ -230,6 +230,8 @@ class Subscription {
   final Address billingAddress;
   final double basePrice;
   final double offeredPrice;
+  final double securityDeposit;
+  final double installationCharge;
 
   Subscription(
       {required this.subscriptionId,
@@ -248,7 +250,9 @@ class Subscription {
       required this.permanentAddress,
       required this.billingAddress,
       required this.basePrice,
-      required this.offeredPrice});
+      required this.offeredPrice,
+      required this.securityDeposit,
+      required this.installationCharge});
 
   factory Subscription.fromJson(Map<String, dynamic> json) {
     return Subscription(
@@ -268,7 +272,9 @@ class Subscription {
         permanentAddress: json['permanentAddress'],
         billingAddress: json['billingAddress'],
         basePrice: json['basePrice'],
-        offeredPrice: json['offeredPrice']);
+        offeredPrice: json['offeredPrice'],
+        securityDeposit: json['securityDeposit'],
+        installationCharge: json['installationCharge']);
   }
 }
 

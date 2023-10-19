@@ -1,3 +1,4 @@
+import 'package:netify/domain/model/billing_model.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/domain/model/settings_model.dart';
@@ -606,6 +607,64 @@ class GetServicesInfo extends BaseResponse {
     return GetServicesInfo(
         data: (json['data'] as List)
             .map((e) => ServicesInfo.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetBillingProfileMeta extends BaseResponse {
+  final List<BillingProfileMeta> data;
+
+  GetBillingProfileMeta(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetBillingProfileMeta.fromJson(Map<String, dynamic> json) {
+    return GetBillingProfileMeta(
+        data: (json['data'] as List)
+            .map((e) => BillingProfileMeta.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetBills extends BaseResponse {
+  final List<BillsData> data;
+
+  GetBills(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetBills.fromJson(Map<String, dynamic> json) {
+    return GetBills(
+        data: (json['data'] as List).map((e) => BillsData.fromJson(e)).toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetUpcomingRenewals extends BaseResponse {
+  final List<UpcomingRenewals> data;
+
+  GetUpcomingRenewals(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetUpcomingRenewals.fromJson(Map<String, dynamic> json) {
+    return GetUpcomingRenewals(
+        data: (json['data'] as List)
+            .map((e) => UpcomingRenewals.fromJson(e))
             .toList(),
         status: json['status'],
         message: json['message'],

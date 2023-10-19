@@ -2,6 +2,7 @@
 
 import 'package:netify/app/extensions.dart';
 import 'package:netify/data/responses/responses.dart';
+import 'package:netify/domain/model/billing_model.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/model/plan_model.dart';
@@ -400,6 +401,8 @@ extension SubscriptionResponseExtension on SubscriptionResponse? {
       ipType: this?.ipType?.nonNull ?? defaultEmptyString,
       basePrice: this?.basePrice ?? 0,
       offeredPrice: this?.offeredPrice ?? 0,
+      securityDeposit: this?.securityDeposit ?? 0,
+      installationCharge: this?.installationCharge ?? 0,
       subscriptionDate:
           DateTime.parse(this?.subscriptionDate?.nonNull ?? defaultEmptyString),
       lastRenewalDate:
@@ -687,6 +690,149 @@ extension NasResponseExtension on NasResponse? {
 extension GetNasListResponseExtension on GetNasListResponse? {
   GetNasList toDomain() {
     return GetNasList(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension OperatorSubscriberMapResponseExtension
+    on OperatorSubscriberMapResponse? {
+  OperatorSubscriberMap toDomain() {
+    return OperatorSubscriberMap(
+      subscriberUserName:
+          this?.subscriberUserName?.nonNull ?? defaultEmptyString,
+      customerId: this?.customerId?.nonNull ?? defaultEmptyString,
+      mobileNumber: this?.mobileNumber?.nonNull ?? defaultEmptyString,
+      email: this?.email?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension SubscriptionSubscriberMapResponseExtension
+    on SubscriptionSubscriberMapResponse? {
+  SubscriptionSubscriberMap toDomain() {
+    return SubscriptionSubscriberMap(
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      networkType: this?.networkType?.nonNull ?? defaultEmptyString,
+      ipType: this?.ipType?.nonNull ?? defaultEmptyString,
+      lastRenewalDate: this?.lastRenewalDate?.nonNull ?? defaultEmptyString,
+      subscriptionStatus:
+          this?.subscriptionStatus?.nonNull ?? defaultEmptyString,
+      subscriptionId: this?.subscriptionId?.nonNull ?? defaultEmptyString,
+      operatorUserName: this?.operatorUserName?.nonNull ?? defaultEmptyString,
+      offeredPrice: this?.offeredPrice ?? 0,
+    );
+  }
+}
+
+extension BillingProfileMetaResponseExtension on BillingProfileMetaResponse? {
+  BillingProfileMeta toDomain() {
+    return BillingProfileMeta(
+      role: this?.role?.nonNull ?? defaultEmptyString,
+      ownerUserName: this?.ownerUserName?.nonNull ?? defaultEmptyString,
+      userName: this?.userName?.nonNull ?? defaultEmptyString,
+      billingScreens:
+          this?.billingScreens?.map((e) => e.toDomain()).toList() ?? [],
+      resellerOperatorMap: this?.resellerOperatorMap ?? {},
+      operatorSubscriberMap: this?.operatorSubscriberMap?.map(((key, value) =>
+              MapEntry(key, value.map((e) => e.toDomain()).toList()))) ??
+          {},
+      subscriberSubscriptionMap: this?.subscriptionSubscriberMap?.map(
+              ((key, value) =>
+                  MapEntry(key, value.map((e) => e.toDomain()).toList()))) ??
+          {},
+    );
+  }
+}
+
+extension GetBillingProfileMetaResponseExtension
+    on GetBillingProfileMetaResponse? {
+  GetBillingProfileMeta toDomain() {
+    return GetBillingProfileMeta(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension UpcomingRenewalsResponseExtension on UpcomingRenewalsResponse? {
+  UpcomingRenewals toDomain() {
+    return UpcomingRenewals(
+      subscriptionId: this?.subscriptionId?.nonNull ?? defaultEmptyString,
+      resellerUserName: this?.resellerUserName?.nonNull ?? defaultEmptyString,
+      operatorUserName: this?.operatorUserName?.nonNull ?? defaultEmptyString,
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      networkType: this?.networkType?.nonNull ?? defaultEmptyString,
+      ipType: this?.ipType?.nonNull ?? defaultEmptyString,
+      lastRenewalDate: this?.lastRenewalDate?.nonNull ?? defaultEmptyString,
+      nextRenewalDate: this?.nextRenewalDate?.nonNull ?? defaultEmptyString,
+      offeredPrice: this?.offeredPrice ?? 0,
+      subscriptionStatus:
+          this?.subscriptionStatus?.nonNull ?? defaultEmptyString,
+      customerId: this?.customerId?.nonNull ?? defaultEmptyString,
+      subscriberUserName:
+          this?.subscriberUserName?.nonNull ?? defaultEmptyString,
+      subscriberName: this?.subscriberName?.nonNull ?? defaultEmptyString,
+      subscriberEmail: this?.subscriberEmail?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension GetUpcomingRenewalsResponseExtension on GetUpcomingRenewalsResponse? {
+  GetUpcomingRenewals toDomain() {
+    return GetUpcomingRenewals(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension BillsResponseExtension on BillsResponse? {
+  Bills toDomain() {
+    return Bills(
+      subscriberName: this?.subscriberName?.nonNull ?? defaultEmptyString,
+      subscriberUserName:
+          this?.subscriberUserName?.nonNull ?? defaultEmptyString,
+      customerId: this?.customerId?.nonNull ?? defaultEmptyString,
+      operatorName: this?.operatorName?.nonNull ?? defaultEmptyString,
+      operatorUserName: this?.operatorUserName?.nonNull ?? defaultEmptyString,
+      operatorId: this?.operatorId?.nonNull ?? defaultEmptyString,
+      resellerName: this?.resellerName?.nonNull ?? defaultEmptyString,
+      resellerUserName: this?.resellerUserName?.nonNull ?? defaultEmptyString,
+      resellerId: this?.resellerId?.nonNull ?? defaultEmptyString,
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      billNumber: this?.billNumber?.nonNull ?? defaultEmptyString,
+      billPeriod: this?.billPeriod?.nonNull ?? defaultEmptyString,
+      dueDate: this?.dueDate?.nonNull ?? defaultEmptyString,
+      billAmount: this?.billAmount ?? 0,
+      nextBillingDate: this?.nextBillingDate?.nonNull ?? defaultEmptyString,
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      createdAt: DateTime.parse(this?.createdAt?.nonNull ?? defaultEmptyString),
+      updatedAt: DateTime.parse(this?.updatedAt?.nonNull ?? defaultEmptyString),
+    );
+  }
+}
+
+extension BillsDataResponseExtension on BillsDataResponse? {
+  BillsData toDomain() {
+    return BillsData(
+      bills: this?.bills?.map((e) => e.toDomain()).toList() ?? [],
+      isSearch: this?.isSearch ?? false,
+      screenTypeIdentity: this?.screenTypeIdentity ?? defaultEmptyString,
+    );
+  }
+}
+
+extension GetBillsResponseExtension on GetBillsResponse? {
+  GetBills toDomain() {
+    return GetBills(
       data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
       status: this?.status?.nonNull ?? defaultEmptyString,
       message: this?.message?.nonNull ?? defaultEmptyString,

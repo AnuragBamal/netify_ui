@@ -34,6 +34,8 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _securityDeposit = TextEditingController();
+  final TextEditingController _installationCost = TextEditingController();
 
   bool isTaxIncluded = false;
 
@@ -74,6 +76,22 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
         _subcriptionViewModel.setPlanEnteredPrice(_priceController.text);
       } else {
         _subcriptionViewModel.setPlanEnteredPrice("0");
+      }
+    });
+    _securityDeposit.addListener(() {
+      if (_securityDeposit.text.isNotEmpty) {
+        _subcriptionViewModel
+            .setSecurityDeposit(double.tryParse(_securityDeposit.text) ?? 0);
+      } else {
+        _subcriptionViewModel.setSecurityDeposit(0);
+      }
+    });
+    _installationCost.addListener(() {
+      if (_installationCost.text.isNotEmpty) {
+        _subcriptionViewModel
+            .setInstallationCost(double.tryParse(_installationCost.text) ?? 0);
+      } else {
+        _subcriptionViewModel.setInstallationCost(0);
       }
     });
   }
@@ -201,6 +219,45 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
                             builder: dropDownStaticIp)
                         : const SizedBox();
                   }),
+              const SizedBox(
+                height: AppSize.s24,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.p24,
+                ),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _securityDeposit,
+                  decoration: const InputDecoration(
+                    hintText: AppString.securityDepositHint,
+                    labelText: AppString.securityDeposit,
+                  ),
+                  validator: (value) => double.tryParse(value!)! >= 0
+                      ? null
+                      : AppString.securityDepositError,
+                ),
+              ),
+              const SizedBox(
+                height: AppSize.s24,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.p24,
+                ),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _installationCost,
+                  decoration: const InputDecoration(
+                    hintText: AppString.installationCostHint,
+                    labelText: AppString.installationCost,
+                  ),
+                  validator: (value) => double.tryParse(value!)! >= 0
+                      ? null
+                      : AppString.securityDepositError,
+                ),
+              ),
+
               const SizedBox(
                 height: AppSize.s24,
               ),
@@ -443,6 +500,7 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
           fieldViewBuilder:
               (context, textEditingController, focusNode, onFieldSubmitted) {
             return TextFormField(
+                key: _dropDownOperatorKey,
                 controller: textEditingController,
                 focusNode: focusNode,
                 onEditingComplete: onFieldSubmitted,
@@ -581,6 +639,7 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
           fieldViewBuilder:
               (context, textEditingController, focusNode, onFieldSubmitted) {
             return TextFormField(
+                key: _dropDownSubscriberKey,
                 controller: textEditingController,
                 focusNode: focusNode,
                 onEditingComplete: onFieldSubmitted,
@@ -1081,6 +1140,8 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
     _stateController.dispose();
     _countryController.dispose();
     _priceController.dispose();
+    _securityDeposit.dispose();
+    _installationCost.dispose();
     super.dispose();
   }
   //Unused Code for future reference uncomment if needed

@@ -429,6 +429,8 @@ class CreateSubscriptionRequest {
   double offeredPrice;
   double basePrice;
   double taxAmount;
+  double installationCharge;
+  double securityDeposit;
 
   CreateSubscriptionRequest({
     required this.userName,
@@ -450,6 +452,8 @@ class CreateSubscriptionRequest {
     required this.offeredPrice,
     required this.basePrice,
     required this.taxAmount,
+    required this.installationCharge,
+    required this.securityDeposit,
   });
 
   Map<String, dynamic> toJson() => {
@@ -473,6 +477,8 @@ class CreateSubscriptionRequest {
         "offeredPrice": offeredPrice,
         "basePrice": basePrice,
         "taxAmount": taxAmount,
+        "installationCharge": installationCharge,
+        "securityDeposit": securityDeposit,
       };
 }
 
@@ -542,5 +548,67 @@ class NasEntryRequest {
         "description": description,
         "community": community,
         "server": server,
+      };
+}
+
+class GetRenewalsRequest {
+  int? days;
+
+  GetRenewalsRequest({this.days});
+
+  Map<String, dynamic> toJson() => {
+        "days": days,
+      };
+}
+
+class GetBillRequest {
+  String screenTypeIdentity;
+  bool isSearch;
+  String? searchValue;
+  String? searchFilter;
+  String fromDate;
+  String toDate;
+  int pageNumber;
+  int pageSize;
+
+  GetBillRequest(
+      {required this.screenTypeIdentity,
+      required this.isSearch,
+      this.searchValue,
+      this.searchFilter,
+      required this.fromDate,
+      required this.toDate,
+      required this.pageNumber,
+      required this.pageSize});
+
+  Map<String, dynamic> toJson() => {
+        "screenTypeIdentity": screenTypeIdentity,
+        "isSearch": isSearch,
+        "searchValue": searchValue,
+        "searchFilter": searchFilter,
+        "fromDate": fromDate,
+        "toDate": toDate,
+        "pageNumber": pageNumber,
+        "pageSize": pageSize,
+      };
+}
+
+class GenerateBillRequest {
+  String resellerUserName;
+  String operatorId;
+  String subscriberId;
+  String subscriptionId;
+
+  GenerateBillRequest(
+      {required this.resellerUserName,
+      required this.operatorId,
+      required this.subscriberId,
+      required this.subscriptionId});
+
+  Map<String, dynamic> toJson() => {
+        "resellerUserName": resellerUserName,
+        "operatorId": operatorId,
+        "subscriberId": subscriberId,
+        "subscriptionId": subscriptionId,
       };
 }

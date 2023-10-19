@@ -6,10 +6,14 @@ class ScreenTypeIdentity {
   static const String plans = "plansScreen";
   static const String resellerPriceChart = "resellerPriceChartScreen";
   static const String operatorPriceChart = "operatorPriceChartScreen";
-  static const String nasEntries = "nasEntries";
-  static const String serviceSubscriptions = "ServiceSubscriptions";
-  static const String wallet = "wallet";
-  static const String transactions = "transactions";
+  static const String nasEntries = "nasEntriesScreen";
+  static const String serviceSubscriptions = "ServiceSubscriptionsScreen";
+  static const String wallet = "walletScreen";
+  static const String transactions = "transactionsScreen";
+  static const String bills = "billsScreen";
+  static const String biller = "billerScreen";
+  static const String unpaidBills = "unpaidBillsScreen";
+  static const String upcomingRenewals = "upcomingRenewalsScreen";
 }
 
 class DataTypeIdentity {
@@ -24,6 +28,9 @@ class DataTypeIdentity {
   static const String serviceSubscriptions = "ServiceSubscriptions";
   static const String wallet = "wallet";
   static const String transactions = "transactions";
+  static const String bills = "bills";
+  static const String biller = "biller";
+  static const String renewals = "renewals";
 }
 
 class Roles {

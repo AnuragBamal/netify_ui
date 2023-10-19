@@ -151,26 +151,29 @@ class CreateNewSubscriber with _$CreateNewSubscriber {
 @freezed
 class CreateNewSubscription with _$CreateNewSubscription {
   factory CreateNewSubscription(
-      String userName,
-      String password,
-      String resellerUserName,
-      String operatorUserName,
-      String subscriberId,
-      String planName,
-      String networkType,
-      String ipType,
-      String assignedIp,
-      bool isInstallationAddressSameAsBilling,
-      bool isInstallationAddressSameAsPermanent,
-      String country,
-      String address,
-      String pincode,
-      String city,
-      String state,
-      double planBasicCost,
-      double planOfferedCost,
-      double planEnteredCost,
-      double taxAmount) = _CreateNewSubscription;
+    String userName,
+    String password,
+    String resellerUserName,
+    String operatorUserName,
+    String subscriberId,
+    String planName,
+    String networkType,
+    String ipType,
+    String assignedIp,
+    bool isInstallationAddressSameAsBilling,
+    bool isInstallationAddressSameAsPermanent,
+    String country,
+    String address,
+    String pincode,
+    String city,
+    String state,
+    double planBasicCost,
+    double planOfferedCost,
+    double planEnteredCost,
+    double taxAmount,
+    double installationCost,
+    double securityDeposit,
+  ) = _CreateNewSubscription;
 }
 
 @freezed
@@ -191,4 +194,10 @@ class W2wTransferObject with _$W2wTransferObject {
   factory W2wTransferObject(
           double amount, String receiverUserName, String receiverUserId) =
       _W2wTransferObject;
+}
+
+@freezed
+class BillerData with _$BillerData {
+  factory BillerData(String resellerUserName, String operatorUserName,
+      String subscriberId, String subscriptionId) = _BillerData;
 }

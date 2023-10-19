@@ -68,11 +68,11 @@ abstract class ApiServiceClient {
   @GET("/api/v1/tenancy/ui/getplanprofile")
   Future<GetPlanProfileMetaResponse> getPlanProfile();
 
-  @POST("/api/v1/subs/subscriber")
+  @POST("/api/v1/tenancy/subscriber")
   Future<GeneralSuccessResponse> createSubscriber(
       @Body() Map<String, dynamic> body);
 
-  @POST("/api/v1/subs/subscription")
+  @POST("/api/v1/tenancy/subscription")
   Future<GeneralSuccessResponse> createSubscription(
       @Body() Map<String, dynamic> body);
 
@@ -112,4 +112,18 @@ abstract class ApiServiceClient {
   @POST("/api/v1/infra/subscription")
   Future<GeneralSuccessResponse> createServiceSubscription(
       @Body() Map<String, dynamic> body);
+
+  @GET("/api/v1/tenancy/ui/getbillingmeta")
+  Future<GetBillingProfileMetaResponse> getBillingMetadata();
+
+  @GET("/api/v1/tenancy/billing")
+  Future<GetBillsResponse> getBills(
+      @Queries() Map<String, dynamic> queryParams);
+
+  @POST("/api/v1/tenancy/billing")
+  Future<GeneralSuccessResponse> createBill(@Body() Map<String, dynamic> body);
+
+  @GET("/api/v1/tenancy/getrenewals")
+  Future<GetUpcomingRenewalsResponse> getRenewals(
+      @Queries() Map<String, dynamic> queryParams);
 }
