@@ -156,10 +156,26 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
         billerData.subscriptionId);
   }
 
+  void updateSearchFilter(String filterName, String filterValue) {
+    _currentFilter = filterName;
+    _filterSearchValue = filterValue;
+    _currentPage = 0;
+    _pageSize = 10;
+    _getBills(_screenIndex[currentSliderIndex]!.screenTypeIdentity);
+  }
+
   void updateDateFilters(String fromDate, String toDate) {
     _fromDate = fromDate;
     _toDate = toDate;
     _getBills(_screenIndex[currentSliderIndex]!.screenTypeIdentity);
+  }
+
+  getFromDate() {
+    return _fromDate;
+  }
+
+  getToDate() {
+    return _toDate;
   }
 
   void onScreenChange(int index) {
@@ -171,6 +187,12 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
     _pageSize = 10;
     _fromDate = _dateOnFirstDayOfMonth;
     _toDate = _dateOnToday;
+    _isBillerDetailsValidController.sink.add(false);
+    billerData = billerData.copyWith(
+        resellerUserName: "",
+        operatorUserName: "",
+        subscriberId: "",
+        subscriptionId: "");
     currentSliderIndex = index;
     if (_screenIndex[index]!.dataTypeIdentity == DataTypeIdentity.dashboard) {
       _getDashboardData(_screenIndex[index]!.screenTypeIdentity);

@@ -155,19 +155,37 @@ class _MainState extends State<Main> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    visualDensity: const VisualDensity(vertical: -4.0),
-                    padding: const EdgeInsets.all(0.0),
-                    icon: const Icon(Icons.home_outlined, color: Colors.white),
-                    onPressed: () => _onItemTapped(0),
-                    tooltip: "Home",
-                  ),
-                  Text(
-                    "Home",
-                    style: getBoldStyle(
-                        color: ColorManager.surfaceColor,
-                        fontSize: AppSize.s12),
-                  )
+                  if (_selectedIndex == 0)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.home_outlined,
+                          color: ColorManager.primaryColor),
+                      onPressed: () => _onItemTapped(0),
+                      tooltip: "Home",
+                    ),
+                  if (_selectedIndex != 0)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.home_outlined,
+                          color: ColorManager.greyColor),
+                      onPressed: () => _onItemTapped(0),
+                      tooltip: "Home",
+                    ),
+                  if (_selectedIndex == 0)
+                    Text(
+                      "Home",
+                      style: getBoldStyle(
+                          color: ColorManager.primaryColor,
+                          fontSize: AppSize.s12),
+                    ),
+                  if (_selectedIndex != 0)
+                    Text(
+                      "Home",
+                      style: getBoldStyle(
+                          color: ColorManager.greyColor, fontSize: AppSize.s12),
+                    )
                 ],
               ),
             ),
@@ -175,83 +193,148 @@ class _MainState extends State<Main> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    visualDensity: const VisualDensity(vertical: -4.0),
-                    padding: const EdgeInsets.all(0.0),
-                    icon: const Icon(Icons.wifi_outlined, color: Colors.white),
-                    onPressed: () => _onItemTapped(1),
-                    tooltip: "Plans",
-                  ),
-                  Text(
-                    "Plans",
-                    style: getBoldStyle(
-                        color: ColorManager.surfaceColor,
-                        fontSize: AppSize.s12),
-                  )
-                ],
-              ),
-            ),
-            FittedBox(
-              child: Column(
-                children: [
-                  IconButton(
-                    visualDensity: const VisualDensity(vertical: -4.0),
-                    padding: const EdgeInsets.all(0.0),
-                    icon: const Icon(
-                      Icons.receipt_outlined,
-                      color: Colors.white,
+                  if (_selectedIndex == 1)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.webhook_outlined,
+                          color: ColorManager.primaryColor),
+                      onPressed: () => _onItemTapped(1),
+                      tooltip: "Plans",
                     ),
-                    onPressed: () => _onItemTapped(2),
-                    tooltip: "Billing",
-                  ),
-                  Text(
-                    "Billing",
-                    style: getBoldStyle(
-                        color: ColorManager.surfaceColor,
-                        fontSize: AppSize.s12),
-                  )
-                ],
-              ),
-            ),
-            FittedBox(
-              child: Column(
-                children: [
-                  IconButton(
-                    visualDensity: const VisualDensity(vertical: -4.0),
-                    padding: const EdgeInsets.all(0.0),
-                    icon: const Icon(Icons.bar_chart_outlined,
-                        color: Colors.white),
-                    onPressed: () => _onItemTapped(3),
-                    tooltip: "Reports",
-                  ),
-                  Text(
-                    "Reports",
-                    style: getBoldStyle(
-                        color: ColorManager.surfaceColor,
-                        fontSize: AppSize.s12),
-                  )
-                ],
-              ),
-            ),
-            FittedBox(
-              child: Column(
-                children: [
-                  IconButton(
-                    visualDensity: const VisualDensity(vertical: -4.0),
-                    padding: const EdgeInsets.all(0.0),
-                    icon: const Icon(
-                      Icons.payments_outlined,
-                      color: Colors.white,
+                  if (_selectedIndex != 1)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.webhook_outlined,
+                          color: ColorManager.greyColor),
+                      onPressed: () => _onItemTapped(1),
+                      tooltip: "Plans",
                     ),
-                    onPressed: () => _onItemTapped(4),
-                    tooltip: "Payments",
-                  ),
-                  Text(
-                    "Payments",
-                    style: getBoldStyle(
-                        color: ColorManager.surfaceColor,
-                        fontSize: AppSize.s12),
-                  )
+                  if (_selectedIndex == 1)
+                    Text(
+                      "Plans",
+                      style: getBoldStyle(
+                          color: ColorManager.primaryColor,
+                          fontSize: AppSize.s12),
+                    ),
+                  if (_selectedIndex != 1)
+                    Text(
+                      "Plans",
+                      style: getBoldStyle(
+                          color: ColorManager.greyColor, fontSize: AppSize.s12),
+                    )
+                ],
+              ),
+            ),
+            FittedBox(
+              child: Column(
+                children: [
+                  if (_selectedIndex == 2)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.receipt_outlined,
+                          color: ColorManager.primaryColor),
+                      onPressed: () => _onItemTapped(2),
+                      tooltip: "Billing",
+                    ),
+                  if (_selectedIndex != 2)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.receipt_outlined,
+                          color: ColorManager.greyColor),
+                      onPressed: () => _onItemTapped(2),
+                      tooltip: "Billing",
+                    ),
+                  if (_selectedIndex == 2)
+                    Text(
+                      "Billing",
+                      style: getBoldStyle(
+                          color: ColorManager.primaryColor,
+                          fontSize: AppSize.s12),
+                    ),
+                  if (_selectedIndex != 2)
+                    Text(
+                      "Billing",
+                      style: getBoldStyle(
+                          color: ColorManager.greyColor, fontSize: AppSize.s12),
+                    )
+                ],
+              ),
+            ),
+            FittedBox(
+              child: Column(
+                children: [
+                  if (_selectedIndex == 3)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.bar_chart_outlined,
+                          color: ColorManager.primaryColor),
+                      onPressed: () => _onItemTapped(3),
+                      tooltip: "Reports",
+                    ),
+                  if (_selectedIndex != 3)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.bar_chart_outlined,
+                          color: ColorManager.greyColor),
+                      onPressed: () => _onItemTapped(3),
+                      tooltip: "Reports",
+                    ),
+                  if (_selectedIndex == 3)
+                    Text(
+                      "Reports",
+                      style: getBoldStyle(
+                          color: ColorManager.primaryColor,
+                          fontSize: AppSize.s12),
+                    ),
+                  if (_selectedIndex != 3)
+                    Text(
+                      "Reports",
+                      style: getBoldStyle(
+                          color: ColorManager.greyColor, fontSize: AppSize.s12),
+                    )
+                ],
+              ),
+            ),
+            FittedBox(
+              child: Column(
+                children: [
+                  if (_selectedIndex == 4)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.payments_outlined,
+                          color: ColorManager.primaryColor),
+                      onPressed: () => _onItemTapped(4),
+                      tooltip: "Payments",
+                    ),
+                  if (_selectedIndex != 4)
+                    IconButton(
+                      visualDensity: const VisualDensity(vertical: -4.0),
+                      padding: const EdgeInsets.all(0.0),
+                      icon: const Icon(Icons.payments_outlined,
+                          color: ColorManager.greyColor),
+                      onPressed: () => _onItemTapped(4),
+                      tooltip: "Payments",
+                    ),
+                  if (_selectedIndex == 4)
+                    Text(
+                      "Payments",
+                      style: getBoldStyle(
+                          color: ColorManager.primaryColor,
+                          fontSize: AppSize.s12),
+                    ),
+                  if (_selectedIndex != 4)
+                    Text(
+                      "Payments",
+                      style: getBoldStyle(
+                          color: ColorManager.greyColor, fontSize: AppSize.s12),
+                    )
                 ],
               ),
             ),

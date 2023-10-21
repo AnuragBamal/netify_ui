@@ -61,14 +61,19 @@ class _PaymentsState extends State<Payments> {
   Widget _paymentPageWidget(BuildContext context, MainPageModel mainPageModel) {
     return Column(
       children: [
-        Text(mainPageModel.title,
-            style: Theme.of(context).textTheme.titleSmall),
-        const SizedBox(
-          height: AppSize.s12,
-        ),
-        const Divider(
-          color: ColorManager.primaryColor,
-          thickness: 2,
+        Container(
+          decoration: const BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      width: 1, color: Color.fromRGBO(198, 198, 198, 1)))),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(mainPageModel.title,
+                  style: Theme.of(context).textTheme.titleLarge),
+            ),
+          ),
         ),
         SingleChildScrollView(
           child: Column(

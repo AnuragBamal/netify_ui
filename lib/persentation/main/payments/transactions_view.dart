@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:netify/app/constant.dart';
 import 'package:netify/domain/model/wallet_model.dart';
+import 'package:netify/persentation/common/widgets/display_info_widget.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 
 class TransactionsViewWidget extends StatefulWidget {
@@ -7,12 +9,12 @@ class TransactionsViewWidget extends StatefulWidget {
   final String loggedInUser;
   final Stream<List<Transaction>>? w2wTransactionSnapshot;
 
-  const TransactionsViewWidget(
-      {Key? key,
-      required this.transactionType,
-      this.w2wTransactionSnapshot,
-      required this.loggedInUser})
-      : super(key: key);
+  const TransactionsViewWidget({
+    Key? key,
+    required this.transactionType,
+    this.w2wTransactionSnapshot,
+    required this.loggedInUser,
+  }) : super(key: key);
 
   @override
   State<TransactionsViewWidget> createState() => _TransactionsViewWidget();
@@ -47,7 +49,9 @@ class _TransactionsViewWidget extends State<TransactionsViewWidget> {
   Widget _buildW2wTransferExpansionPanel(
       BuildContext context, AsyncSnapshot<List<Transaction>> snapshot) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.78,
+      height: MediaQuery.of(context).size.height * 0.75,
+      width: MediaQuery.of(context).size.width *
+          Constant.expandedPanelContainerWidth,
       child: SingleChildScrollView(
         child: ExpansionPanelList(
           expansionCallback: (int index, bool isExpanded) {
@@ -63,10 +67,16 @@ class _TransactionsViewWidget extends State<TransactionsViewWidget> {
             return ExpansionPanel(
                 headerBuilder: (BuildContext context, bool isExpanded) {
                   return ListTile(
-                    leading: const Icon(Icons.payment),
+                    leading: const CircleAvatar(
+                      backgroundColor: ColorManager.circularAvtarColor,
+                      child: Icon(
+                        Icons.payment,
+                        color: ColorManager.blackColor,
+                      ),
+                    ),
                     title: Text(
-                      transaction.transactionType,
-                      style: const TextStyle(color: ColorManager.primaryColor),
+                      "Transaction Id: ${transaction.transactionId}",
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +101,7 @@ class _TransactionsViewWidget extends State<TransactionsViewWidget> {
                                 color: ColorManager.paymentOut)),
                   );
                 },
-                body: _expandedW2wTransferPanel(transaction),
+                body: W2WTransactionExpandedWidget(transaction: transaction),
                 isExpanded: transaction.transactionId == expandThis,
                 canTapOnHeader: true);
           }).toList(),

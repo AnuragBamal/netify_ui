@@ -22,18 +22,19 @@ Widget dashboardGridItemBuilder(BuildContext context, int index,
                 children: [
                   if (data[index].assetCount >= 0)
                     Text(data[index].assetCount.toString(),
-                        style: getBoldStyle(color: Colors.white, fontSize: 45)),
+                        style: getBoldStyle(
+                            color: ColorManager.whiteColor, fontSize: 45)),
                   if (data[index].assetCount >= 0)
                     Text(
                       data[index].assetName,
                       style: getSemiBoldStyle(
-                          color: ColorManager.surfaceColor, fontSize: 20),
+                          color: ColorManager.whiteColor, fontSize: 20),
                     ),
                   if (data[index].assetCount < 0)
                     Text(
                       data[index].assetName,
                       style: getSemiBoldStyle(
-                          color: ColorManager.surfaceColor, fontSize: 30),
+                          color: ColorManager.whiteColor, fontSize: 30),
                     ),
                 ]),
           )),

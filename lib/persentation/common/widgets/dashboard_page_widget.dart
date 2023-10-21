@@ -49,7 +49,7 @@ Widget mainDashboardWidget(
 Widget dashboardShimmer(BuildContext context) {
   return ConstrainedBox(
     constraints: BoxConstraints(
-      maxHeight: MediaQuery.of(context).size.height * 0.78,
+      maxHeight: MediaQuery.of(context).size.height * 0.75,
     ),
     child: GridView.builder(
       padding: const EdgeInsets.all(25.0),

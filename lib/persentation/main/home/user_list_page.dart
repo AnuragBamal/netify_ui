@@ -112,7 +112,7 @@ class UserDataTypeScreen extends StatelessWidget {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.70,
+                height: MediaQuery.of(context).size.height * 0.67,
                 // constraints: BoxConstraints(
                 //   maxHeight: ,
                 // ),
@@ -150,7 +150,7 @@ class UserDataTypeScreen extends StatelessWidget {
     } else {
       return ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.70,
+            maxHeight: MediaQuery.of(context).size.height * 0.65,
           ),
           child: ListView.builder(
             itemCount: 10,

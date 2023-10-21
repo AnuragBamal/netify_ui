@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:netify/app/constant.dart';
 import 'package:netify/app/di.dart';
 import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/persentation/common/dashboard_list_page.dart';
 import 'package:netify/persentation/common/widgets/dashboard_page_widget.dart';
+import 'package:netify/persentation/common/widgets/date_selectors_widget.dart';
 import 'package:netify/persentation/common/widgets/grid_view_builder.dart';
+import 'package:netify/persentation/common/widgets/search_widget.dart';
 import 'package:netify/persentation/main/billing/biller.dart';
 import 'package:netify/persentation/main/billing/billing_view_model.dart';
 import 'package:netify/persentation/main/billing/billing_view_widget.dart';
@@ -52,8 +55,20 @@ class _BillingState extends State<Billing> {
   Widget _billingPageWidget(BuildContext context, MainPageModel mainPageModel) {
     return Column(
       children: [
-        Text(mainPageModel.title,
-            style: Theme.of(context).textTheme.titleSmall),
+        Container(
+          decoration: const BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      width: 1, color: Color.fromRGBO(198, 198, 198, 1)))),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(mainPageModel.title,
+                  style: Theme.of(context).textTheme.titleLarge),
+            ),
+          ),
+        ),
         if (mainPageModel.viewType == ScreenViewType.grid &&
             mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
           DashboardView(
@@ -67,13 +82,46 @@ class _BillingState extends State<Billing> {
         if (mainPageModel.dataTypeIdentity == DataTypeIdentity.renewals &&
             mainPageModel.screenTypeIdentity ==
                 ScreenTypeIdentity.upcomingRenewals)
-          upcomingRenewalStreamBuilder(mainPageModel, context),
+          Column(
+            children: [
+              BaseSearchWidget(
+                filters: mainPageModel.filter,
+                onFilterChanged: _billingPageViewModel.updateSearchFilter,
+              ),
+              upcomingRenewalStreamBuilder(mainPageModel, context),
+            ],
+          ),
         if (mainPageModel.dataTypeIdentity == DataTypeIdentity.bills &&
             mainPageModel.screenTypeIdentity == ScreenTypeIdentity.bills)
-          billsStreamBuilder(mainPageModel, context),
+          Column(
+            children: [
+              BaseSearchWidget(
+                filters: mainPageModel.filter,
+                onFilterChanged: _billingPageViewModel.updateSearchFilter,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width *
+                    Constant.expandedPanelContainerWidth,
+                child: DateSelectors(
+                  fromDate: _billingPageViewModel.getFromDate(),
+                  toDate: _billingPageViewModel.getToDate(),
+                  onDateChange: _billingPageViewModel.updateDateFilters,
+                ),
+              ),
+              billsStreamBuilder(mainPageModel, context),
+            ],
+          ),
         if (mainPageModel.dataTypeIdentity == DataTypeIdentity.bills &&
             mainPageModel.screenTypeIdentity == ScreenTypeIdentity.unpaidBills)
-          unpaidBillsStreamBuilder(mainPageModel, context)
+          Column(
+            children: [
+              BaseSearchWidget(
+                filters: mainPageModel.filter,
+                onFilterChanged: _billingPageViewModel.updateSearchFilter,
+              ),
+              unpaidBillsStreamBuilder(mainPageModel, context),
+            ],
+          )
       ],
     );
   }

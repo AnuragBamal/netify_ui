@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netify/app/constant.dart';
 import 'package:netify/domain/model/settings_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 
@@ -32,7 +33,10 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
     } else if (widget.viewTypeIdentity == "subscibed_services") {
       return _buildSubscribedServicesExpansionPanel(context);
     } else if (widget.viewTypeIdentity == "nas_list") {
-      return _buildNasExpansionPanel(context);
+      return SizedBox(
+          width: MediaQuery.of(context).size.width *
+              Constant.expandedPanelContainerWidth,
+          child: _buildNasExpansionPanel(context));
     } else {
       return Container();
     }

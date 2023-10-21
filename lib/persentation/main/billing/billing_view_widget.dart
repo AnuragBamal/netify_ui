@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:netify/app/constant.dart';
 import 'package:netify/domain/model/billing_model.dart';
 import 'package:netify/domain/model/enum_model.dart';
+import 'package:netify/persentation/common/widgets/display_info_widget.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -25,11 +27,21 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.screenTypeIdentity == ScreenTypeIdentity.upcomingRenewals) {
-      return _upcomingRenewalsStreamBuilder(context, widget.upcomingRenewals);
+      return SizedBox(
+          width: MediaQuery.of(context).size.width *
+              Constant.expandedPanelContainerWidth,
+          child:
+              _upcomingRenewalsStreamBuilder(context, widget.upcomingRenewals));
     } else if (widget.screenTypeIdentity == ScreenTypeIdentity.bills) {
-      return _billsStreamBuilder(context, widget.bills);
+      return SizedBox(
+          width: MediaQuery.of(context).size.width *
+              Constant.expandedPanelContainerWidth,
+          child: _billsStreamBuilder(context, widget.bills));
     } else if (widget.screenTypeIdentity == ScreenTypeIdentity.unpaidBills) {
-      return _unPaidBillsStreamBuilder(context, widget.unPaidBills);
+      return SizedBox(
+          width: MediaQuery.of(context).size.width *
+              Constant.expandedPanelContainerWidth,
+          child: _unPaidBillsStreamBuilder(context, widget.unPaidBills));
     } else {
       return Container();
     }
@@ -123,24 +135,30 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
       },
       children: bills!.map<ExpansionPanel>((Bills bill) {
         return ExpansionPanel(
-          headerBuilder: (BuildContext context, bool isExpanded) {
-            return ListTile(
-              leading: const Icon(Icons.receipt_long_rounded),
-              title: Text(bill.subscriberUserName,
-                  style: const TextStyle(color: ColorManager.primaryColor)),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(bill.billPeriod),
-                  Text(bill.billAmount.toString()),
-                  Text(bill.status),
-                ],
-              ),
-            );
-          },
-          body: _expandedBills(bill),
-          isExpanded: expandThis == bill.billNumber,
-        );
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: ColorManager.circularAvtarColor,
+                  child: Icon(
+                    Icons.receipt_long_rounded,
+                    color: ColorManager.blackColor,
+                  ),
+                ),
+                title: Text(bill.subscriberUserName,
+                    style: const TextStyle(color: ColorManager.primaryColor)),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("DueDate:${bill.dueDate}"),
+                    Text("Amount:${bill.billAmount}"),
+                    Text("Status:${bill.status}"),
+                  ],
+                ),
+              );
+            },
+            body: BillExpandedWidget(bill: bill),
+            isExpanded: expandThis == bill.billNumber,
+            canTapOnHeader: true);
       }).toList(),
       elevation: 4,
       dividerColor: ColorManager.primaryColor,
@@ -161,26 +179,32 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
       children: upcomingRenewals!
           .map<ExpansionPanel>((UpcomingRenewals upcomingRenewal) {
         return ExpansionPanel(
-          headerBuilder: (BuildContext context, bool isExpanded) {
-            return ListTile(
-              leading: const Icon(Icons.receipt_long_outlined),
-              title: Text(
-                upcomingRenewal.subscriberUserName,
-                style: const TextStyle(color: ColorManager.primaryColor),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(upcomingRenewal.resellerUserName),
-                  Text(upcomingRenewal.operatorUserName),
-                  Text(upcomingRenewal.nextRenewalDate),
-                ],
-              ),
-            );
-          },
-          body: _expandedUpcomingRenewals(upcomingRenewal),
-          isExpanded: expandThis == upcomingRenewal.subscriptionId,
-        );
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: ColorManager.circularAvtarColor,
+                  child: Icon(
+                    Icons.receipt_long_rounded,
+                    color: ColorManager.blackColor,
+                  ),
+                ),
+                title: Text(upcomingRenewal.subscriberUserName,
+                    style: const TextStyle(color: ColorManager.primaryColor)),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Reseller:${upcomingRenewal.resellerUserName}"),
+                    Text("Operator:${upcomingRenewal.operatorUserName}"),
+                    // Text("RenewalDate:${upcomingRenewal.nextRenewalDate}"),
+                    Text("Status:${upcomingRenewal.subscriptionStatus}"),
+                  ],
+                ),
+              );
+            },
+            body: UpcomingRenewalsExpandedWidget(
+                upcomingRenewals: upcomingRenewal),
+            isExpanded: expandThis == upcomingRenewal.subscriptionId,
+            canTapOnHeader: true);
       }).toList(),
       elevation: 4,
       dividerColor: ColorManager.primaryColor,
@@ -189,292 +213,10 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
     ));
   }
 
-  Widget _expandedUpcomingRenewals(UpcomingRenewals? upcomingRenewals) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        const SizedBox(
-          width: 10,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text.rich(TextSpan(
-                text: "Subscriber Name: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals!.subscriberName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Subscriber UserName: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.subscriberUserName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Subscriber Email: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.subscriberEmail,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Reseller UserName: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.resellerUserName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Operator UserName: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.operatorUserName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "SubscriptionId: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.subscriptionId.length > 10
-                          ? "${upcomingRenewals.subscriptionId.substring(0, 4)}...${upcomingRenewals.subscriptionId.substring(upcomingRenewals.subscriptionId.length - 4, upcomingRenewals.subscriptionId.length)}"
-                          : upcomingRenewals.subscriptionId,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Subscription Status: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.subscriptionStatus,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Plan Name: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.planName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Plan Price: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.offeredPrice.toString(),
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "IP Type: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.ipType,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "IP Type: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.ipType,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Network Type: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.networkType,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "IP Type: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.ipType,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Last Renewal Date: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.lastRenewalDate,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Next Renewal Date: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: upcomingRenewals.nextRenewalDate,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-          ],
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-      ],
-    );
-  }
-
-  Widget _expandedBills(Bills? bills) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        const SizedBox(
-          width: 10,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text.rich(TextSpan(
-                text: "Subscriber Name: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills!.subscriberName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Subscriber UserName: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.subscriberUserName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Operator Name: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.operatorName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Operator UserName: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.operatorUserName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Reseller Name: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.resellerName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Reseller UserName: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.resellerUserName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Plan Name: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.planName,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Bill Number: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.billNumber.length > 10
-                          ? "${bills.billNumber.substring(0, 5)}...${bills.billNumber.substring(bills.billNumber.length - 4, bills.billNumber.length)}"
-                          : bills.billNumber,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Bill Period: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.billPeriod,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Due Date: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.dueDate.toString(),
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Bill Amount: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.billAmount.toString(),
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Next Billing Date: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.nextBillingDate.toString(),
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Status: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.status,
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Created At: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.createdAt.toString(),
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-            Text.rich(TextSpan(
-                text: "Updated At: ",
-                style: Theme.of(context).textTheme.labelLarge,
-                children: [
-                  TextSpan(
-                      text: bills.updatedAt.toString(),
-                      style: Theme.of(context).textTheme.labelMedium)
-                ])),
-          ],
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-      ],
-    );
-  }
-
   Widget _shimmerWidget() {
     return ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          maxHeight: MediaQuery.of(context).size.height * 0.60,
         ),
         child: ListView.builder(
           itemCount: 10,

@@ -52,41 +52,44 @@ class _PlansState extends State<PlansView> {
   }
 
   Widget _planPageWidget(BuildContext context, MainPageModel mainPageModel) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Text(mainPageModel.title,
-              style: Theme.of(context).textTheme.titleSmall),
-          const SizedBox(
-            height: AppSize.s12,
-          ),
-          const Divider(
-            color: ColorManager.primaryColor,
-            thickness: 2,
-          ),
-          if (mainPageModel.viewType == ScreenViewType.grid &&
-              mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
-            DashboardView(
-              itemBuilder: dashboardGridItemBuilder,
-              dashboardStream: _plansPageViewModel.outputForDashboard,
-              onTap: goToPage,
+    return Column(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      width: 1, color: Color.fromRGBO(198, 198, 198, 1)))),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(mainPageModel.title,
+                  style: Theme.of(context).textTheme.titleLarge),
             ),
-          if (mainPageModel.viewType == ScreenViewType.table &&
-              mainPageModel.dataTypeIdentity == DataTypeIdentity.plan)
-            _planPriceChartStreamBuilder(
-                context, mainPageModel.screenTypeIdentity, mainPageModel.filter)
-          else if (mainPageModel.viewType == ScreenViewType.table &&
-              mainPageModel.dataTypeIdentity ==
-                  DataTypeIdentity.resellerPriceChart)
-            _resellerPriceChartStreamBuilder(
-                context, mainPageModel.screenTypeIdentity, mainPageModel.filter)
-          else if (mainPageModel.viewType == ScreenViewType.table &&
-              mainPageModel.dataTypeIdentity ==
-                  DataTypeIdentity.operatorPriceChart)
-            _operatorPriceChartStreamBuilder(
-                context, mainPageModel.screenTypeIdentity, mainPageModel.filter)
-        ],
-      ),
+          ),
+        ),
+        if (mainPageModel.viewType == ScreenViewType.grid &&
+            mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
+          DashboardView(
+            itemBuilder: dashboardGridItemBuilder,
+            dashboardStream: _plansPageViewModel.outputForDashboard,
+            onTap: goToPage,
+          ),
+        if (mainPageModel.viewType == ScreenViewType.table &&
+            mainPageModel.dataTypeIdentity == DataTypeIdentity.plan)
+          _planPriceChartStreamBuilder(
+              context, mainPageModel.screenTypeIdentity, mainPageModel.filter)
+        else if (mainPageModel.viewType == ScreenViewType.table &&
+            mainPageModel.dataTypeIdentity ==
+                DataTypeIdentity.resellerPriceChart)
+          _resellerPriceChartStreamBuilder(
+              context, mainPageModel.screenTypeIdentity, mainPageModel.filter)
+        else if (mainPageModel.viewType == ScreenViewType.table &&
+            mainPageModel.dataTypeIdentity ==
+                DataTypeIdentity.operatorPriceChart)
+          _operatorPriceChartStreamBuilder(
+              context, mainPageModel.screenTypeIdentity, mainPageModel.filter)
+      ],
     );
   }
 
@@ -175,15 +178,15 @@ class _PlansState extends State<PlansView> {
   }
 
   Widget _operatorScreen(BuildContext context, String screenTypeIdentity,
-      Stream<List<OperatorPriceChart?>> plansStream) {
-    return StreamBuilder<List<OperatorPriceChart?>>(
+      Stream<List<OperatorPriceChart>> plansStream) {
+    return StreamBuilder<List<OperatorPriceChart>>(
         stream: plansStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!.isEmpty) {
               return Stack(children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.70,
+                    height: MediaQuery.of(context).size.height * 0.66,
                     child: const Center(child: Text("No data found"))),
                 Positioned(
                   bottom: MediaQuery.of(context).size.height * 0.08,
@@ -209,13 +212,13 @@ class _PlansState extends State<PlansView> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.70,
+                        height: MediaQuery.of(context).size.height * 0.66,
                         // constraints: BoxConstraints(
                         //   maxHeight: ,
                         // ),
                         child: PlanTable(
                           screenTypeIdentity: screenTypeIdentity,
-                          operatorPriceChartSnapshot: snapshot,
+                          operatorPriceChartSnapshot: snapshot.data,
                         )),
                   ),
                   Positioned(
@@ -245,15 +248,15 @@ class _PlansState extends State<PlansView> {
   }
 
   Widget _resellerScreen(BuildContext context, String screenTypeIdentity,
-      Stream<List<ResellerPriceChart?>> plansStream) {
-    return StreamBuilder<List<ResellerPriceChart?>>(
+      Stream<List<ResellerPriceChart>> plansStream) {
+    return StreamBuilder<List<ResellerPriceChart>>(
         stream: plansStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!.isEmpty) {
               return Stack(children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.70,
+                    height: MediaQuery.of(context).size.height * 0.66,
                     child: const Center(child: Text("No data found"))),
                 Positioned(
                   bottom: MediaQuery.of(context).size.height * 0.08,
@@ -279,13 +282,13 @@ class _PlansState extends State<PlansView> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.70,
+                        height: MediaQuery.of(context).size.height * 0.66,
                         // constraints: BoxConstraints(
                         //   maxHeight: ,
                         // ),
                         child: PlanTable(
                           screenTypeIdentity: screenTypeIdentity,
-                          resellerPriceChartSnapshot: snapshot,
+                          resellerPriceChartSnapshot: snapshot.data,
                         )),
                   ),
                   Positioned(
@@ -315,15 +318,15 @@ class _PlansState extends State<PlansView> {
   }
 
   Widget _planScreen(BuildContext context, String screenTypeIdentity,
-      Stream<List<Plans?>> plansStream) {
-    return StreamBuilder<List<Plans?>>(
+      Stream<List<Plans>> plansStream) {
+    return StreamBuilder<List<Plans>>(
         stream: plansStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!.isEmpty) {
               return Stack(children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.70,
+                    height: MediaQuery.of(context).size.height * 0.66,
                     child: const Center(child: Text("No data found"))),
                 if (_plansPageViewModel.loggedInUserRole == Roles.admin)
                   Positioned(
@@ -347,13 +350,13 @@ class _PlansState extends State<PlansView> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.75,
+                        height: MediaQuery.of(context).size.height * 0.66,
                         // constraints: BoxConstraints(
                         //   maxHeight: ,
                         // ),
                         child: PlanTable(
                           screenTypeIdentity: screenTypeIdentity,
-                          plansSnapshot: snapshot,
+                          plansSnapshot: snapshot.data,
                         )),
                   ),
                   if (_plansPageViewModel.loggedInUserRole == Roles.admin)
@@ -383,10 +386,10 @@ class _PlansState extends State<PlansView> {
   Widget _shimmerWidget() {
     return ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          maxHeight: MediaQuery.of(context).size.height * 0.66,
         ),
         child: ListView.builder(
-          itemCount: 10,
+          itemCount: 8,
           itemBuilder: (_, __) => Shimmer.fromColors(
             baseColor: const Color.fromARGB(255, 184, 183, 183),
             highlightColor: const Color.fromARGB(255, 235, 234, 234),

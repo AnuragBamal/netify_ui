@@ -42,7 +42,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.surfaceColor,
+      backgroundColor: ColorManager.whiteColor,
       body: _getContentWidget(context),
     );
   }

@@ -54,36 +54,33 @@ class _SettingsState extends State<Settings> {
       BuildContext context, MainPageModel mainPageModel) {
     return Column(
       children: [
-        Text(mainPageModel.title,
-            style: Theme.of(context).textTheme.titleSmall),
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: AppSize.s12,
-              ),
-              const Divider(
-                color: ColorManager.primaryColor,
-                thickness: 2,
-              ),
-              if (mainPageModel.viewType == ScreenViewType.grid &&
-                  mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
-                DashboardView(
-                  itemBuilder: dashboardGridItemBuilder,
-                  dashboardStream: _settingsPageViewModel.outputForDashborad,
-                  onTap: goToPage,
-                ),
-              if (mainPageModel.dataTypeIdentity ==
-                  DataTypeIdentity.serviceSubscriptions)
-                _serviceScreen(
-                    context,
-                    _settingsPageViewModel.outputForServices,
-                    _settingsPageViewModel.outputForSubscribedServices),
-              if (mainPageModel.dataTypeIdentity == DataTypeIdentity.nasEntries)
-                _nasScreen(context, _settingsPageViewModel.outputForNas),
-            ],
+        Container(
+          decoration: const BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      width: 1, color: Color.fromRGBO(198, 198, 198, 1)))),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(mainPageModel.title,
+                  style: Theme.of(context).textTheme.titleLarge),
+            ),
           ),
         ),
+        if (mainPageModel.viewType == ScreenViewType.grid &&
+            mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
+          DashboardView(
+            itemBuilder: dashboardGridItemBuilder,
+            dashboardStream: _settingsPageViewModel.outputForDashborad,
+            onTap: goToPage,
+          ),
+        if (mainPageModel.dataTypeIdentity ==
+            DataTypeIdentity.serviceSubscriptions)
+          _serviceScreen(context, _settingsPageViewModel.outputForServices,
+              _settingsPageViewModel.outputForSubscribedServices),
+        if (mainPageModel.dataTypeIdentity == DataTypeIdentity.nasEntries)
+          _nasScreen(context, _settingsPageViewModel.outputForNas),
       ],
     );
   }
@@ -107,7 +104,7 @@ class _SettingsState extends State<Settings> {
               border: Border.all(color: ColorManager.primaryColor)),
           child: ConstrainedBox(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.34,
+                maxHeight: MediaQuery.of(context).size.height * 0.32,
                 // minHeight: MediaQuery.of(context).size.height * 0.35
               ),
               child: _availiableServicesBuilder(context, serviceStream)),
@@ -137,7 +134,7 @@ class _SettingsState extends State<Settings> {
               border: Border.all(color: ColorManager.primaryColor)),
           child: ConstrainedBox(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.34,
+                maxHeight: MediaQuery.of(context).size.height * 0.32,
                 // minHeight: MediaQuery.of(context).size.height * 0.35
               ),
               child:
@@ -155,7 +152,7 @@ class _SettingsState extends State<Settings> {
             if (snapshot.data!.isEmpty) {
               return Stack(children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.78,
+                    height: MediaQuery.of(context).size.height * 0.70,
                     child: const Center(child: Text("No data found"))),
                 Positioned(
                   bottom: MediaQuery.of(context).size.height * 0.08,
@@ -178,7 +175,7 @@ class _SettingsState extends State<Settings> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.78,
+                        height: MediaQuery.of(context).size.height * 0.70,
                         // constraints: BoxConstraints(
                         //   maxHeight: ,
                         // ),
@@ -257,32 +254,34 @@ class _SettingsState extends State<Settings> {
   }
 
   Widget _shimmerWidget() {
-    return ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.30,
-        ),
-        child: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (_, __) => Shimmer.fromColors(
-            baseColor: const Color.fromARGB(255, 184, 183, 183),
-            highlightColor: const Color.fromARGB(255, 235, 234, 234),
-            child: ListTile(
-              leading: Container(
-                width: 48.0,
-                height: 48.0,
-                color: Colors.white,
-              ),
-              title: Container(
-                height: 8.0,
-                color: Colors.white,
-              ),
-              subtitle: Container(
-                height: 8.0,
-                color: Colors.white,
+    return SingleChildScrollView(
+      child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.70,
+          ),
+          child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (_, __) => Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 184, 183, 183),
+              highlightColor: const Color.fromARGB(255, 235, 234, 234),
+              child: ListTile(
+                leading: Container(
+                  width: 48.0,
+                  height: 48.0,
+                  color: Colors.white,
+                ),
+                title: Container(
+                  height: 8.0,
+                  color: Colors.white,
+                ),
+                subtitle: Container(
+                  height: 8.0,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 
   @override

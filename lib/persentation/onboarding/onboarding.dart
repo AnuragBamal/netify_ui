@@ -51,7 +51,7 @@ class _OnboardingViewState extends State<OnboardingView> {
           return _getContentWidget(context, snapshot.data!);
         } else {
           return const Scaffold(
-            backgroundColor: ColorManager.surfaceColor,
+            backgroundColor: ColorManager.whiteColor,
             body: Center(
                 child: Image(
               image: AssetImage(ImageAssets.splashLogo),
@@ -66,13 +66,13 @@ class _OnboardingViewState extends State<OnboardingView> {
   Widget _getContentWidget(
       BuildContext context, SliderViewObject? sliderViewObject) {
     return Scaffold(
-      backgroundColor: ColorManager.surfaceColor,
+      backgroundColor: ColorManager.whiteColor,
       appBar: AppBar(
           elevation: AppSize.s0,
-          backgroundColor: ColorManager.surfaceColor,
+          backgroundColor: ColorManager.whiteColor,
           systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarBrightness: Brightness.dark,
-              statusBarColor: ColorManager.surfaceColor,
+              statusBarColor: ColorManager.whiteColor,
               statusBarIconBrightness: Brightness.dark)),
       body: PageView.builder(
         controller: _pageController,
@@ -86,7 +86,7 @@ class _OnboardingViewState extends State<OnboardingView> {
         },
       ),
       bottomSheet: Container(
-        color: ColorManager.surfaceColor,
+        color: ColorManager.whiteColor,
         height: AppSize.s100,
         child: Column(children: [
           Align(

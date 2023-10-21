@@ -23,15 +23,15 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
   final StreamController _sliderDisplayObjectController =
       StreamController<SliderDisplayObject>.broadcast();
   final _operatorPriceChartController =
-      BehaviorSubject<List<OperatorPriceChart?>>();
+      BehaviorSubject<List<OperatorPriceChart>>();
   final _operatorPriceSearchChartController =
-      BehaviorSubject<List<OperatorPriceChart?>>();
-  final _plansController = BehaviorSubject<List<Plans?>>();
-  final _plansSearchController = BehaviorSubject<List<Plans?>>();
+      BehaviorSubject<List<OperatorPriceChart>>();
+  final _plansController = BehaviorSubject<List<Plans>>();
+  final _plansSearchController = BehaviorSubject<List<Plans>>();
   final _resellerPriceChartController =
-      BehaviorSubject<List<ResellerPriceChart?>>();
+      BehaviorSubject<List<ResellerPriceChart>>();
   final _resellerPriceSearchChartController =
-      BehaviorSubject<List<ResellerPriceChart?>>();
+      BehaviorSubject<List<ResellerPriceChart>>();
 
   final _searchController = BehaviorSubject<bool>.seeded(false);
 
@@ -61,22 +61,22 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
 
   void planScreenSearch(String? filterName, String? value) {
     if (value!.length < 3 || value.isEmpty) {
-      List<Plans?> plans = [];
+      List<Plans> plans = [];
       inputSearch.add(false);
       _plansSearchController.sink.add(plans);
       return;
     }
     if (filterName != null && value.isNotEmpty) {
-      List<Plans?> plans = [];
+      List<Plans> plans = [];
       for (var element in _plansController.value) {
-        if (element!.planName == value) {
+        if (element.planName == value) {
           plans.add(element);
         }
       }
       inputSearch.add(true);
       _plansSearchController.sink.add(plans);
     } else {
-      List<Plans?> plans = [];
+      List<Plans> plans = [];
       inputSearch.add(false);
       _plansSearchController.sink.add(plans);
     }
@@ -84,20 +84,20 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
 
   void resellerPriceScreenSearch(String? filterName, String? value) {
     if (value!.length < 3 || value.isEmpty) {
-      List<ResellerPriceChart?> resellerPC = [];
+      List<ResellerPriceChart> resellerPC = [];
       inputSearch.add(false);
       _resellerPriceSearchChartController.sink.add(resellerPC);
       return;
     }
     if (filterName != null && value.isNotEmpty) {
-      List<ResellerPriceChart?> resellerPC = [];
+      List<ResellerPriceChart> resellerPC = [];
       for (var element in _resellerPriceChartController.value) {
         if (filterName == "Plan") {
-          if (element!.planName == value) {
+          if (element.planName == value) {
             resellerPC.add(element);
           }
         } else if (filterName == "Reseller") {
-          if (element!.resellerUserName == value) {
+          if (element.resellerUserName == value) {
             resellerPC.add(element);
           }
         }
@@ -105,7 +105,7 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
       inputSearch.add(true);
       _resellerPriceSearchChartController.sink.add(resellerPC);
     } else {
-      List<ResellerPriceChart?> resellerPC = [];
+      List<ResellerPriceChart> resellerPC = [];
       inputSearch.add(false);
       _resellerPriceSearchChartController.sink.add(resellerPC);
     }
@@ -113,24 +113,24 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
 
   void operatorPriceScreenSearch(String? filterName, String? value) {
     if (value!.length < 3 || value.isEmpty) {
-      List<OperatorPriceChart?> operatorPC = [];
+      List<OperatorPriceChart> operatorPC = [];
       inputSearch.add(false);
       _operatorPriceSearchChartController.sink.add(operatorPC);
       return;
     }
     if (filterName != null && value.isNotEmpty) {
-      List<OperatorPriceChart?> operatorPC = [];
+      List<OperatorPriceChart> operatorPC = [];
       for (var element in _operatorPriceChartController.value) {
         if (filterName == "Plan") {
-          if (element!.planName == value) {
+          if (element.planName == value) {
             operatorPC.add(element);
           }
         } else if (filterName == "Operator") {
-          if (element!.operatorUserName == value) {
+          if (element.operatorUserName == value) {
             operatorPC.add(element);
           }
         } else if (filterName == "Reseller") {
-          if (element!.resellerUserName == value) {
+          if (element.resellerUserName == value) {
             operatorPC.add(element);
           }
         }
@@ -138,7 +138,7 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
       inputSearch.add(true);
       _operatorPriceSearchChartController.sink.add(operatorPC);
     } else {
-      List<OperatorPriceChart?> operatorPC = [];
+      List<OperatorPriceChart> operatorPC = [];
       inputSearch.add(false);
       _operatorPriceSearchChartController.sink.add(operatorPC);
     }
@@ -211,14 +211,14 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
   Sink get inputForResellerPriceSearchScreen =>
       _resellerPriceSearchChartController.sink;
 
-  Stream<List<Plans?>> get outputForPlanSearchScreen =>
+  Stream<List<Plans>> get outputForPlanSearchScreen =>
       _plansSearchController.stream.map((plans) => plans);
 
-  Stream<List<OperatorPriceChart?>> get outputForOperatorPriceSearchScreen =>
+  Stream<List<OperatorPriceChart>> get outputForOperatorPriceSearchScreen =>
       _operatorPriceSearchChartController.stream
           .map((operatorPriceChart) => operatorPriceChart);
 
-  Stream<List<ResellerPriceChart?>> get outputForResellerPriceSearchScreen =>
+  Stream<List<ResellerPriceChart>> get outputForResellerPriceSearchScreen =>
       _resellerPriceSearchChartController.stream
           .map((resellerPriceChart) => resellerPriceChart);
 
@@ -230,15 +230,14 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
       _dashboardController.stream.map((dashboard) => dashboard);
 
   @override
-  Stream<List<OperatorPriceChart?>> get outputForOperatorPriceChartScreen =>
+  Stream<List<OperatorPriceChart>> get outputForOperatorPriceChartScreen =>
       _operatorPriceChartController.stream;
 
   @override
-  Stream<List<Plans?>> get outputForPlansChartsScreen =>
-      _plansController.stream;
+  Stream<List<Plans>> get outputForPlansChartsScreen => _plansController.stream;
 
   @override
-  Stream<List<ResellerPriceChart?>> get outputForResellerPriceChartScreen =>
+  Stream<List<ResellerPriceChart>> get outputForResellerPriceChartScreen =>
       _resellerPriceChartController.stream;
 
   @override

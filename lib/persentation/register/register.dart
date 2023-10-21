@@ -86,7 +86,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: ColorManager.surfaceColor,
+        backgroundColor: ColorManager.whiteColor,
         body: _getContentWidget(context));
   }
 
