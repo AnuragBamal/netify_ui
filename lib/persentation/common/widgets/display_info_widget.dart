@@ -1,10 +1,107 @@
 import 'package:flutter/material.dart';
 import 'package:netify/domain/model/billing_model.dart';
 import 'package:netify/domain/model/home_model.dart';
+import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/domain/model/wallet_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:netify/persentation/resources/values_manager.dart';
+
+typedef OnPanelButtonPress = void Function(
+    BuildContext context,
+    String buttonName,
+    String screenTypeIdentity,
+    String buttonType,
+    Map<String, dynamic> selectedItem);
+
+class PanelButtonManager extends StatelessWidget {
+  final List<PanelButton> panelButtons;
+  final MainPageModel mainPageModel;
+  final int maxButtonInRow;
+  final Map<String, dynamic> selectedItem;
+  final OnPanelButtonPress onButtonPress;
+  const PanelButtonManager(
+      {super.key,
+      required this.panelButtons,
+      required this.maxButtonInRow,
+      required this.mainPageModel,
+      required this.selectedItem,
+      required this.onButtonPress});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        for (int item = 0; item < panelButtons.length; item += maxButtonInRow)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppPadding.p2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                for (int subItem = 0; subItem < maxButtonInRow; subItem++,)
+                  if (item + subItem < panelButtons.length)
+                    SizedBox(
+                      //height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .35,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppPadding.p2),
+                        child: //panelButtons[item],
+                            Tooltip(
+                          message: panelButtons[item + subItem].details,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(int.parse(
+                                    panelButtons[item + subItem].color))),
+                            onPressed: _isButtonDisabled(
+                                    panelButtons[item + subItem].disable)
+                                ? null
+                                : () {
+                                    onButtonTap(
+                                        context,
+                                        panelButtons[item + subItem].name,
+                                        panelButtons[item + subItem].type,
+                                        panelButtons[item + subItem]
+                                            .extractInfo);
+                                  },
+                            child: Text(panelButtons[item + subItem].label),
+                          ),
+                        ),
+                      ),
+                    )
+              ],
+            ),
+          )
+      ],
+    );
+  }
+
+  bool _isButtonDisabled(Map<String, List<String>> disableInfo) {
+    bool isDisabled = false;
+    if (disableInfo.isNotEmpty) {
+      for (int item = 0; item < disableInfo.keys.length; item++) {
+        if (disableInfo[disableInfo.keys.elementAt(item)]!
+            .contains(selectedItem[disableInfo.keys.elementAt(item)])) {
+          isDisabled = true;
+          break;
+        }
+      }
+    }
+    return isDisabled;
+  }
+
+  onButtonTap(BuildContext context, String buttonName, String buttonType,
+      List<String> keysToExtract) {
+    if (keysToExtract.isNotEmpty) {
+      Map<String, dynamic> extractedInfo = {};
+      for (int item = 0; item < keysToExtract.length; item++) {
+        extractedInfo[keysToExtract[item]] = selectedItem[keysToExtract[item]];
+      }
+      onButtonPress(context, buttonName, mainPageModel.screenTypeIdentity,
+          buttonType, extractedInfo);
+    } else {}
+  }
+}
 
 class GroupWidget extends StatelessWidget {
   final Map<String, List<String>> groupList;
@@ -112,11 +209,6 @@ class ExpandedUserWidget extends StatelessWidget {
             child: GroupWidget(groupList: {
               'Name': ['${user.firstName} ${user.lastName}'],
               'UserName': [user.userName],
-            }),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: AppPadding.p16),
-            child: GroupWidget(groupList: {
               'Mobile': [(user.mobileNumber)],
               'Email': [user.email]
             }),
@@ -172,13 +264,8 @@ class SubscriberExpandedWidget extends StatelessWidget {
             child: GroupWidget(groupList: {
               'Name': ['${subscriber.firstName} ${subscriber.lastName}'],
               'UserName': [subscriber.userName],
-            }),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: AppPadding.p16),
-            child: GroupWidget(groupList: {
               'Mobile': [(subscriber.mobileNumber)],
-              'Email': [subscriber.email]
+              'Email': [subscriber.email],
             }),
           ),
           Padding(
@@ -275,6 +362,7 @@ class SubscriptionExpandedWidget extends StatelessWidget {
               'Subscription Date': [
                 '${subscription.subscriptionDate.day}/${subscription.subscriptionDate.month}/${subscription.subscriptionDate.year}'
               ],
+              'Subscription Status': [subscription.status],
               'Last Renewal Date': [
                 '${subscription.lastRenewalDate.day}/${subscription.lastRenewalDate.month}/${subscription.lastRenewalDate.year}'
               ],
@@ -458,8 +546,13 @@ class OperatorPriceChartExpandedWidget extends StatelessWidget {
 
 class UpcomingRenewalsExpandedWidget extends StatelessWidget {
   final UpcomingRenewals upcomingRenewals;
+  final MainPageModel mainPageModel;
+  final OnPanelButtonPress onButtonPress;
   const UpcomingRenewalsExpandedWidget(
-      {super.key, required this.upcomingRenewals});
+      {super.key,
+      required this.upcomingRenewals,
+      required this.mainPageModel,
+      required this.onButtonPress});
 
   @override
   Widget build(BuildContext context) {
@@ -501,13 +594,26 @@ class UpcomingRenewalsExpandedWidget extends StatelessWidget {
                   'Next Renewal Date': [upcomingRenewals.nextRenewalDate],
                 }),
               ),
+              PanelButtonManager(
+                onButtonPress: onButtonPress,
+                panelButtons: mainPageModel.actionButtons,
+                mainPageModel: mainPageModel,
+                maxButtonInRow: 2,
+                selectedItem: upcomingRenewals.toJson(),
+              ),
             ])));
   }
 }
 
 class BillExpandedWidget extends StatelessWidget {
   final Bills bill;
-  const BillExpandedWidget({super.key, required this.bill});
+  final MainPageModel mainPageModel;
+  final OnPanelButtonPress onButtonPress;
+  const BillExpandedWidget(
+      {super.key,
+      required this.bill,
+      required this.mainPageModel,
+      required this.onButtonPress});
 
   @override
   Widget build(BuildContext context) {
@@ -517,7 +623,8 @@ class BillExpandedWidget extends StatelessWidget {
         ),
         child: Padding(
             padding: const EdgeInsets.all(AppPadding.p20),
-            child: Column(children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: AppPadding.p16),
                 child: GroupWidget(groupList: {
@@ -554,6 +661,13 @@ class BillExpandedWidget extends StatelessWidget {
                     "${bill.updatedAt.day}/${bill.updatedAt.month}/${bill.updatedAt.year}"
                   ],
                 }),
+              ),
+              PanelButtonManager(
+                onButtonPress: onButtonPress,
+                panelButtons: mainPageModel.actionButtons,
+                mainPageModel: mainPageModel,
+                maxButtonInRow: 2,
+                selectedItem: bill.toJson(),
               ),
             ])));
   }

@@ -39,6 +39,7 @@ class VerificationViewModel extends BaseViewModelInputsOutputs
     _inputOtpStreamController.close();
     _inputRegenerateOtpStreamController.close();
     _inputActiveSubmitOtpStreamController.close();
+    _timer?.cancel();
   }
 
   @override

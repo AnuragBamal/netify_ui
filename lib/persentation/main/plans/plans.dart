@@ -11,7 +11,6 @@ import 'package:netify/persentation/main/plans/plan_table.dart';
 import 'package:netify/persentation/main/plans/plans_view_model.dart';
 import 'package:netify/persentation/main/plans/price_chart/create_price_chart.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
-import 'package:netify/persentation/resources/values_manager.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PlansView extends StatefulWidget {

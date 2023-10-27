@@ -10,10 +10,14 @@ import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/usecase/create_bill_usecase.dart';
 import 'package:netify/domain/usecase/get_billing_metadata_usecase.dart';
 import 'package:netify/domain/usecase/get_bills_usecase.dart';
+import 'package:netify/domain/usecase/get_panel_actions_done.dart';
+import 'package:netify/domain/usecase/get_panel_download_done.dart';
 import 'package:netify/domain/usecase/get_renewals_usecase.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
 import 'package:netify/persentation/base/baseviewmodel.dart';
 import 'package:netify/persentation/common/freezed_data_classes.dart';
+import 'package:netify/services/dialog_service.dart';
+import 'package:netify/services/navigator_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BillingPageViewModel extends BaseViewModelInputsOutputs {
@@ -51,6 +55,10 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
   final GetRenewalsUsecase _getRenewalsUsecase;
   final GetBillsUsecase _getBillsUsecase;
   final CreateBillsUseCase _createBillsUseCase;
+  final GetPanelActionDownloadDoneUsecase _getPanelActionDownloadDoneUsecase;
+  final GetPanelActionDoneUsecase _getPanelActionDoneUsecase;
+  final DialogService _dialogService;
+  final NavigationService _navigatorService;
 
   late final Map<int, MainPageModel> _screenIndex;
   late final Map<String, List<String>> _resellerOperatorMap;
@@ -63,6 +71,7 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
   int _currentPage = 0;
   int _pageSize = 10;
   bool _isSearchEnabled = false;
+  Timer? _debounce;
   final DateTime firstDayOfMonth =
       DateTime(DateTime.now().year, DateTime.now().month, 1);
   late final String _dateOnFirstDayOfMonth;
@@ -77,6 +86,10 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
     this._getRenewalsUsecase,
     this._getBillsUsecase,
     this._createBillsUseCase,
+    this._getPanelActionDownloadDoneUsecase,
+    this._getPanelActionDoneUsecase,
+    this._dialogService,
+    this._navigatorService,
   );
   int currentSliderIndex = 0;
   bool isSearchEnabled = false;
@@ -106,6 +119,7 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
     _unpaidBillsController.close();
     _isBillerDetailsValidController.close();
     _searchController.close();
+    _debounce?.cancel();
   }
 
   void setReseller(String reseller) {
@@ -156,12 +170,93 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
         billerData.subscriptionId);
   }
 
-  void updateSearchFilter(String filterName, String filterValue) {
-    _currentFilter = filterName;
-    _filterSearchValue = filterValue;
-    _currentPage = 0;
-    _pageSize = 10;
-    _getBills(_screenIndex[currentSliderIndex]!.screenTypeIdentity);
+  // void updateSearchFilter(String filterName, String filterValue) {
+  //   _currentFilter = filterName;
+  //   _filterSearchValue = filterValue;
+  //   _currentPage = 0;
+  //   _pageSize = 10;
+  //   _getBills(_screenIndex[currentSliderIndex]!.screenTypeIdentity);
+  // }
+
+  void updateBillsSearchFilter(String? filterName, String? filterValue) {
+    if (filterName == null || filterName.isEmpty || filterValue == null) {
+      return;
+    }
+    if (filterValue.length > 2) {
+      isSearchEnabled = true;
+      inputSearch.add(true);
+      _currentFilter = filterName;
+      _filterSearchValue = filterValue;
+      if (_debounce?.isActive ?? false) _debounce?.cancel();
+      _debounce = Timer(const Duration(milliseconds: 500), () {
+        _getBills(_screenIndex[currentSliderIndex]!.screenTypeIdentity);
+      });
+      // _getBills(_screenIndex[currentSliderIndex]!.screenTypeIdentity);
+    } else {
+      isSearchEnabled = false;
+      inputSearch.add(false);
+      _currentFilter = null;
+      _filterSearchValue = null;
+      inputSearch.add(false);
+      _billsSearchController.sink.add([]);
+    }
+  }
+
+  void updateUpcomingBillsSearchFilter(
+      String? filterName, String? filterValue) async {
+    if (filterName == null || filterName.isEmpty || filterValue == null) {
+      return;
+    }
+    if (filterValue.length > 2) {
+      isSearchEnabled = true;
+      inputSearch.add(true);
+      _currentFilter = filterName;
+      _filterSearchValue = filterValue;
+      List<UpcomingRenewals> upcomingRenewals = [];
+      for (var element in _upcomingRenewalsController.value) {
+        if (_currentFilter!.toLowerCase().contains("name")) {
+          if (element.subscriberUserName
+                  .toLowerCase()
+                  .contains(filterValue.toLowerCase()) ||
+              element.subscriberName
+                  .toLowerCase()
+                  .contains(filterValue.toLowerCase())) {
+            upcomingRenewals.add(element);
+          }
+        } else if (_currentFilter!.toLowerCase().contains("reseller")) {
+          if (element.resellerUserName
+              .toLowerCase()
+              .contains(filterValue.toLowerCase())) {
+            upcomingRenewals.add(element);
+          }
+        } else if (_currentFilter!.toLowerCase().contains("operator")) {
+          if (element.operatorUserName
+              .toLowerCase()
+              .contains(filterValue.toLowerCase())) {
+            upcomingRenewals.add(element);
+          }
+        } else if (_currentFilter!.toLowerCase().contains("plan")) {
+          if (element.planName
+              .toLowerCase()
+              .contains(filterValue.toLowerCase())) {
+            upcomingRenewals.add(element);
+          }
+        } else if (_currentFilter!.toLowerCase().contains("status")) {
+          if (element.subscriptionStatus
+              .toLowerCase()
+              .contains(filterValue.toLowerCase())) {
+            upcomingRenewals.add(element);
+          }
+        }
+      }
+      _upcomingRenewalsSearchController.sink.add(upcomingRenewals);
+      // _getBills(_screenIndex[currentSliderIndex]!.screenTypeIdentity);
+    } else {
+      isSearchEnabled = false;
+      inputSearch.add(false);
+      _currentFilter = null;
+      _filterSearchValue = null;
+    }
   }
 
   void updateDateFilters(String fromDate, String toDate) {
@@ -176,6 +271,23 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
 
   getToDate() {
     return _toDate;
+  }
+
+  void onPanelButtonPressed(
+      BuildContext context,
+      String buttonName,
+      String screenTypeIdentity,
+      String buttonType,
+      Map<String, dynamic> selectedItem) {
+    print(
+        "onPanelButtonPressed: $buttonName on screenTypeIdentity: $screenTypeIdentity and extracted data: $selectedItem");
+    if (buttonType == PanelButtonType.download) {
+      _getPanelActionDownloadDone(
+          context, buttonName, screenTypeIdentity, selectedItem);
+    } else if (buttonType == PanelButtonType.action) {
+      _getPanelActionDone(
+          context, buttonName, screenTypeIdentity, selectedItem);
+    }
   }
 
   void onScreenChange(int index) {
@@ -321,6 +433,12 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
 
   _createBills(BuildContext context, resellerUserName, String operatorId,
       String subscriberId, String subscriptionId) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
     GenerateBillRequest generateBillRequest = GenerateBillRequest(
         resellerUserName: resellerUserName,
         operatorId: operatorId,
@@ -329,9 +447,21 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
 
     var result = await _createBillsUseCase.execute(generateBillRequest);
     result.fold((failure) {
-      //TODO: Handle Failure
+      Navigator.of(context).pop();
+      _dialogService.showDialogOnScreen(
+          context,
+          DialogRequest(
+              title: "Error",
+              description: failure.message,
+              dialogType: DialogType.error));
     }, (success) {
-      //TODO: Handle Success
+      Navigator.of(context).pop();
+      var successDialouge = _dialogService.showDialogOnScreen(
+          context,
+          DialogRequest(
+              title: "Success",
+              description: success.data[0].message,
+              dialogType: DialogType.info));
     });
   }
 
@@ -342,6 +472,83 @@ class BillingPageViewModel extends BaseViewModelInputsOutputs {
       //TODO: Handle Failure
     }, (dashboard) {
       inputForDashboard.add(dashboard.data);
+    });
+  }
+
+  _getPanelActionDownloadDone(BuildContext context, String buttonName,
+      String screenTypeIdentity, Map<String, dynamic> extractedData) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
+    var result = await _getPanelActionDownloadDoneUsecase.execute(
+        PanelActionRequest(
+            screenTypeIdentity: screenTypeIdentity,
+            buttonName: buttonName,
+            extractedData: extractedData));
+    result.fold((failure) {
+      Navigator.of(context).pop();
+      _dialogService.showDialogOnScreen(
+          context,
+          DialogRequest(
+              title: "Error",
+              description: failure.message,
+              dialogType: DialogType.error));
+    }, (success) {
+      Navigator.of(context).pop();
+      var successDialouge = _dialogService.showDialogOnScreen(
+          context,
+          DialogRequest(
+              title: "Success",
+              description: success.message,
+              dialogType: DialogType.info));
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(success.message),
+      ));
+    });
+  }
+
+  _getPanelActionDone(BuildContext context, String buttonName,
+      String screenTypeIdentity, Map<String, dynamic> extractedData) async {
+    _dialogService.showDialogOnScreen(
+        context,
+        DialogRequest(
+            title: "Loading",
+            description: "Loading",
+            dialogType: DialogType.loading));
+    var result = await _getPanelActionDoneUsecase.execute(PanelActionRequest(
+        screenTypeIdentity: screenTypeIdentity,
+        buttonName: buttonName,
+        extractedData: extractedData));
+    result.fold((failure) {
+      Navigator.of(context).pop();
+      _dialogService.showDialogOnScreen(
+          context,
+          DialogRequest(
+              title: "Error",
+              description: failure.message,
+              dialogType: DialogType.error));
+    }, (success) {
+      Navigator.of(context).pop();
+      var successDialouge = _dialogService.showDialogOnScreen(
+          context,
+          DialogRequest(
+              title: "Success",
+              description: success.data[0].message,
+              dialogType: DialogType.info));
+      if (_screenIndex[currentSliderIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.renewals) {
+        _getUpcomingRenewals(10);
+      } else if (_screenIndex[currentSliderIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.bills) {
+        _getBills(_screenIndex[currentSliderIndex]!.screenTypeIdentity);
+      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(success.data[0].message),
+      ));
     });
   }
 

@@ -64,6 +64,22 @@ extension FilterExtension on FilterResponseData? {
   }
 }
 
+extension PanelButtonExtension on PanelButtonResponseData? {
+  PanelButton toDomain() {
+    return PanelButton(
+      name: this?.name?.nonNull ?? defaultEmptyString,
+      type: this?.type?.nonNull ?? defaultEmptyString,
+      label: this?.label?.nonNull ?? defaultEmptyString,
+      details: this?.details?.nonNull ?? defaultEmptyString,
+      color: this?.color?.nonNull ?? defaultEmptyString,
+      extractInfo: this?.extractInfo?.map((e) => e.toString()).toList() ?? [],
+      disable: this?.disable?.map((key, value) =>
+              MapEntry(key, value.map((e) => e.toString()).toList())) ??
+          {},
+    );
+  }
+}
+
 extension MainPageModelExtension on MainPageModelResponseData? {
   MainPageModel toDomain() {
     return MainPageModel(
@@ -74,6 +90,8 @@ extension MainPageModelExtension on MainPageModelResponseData? {
       title: this?.title?.nonNull ?? defaultEmptyString,
       viewType: this?.viewType?.nonNull ?? defaultEmptyString,
       filter: this?.filter?.map((e) => e.toDomain()).toList() ?? [],
+      actionButtons:
+          this?.actionButtons?.map((e) => e.toDomain()).toList() ?? [],
     );
   }
 }

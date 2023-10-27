@@ -53,6 +53,37 @@ class SuccessMessageResponse {
   SuccessMessageResponse({this.message});
 }
 
+// @JsonSerializable()
+// class PanelActionResponseData {
+//   @JsonKey(name: "message")
+//   String? message;
+//   @JsonKey(name: "fileForDownload")
+//   String? fileForDownload;
+//   @JsonKey(name: "screenTypeIdentity")
+//   String? screenTypeIdentity;
+
+//   PanelActionResponseData(
+//       {this.message, this.fileForDownload, this.screenTypeIdentity});
+
+//   factory PanelActionResponseData.fromJson(Map<String, dynamic> json) =>
+//       _$PanelActionResponseDataFromJson(json);
+
+//   Map<String, dynamic> toJson() => _$PanelActionResponseDataToJson(this);
+// }
+
+// @JsonSerializable()
+// class GetPanelActionResponseData extends BaseResponse {
+//   @JsonKey(name: "data")
+//   List<PanelActionResponseData>? data;
+
+//   GetPanelActionResponseData({this.data});
+
+//   factory GetPanelActionResponseData.fromJson(Map<String, dynamic> json) =>
+//       _$GetPanelActionResponseDataFromJson(json);
+
+//   Map<String, dynamic> toJson() => _$GetPanelActionResponseDataToJson(this);
+// }
+
 @JsonSerializable()
 class LoginResponse extends BaseResponse {
   @JsonKey(name: "data")
@@ -102,6 +133,38 @@ class FilterResponseData {
 }
 
 @JsonSerializable()
+class PanelButtonResponseData {
+  @JsonKey(name: "name")
+  String? name;
+  @JsonKey(name: "type")
+  String? type;
+  @JsonKey(name: "label")
+  String? label;
+  @JsonKey(name: "details")
+  String? details;
+  @JsonKey(name: "color")
+  String? color;
+  @JsonKey(name: "extractInfo")
+  List<String>? extractInfo;
+  @JsonKey(name: "disable")
+  Map<String, List<String>>? disable;
+
+  PanelButtonResponseData(
+      {this.name,
+      this.type,
+      this.label,
+      this.details,
+      this.color,
+      this.extractInfo,
+      this.disable});
+
+  factory PanelButtonResponseData.fromJson(Map<String, dynamic> json) =>
+      _$PanelButtonResponseDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PanelButtonResponseDataToJson(this);
+}
+
+@JsonSerializable()
 class MainPageModelResponseData {
   @JsonKey(name: "viewType")
   String? viewType;
@@ -115,6 +178,8 @@ class MainPageModelResponseData {
   int? index;
   @JsonKey(name: "filter")
   List<FilterResponseData>? filter;
+  @JsonKey(name: "actionButtons")
+  List<PanelButtonResponseData>? actionButtons;
 
   MainPageModelResponseData(
       {this.viewType,
@@ -1460,4 +1525,24 @@ class GetUpcomingRenewalsResponse extends BaseResponse {
       _$GetUpcomingRenewalsResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetUpcomingRenewalsResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetFileDownloadResponse {
+  @JsonKey(name: 'data')
+  List<int>? data;
+  @JsonKey(name: 'statusCode')
+  int? statusCode;
+  @JsonKey(name: 'statusMessage')
+  String? statusMessage;
+  @JsonKey(name: 'headers')
+  Map<String, List<String>>? headers;
+
+  GetFileDownloadResponse(
+      {this.data, this.statusCode, this.statusMessage, this.headers});
+
+  factory GetFileDownloadResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetFileDownloadResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetFileDownloadResponseToJson(this);
 }

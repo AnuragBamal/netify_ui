@@ -12,8 +12,10 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
   final HomepageViewModel homepageViewModel;
   final List<Filter> filterList;
   final String screenName;
+  final searchkey = GlobalKey();
+  final regularKey = GlobalKey();
 
-  const SubscriptionDataTypeScreen(
+  SubscriptionDataTypeScreen(
       {super.key,
       required this.homepageViewModel,
       required this.filterList,
@@ -36,7 +38,7 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
                     ? StreamBuilder<List<Subscription>>(
                         stream:
                             homepageViewModel.outputSubscriptionDataTypeSearch,
-                        builder: subscriptionPageBuilder,
+                        builder: subscriptionSearchPageBuilder,
                       )
                     : StreamBuilder<List<Subscription>>(
                         stream:
@@ -86,6 +88,89 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.66,
                 child: ExpandedPanelWidget(
+                  key: regularKey,
+                  dataTypeIdentity: DataTypeIdentity.subscription,
+                  subscriptionItemSnapshot: snapshot.data,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.08,
+              right: MediaQuery.of(context).size.width * 0.05,
+              child: FloatingActionButton(
+                onPressed: () {
+                  homepageViewModel.navigateToCreateSubscription();
+                },
+                backgroundColor: ColorManager.primaryColor,
+                child: const Icon(Icons.add),
+              ),
+            ),
+          ],
+        );
+      }
+    } else if (snapshot.hasError) {
+      return Text("Error: ${snapshot.error}");
+    } else {
+      return ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.66,
+          ),
+          child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (_, __) => Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 184, 183, 183),
+              highlightColor: const Color.fromARGB(255, 235, 234, 234),
+              child: ListTile(
+                leading: Container(
+                  width: 48.0,
+                  height: 48.0,
+                  color: Colors.white,
+                ),
+                title: Container(
+                  height: 8.0,
+                  color: Colors.white,
+                ),
+                subtitle: Container(
+                  height: 8.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ));
+    }
+  }
+
+  Widget subscriptionSearchPageBuilder(
+      BuildContext context, AsyncSnapshot<List<Subscription>> snapshot) {
+    if (snapshot.hasData) {
+      if (snapshot.data!.isEmpty) {
+        return Stack(children: [
+          SizedBox(
+              height: MediaQuery.of(context).size.height * 0.66,
+              child: const Center(child: Text("No data found"))),
+          Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.08,
+            right: MediaQuery.of(context).size.width * 0.05,
+            child: FloatingActionButton(
+              onPressed: () {
+                homepageViewModel.navigateToCreateSubscription();
+              },
+              backgroundColor: ColorManager.primaryColor,
+              child: const Icon(Icons.add),
+            ),
+          ),
+        ]);
+      } else {
+        return Stack(
+          children: [
+            GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.66,
+                child: ExpandedPanelWidget(
+                  key: searchkey,
                   dataTypeIdentity: DataTypeIdentity.subscription,
                   subscriptionItemSnapshot: snapshot.data,
                 ),

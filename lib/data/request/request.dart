@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 class LoginRequest {
@@ -610,5 +611,22 @@ class GenerateBillRequest {
         "operatorId": operatorId,
         "subscriberId": subscriberId,
         "subscriptionId": subscriptionId,
+      };
+}
+
+class PanelActionRequest {
+  String screenTypeIdentity;
+  String buttonName;
+  Map<String, dynamic> extractedData;
+
+  PanelActionRequest(
+      {required this.screenTypeIdentity,
+      required this.buttonName,
+      required this.extractedData});
+
+  Map<String, dynamic> toJson() => {
+        "screenTypeIdentity": screenTypeIdentity,
+        "buttonName": buttonName,
+        "extractedData": json.encode(extractedData),
       };
 }

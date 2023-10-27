@@ -2,21 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:netify/app/constant.dart';
 import 'package:netify/domain/model/billing_model.dart';
 import 'package:netify/domain/model/enum_model.dart';
+import 'package:netify/domain/model/model.dart';
 import 'package:netify/persentation/common/widgets/display_info_widget.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:shimmer/shimmer.dart';
 
+typedef OnPanelButtonPress = void Function(
+    BuildContext context,
+    String buttonName,
+    String screenTypeIdentity,
+    String buttonType,
+    Map<String, dynamic> selectedItem);
+
 class BillingViewWidget extends StatefulWidget {
-  final String screenTypeIdentity;
   final Stream<List<UpcomingRenewals>>? upcomingRenewals;
   final Stream<List<Bills>>? bills;
   final Stream<List<Bills>>? unPaidBills;
+  final MainPageModel mainPageModel;
+  final OnPanelButtonPress onButtonPress;
   const BillingViewWidget(
       {super.key,
-      required this.screenTypeIdentity,
       this.upcomingRenewals,
       this.bills,
-      this.unPaidBills});
+      this.unPaidBills,
+      required this.mainPageModel,
+      required this.onButtonPress});
 
   @override
   State<BillingViewWidget> createState() => _BillingViewWidgetState();
@@ -26,18 +36,21 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
   String expandThis = "";
   @override
   Widget build(BuildContext context) {
-    if (widget.screenTypeIdentity == ScreenTypeIdentity.upcomingRenewals) {
+    if (widget.mainPageModel.screenTypeIdentity ==
+        ScreenTypeIdentity.upcomingRenewals) {
       return SizedBox(
           width: MediaQuery.of(context).size.width *
               Constant.expandedPanelContainerWidth,
           child:
               _upcomingRenewalsStreamBuilder(context, widget.upcomingRenewals));
-    } else if (widget.screenTypeIdentity == ScreenTypeIdentity.bills) {
+    } else if (widget.mainPageModel.screenTypeIdentity ==
+        ScreenTypeIdentity.bills) {
       return SizedBox(
           width: MediaQuery.of(context).size.width *
               Constant.expandedPanelContainerWidth,
           child: _billsStreamBuilder(context, widget.bills));
-    } else if (widget.screenTypeIdentity == ScreenTypeIdentity.unpaidBills) {
+    } else if (widget.mainPageModel.screenTypeIdentity ==
+        ScreenTypeIdentity.unpaidBills) {
       return SizedBox(
           width: MediaQuery.of(context).size.width *
               Constant.expandedPanelContainerWidth,
@@ -55,9 +68,9 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
         if (snapshot.hasData) {
           if (snapshot.data!.isEmpty) {
             return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * .35),
+                SizedBox(height: MediaQuery.of(context).size.height * .15),
                 const Center(
                   child: Text("No Data Found"),
                 ),
@@ -81,9 +94,9 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
         if (snapshot.hasData) {
           if (snapshot.data!.isEmpty) {
             return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * .35),
+                SizedBox(height: MediaQuery.of(context).size.height * .15),
                 const Center(
                   child: Text("No Data Found"),
                 ),
@@ -106,11 +119,10 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.isEmpty) {
-            return Column(
+            return const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * .35),
-                const Center(
+                Center(
                   child: Text("No Data Found"),
                 ),
               ],
@@ -156,7 +168,13 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
                 ),
               );
             },
-            body: BillExpandedWidget(bill: bill),
+            body: SingleChildScrollView(
+              child: BillExpandedWidget(
+                onButtonPress: widget.onButtonPress,
+                mainPageModel: widget.mainPageModel,
+                bill: bill,
+              ),
+            ),
             isExpanded: expandThis == bill.billNumber,
             canTapOnHeader: true);
       }).toList(),
@@ -202,6 +220,8 @@ class _BillingViewWidgetState extends State<BillingViewWidget> {
               );
             },
             body: UpcomingRenewalsExpandedWidget(
+                onButtonPress: widget.onButtonPress,
+                mainPageModel: widget.mainPageModel,
                 upcomingRenewals: upcomingRenewal),
             isExpanded: expandThis == upcomingRenewal.subscriptionId,
             canTapOnHeader: true);

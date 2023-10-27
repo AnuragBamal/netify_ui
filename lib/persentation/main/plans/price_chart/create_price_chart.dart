@@ -23,13 +23,13 @@ class CreatePriceChart extends StatefulWidget {
 class _CreatePriceChartState extends State<CreatePriceChart> {
   final _plansPageViewModel = instance<CreatePlanPageViewModel>();
   final _formKey = GlobalKey<FormState>();
-  final _planpriceController = TextEditingController();
+  final _planMarginController = TextEditingController();
   bool isTaxIncluded = false;
   _bind() {
-    _planpriceController.addListener(() {
-      _plansPageViewModel.setPlanPrice(_planpriceController.text == ""
+    _planMarginController.addListener(() {
+      _plansPageViewModel.setPlanMargin(_planMarginController.text == ""
           ? 0
-          : int.parse(_planpriceController.text));
+          : int.parse(_planMarginController.text));
     });
   }
 
@@ -42,7 +42,7 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
 
   @override
   void dispose() {
-    _planpriceController.dispose();
+    _planMarginController.dispose();
     _plansPageViewModel.dispose();
     super.dispose();
   }
@@ -97,11 +97,11 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
                     stream: _plansPageViewModel.outputErrorPlanPriceStream,
                     builder: (context, snapshot) {
                       return TextFormField(
-                          controller: _planpriceController,
+                          controller: _planMarginController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: AppString.createNewResellerPlanPriceHInt,
-                            labelText: AppString.createNewResellerPlanPrice,
+                            hintText: AppString.marginPriceHint,
+                            labelText: AppString.marginPrice,
                             errorText: snapshot.data,
                           ));
                     }),
@@ -210,10 +210,10 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
                     builder: (context, snapshot) {
                       return TextFormField(
                           keyboardType: TextInputType.number,
-                          controller: _planpriceController,
+                          controller: _planMarginController,
                           decoration: InputDecoration(
-                            hintText: AppString.createNewResellerPlanPriceHInt,
-                            labelText: AppString.createNewResellerPlanPrice,
+                            hintText: AppString.marginPriceHint,
+                            labelText: AppString.marginPrice,
                             errorText: snapshot.data,
                           ));
                     }),
@@ -309,9 +309,9 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
                   items: snapshot.data!.map<DropdownMenuItem<String>>(
                       (PlanProfileMetaPlan value) {
                     return DropdownMenuItem<String>(
-                      value: value.planName,
+                      value: "${value.planName}&&${value.planPrice}",
                       child: Text(
-                        "${value.planName}(${value.planPrice})",
+                        "${value.planName}( Rs. ${value.planPrice})",
                         style: const TextStyle(color: Colors.black),
                       ),
                     );
@@ -347,9 +347,9 @@ class _CreatePriceChartState extends State<CreatePriceChart> {
                   items: snapshot.data!.map<DropdownMenuItem<String>>(
                       (PlanProfileMetaPlan value) {
                     return DropdownMenuItem<String>(
-                      value: value.planName,
+                      value: "${value.planName}&&${value.planPrice}",
                       child: Text(
-                        "${value.planName}(${value.planPrice})",
+                        "${value.planName}( Rs. ${value.planPrice})",
                         style: const TextStyle(color: Colors.black),
                       ),
                     );

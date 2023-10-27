@@ -53,5 +53,5 @@ class AppSize {
 
 class DurationConstants {
   static const int d300 = 300;
-  static const int timeoutMin = 1;
+  static const int timeoutMin = 4;
 }

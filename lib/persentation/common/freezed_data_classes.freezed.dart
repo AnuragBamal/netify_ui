@@ -2053,7 +2053,7 @@ mixin _$CreateResellerPriceChart {
   String get resellerUserName => throw _privateConstructorUsedError;
   double get planBasicCost => throw _privateConstructorUsedError;
   double get planOfferedCost => throw _privateConstructorUsedError;
-  double get planEnteredCost => throw _privateConstructorUsedError;
+  double get planEnteredMargin => throw _privateConstructorUsedError;
   double get taxAmount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -2072,7 +2072,7 @@ abstract class $CreateResellerPriceChartCopyWith<$Res> {
       String resellerUserName,
       double planBasicCost,
       double planOfferedCost,
-      double planEnteredCost,
+      double planEnteredMargin,
       double taxAmount});
 }
 
@@ -2094,7 +2094,7 @@ class _$CreateResellerPriceChartCopyWithImpl<$Res,
     Object? resellerUserName = null,
     Object? planBasicCost = null,
     Object? planOfferedCost = null,
-    Object? planEnteredCost = null,
+    Object? planEnteredMargin = null,
     Object? taxAmount = null,
   }) {
     return _then(_value.copyWith(
@@ -2114,9 +2114,9 @@ class _$CreateResellerPriceChartCopyWithImpl<$Res,
           ? _value.planOfferedCost
           : planOfferedCost // ignore: cast_nullable_to_non_nullable
               as double,
-      planEnteredCost: null == planEnteredCost
-          ? _value.planEnteredCost
-          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+      planEnteredMargin: null == planEnteredMargin
+          ? _value.planEnteredMargin
+          : planEnteredMargin // ignore: cast_nullable_to_non_nullable
               as double,
       taxAmount: null == taxAmount
           ? _value.taxAmount
@@ -2140,7 +2140,7 @@ abstract class _$$_CreateResellerPriceChartCopyWith<$Res>
       String resellerUserName,
       double planBasicCost,
       double planOfferedCost,
-      double planEnteredCost,
+      double planEnteredMargin,
       double taxAmount});
 }
 
@@ -2160,7 +2160,7 @@ class __$$_CreateResellerPriceChartCopyWithImpl<$Res>
     Object? resellerUserName = null,
     Object? planBasicCost = null,
     Object? planOfferedCost = null,
-    Object? planEnteredCost = null,
+    Object? planEnteredMargin = null,
     Object? taxAmount = null,
   }) {
     return _then(_$_CreateResellerPriceChart(
@@ -2180,9 +2180,9 @@ class __$$_CreateResellerPriceChartCopyWithImpl<$Res>
           ? _value.planOfferedCost
           : planOfferedCost // ignore: cast_nullable_to_non_nullable
               as double,
-      null == planEnteredCost
-          ? _value.planEnteredCost
-          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+      null == planEnteredMargin
+          ? _value.planEnteredMargin
+          : planEnteredMargin // ignore: cast_nullable_to_non_nullable
               as double,
       null == taxAmount
           ? _value.taxAmount
@@ -2200,7 +2200,7 @@ class _$_CreateResellerPriceChart implements _CreateResellerPriceChart {
       this.resellerUserName,
       this.planBasicCost,
       this.planOfferedCost,
-      this.planEnteredCost,
+      this.planEnteredMargin,
       this.taxAmount);
 
   @override
@@ -2212,13 +2212,13 @@ class _$_CreateResellerPriceChart implements _CreateResellerPriceChart {
   @override
   final double planOfferedCost;
   @override
-  final double planEnteredCost;
+  final double planEnteredMargin;
   @override
   final double taxAmount;
 
   @override
   String toString() {
-    return 'CreateResellerPriceChart(planName: $planName, resellerUserName: $resellerUserName, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount)';
+    return 'CreateResellerPriceChart(planName: $planName, resellerUserName: $resellerUserName, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredMargin: $planEnteredMargin, taxAmount: $taxAmount)';
   }
 
   @override
@@ -2234,15 +2234,15 @@ class _$_CreateResellerPriceChart implements _CreateResellerPriceChart {
                 other.planBasicCost == planBasicCost) &&
             (identical(other.planOfferedCost, planOfferedCost) ||
                 other.planOfferedCost == planOfferedCost) &&
-            (identical(other.planEnteredCost, planEnteredCost) ||
-                other.planEnteredCost == planEnteredCost) &&
+            (identical(other.planEnteredMargin, planEnteredMargin) ||
+                other.planEnteredMargin == planEnteredMargin) &&
             (identical(other.taxAmount, taxAmount) ||
                 other.taxAmount == taxAmount));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, planName, resellerUserName,
-      planBasicCost, planOfferedCost, planEnteredCost, taxAmount);
+      planBasicCost, planOfferedCost, planEnteredMargin, taxAmount);
 
   @JsonKey(ignore: true)
   @override
@@ -2258,7 +2258,7 @@ abstract class _CreateResellerPriceChart implements CreateResellerPriceChart {
       final String resellerUserName,
       final double planBasicCost,
       final double planOfferedCost,
-      final double planEnteredCost,
+      final double planEnteredMargin,
       final double taxAmount) = _$_CreateResellerPriceChart;
 
   @override
@@ -2270,7 +2270,7 @@ abstract class _CreateResellerPriceChart implements CreateResellerPriceChart {
   @override
   double get planOfferedCost;
   @override
-  double get planEnteredCost;
+  double get planEnteredMargin;
   @override
   double get taxAmount;
   @override
@@ -2286,7 +2286,7 @@ mixin _$CreateOperatorPriceChart {
   String get resellerUserName => throw _privateConstructorUsedError;
   double get planBasicCost => throw _privateConstructorUsedError;
   double get planOfferedCost => throw _privateConstructorUsedError;
-  double get planEnteredCost => throw _privateConstructorUsedError;
+  double get planEnteredMargin => throw _privateConstructorUsedError;
   double get taxAmount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -2306,7 +2306,7 @@ abstract class $CreateOperatorPriceChartCopyWith<$Res> {
       String resellerUserName,
       double planBasicCost,
       double planOfferedCost,
-      double planEnteredCost,
+      double planEnteredMargin,
       double taxAmount});
 }
 
@@ -2329,7 +2329,7 @@ class _$CreateOperatorPriceChartCopyWithImpl<$Res,
     Object? resellerUserName = null,
     Object? planBasicCost = null,
     Object? planOfferedCost = null,
-    Object? planEnteredCost = null,
+    Object? planEnteredMargin = null,
     Object? taxAmount = null,
   }) {
     return _then(_value.copyWith(
@@ -2353,9 +2353,9 @@ class _$CreateOperatorPriceChartCopyWithImpl<$Res,
           ? _value.planOfferedCost
           : planOfferedCost // ignore: cast_nullable_to_non_nullable
               as double,
-      planEnteredCost: null == planEnteredCost
-          ? _value.planEnteredCost
-          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+      planEnteredMargin: null == planEnteredMargin
+          ? _value.planEnteredMargin
+          : planEnteredMargin // ignore: cast_nullable_to_non_nullable
               as double,
       taxAmount: null == taxAmount
           ? _value.taxAmount
@@ -2380,7 +2380,7 @@ abstract class _$$_CreateOperatorPriceChartCopyWith<$Res>
       String resellerUserName,
       double planBasicCost,
       double planOfferedCost,
-      double planEnteredCost,
+      double planEnteredMargin,
       double taxAmount});
 }
 
@@ -2401,7 +2401,7 @@ class __$$_CreateOperatorPriceChartCopyWithImpl<$Res>
     Object? resellerUserName = null,
     Object? planBasicCost = null,
     Object? planOfferedCost = null,
-    Object? planEnteredCost = null,
+    Object? planEnteredMargin = null,
     Object? taxAmount = null,
   }) {
     return _then(_$_CreateOperatorPriceChart(
@@ -2425,9 +2425,9 @@ class __$$_CreateOperatorPriceChartCopyWithImpl<$Res>
           ? _value.planOfferedCost
           : planOfferedCost // ignore: cast_nullable_to_non_nullable
               as double,
-      null == planEnteredCost
-          ? _value.planEnteredCost
-          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+      null == planEnteredMargin
+          ? _value.planEnteredMargin
+          : planEnteredMargin // ignore: cast_nullable_to_non_nullable
               as double,
       null == taxAmount
           ? _value.taxAmount
@@ -2446,7 +2446,7 @@ class _$_CreateOperatorPriceChart implements _CreateOperatorPriceChart {
       this.resellerUserName,
       this.planBasicCost,
       this.planOfferedCost,
-      this.planEnteredCost,
+      this.planEnteredMargin,
       this.taxAmount);
 
   @override
@@ -2460,13 +2460,13 @@ class _$_CreateOperatorPriceChart implements _CreateOperatorPriceChart {
   @override
   final double planOfferedCost;
   @override
-  final double planEnteredCost;
+  final double planEnteredMargin;
   @override
   final double taxAmount;
 
   @override
   String toString() {
-    return 'CreateOperatorPriceChart(planName: $planName, operatorUserName: $operatorUserName, resellerUserName: $resellerUserName, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount)';
+    return 'CreateOperatorPriceChart(planName: $planName, operatorUserName: $operatorUserName, resellerUserName: $resellerUserName, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredMargin: $planEnteredMargin, taxAmount: $taxAmount)';
   }
 
   @override
@@ -2484,8 +2484,8 @@ class _$_CreateOperatorPriceChart implements _CreateOperatorPriceChart {
                 other.planBasicCost == planBasicCost) &&
             (identical(other.planOfferedCost, planOfferedCost) ||
                 other.planOfferedCost == planOfferedCost) &&
-            (identical(other.planEnteredCost, planEnteredCost) ||
-                other.planEnteredCost == planEnteredCost) &&
+            (identical(other.planEnteredMargin, planEnteredMargin) ||
+                other.planEnteredMargin == planEnteredMargin) &&
             (identical(other.taxAmount, taxAmount) ||
                 other.taxAmount == taxAmount));
   }
@@ -2498,7 +2498,7 @@ class _$_CreateOperatorPriceChart implements _CreateOperatorPriceChart {
       resellerUserName,
       planBasicCost,
       planOfferedCost,
-      planEnteredCost,
+      planEnteredMargin,
       taxAmount);
 
   @JsonKey(ignore: true)
@@ -2516,7 +2516,7 @@ abstract class _CreateOperatorPriceChart implements CreateOperatorPriceChart {
       final String resellerUserName,
       final double planBasicCost,
       final double planOfferedCost,
-      final double planEnteredCost,
+      final double planEnteredMargin,
       final double taxAmount) = _$_CreateOperatorPriceChart;
 
   @override
@@ -2530,7 +2530,7 @@ abstract class _CreateOperatorPriceChart implements CreateOperatorPriceChart {
   @override
   double get planOfferedCost;
   @override
-  double get planEnteredCost;
+  double get planEnteredMargin;
   @override
   double get taxAmount;
   @override
@@ -3166,7 +3166,7 @@ mixin _$CreateNewSubscription {
   String get state => throw _privateConstructorUsedError;
   double get planBasicCost => throw _privateConstructorUsedError;
   double get planOfferedCost => throw _privateConstructorUsedError;
-  double get planEnteredCost => throw _privateConstructorUsedError;
+  double get planMarginCost => throw _privateConstructorUsedError;
   double get taxAmount => throw _privateConstructorUsedError;
   double get installationCost => throw _privateConstructorUsedError;
   double get securityDeposit => throw _privateConstructorUsedError;
@@ -3201,7 +3201,7 @@ abstract class $CreateNewSubscriptionCopyWith<$Res> {
       String state,
       double planBasicCost,
       double planOfferedCost,
-      double planEnteredCost,
+      double planMarginCost,
       double taxAmount,
       double installationCost,
       double securityDeposit});
@@ -3239,7 +3239,7 @@ class _$CreateNewSubscriptionCopyWithImpl<$Res,
     Object? state = null,
     Object? planBasicCost = null,
     Object? planOfferedCost = null,
-    Object? planEnteredCost = null,
+    Object? planMarginCost = null,
     Object? taxAmount = null,
     Object? installationCost = null,
     Object? securityDeposit = null,
@@ -3319,9 +3319,9 @@ class _$CreateNewSubscriptionCopyWithImpl<$Res,
           ? _value.planOfferedCost
           : planOfferedCost // ignore: cast_nullable_to_non_nullable
               as double,
-      planEnteredCost: null == planEnteredCost
-          ? _value.planEnteredCost
-          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+      planMarginCost: null == planMarginCost
+          ? _value.planMarginCost
+          : planMarginCost // ignore: cast_nullable_to_non_nullable
               as double,
       taxAmount: null == taxAmount
           ? _value.taxAmount
@@ -3366,7 +3366,7 @@ abstract class _$$_CreateNewSubscriptionCopyWith<$Res>
       String state,
       double planBasicCost,
       double planOfferedCost,
-      double planEnteredCost,
+      double planMarginCost,
       double taxAmount,
       double installationCost,
       double securityDeposit});
@@ -3401,7 +3401,7 @@ class __$$_CreateNewSubscriptionCopyWithImpl<$Res>
     Object? state = null,
     Object? planBasicCost = null,
     Object? planOfferedCost = null,
-    Object? planEnteredCost = null,
+    Object? planMarginCost = null,
     Object? taxAmount = null,
     Object? installationCost = null,
     Object? securityDeposit = null,
@@ -3479,9 +3479,9 @@ class __$$_CreateNewSubscriptionCopyWithImpl<$Res>
           ? _value.planOfferedCost
           : planOfferedCost // ignore: cast_nullable_to_non_nullable
               as double,
-      null == planEnteredCost
-          ? _value.planEnteredCost
-          : planEnteredCost // ignore: cast_nullable_to_non_nullable
+      null == planMarginCost
+          ? _value.planMarginCost
+          : planMarginCost // ignore: cast_nullable_to_non_nullable
               as double,
       null == taxAmount
           ? _value.taxAmount
@@ -3521,7 +3521,7 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
       this.state,
       this.planBasicCost,
       this.planOfferedCost,
-      this.planEnteredCost,
+      this.planMarginCost,
       this.taxAmount,
       this.installationCost,
       this.securityDeposit);
@@ -3563,7 +3563,7 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
   @override
   final double planOfferedCost;
   @override
-  final double planEnteredCost;
+  final double planMarginCost;
   @override
   final double taxAmount;
   @override
@@ -3573,7 +3573,7 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
 
   @override
   String toString() {
-    return 'CreateNewSubscription(userName: $userName, password: $password, resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, subscriberId: $subscriberId, planName: $planName, networkType: $networkType, ipType: $ipType, assignedIp: $assignedIp, isInstallationAddressSameAsBilling: $isInstallationAddressSameAsBilling, isInstallationAddressSameAsPermanent: $isInstallationAddressSameAsPermanent, country: $country, address: $address, pincode: $pincode, city: $city, state: $state, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planEnteredCost: $planEnteredCost, taxAmount: $taxAmount, installationCost: $installationCost, securityDeposit: $securityDeposit)';
+    return 'CreateNewSubscription(userName: $userName, password: $password, resellerUserName: $resellerUserName, operatorUserName: $operatorUserName, subscriberId: $subscriberId, planName: $planName, networkType: $networkType, ipType: $ipType, assignedIp: $assignedIp, isInstallationAddressSameAsBilling: $isInstallationAddressSameAsBilling, isInstallationAddressSameAsPermanent: $isInstallationAddressSameAsPermanent, country: $country, address: $address, pincode: $pincode, city: $city, state: $state, planBasicCost: $planBasicCost, planOfferedCost: $planOfferedCost, planMarginCost: $planMarginCost, taxAmount: $taxAmount, installationCost: $installationCost, securityDeposit: $securityDeposit)';
   }
 
   @override
@@ -3615,8 +3615,8 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
                 other.planBasicCost == planBasicCost) &&
             (identical(other.planOfferedCost, planOfferedCost) ||
                 other.planOfferedCost == planOfferedCost) &&
-            (identical(other.planEnteredCost, planEnteredCost) ||
-                other.planEnteredCost == planEnteredCost) &&
+            (identical(other.planMarginCost, planMarginCost) ||
+                other.planMarginCost == planMarginCost) &&
             (identical(other.taxAmount, taxAmount) ||
                 other.taxAmount == taxAmount) &&
             (identical(other.installationCost, installationCost) ||
@@ -3646,7 +3646,7 @@ class _$_CreateNewSubscription implements _CreateNewSubscription {
         state,
         planBasicCost,
         planOfferedCost,
-        planEnteredCost,
+        planMarginCost,
         taxAmount,
         installationCost,
         securityDeposit
@@ -3680,7 +3680,7 @@ abstract class _CreateNewSubscription implements CreateNewSubscription {
       final String state,
       final double planBasicCost,
       final double planOfferedCost,
-      final double planEnteredCost,
+      final double planMarginCost,
       final double taxAmount,
       final double installationCost,
       final double securityDeposit) = _$_CreateNewSubscription;
@@ -3722,7 +3722,7 @@ abstract class _CreateNewSubscription implements CreateNewSubscription {
   @override
   double get planOfferedCost;
   @override
-  double get planEnteredCost;
+  double get planMarginCost;
   @override
   double get taxAmount;
   @override

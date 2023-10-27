@@ -20,6 +20,8 @@ import 'package:netify/domain/usecase/forgot_password_usecase.dart';
 import 'package:netify/domain/usecase/get_billing_metadata_usecase.dart';
 import 'package:netify/domain/usecase/get_bills_usecase.dart';
 import 'package:netify/domain/usecase/get_nasinfo_usecase.dart';
+import 'package:netify/domain/usecase/get_panel_actions_done.dart';
+import 'package:netify/domain/usecase/get_panel_download_done.dart';
 import 'package:netify/domain/usecase/get_payment_metadata_usecase.dart';
 import 'package:netify/domain/usecase/get_renewals_usecase.dart';
 import 'package:netify/domain/usecase/get_serviceinfo_usecase.dart';
@@ -111,7 +113,7 @@ Future<void> initAppModule() async {
 
   //Instance of repository
   instance.registerLazySingleton<Repository>(() => RepositoryImplementer(
-      instance<RemoteDataSource>(), instance<NetworkInfo>()));
+      instance<RemoteDataSource>(), instance<NetworkInfo>(), instance()));
 
   if (!GetIt.I.isRegistered<SplashViewModel>()) {
     instance.registerFactory<SplashViewModel>(
@@ -202,6 +204,12 @@ initHomepageModule() {
     instance.registerFactory<GetRenewalsUsecase>(
         () => GetRenewalsUsecase(instance()));
 
+    instance.registerFactory<GetPanelActionDownloadDoneUsecase>(
+        () => GetPanelActionDownloadDoneUsecase(instance()));
+
+    instance.registerFactory<GetPanelActionDoneUsecase>(
+        () => GetPanelActionDoneUsecase(instance()));
+
     instance.registerFactory<HomepageViewModel>(() => HomepageViewModel(
         instance(),
         instance(),
@@ -237,7 +245,15 @@ initHomepageModule() {
         ));
 
     instance.registerFactory<BillingPageViewModel>(() => BillingPageViewModel(
-        instance(), instance(), instance(), instance(), instance()));
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance(),
+        instance()));
 
     instance
         .registerFactory<ReportingPageViewModel>(() => ReportingPageViewModel(

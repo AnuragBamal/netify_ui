@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:netify/data/request/request.dart';
@@ -189,12 +190,13 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   }
 
   setReseller(String reseller) {
-    createNewSubscription =
-        createNewSubscription.copyWith(resellerUserName: reseller);
-    createNewSubscription =
-        createNewSubscription.copyWith(operatorUserName: "");
-    createNewSubscription = createNewSubscription.copyWith(subscriberId: "");
-    createNewSubscription = createNewSubscription.copyWith(planName: "");
+    createNewSubscription = createNewSubscription.copyWith(
+        resellerUserName: reseller,
+        operatorUserName: "",
+        subscriberId: "",
+        planName: "",
+        planBasicCost: 0);
+    _operatorController.sink.add(null);
     _subscriberController.sink.add(null);
     _planController.sink.add(null);
     _operatorController.sink.add(resellermap[reseller]!);
@@ -202,10 +204,12 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   }
 
   setOperator(String operator) {
-    createNewSubscription =
-        createNewSubscription.copyWith(operatorUserName: operator);
-    createNewSubscription = createNewSubscription.copyWith(subscriberId: "");
-    createNewSubscription = createNewSubscription.copyWith(planName: "");
+    createNewSubscription = createNewSubscription.copyWith(
+        operatorUserName: operator,
+        subscriberId: "",
+        planName: "",
+        planBasicCost: 0);
+
     _subscriberController.sink.add(operatorSubscriberMap[operator]!);
     _planController.sink.add(operatorPlanMap[operator]!);
     _validateForm();
@@ -218,7 +222,11 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   }
 
   setPlanName(String planName) {
-    createNewSubscription = createNewSubscription.copyWith(planName: planName);
+    String extractedPlanId = planName.split("&&")[0];
+    double planBasicCost = double.parse(planName.split("&&")[1]);
+    createNewSubscription = createNewSubscription.copyWith(
+        planName: extractedPlanId, planBasicCost: planBasicCost);
+    calculateOfferPrice();
     _validateForm();
   }
 
@@ -244,15 +252,14 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
     _validateForm();
   }
 
-  setPlanEnteredPrice(String value) {
+  setPlanMarginPrice(String value) {
     double price = double.tryParse(value) ?? 0;
     if (_validateBasePrice(price)) {
       createNewSubscription =
-          createNewSubscription.copyWith(planEnteredCost: price);
+          createNewSubscription.copyWith(planMarginCost: price);
       calculateOfferPrice();
     } else {
-      createNewSubscription =
-          createNewSubscription.copyWith(planEnteredCost: 0);
+      createNewSubscription = createNewSubscription.copyWith(planMarginCost: 0);
       inputPlanOfferPrice.add(null);
     }
     _validateForm();
@@ -261,12 +268,6 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   setPlanOfferPrice(double value) {
     createNewSubscription =
         createNewSubscription.copyWith(planOfferedCost: value);
-    _validateForm();
-  }
-
-  setPlanBasePriceCost(double value) {
-    createNewSubscription =
-        createNewSubscription.copyWith(planBasicCost: value);
     _validateForm();
   }
 
@@ -439,62 +440,33 @@ class SubscriptionViewModel extends BaseViewModelInputsOutputs {
   }
 
   calculateOfferPrice() {
-    if (createNewSubscription.planEnteredCost > 0 ||
-        createNewSubscription.planEnteredCost > 0) {
-      if (createNewSubscription.planEnteredCost > 0) {
-        if (isTaxIncluded) {
-          var finalAmount = createNewSubscription.planEnteredCost;
-          var basePrice = finalAmount / (1 + (taxRate / 100));
-          var taxAmount = finalAmount - basePrice;
-          inputPlanOfferPrice.add(OfferPrice(
-              offerPrice: finalAmount,
-              taxAmount: taxAmount,
-              basePrice: basePrice,
-              taxPercentage: taxRate));
-          setPlanOfferPrice(finalAmount);
-          setPlanBasePriceCost(basePrice);
-          setTaxAmount(taxAmount);
-        } else {
-          var finalAmount = createNewSubscription.planEnteredCost +
-              (createNewSubscription.planEnteredCost * (taxRate / 100));
-          var basePrice = createNewSubscription.planEnteredCost;
-          var taxAmount = finalAmount - basePrice;
-          inputPlanOfferPrice.add(OfferPrice(
-              offerPrice: finalAmount,
-              taxAmount: taxAmount,
-              basePrice: basePrice,
-              taxPercentage: taxRate));
-          setPlanOfferPrice(finalAmount);
-          setPlanBasePriceCost(basePrice);
-          setTaxAmount(taxAmount);
-        }
+    if (createNewSubscription.planMarginCost > 0 &&
+        createNewSubscription.planBasicCost > 0) {
+      if (isTaxIncluded) {
+        var finalAmount = createNewSubscription.planBasicCost +
+            createNewSubscription.planMarginCost;
+        var marginPrice = createNewSubscription.planMarginCost;
+        var taxAmount = marginPrice * (taxRate / (100 + taxRate));
+        inputPlanOfferPrice.add(OfferPrice(
+            offerPrice: finalAmount,
+            taxAmount: taxAmount,
+            basePrice: createNewSubscription.planBasicCost,
+            taxPercentage: taxRate));
+        setPlanOfferPrice(finalAmount);
+        setTaxAmount(taxAmount);
       } else {
-        if (isTaxIncluded) {
-          var finalAmount = createNewSubscription.planEnteredCost;
-          var basePrice = finalAmount / (1 + (taxRate / 100));
-          var taxAmount = finalAmount - basePrice;
-          inputPlanOfferPrice.add(OfferPrice(
-              offerPrice: finalAmount,
-              taxAmount: taxAmount,
-              basePrice: basePrice,
-              taxPercentage: taxRate));
-          setPlanOfferPrice(finalAmount);
-          setPlanBasePriceCost(basePrice);
-          setTaxAmount(taxAmount);
-        } else {
-          var finalAmount = createNewSubscription.planEnteredCost +
-              (createNewSubscription.planEnteredCost * (taxRate / 100));
-          var basePrice = createNewSubscription.planEnteredCost;
-          var taxAmount = finalAmount - basePrice;
-          inputPlanOfferPrice.add(OfferPrice(
-              offerPrice: finalAmount,
-              taxAmount: taxAmount,
-              basePrice: basePrice,
-              taxPercentage: taxRate));
-          setPlanOfferPrice(finalAmount);
-          setPlanBasePriceCost(basePrice);
-          setTaxAmount(taxAmount);
-        }
+        var taxAmount = createNewSubscription.planMarginCost * (taxRate / 100);
+        var finalAmount = createNewSubscription.planBasicCost +
+            createNewSubscription.planMarginCost +
+            taxAmount;
+
+        inputPlanOfferPrice.add(OfferPrice(
+            offerPrice: finalAmount,
+            taxAmount: taxAmount,
+            basePrice: createNewSubscription.planBasicCost,
+            taxPercentage: taxRate));
+        setPlanOfferPrice(finalAmount);
+        setTaxAmount(taxAmount);
       }
     } else {
       inputPlanOfferPrice.add(null);

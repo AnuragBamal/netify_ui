@@ -41,12 +41,12 @@ class _ReportsState extends State<Reports> {
     return const Center(
       child: Text("Reporting Under Construction"),
     );
-    return mainDashboardWidget(
-        context,
-        _pageController,
-        _reportingPageViewModel.outputForSliderDisplayObject,
-        _reportingPageViewModel.onScreenChange,
-        _paymentPageWidget);
+    // return mainDashboardWidget(
+    //     context,
+    //     _pageController,
+    //     _reportingPageViewModel.outputForSliderDisplayObject,
+    //     _reportingPageViewModel.onScreenChange,
+    //     _paymentPageWidget);
   }
 
   Widget _paymentPageWidget(BuildContext context, MainPageModel mainPageModel) {

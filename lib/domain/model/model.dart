@@ -181,6 +181,49 @@ class Filter {
   }
 }
 
+class PanelButton {
+  String name;
+  String label;
+  String type;
+  String details;
+  String color;
+  List<String> extractInfo;
+  Map<String, List<String>> disable;
+
+  PanelButton(
+      {required this.name,
+      required this.label,
+      required this.type,
+      required this.details,
+      required this.color,
+      required this.extractInfo,
+      required this.disable});
+
+  factory PanelButton.fromJson(Map<String, dynamic> json) {
+    return PanelButton(
+        name: json['name'],
+        label: json['label'],
+        type: json['type'],
+        details: json['details'],
+        color: json['color'],
+        extractInfo:
+            (json['extractInfo'] as List).map((e) => e.toString()).toList(),
+        disable: (json['disable'] as Map<String, List<String>>));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'label': label,
+      'type': type,
+      'details': details,
+      'color': color,
+      'extractInfo': extractInfo,
+      'disable': disable
+    };
+  }
+}
+
 class MainPageModel {
   String viewType;
   String title;
@@ -188,6 +231,7 @@ class MainPageModel {
   String screenTypeIdentity;
   int index;
   List<Filter> filter;
+  List<PanelButton> actionButtons;
 
   MainPageModel(
       {required this.viewType,
@@ -195,7 +239,8 @@ class MainPageModel {
       required this.dataTypeIdentity,
       required this.screenTypeIdentity,
       required this.index,
-      required this.filter});
+      required this.filter,
+      required this.actionButtons});
 
   factory MainPageModel.fromJson(Map<String, dynamic> json) {
     return MainPageModel(
@@ -205,7 +250,10 @@ class MainPageModel {
         screenTypeIdentity: json['screenTypeIdentiy'],
         index: json['index'],
         filter:
-            (json['filter'] as List).map((e) => Filter.fromJson(e)).toList());
+            (json['filter'] as List).map((e) => Filter.fromJson(e)).toList(),
+        actionButtons: (json['panelButton'] as List)
+            .map((e) => PanelButton.fromJson(e))
+            .toList());
   }
 }
 

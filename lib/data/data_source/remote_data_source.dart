@@ -63,6 +63,10 @@ abstract class RemoteDataSource {
 
   Future<GetUpcomingRenewalsResponse> getRenewals(
       GetRenewalsRequest getRenewalRequest);
+  Future<GeneralSuccessResponse> getPanelActionDone(
+      PanelActionRequest panelActionRequest);
+  Future<GetFileDownloadResponse> getPanelActionDownloadDone(
+      PanelActionRequest panelActionRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -269,5 +273,19 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<GetUpcomingRenewalsResponse> getRenewals(
       GetRenewalsRequest getRenewalRequest) async {
     return await _apiServiceClient.getRenewals(getRenewalRequest.toJson());
+  }
+
+  @override
+  Future<GeneralSuccessResponse> getPanelActionDone(
+      PanelActionRequest panelActionRequest) async {
+    return await _apiServiceClient
+        .getPanelActionDone(panelActionRequest.toJson());
+  }
+
+  @override
+  Future<GetFileDownloadResponse> getPanelActionDownloadDone(
+      PanelActionRequest panelActionRequest) async {
+    return await _apiServiceClient
+        .getPanelActionDownloadDone(panelActionRequest.toJson());
   }
 }

@@ -33,7 +33,7 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _marginController = TextEditingController();
   final TextEditingController _securityDeposit = TextEditingController();
   final TextEditingController _installationCost = TextEditingController();
 
@@ -71,11 +71,11 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
       _subcriptionViewModel.setState(_stateController.text);
     });
 
-    _priceController.addListener(() {
-      if (_priceController.text.isNotEmpty) {
-        _subcriptionViewModel.setPlanEnteredPrice(_priceController.text);
+    _marginController.addListener(() {
+      if (_marginController.text.isNotEmpty) {
+        _subcriptionViewModel.setPlanMarginPrice(_marginController.text);
       } else {
-        _subcriptionViewModel.setPlanEnteredPrice("0");
+        _subcriptionViewModel.setPlanMarginPrice("0");
       }
     });
     _securityDeposit.addListener(() {
@@ -773,9 +773,9 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
               items: snapshot.data!
                   .map<DropdownMenuItem<String>>((PlanProfileMetaPlan value) {
                 return DropdownMenuItem<String>(
-                  value: value.planId,
+                  value: "${value.planId}&&${value.planPrice}",
                   child: Text(
-                    "${"${value.planName}(${value.planPrice}"})",
+                    "${"${value.planName}( Rs. ${value.planPrice}"})",
                     style: const TextStyle(color: Colors.black),
                   ),
                 );
@@ -793,11 +793,11 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
                 stream: _subcriptionViewModel.outputPlanBasePrice,
                 builder: (context, snapshot) {
                   return TextFormField(
-                      controller: _priceController,
+                      controller: _marginController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        hintText: AppString.planBasePriceHint,
-                        labelText: AppString.planBasePrice,
+                        hintText: AppString.marginPriceHint,
+                        labelText: AppString.marginPrice,
                         errorText: snapshot.data,
                       ));
                 }),
@@ -1139,7 +1139,7 @@ class _CreateNewSubscriptionState extends State<CreateNewSubscription> {
     _cityController.dispose();
     _stateController.dispose();
     _countryController.dispose();
-    _priceController.dispose();
+    _marginController.dispose();
     _securityDeposit.dispose();
     _installationCost.dispose();
     super.dispose();

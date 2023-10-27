@@ -108,6 +108,35 @@ Map<String, dynamic> _$FilterResponseDataToJson(FilterResponseData instance) =>
       'placeholder': instance.placeholder,
     };
 
+PanelButtonResponseData _$PanelButtonResponseDataFromJson(
+        Map<String, dynamic> json) =>
+    PanelButtonResponseData(
+      name: json['name'] as String?,
+      type: json['type'] as String?,
+      label: json['label'] as String?,
+      details: json['details'] as String?,
+      color: json['color'] as String?,
+      extractInfo: (json['extractInfo'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      disable: (json['disable'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+      ),
+    );
+
+Map<String, dynamic> _$PanelButtonResponseDataToJson(
+        PanelButtonResponseData instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'type': instance.type,
+      'label': instance.label,
+      'details': instance.details,
+      'color': instance.color,
+      'extractInfo': instance.extractInfo,
+      'disable': instance.disable,
+    };
+
 MainPageModelResponseData _$MainPageModelResponseDataFromJson(
         Map<String, dynamic> json) =>
     MainPageModelResponseData(
@@ -119,7 +148,10 @@ MainPageModelResponseData _$MainPageModelResponseDataFromJson(
       filter: (json['filter'] as List<dynamic>?)
           ?.map((e) => FilterResponseData.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
+    )..actionButtons = (json['actionButtons'] as List<dynamic>?)
+        ?.map(
+            (e) => PanelButtonResponseData.fromJson(e as Map<String, dynamic>))
+        .toList();
 
 Map<String, dynamic> _$MainPageModelResponseDataToJson(
         MainPageModelResponseData instance) =>
@@ -130,6 +162,7 @@ Map<String, dynamic> _$MainPageModelResponseDataToJson(
       'screenTypeIdentity': instance.screenTypeIdentity,
       'index': instance.index,
       'filter': instance.filter,
+      'actionButtons': instance.actionButtons,
     };
 
 GetUserResponseData _$GetUserResponseDataFromJson(Map<String, dynamic> json) =>
@@ -1433,4 +1466,25 @@ Map<String, dynamic> _$GetUpcomingRenewalsResponseToJson(
       'message': instance.message,
       'errorCode': instance.errorCode,
       'data': instance.data,
+    };
+
+GetFileDownloadResponse _$GetFileDownloadResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetFileDownloadResponse(
+      data: (json['data'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      statusCode: json['statusCode'] as int?,
+      statusMessage: json['statusMessage'] as String?,
+      headers: (json['headers'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+      ),
+    );
+
+Map<String, dynamic> _$GetFileDownloadResponseToJson(
+        GetFileDownloadResponse instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+      'statusCode': instance.statusCode,
+      'statusMessage': instance.statusMessage,
+      'headers': instance.headers,
     };

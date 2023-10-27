@@ -53,3 +53,8 @@ class DashboardType {
   static const String report = "reportDashboard";
   static const String billing = "billingDashboard";
 }
+
+class PanelButtonType {
+  static const String action = "action";
+  static const String download = "download";
+}

@@ -106,7 +106,10 @@ class AppString {
   static const String planValidityType = "Validity Type";
   static const String planBasePrice = "Base Price";
   static const String planBasePriceHint = "Enter Base Price";
-  static const String planOfferPrice = "Offer Price";
+  static const String planOfferPrice = "Offer Price (Plan Price)";
+
+  static const String marginPrice = "Margin(Profit)";
+  static const String marginPriceHint = "Enter Profit Margin";
   static const String planTaxAmount = "TaxAmount";
   static const String planTaxIncluded = "Is Tax Included in above price?";
   static const String planMaxSessionTimeInHours = "Max-Session Time";

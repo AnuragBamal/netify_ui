@@ -80,14 +80,14 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
     _getPlansMetaData();
   }
 
-  setPlanPrice(int value) {
+  setPlanMargin(int value) {
     var enteredCost = double.tryParse(value.toString()) ?? 0;
     _planPriceController.sink.add(value);
     if (_validatePlanPrice(value) == null) {
       createNewResellerPriceChart =
-          createNewResellerPriceChart.copyWith(planEnteredCost: enteredCost);
+          createNewResellerPriceChart.copyWith(planEnteredMargin: enteredCost);
       createNewOperatorPriceChart =
-          createNewOperatorPriceChart.copyWith(planEnteredCost: enteredCost);
+          createNewOperatorPriceChart.copyWith(planEnteredMargin: enteredCost);
     }
     calculateOfferPrice();
     _validateCreateOperatorPriceChart();
@@ -95,19 +95,25 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
   }
 
   setSelectedPlan(String value) {
-    createNewResellerPriceChart =
-        createNewResellerPriceChart.copyWith(planName: value);
-    createNewOperatorPriceChart =
-        createNewOperatorPriceChart.copyWith(planName: value);
+    String planName = value.split("&&")[0];
+    double planBasicCost = double.tryParse(value.split("&&")[1]) ?? 0;
+    createNewResellerPriceChart = createNewResellerPriceChart.copyWith(
+        planName: planName, planBasicCost: planBasicCost);
+    createNewOperatorPriceChart = createNewOperatorPriceChart.copyWith(
+        planName: planName, planBasicCost: planBasicCost);
+    calculateOfferPrice();
     _validateCreateOperatorPriceChart();
     _validateCreateResellerPriceChart();
   }
 
   setResellerUsername(String value) {
     createNewResellerPriceChart = createNewResellerPriceChart.copyWith(
-        resellerUserName: value, planName: "");
+        resellerUserName: value, planName: "", planBasicCost: 0);
     createNewOperatorPriceChart = createNewOperatorPriceChart.copyWith(
-        resellerUserName: value, planName: "", operatorUserName: "");
+        resellerUserName: value,
+        planName: "",
+        operatorUserName: "",
+        planBasicCost: 0);
     _listOfResellerPlansStreamController.sink.add(resellerPlanMap[value]!);
     _listOfOperatorStreamController.sink.add(resellermap[value]!);
     _validateCreateOperatorPriceChart();
@@ -129,14 +135,14 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
     _validateCreateResellerPriceChart();
   }
 
-  setPlanBasePriceCost(double value) {
-    createNewResellerPriceChart =
-        createNewResellerPriceChart.copyWith(planBasicCost: value);
-    createNewOperatorPriceChart =
-        createNewOperatorPriceChart.copyWith(planBasicCost: value);
-    _validateCreateOperatorPriceChart();
-    _validateCreateResellerPriceChart();
-  }
+  // setPlanBasePriceCost(double value) {
+  //   createNewResellerPriceChart =
+  //       createNewResellerPriceChart.copyWith(planBasicCost: value);
+  //   createNewOperatorPriceChart =
+  //       createNewOperatorPriceChart.copyWith(planBasicCost: value);
+  //   _validateCreateOperatorPriceChart();
+  //   _validateCreateResellerPriceChart();
+  // }
 
   setTaxAmount(double value) {
     createNewResellerPriceChart =
@@ -199,60 +205,66 @@ class CreatePlanPageViewModel extends BaseViewModelInputsOutputs {
   }
 
   calculateOfferPrice() {
-    if (createNewResellerPriceChart.planEnteredCost > 0 ||
-        createNewOperatorPriceChart.planEnteredCost > 0) {
-      if (createNewResellerPriceChart.planEnteredCost > 0) {
+    if ((createNewResellerPriceChart.planEnteredMargin > 0 &&
+            createNewResellerPriceChart.planBasicCost > 0) ||
+        (createNewOperatorPriceChart.planEnteredMargin > 0 &&
+            createNewOperatorPriceChart.planBasicCost > 0)) {
+      if (createNewResellerPriceChart.planEnteredMargin > 0 &&
+          createNewResellerPriceChart.planBasicCost > 0) {
         if (isTaxIncluded) {
-          var finalAmount = createNewResellerPriceChart.planEnteredCost;
-          var basePrice = finalAmount / (1 + (taxRate / 100));
-          var taxAmount = finalAmount - basePrice;
+          var finalAmount = createNewResellerPriceChart.planEnteredMargin +
+              createNewResellerPriceChart.planBasicCost;
+
+          var marginPrice = createNewResellerPriceChart.planEnteredMargin;
+          var taxAmount = marginPrice * (taxRate / (100 + taxRate));
           inputPlanOfferPrice.add(OfferPrice(
               offerPrice: finalAmount,
               taxAmount: taxAmount,
-              basePrice: basePrice,
+              basePrice: createNewResellerPriceChart.planBasicCost,
               taxPercentage: taxRate));
           setPlanOfferPrice(finalAmount);
-          setPlanBasePriceCost(basePrice);
           setTaxAmount(taxAmount);
         } else {
-          var finalAmount = createNewResellerPriceChart.planEnteredCost +
-              (createNewResellerPriceChart.planEnteredCost * (taxRate / 100));
-          var basePrice = createNewResellerPriceChart.planEnteredCost;
-          var taxAmount = finalAmount - basePrice;
+          var taxAmount =
+              createNewResellerPriceChart.planEnteredMargin * (taxRate / 100);
+          var finalAmount = createNewResellerPriceChart.planEnteredMargin +
+              createNewResellerPriceChart.planBasicCost +
+              taxAmount;
+
           inputPlanOfferPrice.add(OfferPrice(
               offerPrice: finalAmount,
               taxAmount: taxAmount,
-              basePrice: basePrice,
+              basePrice: createNewResellerPriceChart.planBasicCost,
               taxPercentage: taxRate));
           setPlanOfferPrice(finalAmount);
-          setPlanBasePriceCost(basePrice);
           setTaxAmount(taxAmount);
         }
       } else {
         if (isTaxIncluded) {
-          var finalAmount = createNewOperatorPriceChart.planEnteredCost;
-          var basePrice = finalAmount / (1 + (taxRate / 100));
-          var taxAmount = finalAmount - basePrice;
+          var finalAmount = createNewOperatorPriceChart.planEnteredMargin +
+              createNewOperatorPriceChart.planBasicCost;
+          var marginPrice = createNewOperatorPriceChart.planEnteredMargin;
+          var taxAmount = marginPrice * (taxRate / (100 + taxRate));
           inputPlanOfferPrice.add(OfferPrice(
               offerPrice: finalAmount,
               taxAmount: taxAmount,
-              basePrice: basePrice,
+              basePrice: createNewOperatorPriceChart.planBasicCost,
               taxPercentage: taxRate));
           setPlanOfferPrice(finalAmount);
-          setPlanBasePriceCost(basePrice);
           setTaxAmount(taxAmount);
         } else {
-          var finalAmount = createNewOperatorPriceChart.planEnteredCost +
-              (createNewOperatorPriceChart.planEnteredCost * (taxRate / 100));
-          var basePrice = createNewOperatorPriceChart.planEnteredCost;
-          var taxAmount = finalAmount - basePrice;
+          var taxAmount =
+              createNewOperatorPriceChart.planEnteredMargin * (taxRate / 100);
+          var finalAmount = createNewOperatorPriceChart.planEnteredMargin +
+              createNewOperatorPriceChart.planBasicCost +
+              taxAmount;
+
           inputPlanOfferPrice.add(OfferPrice(
               offerPrice: finalAmount,
               taxAmount: taxAmount,
-              basePrice: basePrice,
+              basePrice: createNewOperatorPriceChart.planBasicCost,
               taxPercentage: taxRate));
           setPlanOfferPrice(finalAmount);
-          setPlanBasePriceCost(basePrice);
           setTaxAmount(taxAmount);
         }
       }

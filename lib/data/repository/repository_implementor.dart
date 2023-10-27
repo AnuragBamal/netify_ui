@@ -1,18 +1,28 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:netify/app/app_prefs.dart';
+import 'package:netify/app/constant.dart';
 import 'package:netify/data/data_source/remote_data_source.dart';
 import 'package:netify/data/mapper/mapper.dart';
+import 'package:netify/data/network/dio_factory.dart';
 import 'package:netify/data/network/error_handler.dart';
 import 'package:netify/data/network/failure.dart';
 import 'package:netify/data/network/network_info.dart';
 import 'package:netify/data/request/request.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/repository/repository.dart';
+import 'package:path_provider/path_provider.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 class RepositoryImplementer extends Repository {
   final RemoteDataSource _remoteDataSource;
   final NetworkInfo _networkInfo;
+  final AppPreferences _appPreferences;
 
-  RepositoryImplementer(this._remoteDataSource, this._networkInfo);
+  RepositoryImplementer(
+      this._remoteDataSource, this._networkInfo, this._appPreferences);
 
   @override
   Future<Either<Failure, Login>> login(LoginRequest loginRequest) async {
@@ -842,6 +852,121 @@ class RepositoryImplementer extends Repository {
           ));
         }
       } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GeneralSuccess>> getPanelActionDone(
+      PanelActionRequest panelActionRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.getPanelActionDone(panelActionRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } on Exception catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  Future<String?> _findLocalPath() async {
+    if (Platform.isAndroid) {
+      return "/sdcard/download/";
+    } else {
+      var directory = await getApplicationDocumentsDirectory();
+      return '${directory.path}${Platform.pathSeparator}Download';
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuccessMessage>> getPanelActionDownloadDone(
+      PanelActionRequest panelActionRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final Dio dio = Dio();
+        //Directory documentDirectory;
+        String downloadDirectoryPath;
+        String fileName = 'downloaded_file';
+        String filePath = '';
+        // final response = await _remoteDataSource
+        //     .getPanelActionDownloadDone(panelActionRequest);
+        final response = await dio.get<List<int>>(
+          '${Constant.baseUrl}/api/v1/tenancy/actions/download', // Replace with your file download endpoint
+
+          queryParameters: panelActionRequest.toJson(),
+          options: Options(headers: {
+            contentType: "content-type",
+            accept: "application/json",
+            authorization: await _appPreferences.getJwtToken() ?? "",
+          }, responseType: ResponseType.bytes), // Specify responseType as bytes
+        );
+        if (response.statusCode ==
+            ApiInternalStatus.successDownloadFileStatusCode) {
+          List<String>? contentDisposition =
+              response.headers['content-disposition'];
+
+          fileName = contentDisposition != null
+              ? contentDisposition[0].split('filename=')[1].trim()
+              : 'downloaded_file';
+          try {
+            // await Directory('storage/emulated/0/Netify').create(recursive: true);
+            //dir = (await getDownloadsDirectory())?.path;
+            //documentDirectory = (await getDownloadsDirectory());
+            //downloadDirectoryPath = ${documentDirectory.path}${Platform.pathSeparator}Download';
+            downloadDirectoryPath = await _findLocalPath() ?? "";
+            final saveDirectory = Directory(downloadDirectoryPath);
+            bool isThere = await saveDirectory.exists();
+            if (!isThere) {
+              await saveDirectory.create(recursive: true);
+            }
+            filePath = '$downloadDirectoryPath/$fileName';
+          } catch (e) {
+            return Left(Failure(
+              code: "X-Permission Error.",
+              message: "Need Storage Permission.",
+            ));
+          }
+
+          if (downloadDirectoryPath.isNotEmpty) {
+            await File(filePath).writeAsBytes(response.data!);
+            return Right(SuccessMessage(
+                message: "Downloaded Successfully at $filePath"));
+          } else {
+            Right(
+                SuccessMessage(message: "Failed to access storage directory."));
+          }
+
+          return Right(
+              SuccessMessage(message: "Downloaded Successfully at $filePath"));
+
+          // Default filename if header not provided
+          //return Right(response.data!);
+        } else {
+          return Left(Failure(
+            code: "X-Download API Error",
+            message: "Download API Error",
+          ));
+        }
+      } on Exception catch (error) {
         return Left(ErrorHandler.handle(error).failure);
       }
     } else {

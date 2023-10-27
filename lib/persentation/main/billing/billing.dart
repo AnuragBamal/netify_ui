@@ -11,7 +11,6 @@ import 'package:netify/persentation/common/widgets/search_widget.dart';
 import 'package:netify/persentation/main/billing/biller.dart';
 import 'package:netify/persentation/main/billing/billing_view_model.dart';
 import 'package:netify/persentation/main/billing/billing_view_widget.dart';
-import 'package:netify/persentation/resources/color_manager.dart';
 
 class Billing extends StatefulWidget {
   const Billing({super.key});
@@ -36,11 +35,7 @@ class _BillingState extends State<Billing> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: const BoxDecoration(
-            border: Border(
-                top: BorderSide(width: 0.5, color: ColorManager.primaryColor))),
-        child: _getContentWidget(context));
+    return _getContentWidget(context);
   }
 
   Widget _getContentWidget(BuildContext context) {
@@ -86,9 +81,18 @@ class _BillingState extends State<Billing> {
             children: [
               BaseSearchWidget(
                 filters: mainPageModel.filter,
-                onFilterChanged: _billingPageViewModel.updateSearchFilter,
+                onFilterChanged:
+                    _billingPageViewModel.updateUpcomingBillsSearchFilter,
               ),
-              upcomingRenewalStreamBuilder(mainPageModel, context),
+              GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.height * .67,
+                    child:
+                        upcomingRenewalStreamBuilder(mainPageModel, context)),
+              ),
             ],
           ),
         if (mainPageModel.dataTypeIdentity == DataTypeIdentity.bills &&
@@ -97,7 +101,7 @@ class _BillingState extends State<Billing> {
             children: [
               BaseSearchWidget(
                 filters: mainPageModel.filter,
-                onFilterChanged: _billingPageViewModel.updateSearchFilter,
+                onFilterChanged: _billingPageViewModel.updateBillsSearchFilter,
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width *
@@ -108,7 +112,14 @@ class _BillingState extends State<Billing> {
                   onDateChange: _billingPageViewModel.updateDateFilters,
                 ),
               ),
-              billsStreamBuilder(mainPageModel, context),
+              GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.height * .60,
+                    child: billsStreamBuilder(mainPageModel, context)),
+              ),
             ],
           ),
         if (mainPageModel.dataTypeIdentity == DataTypeIdentity.bills &&
@@ -117,9 +128,16 @@ class _BillingState extends State<Billing> {
             children: [
               BaseSearchWidget(
                 filters: mainPageModel.filter,
-                onFilterChanged: _billingPageViewModel.updateSearchFilter,
+                onFilterChanged: _billingPageViewModel.updateBillsSearchFilter,
               ),
-              unpaidBillsStreamBuilder(mainPageModel, context),
+              GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.height * .67,
+                    child: unpaidBillsStreamBuilder(mainPageModel, context)),
+              ),
             ],
           )
       ],
@@ -133,7 +151,8 @@ class _BillingState extends State<Billing> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BillingViewWidget(
-              screenTypeIdentity: mainPageModel.screenTypeIdentity,
+              onButtonPress: _billingPageViewModel.onPanelButtonPressed,
+              mainPageModel: mainPageModel,
               upcomingRenewals: snapshot.data!
                   ? _billingPageViewModel.outputUpcomingRenewalsSearch
                   : _billingPageViewModel.outputUpcomingRenewals);
@@ -150,7 +169,8 @@ class _BillingState extends State<Billing> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BillingViewWidget(
-              screenTypeIdentity: mainPageModel.screenTypeIdentity,
+              onButtonPress: _billingPageViewModel.onPanelButtonPressed,
+              mainPageModel: mainPageModel,
               bills: snapshot.data!
                   ? _billingPageViewModel.outputBillsSearch
                   : _billingPageViewModel.outputBills);
@@ -168,7 +188,8 @@ class _BillingState extends State<Billing> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BillingViewWidget(
-              screenTypeIdentity: mainPageModel.screenTypeIdentity,
+              onButtonPress: _billingPageViewModel.onPanelButtonPressed,
+              mainPageModel: mainPageModel,
               unPaidBills: snapshot.data!
                   ? _billingPageViewModel.outputBillsSearch
                   : _billingPageViewModel.outputUnpaidBills);

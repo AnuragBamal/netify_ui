@@ -416,64 +416,70 @@ class _CreatePlanState extends State<CreateNewPlan> {
   }
 
   Widget offerPriceWidget(BuildContext context, OfferPrice offerPrice) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text.rich(
-          TextSpan(
-            text: "${AppString.planOfferPrice} : ",
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
-            children: [
-              TextSpan(
-                text: offerPrice.offerPrice.toStringAsFixed(2),
-                style: const TextStyle(
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text.rich(
+            TextSpan(
+              text: "${AppString.planOfferPrice} : ",
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: ColorManager.blackColor,
+                  color: ColorManager.primaryColor),
+              children: [
+                TextSpan(
+                  text: offerPrice.offerPrice.toStringAsFixed(2),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: ColorManager.blackColor,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(
-          height: AppSize.s8,
-        ),
-        Text.rich(
-          TextSpan(
-            text: "${AppString.planTaxAmount}(${offerPrice.taxPercentage}%) : ",
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
-            children: [
-              TextSpan(
-                text: offerPrice.taxAmount.toStringAsFixed(2),
-                style: const TextStyle(
+          const SizedBox(
+            height: AppSize.s8,
+          ),
+          Text.rich(
+            TextSpan(
+              text:
+                  "${AppString.planTaxAmount}(${offerPrice.taxPercentage}%) : ",
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: ColorManager.blackColor,
+                  color: ColorManager.primaryColor),
+              children: [
+                TextSpan(
+                  text: offerPrice.taxAmount.toStringAsFixed(2),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: ColorManager.blackColor,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(
-          height: AppSize.s8,
-        ),
-        Text.rich(
-          TextSpan(
-            text: "${AppString.planBasePrice} : ",
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: ColorManager.primaryColor),
-            children: [
-              TextSpan(
-                text: offerPrice.basePrice.toStringAsFixed(2),
-                style: const TextStyle(
+          const SizedBox(
+            height: AppSize.s8,
+          ),
+          Text.rich(
+            TextSpan(
+              text: "${AppString.planBasePrice} : ",
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: ColorManager.blackColor,
+                  color: ColorManager.primaryColor),
+              children: [
+                TextSpan(
+                  text: offerPrice.basePrice.toStringAsFixed(2),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: ColorManager.blackColor,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

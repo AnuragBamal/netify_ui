@@ -103,7 +103,7 @@ class CreateResellerPriceChart with _$CreateResellerPriceChart {
       String resellerUserName,
       double planBasicCost,
       double planOfferedCost,
-      double planEnteredCost,
+      double planEnteredMargin,
       double taxAmount) = _CreateResellerPriceChart;
 }
 
@@ -115,7 +115,7 @@ class CreateOperatorPriceChart with _$CreateOperatorPriceChart {
       String resellerUserName,
       double planBasicCost,
       double planOfferedCost,
-      double planEnteredCost,
+      double planEnteredMargin,
       double taxAmount) = _CreateOperatorPriceChart;
 }
 
@@ -169,7 +169,7 @@ class CreateNewSubscription with _$CreateNewSubscription {
     String state,
     double planBasicCost,
     double planOfferedCost,
-    double planEnteredCost,
+    double planMarginCost,
     double taxAmount,
     double installationCost,
     double securityDeposit,

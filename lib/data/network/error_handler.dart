@@ -187,4 +187,5 @@ class ResponseMessage {
 class ApiInternalStatus {
   static const String success = "success";
   static const String failure = "error";
+  static const int successDownloadFileStatusCode = 200;
 }

@@ -14,7 +14,6 @@ class Biller extends StatefulWidget {
 }
 
 class _BillerState extends State<Biller> {
-  final GlobalKey<FormState> _billerFormKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState<dynamic>> _dropDownBillerResellerKey =
       GlobalKey<FormFieldState<dynamic>>();
   final GlobalKey<FormFieldState<dynamic>> _dropDownBillerOperatorKey =

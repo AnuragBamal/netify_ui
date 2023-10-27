@@ -126,4 +126,13 @@ abstract class ApiServiceClient {
   @GET("/api/v1/tenancy/getrenewals")
   Future<GetUpcomingRenewalsResponse> getRenewals(
       @Queries() Map<String, dynamic> queryParams);
+
+  @GET("/api/v1/tenancy/actions")
+  Future<GeneralSuccessResponse> getPanelActionDone(
+      @Queries() Map<String, dynamic> queryParams);
+
+  @GET("/api/v1/tenancy/actions/download")
+  Future<GetFileDownloadResponse> getPanelActionDownloadDone(
+    @Queries() Map<String, dynamic> queryParams,
+  );
 }
