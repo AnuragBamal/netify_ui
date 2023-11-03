@@ -487,16 +487,19 @@ class W2WTransferRequest {
   String receiverId;
   String receiverUsername;
   double amount;
+  String? remarks;
 
   W2WTransferRequest(
       {required this.receiverId,
       required this.receiverUsername,
-      required this.amount});
+      required this.amount,
+      this.remarks});
 
   Map<String, dynamic> toJson() => {
         "receiverId": receiverId,
         "receiverUsername": receiverUsername,
         "amount": amount,
+        "remarks": remarks,
       };
 }
 
@@ -628,5 +631,69 @@ class PanelActionRequest {
         "screenTypeIdentity": screenTypeIdentity,
         "buttonName": buttonName,
         "extractedData": json.encode(extractedData),
+      };
+}
+
+class GetSalesRequest {
+  String screenTypeIdentity;
+  bool isSearch;
+  String? searchValue;
+  String? searchFilter;
+  String fromDate;
+  String toDate;
+  int pageNumber;
+  int pageSize;
+
+  GetSalesRequest(
+      {required this.screenTypeIdentity,
+      required this.isSearch,
+      this.searchValue,
+      this.searchFilter,
+      required this.fromDate,
+      required this.toDate,
+      required this.pageNumber,
+      required this.pageSize});
+
+  Map<String, dynamic> toJson() => {
+        "screenTypeIdentity": screenTypeIdentity,
+        "isSearch": isSearch,
+        "searchValue": searchValue,
+        "searchFilter": searchFilter,
+        "fromDate": fromDate,
+        "toDate": toDate,
+        "pageNumber": pageNumber,
+        "pageSize": pageSize,
+      };
+}
+
+class GetTransactionsRequest {
+  String screenTypeIdentity;
+  bool isSearch;
+  String? searchValue;
+  String? searchFilter;
+  String fromDate;
+  String toDate;
+  int pageNumber;
+  int pageSize;
+
+  GetTransactionsRequest(
+      {required this.screenTypeIdentity,
+      required this.isSearch,
+      this.searchValue,
+      this.searchFilter,
+      required this.fromDate,
+      required this.toDate,
+      required this.pageNumber,
+      required this.pageSize});
+
+  Map<String, dynamic> toJson() => {
+        "screenTypeIdentity": screenTypeIdentity,
+        "isSearch": isSearch,
+        "searchValue": searchValue,
+        "searchFilter": searchFilter,
+        "fromDate": fromDate,
+        "toDate": toDate,
+        "pageNumber": pageNumber,
+        "pageSize": pageSize,
       };
 }

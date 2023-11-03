@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netify/app/di.dart';
+import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/persentation/main/plans/create_plan/create_plan_view_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 import 'package:netify/persentation/resources/strings_manager.dart';
@@ -552,39 +553,41 @@ class _CreatePlanState extends State<CreateNewPlan> {
           const SizedBox(
             height: AppSize.s24,
           ),
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: AppPadding.p24,
-                  ),
-                  child: StreamBuilder<String?>(
-                      stream: _plansPageViewModel.outputPlanDataLimit,
-                      builder: (context, snapshot) {
-                        return TextFormField(
-                            controller: _dataLimitController,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              hintText: AppString.dataLimitHint,
-                              labelText: AppString.dataLimit,
-                              errorText: snapshot.data,
-                            ));
-                      }),
-                ),
-              ),
-              Expanded(
+          if (snapshot.data == PlanType.fup ||
+              snapshot.data == PlanType.limited)
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
                   child: Padding(
-                padding: const EdgeInsets.only(right: AppPadding.p24),
-                child: dropDownDataLimitType(context, maxDataLimitUnit),
-              )),
-            ],
-          ),
+                    padding: const EdgeInsets.only(
+                      left: AppPadding.p24,
+                    ),
+                    child: StreamBuilder<String?>(
+                        stream: _plansPageViewModel.outputPlanDataLimit,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                              controller: _dataLimitController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: AppString.dataLimitHint,
+                                labelText: AppString.dataLimit,
+                                errorText: snapshot.data,
+                              ));
+                        }),
+                  ),
+                ),
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.only(right: AppPadding.p24),
+                  child: dropDownDataLimitType(context, maxDataLimitUnit),
+                )),
+              ],
+            ),
           const SizedBox(
             height: AppSize.s24,
           ),
-          if (snapshot.data == "FUP")
+          if (snapshot.data == PlanType.fup)
             Row(
               children: [
                 Expanded(
@@ -614,10 +617,11 @@ class _CreatePlanState extends State<CreateNewPlan> {
                 )),
               ],
             ),
-          const SizedBox(
-            height: AppSize.s24,
-          ),
-          if (snapshot.data == "FUP")
+          if (snapshot.data == PlanType.fup)
+            const SizedBox(
+              height: AppSize.s24,
+            ),
+          if (snapshot.data == PlanType.fup)
             Row(
               children: [
                 Expanded(
@@ -651,7 +655,7 @@ class _CreatePlanState extends State<CreateNewPlan> {
           const SizedBox(
             height: AppSize.s24,
           ),
-          if (snapshot.data == "FUP")
+          if (snapshot.data == PlanType.fup)
             Row(
               children: [
                 Expanded(
@@ -681,9 +685,10 @@ class _CreatePlanState extends State<CreateNewPlan> {
                 )),
               ],
             ),
-          const SizedBox(
-            height: AppSize.s24,
-          ),
+          if (snapshot.data == PlanType.fup)
+            const SizedBox(
+              height: AppSize.s24,
+            ),
         ],
       );
     } else {

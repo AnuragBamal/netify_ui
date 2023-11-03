@@ -106,18 +106,26 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
     inputForSearchState.add(false);
     _currentFilter = "";
     _filterSearchValue = "";
-    if (_screenIndex[index]!.dataTypeIdentity == DataTypeIdentity.user) {
-      _getUserListData(_screenIndex[index]!.screenTypeIdentity);
+
+    if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+        DataTypeIdentity.dashboard) {
+      _getDashboardData(_screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
     }
-    if (_screenIndex[index]!.dataTypeIdentity == DataTypeIdentity.dashboard) {
-      _getDashboardData(_screenIndex[index]!.screenTypeIdentity);
+
+    if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+        DataTypeIdentity.user) {
+      _getUserListData(_screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
     }
-    if (_screenIndex[index]!.dataTypeIdentity == DataTypeIdentity.subscriber) {
-      _getSubscriberListData(_screenIndex[index]!.screenTypeIdentity);
+
+    if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+        DataTypeIdentity.subscriber) {
+      _getSubscriberListData(
+          _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
     }
-    if (_screenIndex[index]!.dataTypeIdentity ==
+    if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
         DataTypeIdentity.subscription) {
-      _getSubscriptionListData(_screenIndex[index]!.screenTypeIdentity);
+      _getSubscriptionListData(
+          _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
     }
     _postDataToView();
   }
@@ -189,15 +197,68 @@ class HomepageViewModel extends BaseViewModelInputsOutputs
   }
 
   navigateToCreateUser(CreateUserViewArguments args) {
-    _navigationService.navigateTo(Routes.createuser, arguments: args);
+    _navigationService
+        .navigateTo(Routes.createuser, arguments: args)
+        .then((value) {
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.user) {
+        _getUserListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.subscriber) {
+        _getSubscriberListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.subscription) {
+        _getSubscriptionListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+    });
   }
 
   navigateToCreateSubscriber() {
-    _navigationService.navigateTo(Routes.createSubscriber);
+    _navigationService.navigateTo(Routes.createSubscriber).then((value) {
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.user) {
+        _getUserListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.subscriber) {
+        _getSubscriberListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.subscription) {
+        _getSubscriptionListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+    });
   }
 
   navigateToCreateSubscription() {
-    _navigationService.navigateTo(Routes.createSubscription);
+    _navigationService.navigateTo(Routes.createSubscription).then((value) {
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.user) {
+        _getUserListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.subscriber) {
+        _getSubscriberListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+      if (_screenIndex[_currentDisplayIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.subscription) {
+        _getSubscriptionListData(
+            _screenIndex[_currentDisplayIndex]!.screenTypeIdentity);
+      }
+    });
   }
 
   @override

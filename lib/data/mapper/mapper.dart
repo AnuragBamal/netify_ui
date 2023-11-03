@@ -525,6 +525,11 @@ extension TransactionResponseExtension on TransactionResponse? {
       transactionType: this?.transactionType?.nonNull ?? defaultEmptyString,
       transactionDate:
           DateTime.parse(this?.transactionDate?.nonNull ?? defaultEmptyString),
+      openingBalance: this?.openingBalance ?? 0,
+      closingBalance: this?.closingBalance ?? 0,
+      remarks: this?.remarks?.nonNull ?? defaultEmptyString,
+      billNumber: this?.billNumber?.nonNull ?? defaultEmptyString,
+      billAmount: this?.billAmount ?? 0,
     );
   }
 }
@@ -834,6 +839,8 @@ extension BillsResponseExtension on BillsResponse? {
       status: this?.status?.nonNull ?? defaultEmptyString,
       createdAt: DateTime.parse(this?.createdAt?.nonNull ?? defaultEmptyString),
       updatedAt: DateTime.parse(this?.updatedAt?.nonNull ?? defaultEmptyString),
+      basicBillAmount: this?.basicBillAmount ?? 0,
+      billAmountComponents: this?.billAmountComponents ?? defaultEmptyString,
     );
   }
 }
@@ -851,6 +858,68 @@ extension BillsDataResponseExtension on BillsDataResponse? {
 extension GetBillsResponseExtension on GetBillsResponse? {
   GetBills toDomain() {
     return GetBills(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension TransactionsDataResponseExtension on TransactionsDataResponse? {
+  TransactionsData toDomain() {
+    return TransactionsData(
+      transactions: this?.transactions?.map((e) => e.toDomain()).toList() ?? [],
+      isSearch: this?.isSearch ?? false,
+      screenTypeIdentity: this?.screenTypeIdentity ?? defaultEmptyString,
+    );
+  }
+}
+
+extension GetTransactionsDataResponseExtension on GetTransactionsDataResponse? {
+  GetTransactionsData toDomain() {
+    return GetTransactionsData(
+      data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
+      status: this?.status?.nonNull ?? defaultEmptyString,
+      message: this?.message?.nonNull ?? defaultEmptyString,
+      errorCode: this?.errorCode?.nonNull ?? defaultEmptyString,
+    );
+  }
+}
+
+extension SaleResponseExtension on SaleResponse? {
+  Sale toDomain() {
+    return Sale(
+      billNumber: this?.billNumber?.nonNull ?? defaultEmptyString,
+      planName: this?.planName?.nonNull ?? defaultEmptyString,
+      operatorUserName: this?.operatorUserName?.nonNull ?? defaultEmptyString,
+      resellerUserName: this?.resellerUserName?.nonNull ?? defaultEmptyString,
+      planBasicCost: this?.planBasicCost ?? 0,
+      planOfferedCost: this?.planOfferedCost ?? 0,
+      planTax: this?.planTax ?? 0,
+      planProfit: this?.planProfit ?? 0,
+      billAmount: this?.billAmount ?? 0,
+      createdAt: DateTime.parse(this?.createdAt?.nonNull ?? defaultEmptyString),
+      billAmountComponents: this?.billAmountComponents ?? defaultEmptyString,
+      totalTaxCollected: this?.totalTaxCollected ?? 0,
+      basicBillAmount: this?.basicBillAmount ?? 0,
+    );
+  }
+}
+
+extension SalesDataResponseExtension on SalesDataResponse? {
+  SalesData toDomain() {
+    return SalesData(
+      sales: this?.sales?.map((e) => e.toDomain()).toList() ?? [],
+      isSearch: this?.isSearch ?? false,
+      screenTypeIdentity: this?.screenTypeIdentity ?? defaultEmptyString,
+    );
+  }
+}
+
+extension GetSalesDataResponseExtension on GetSalesDataResponse? {
+  GetSalesdata toDomain() {
+    return GetSalesdata(
       data: this?.data?.map((e) => e.toDomain()).toList() ?? [],
       status: this?.status?.nonNull ?? defaultEmptyString,
       message: this?.message?.nonNull ?? defaultEmptyString,

@@ -934,6 +934,16 @@ class TransactionResponse {
   String? transactionType;
   @JsonKey(name: 'transactionDate')
   String? transactionDate;
+  @JsonKey(name: 'openingBalance')
+  double? openingBalance;
+  @JsonKey(name: 'closingBalance')
+  double? closingBalance;
+  @JsonKey(name: 'remarks')
+  String? remarks;
+  @JsonKey(name: 'billNumber')
+  String? billNumber;
+  @JsonKey(name: 'billAmount')
+  double? billAmount;
 
   TransactionResponse(
       {this.transactionId,
@@ -942,7 +952,12 @@ class TransactionResponse {
       this.amount,
       this.transactionStatus,
       this.transactionType,
-      this.transactionDate});
+      this.transactionDate,
+      this.openingBalance,
+      this.closingBalance,
+      this.remarks,
+      this.billNumber,
+      this.billAmount});
 
   factory TransactionResponse.fromJson(Map<String, dynamic> json) =>
       _$TransactionResponseFromJson(json);
@@ -1396,8 +1411,12 @@ class BillsResponse {
   String? dueDate;
   @JsonKey(name: 'billAmount')
   double? billAmount;
+  @JsonKey(name: 'basicBillAmount')
+  double? basicBillAmount;
   @JsonKey(name: 'nextBillingDate')
   String? nextBillingDate;
+  @JsonKey(name: 'billAmountComponents')
+  String? billAmountComponents;
   @JsonKey(name: 'status')
   String? status;
   @JsonKey(name: 'createdAt')
@@ -1423,7 +1442,9 @@ class BillsResponse {
       this.nextBillingDate,
       this.status,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.basicBillAmount,
+      this.billAmountComponents});
 
   factory BillsResponse.fromJson(Map<String, dynamic> json) =>
       _$BillsResponseFromJson(json);
@@ -1545,4 +1566,115 @@ class GetFileDownloadResponse {
       _$GetFileDownloadResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetFileDownloadResponseToJson(this);
+}
+
+@JsonSerializable()
+class TransactionsDataResponse {
+  @JsonKey(name: 'transactions')
+  List<TransactionResponse>? transactions;
+  @JsonKey(name: 'isSearch')
+  bool? isSearch;
+  @JsonKey(name: 'screenTypeIdentity')
+  String? screenTypeIdentity;
+
+  TransactionsDataResponse(
+      {this.transactions, this.isSearch, this.screenTypeIdentity});
+
+  factory TransactionsDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$TransactionsDataResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TransactionsDataResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetTransactionsDataResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  List<TransactionsDataResponse>? data;
+
+  GetTransactionsDataResponse({this.data});
+
+  factory GetTransactionsDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetTransactionsDataResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetTransactionsDataResponseToJson(this);
+}
+
+@JsonSerializable()
+class SaleResponse {
+  @JsonKey(name: 'billNumber')
+  String? billNumber;
+  @JsonKey(name: 'planName')
+  String? planName;
+  @JsonKey(name: 'operatorUserName')
+  String? operatorUserName;
+  @JsonKey(name: 'resellerUserName')
+  String? resellerUserName;
+  @JsonKey(name: 'planBasicCost')
+  double? planBasicCost;
+  @JsonKey(name: 'planOfferedCost')
+  double? planOfferedCost;
+  @JsonKey(name: 'planTax')
+  double? planTax;
+  @JsonKey(name: 'planProfit')
+  double? planProfit;
+  @JsonKey(name: 'billAmount')
+  double? billAmount;
+  @JsonKey(name: 'createdAt')
+  String? createdAt;
+  @JsonKey(name: 'totalTaxCollected')
+  double? totalTaxCollected;
+  @JsonKey(name: 'basicBillAmount')
+  double? basicBillAmount;
+  @JsonKey(name: 'billAmountComponents')
+  String? billAmountComponents;
+
+  SaleResponse(
+      {this.billNumber,
+      this.planName,
+      this.operatorUserName,
+      this.resellerUserName,
+      this.planBasicCost,
+      this.planOfferedCost,
+      this.planTax,
+      this.planProfit,
+      this.billAmount,
+      this.createdAt,
+      this.totalTaxCollected,
+      this.basicBillAmount,
+      this.billAmountComponents});
+
+  factory SaleResponse.fromJson(Map<String, dynamic> json) =>
+      _$SaleResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SaleResponseToJson(this);
+}
+
+@JsonSerializable()
+class SalesDataResponse {
+  @JsonKey(name: 'sales')
+  List<SaleResponse>? sales;
+  @JsonKey(name: 'isSearch')
+  bool? isSearch;
+  @JsonKey(name: 'screenTypeIdentity')
+  String? screenTypeIdentity;
+
+  SalesDataResponse({this.sales, this.isSearch, this.screenTypeIdentity});
+
+  factory SalesDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$SalesDataResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SalesDataResponseToJson(this);
+}
+
+@JsonSerializable()
+class GetSalesDataResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  List<SalesDataResponse>? data;
+
+  GetSalesDataResponse({this.data});
+
+  factory GetSalesDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetSalesDataResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetSalesDataResponseToJson(this);
 }

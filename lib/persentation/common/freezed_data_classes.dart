@@ -191,9 +191,8 @@ class CreateNewNas with _$CreateNewNas {
 
 @freezed
 class W2wTransferObject with _$W2wTransferObject {
-  factory W2wTransferObject(
-          double amount, String receiverUserName, String receiverUserId) =
-      _W2wTransferObject;
+  factory W2wTransferObject(double amount, String receiverUserName,
+      String receiverUserId, String remarks) = _W2wTransferObject;
 }
 
 @freezed

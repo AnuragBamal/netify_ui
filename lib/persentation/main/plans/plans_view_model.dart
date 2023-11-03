@@ -161,29 +161,51 @@ class PlansPageViewModel extends BaseViewModelInputsOutputs
   void onScreenChange(int index) {
     inputSearch.add(false);
     _currentSliderIndex = index;
-    if (_screenIndex[index]!.dataTypeIdentity == DataTypeIdentity.dashboard) {
-      _getDashboardData(_screenIndex[index]!.screenTypeIdentity);
+    if (_screenIndex[_currentSliderIndex]!.dataTypeIdentity ==
+        DataTypeIdentity.dashboard) {
+      _getDashboardData(_screenIndex[_currentSliderIndex]!.screenTypeIdentity);
     }
-    if (_screenIndex[index]!.dataTypeIdentity ==
+    if (_screenIndex[_currentSliderIndex]!.dataTypeIdentity ==
         DataTypeIdentity.operatorPriceChart) {
-      _getOperatorPriceChartData(_screenIndex[index]!.screenTypeIdentity);
+      _getOperatorPriceChartData(
+          _screenIndex[_currentSliderIndex]!.screenTypeIdentity);
     }
-    if (_screenIndex[index]!.dataTypeIdentity ==
+    if (_screenIndex[_currentSliderIndex]!.dataTypeIdentity ==
         DataTypeIdentity.resellerPriceChart) {
-      _getResellerPriceChartData(_screenIndex[index]!.screenTypeIdentity);
+      _getResellerPriceChartData(
+          _screenIndex[_currentSliderIndex]!.screenTypeIdentity);
     }
-    if (_screenIndex[index]!.dataTypeIdentity == DataTypeIdentity.plan) {
-      _getPlansData(_screenIndex[index]!.screenTypeIdentity);
+    if (_screenIndex[_currentSliderIndex]!.dataTypeIdentity ==
+        DataTypeIdentity.plan) {
+      _getPlansData(_screenIndex[_currentSliderIndex]!.screenTypeIdentity);
     }
     _postDataToView();
   }
 
   navigateToCreatePriceChart(CreatePriceChartArguments args) {
-    _navigationService.navigateTo(Routes.createpricechart, arguments: args);
+    _navigationService
+        .navigateTo(Routes.createpricechart, arguments: args)
+        .then((value) {
+      if (_screenIndex[_currentSliderIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.operatorPriceChart) {
+        _getOperatorPriceChartData(
+            _screenIndex[_currentSliderIndex]!.screenTypeIdentity);
+      }
+      if (_screenIndex[_currentSliderIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.resellerPriceChart) {
+        _getResellerPriceChartData(
+            _screenIndex[_currentSliderIndex]!.screenTypeIdentity);
+      }
+    });
   }
 
   navigateToCreatePlan() {
-    _navigationService.navigateTo(Routes.createPlan);
+    _navigationService.navigateTo(Routes.createPlan).then((value) {
+      if (_screenIndex[_currentSliderIndex]!.dataTypeIdentity ==
+          DataTypeIdentity.plan) {
+        _getPlansData(_screenIndex[_currentSliderIndex]!.screenTypeIdentity);
+      }
+    });
   }
 
   @override

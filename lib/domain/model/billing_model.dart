@@ -138,6 +138,8 @@ class Bills {
   final String billPeriod;
   final String dueDate;
   final double billAmount;
+  final double basicBillAmount;
+  final String billAmountComponents;
   final String nextBillingDate;
   final String status;
   final DateTime createdAt;
@@ -162,6 +164,8 @@ class Bills {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.basicBillAmount,
+    required this.billAmountComponents,
   });
 
   factory Bills.fromJson(Map<String, dynamic> json) => Bills(
@@ -183,6 +187,8 @@ class Bills {
         status: json["status"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+        basicBillAmount: json["basicBillAmount"].toDouble(),
+        billAmountComponents: json["billAmountComponents"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -204,6 +210,8 @@ class Bills {
         "status": status,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
+        "basicBillAmount": basicBillAmount,
+        "billAmountComponents": billAmountComponents,
       };
 }
 

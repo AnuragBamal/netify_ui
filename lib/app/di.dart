@@ -24,8 +24,10 @@ import 'package:netify/domain/usecase/get_panel_actions_done.dart';
 import 'package:netify/domain/usecase/get_panel_download_done.dart';
 import 'package:netify/domain/usecase/get_payment_metadata_usecase.dart';
 import 'package:netify/domain/usecase/get_renewals_usecase.dart';
+import 'package:netify/domain/usecase/get_sales_usecase.dart';
 import 'package:netify/domain/usecase/get_serviceinfo_usecase.dart';
 import 'package:netify/domain/usecase/get_settings_metadata_usecase.dart';
+import 'package:netify/domain/usecase/get_transaction_usecase.dart';
 import 'package:netify/domain/usecase/getdashboard_usecase.dart';
 import 'package:netify/domain/usecase/getoperator_pricechart_usecase.dart';
 import 'package:netify/domain/usecase/getplanprofile_usecase.dart';
@@ -210,6 +212,12 @@ initHomepageModule() {
     instance.registerFactory<GetPanelActionDoneUsecase>(
         () => GetPanelActionDoneUsecase(instance()));
 
+    instance
+        .registerFactory<GetSalesUsecase>(() => GetSalesUsecase(instance()));
+
+    instance.registerFactory<GetTransactionsUsecase>(
+        () => GetTransactionsUsecase(instance()));
+
     instance.registerFactory<HomepageViewModel>(() => HomepageViewModel(
         instance(),
         instance(),
@@ -236,6 +244,8 @@ initHomepageModule() {
         ));
 
     instance.registerFactory<PaymentsPageViewModel>(() => PaymentsPageViewModel(
+          instance(),
+          instance(),
           instance(),
           instance(),
           instance(),

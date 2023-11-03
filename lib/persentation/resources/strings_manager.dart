@@ -206,4 +206,5 @@ class AppString {
       "Enter Value Greater Than or equal to 0";
   static const String installationCost = "Installation Cost";
   static const String installationCostHint = "Enter Installation Cost";
+  static const String remarks = "Remarks";
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netify/domain/model/billing_model.dart';
+import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/home_model.dart';
 import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/model/plan_model.dart';
@@ -696,6 +697,24 @@ class W2WTransactionExpandedWidget extends StatelessWidget {
                   'Transaction Type': [transaction.transactionType],
                 }),
               ),
+              if (transaction.transactionType == TransactionType.offlineSale)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppPadding.p16),
+                  child: GroupWidget(groupList: {
+                    'Bill Number': [
+                      "${transaction.billNumber!.substring(0, 5)}...${transaction.billNumber!.substring(transaction.billNumber!.length - 4, transaction.billNumber!.length)}"
+                    ],
+                    'Bill Amount': [transaction.billAmount!.toString()],
+                  }),
+                ),
+              if (transaction.transactionStatus == TranasctionStatus.success)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppPadding.p16),
+                  child: GroupWidget(groupList: {
+                    'Opening Balance': [transaction.openingBalance.toString()],
+                    'Closing Balance': [transaction.closingBalance.toString()],
+                  }),
+                ),
               Padding(
                 padding: const EdgeInsets.only(bottom: AppPadding.p16),
                 child: GroupWidget(groupList: {
@@ -707,6 +726,67 @@ class W2WTransactionExpandedWidget extends StatelessWidget {
                   ],
                 }),
               ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: AppPadding.p16),
+                child: GroupWidget(groupList: {
+                  "Remarks": [transaction.remarks!]
+                }),
+              ),
             ])));
+  }
+}
+
+class SalesExpandedWidget extends StatelessWidget {
+  final Sale sale;
+  const SalesExpandedWidget({super.key, required this.sale});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: ColorManager.secondaryColor,
+      ),
+      child: Padding(
+          padding: const EdgeInsets.all(AppPadding.p20),
+          child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppPadding.p16),
+              child: GroupWidget(groupList: {
+                'Bill Number': [
+                  "${sale.billNumber.substring(0, 5)}...${sale.billNumber.substring(sale.billNumber.length - 4, sale.billNumber.length)}"
+                ],
+                'Bill Amount': [sale.billAmount.toString()],
+                'Basic Bill Amount': [sale.basicBillAmount.toString()],
+                'Bill Components': [sale.billAmountComponents],
+              }),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppPadding.p16),
+              child: GroupWidget(groupList: {
+                'Operator': [sale.operatorUserName],
+                'Reseller': [sale.resellerUserName],
+              }),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppPadding.p16),
+              child: GroupWidget(groupList: {
+                'Plan Name': [sale.planName],
+                'Plan Basic Cost': [sale.planBasicCost.toString()],
+                'Plan Offered Cost': [sale.planOfferedCost.toString()],
+                'Your Tax Share': [sale.planTax.toString()],
+                'Total Tax Collected': [sale.totalTaxCollected.toString()],
+                'Profit': [sale.planProfit.toString()],
+              }),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppPadding.p16),
+              child: GroupWidget(groupList: {
+                'SaleTime': [
+                  "${sale.createdAt.day}/${sale.createdAt.month}/${sale.createdAt.year}"
+                ],
+              }),
+            ),
+          ])),
+    );
   }
 }

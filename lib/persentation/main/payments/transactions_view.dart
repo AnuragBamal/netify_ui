@@ -1,17 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:netify/app/constant.dart';
+import 'package:netify/domain/model/model.dart';
 import 'package:netify/domain/model/wallet_model.dart';
+import 'package:netify/persentation/common/widgets/date_selectors_widget.dart';
 import 'package:netify/persentation/common/widgets/display_info_widget.dart';
+import 'package:netify/persentation/common/widgets/search_widget.dart';
+import 'package:netify/persentation/main/payments/payments_view_model.dart';
 import 'package:netify/persentation/resources/color_manager.dart';
 
+class TransactionWidget extends StatelessWidget {
+  final MainPageModel mainPageModel;
+  final PaymentsPageViewModel paymentsPageViewModel;
+  const TransactionWidget(
+      {super.key,
+      required this.mainPageModel,
+      required this.paymentsPageViewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          BaseSearchWidget(
+            filters: mainPageModel.filter,
+            onFilterChanged: paymentsPageViewModel.updateSearchFilter,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width *
+                Constant.expandedPanelContainerWidth,
+            child: DateSelectors(
+              fromDate: paymentsPageViewModel.getFromDate(),
+              toDate: paymentsPageViewModel.getToDate(),
+              onDateChange: paymentsPageViewModel.updateDateFilters,
+            ),
+          ),
+          SingleChildScrollView(
+            child: StreamBuilder<bool>(
+              stream: paymentsPageViewModel.outputSearch,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (!snapshot.data!) {
+                    return SizedBox(
+                        height: MediaQuery.of(context).size.height * .60,
+                        child: TransactionsViewWidget(
+                          loggedInUser: paymentsPageViewModel.loggedInUser,
+                          w2wTransactionSnapshot: paymentsPageViewModel
+                              .outputForTransaction, // paymentsPageViewModel.outputForTransaction,
+                        ));
+                  } else {
+                    return SizedBox(
+                        height: MediaQuery.of(context).size.height * .60,
+                        child: TransactionsViewWidget(
+                          loggedInUser: paymentsPageViewModel.loggedInUser,
+                          w2wTransactionSnapshot: paymentsPageViewModel
+                              .outputForTransactionSearch, // paymentsPageViewModel.outputForTransaction,
+                        ));
+                  }
+                } else {
+                  return SizedBox(
+                      height: MediaQuery.of(context).size.height * .60,
+                      child: TransactionsViewWidget(
+                        // key: const Key("_transaction__"),
+                        loggedInUser: paymentsPageViewModel.loggedInUser,
+                        w2wTransactionSnapshot: paymentsPageViewModel
+                            .outputForTransaction, // paymentsPageViewModel.outputForTransaction,
+                      ));
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class TransactionsViewWidget extends StatefulWidget {
-  final String transactionType;
   final String loggedInUser;
   final Stream<List<Transaction>>? w2wTransactionSnapshot;
 
   const TransactionsViewWidget({
     Key? key,
-    required this.transactionType,
     this.w2wTransactionSnapshot,
     required this.loggedInUser,
   }) : super(key: key);
@@ -25,11 +94,7 @@ class _TransactionsViewWidget extends State<TransactionsViewWidget> {
   String expandThis = "";
   @override
   Widget build(BuildContext context) {
-    if (widget.transactionType == "w2w") {
-      return _buildW2wTransferExpansionPanelStream(context);
-    } else {
-      return Container();
-    }
+    return _buildW2wTransferExpansionPanelStream(context);
   }
 
   Widget _buildW2wTransferExpansionPanelStream(BuildContext context) {
@@ -37,7 +102,11 @@ class _TransactionsViewWidget extends State<TransactionsViewWidget> {
         stream: widget.w2wTransactionSnapshot,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return _buildW2wTransferExpansionPanel(context, snapshot);
+            if (snapshot.data!.isEmpty) {
+              return Text("No Data Found");
+            } else {
+              return _buildW2wTransferExpansionPanel(context, snapshot);
+            }
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
@@ -49,7 +118,7 @@ class _TransactionsViewWidget extends State<TransactionsViewWidget> {
   Widget _buildW2wTransferExpansionPanel(
       BuildContext context, AsyncSnapshot<List<Transaction>> snapshot) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.75,
+      //height: MediaQuery.of(context).size.height * 0.75,
       width: MediaQuery.of(context).size.width *
           Constant.expandedPanelContainerWidth,
       child: SingleChildScrollView(

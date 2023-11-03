@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:netify/data/request/request.dart';
+import 'package:netify/domain/model/enum_model.dart';
 import 'package:netify/domain/model/plan_model.dart';
 import 'package:netify/domain/usecase/create_plan_usecase.dart';
 import 'package:netify/domain/usecase/getplanprofile_usecase.dart';
@@ -362,9 +363,10 @@ class CreatePlanViewModel extends BaseViewModelInputsOutputs {
         createNewPlan.uploadSpeedUnit.isNotEmpty &&
         createNewPlan.downloadSpeed > 0 &&
         createNewPlan.downloadSpeedUnit.isNotEmpty &&
-        createNewPlan.dataLimit > 0 &&
-        createNewPlan.dataLimitUnit.isNotEmpty &&
-        (createNewPlan.planType == "FUP"
+        ((createNewPlan.dataLimit > 0 &&
+                createNewPlan.dataLimitUnit.isNotEmpty) ||
+            createNewPlan.planType == PlanType.unlimited) &&
+        (createNewPlan.planType == PlanType.fup
             ? (createNewPlan.uploadSpeedFUP > 0 &&
                 createNewPlan.uploadSpeedFUPUnit.isNotEmpty &&
                 createNewPlan.downloadSpeedFUP > 0 &&

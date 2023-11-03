@@ -719,3 +719,41 @@ class GetUpcomingRenewals extends BaseResponse {
         errorCode: json['errorCode']);
   }
 }
+
+class GetTransactionsData extends BaseResponse {
+  final List<TransactionsData> data;
+
+  GetTransactionsData(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetTransactionsData.fromJson(Map<String, dynamic> json) {
+    return GetTransactionsData(
+        data: (json['data'] as List)
+            .map((e) => TransactionsData.fromJson(e))
+            .toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}
+
+class GetSalesdata extends BaseResponse {
+  final List<SalesData> data;
+
+  GetSalesdata(
+      {required this.data,
+      required super.status,
+      required super.message,
+      required super.errorCode});
+
+  factory GetSalesdata.fromJson(Map<String, dynamic> json) {
+    return GetSalesdata(
+        data: (json['data'] as List).map((e) => SalesData.fromJson(e)).toList(),
+        status: json['status'],
+        message: json['message'],
+        errorCode: json['errorCode']);
+  }
+}

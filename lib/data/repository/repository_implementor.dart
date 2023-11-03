@@ -976,4 +976,55 @@ class RepositoryImplementer extends Repository {
       ));
     }
   }
+
+  @override
+  Future<Either<Failure, GetSalesdata>> getSalesData(
+      GetSalesRequest getSalesRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getSalesData(getSalesRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } on Exception catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetTransactionsData>> getTransactionsData(
+      GetTransactionsRequest getTransactionsRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response =
+            await _remoteDataSource.getTransactionsData(getTransactionsRequest);
+        if (response.status == ApiInternalStatus.success) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(
+            code: response.errorCode ?? "X-410",
+            message: response.message ?? "API Error",
+          ));
+        }
+      } on Exception catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(Failure(
+        code: ResponseCode.noInternetConnection.toString(),
+        message: ResponseMessage.noInternetConnection,
+      ));
+    }
+  }
 }

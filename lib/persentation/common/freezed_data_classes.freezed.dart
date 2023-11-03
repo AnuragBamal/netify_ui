@@ -3999,6 +3999,7 @@ mixin _$W2wTransferObject {
   double get amount => throw _privateConstructorUsedError;
   String get receiverUserName => throw _privateConstructorUsedError;
   String get receiverUserId => throw _privateConstructorUsedError;
+  String get remarks => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $W2wTransferObjectCopyWith<W2wTransferObject> get copyWith =>
@@ -4011,7 +4012,11 @@ abstract class $W2wTransferObjectCopyWith<$Res> {
           W2wTransferObject value, $Res Function(W2wTransferObject) then) =
       _$W2wTransferObjectCopyWithImpl<$Res, W2wTransferObject>;
   @useResult
-  $Res call({double amount, String receiverUserName, String receiverUserId});
+  $Res call(
+      {double amount,
+      String receiverUserName,
+      String receiverUserId,
+      String remarks});
 }
 
 /// @nodoc
@@ -4030,6 +4035,7 @@ class _$W2wTransferObjectCopyWithImpl<$Res, $Val extends W2wTransferObject>
     Object? amount = null,
     Object? receiverUserName = null,
     Object? receiverUserId = null,
+    Object? remarks = null,
   }) {
     return _then(_value.copyWith(
       amount: null == amount
@@ -4044,6 +4050,10 @@ class _$W2wTransferObjectCopyWithImpl<$Res, $Val extends W2wTransferObject>
           ? _value.receiverUserId
           : receiverUserId // ignore: cast_nullable_to_non_nullable
               as String,
+      remarks: null == remarks
+          ? _value.remarks
+          : remarks // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -4056,7 +4066,11 @@ abstract class _$$_W2wTransferObjectCopyWith<$Res>
       __$$_W2wTransferObjectCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double amount, String receiverUserName, String receiverUserId});
+  $Res call(
+      {double amount,
+      String receiverUserName,
+      String receiverUserId,
+      String remarks});
 }
 
 /// @nodoc
@@ -4073,6 +4087,7 @@ class __$$_W2wTransferObjectCopyWithImpl<$Res>
     Object? amount = null,
     Object? receiverUserName = null,
     Object? receiverUserId = null,
+    Object? remarks = null,
   }) {
     return _then(_$_W2wTransferObject(
       null == amount
@@ -4087,6 +4102,10 @@ class __$$_W2wTransferObjectCopyWithImpl<$Res>
           ? _value.receiverUserId
           : receiverUserId // ignore: cast_nullable_to_non_nullable
               as String,
+      null == remarks
+          ? _value.remarks
+          : remarks // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -4094,7 +4113,8 @@ class __$$_W2wTransferObjectCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_W2wTransferObject implements _W2wTransferObject {
-  _$_W2wTransferObject(this.amount, this.receiverUserName, this.receiverUserId);
+  _$_W2wTransferObject(
+      this.amount, this.receiverUserName, this.receiverUserId, this.remarks);
 
   @override
   final double amount;
@@ -4102,10 +4122,12 @@ class _$_W2wTransferObject implements _W2wTransferObject {
   final String receiverUserName;
   @override
   final String receiverUserId;
+  @override
+  final String remarks;
 
   @override
   String toString() {
-    return 'W2wTransferObject(amount: $amount, receiverUserName: $receiverUserName, receiverUserId: $receiverUserId)';
+    return 'W2wTransferObject(amount: $amount, receiverUserName: $receiverUserName, receiverUserId: $receiverUserId, remarks: $remarks)';
   }
 
   @override
@@ -4117,12 +4139,13 @@ class _$_W2wTransferObject implements _W2wTransferObject {
             (identical(other.receiverUserName, receiverUserName) ||
                 other.receiverUserName == receiverUserName) &&
             (identical(other.receiverUserId, receiverUserId) ||
-                other.receiverUserId == receiverUserId));
+                other.receiverUserId == receiverUserId) &&
+            (identical(other.remarks, remarks) || other.remarks == remarks));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, amount, receiverUserName, receiverUserId);
+  int get hashCode => Object.hash(
+      runtimeType, amount, receiverUserName, receiverUserId, remarks);
 
   @JsonKey(ignore: true)
   @override
@@ -4134,7 +4157,7 @@ class _$_W2wTransferObject implements _W2wTransferObject {
 
 abstract class _W2wTransferObject implements W2wTransferObject {
   factory _W2wTransferObject(final double amount, final String receiverUserName,
-      final String receiverUserId) = _$_W2wTransferObject;
+      final String receiverUserId, final String remarks) = _$_W2wTransferObject;
 
   @override
   double get amount;
@@ -4142,6 +4165,8 @@ abstract class _W2wTransferObject implements W2wTransferObject {
   String get receiverUserName;
   @override
   String get receiverUserId;
+  @override
+  String get remarks;
   @override
   @JsonKey(ignore: true)
   _$$_W2wTransferObjectCopyWith<_$_W2wTransferObject> get copyWith =>

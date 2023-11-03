@@ -135,4 +135,14 @@ abstract class ApiServiceClient {
   Future<GetFileDownloadResponse> getPanelActionDownloadDone(
     @Queries() Map<String, dynamic> queryParams,
   );
+
+  @GET("/api/v1/tenancy/transactions")
+  Future<GetTransactionsDataResponse> getTransactionsData(
+    @Queries() Map<String, dynamic> queryParams,
+  );
+
+  @GET("/api/v1/tenancy/sales")
+  Future<GetSalesDataResponse> getSalesData(
+    @Queries() Map<String, dynamic> queryParams,
+  );
 }

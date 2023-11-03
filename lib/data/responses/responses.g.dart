@@ -869,6 +869,11 @@ TransactionResponse _$TransactionResponseFromJson(Map<String, dynamic> json) =>
       transactionStatus: json['transactionStatus'] as String?,
       transactionType: json['transactionType'] as String?,
       transactionDate: json['transactionDate'] as String?,
+      openingBalance: (json['openingBalance'] as num?)?.toDouble(),
+      closingBalance: (json['closingBalance'] as num?)?.toDouble(),
+      remarks: json['remarks'] as String?,
+      billNumber: json['billNumber'] as String?,
+      billAmount: (json['billAmount'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$TransactionResponseToJson(
@@ -881,6 +886,11 @@ Map<String, dynamic> _$TransactionResponseToJson(
       'transactionStatus': instance.transactionStatus,
       'transactionType': instance.transactionType,
       'transactionDate': instance.transactionDate,
+      'openingBalance': instance.openingBalance,
+      'closingBalance': instance.closingBalance,
+      'remarks': instance.remarks,
+      'billNumber': instance.billNumber,
+      'billAmount': instance.billAmount,
     };
 
 UserWalletResponse _$UserWalletResponseFromJson(Map<String, dynamic> json) =>
@@ -1351,6 +1361,8 @@ BillsResponse _$BillsResponseFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
+      basicBillAmount: (json['basicBillAmount'] as num?)?.toDouble(),
+      billAmountComponents: json['billAmountComponents'] as String?,
     );
 
 Map<String, dynamic> _$BillsResponseToJson(BillsResponse instance) =>
@@ -1369,7 +1381,9 @@ Map<String, dynamic> _$BillsResponseToJson(BillsResponse instance) =>
       'billPeriod': instance.billPeriod,
       'dueDate': instance.dueDate,
       'billAmount': instance.billAmount,
+      'basicBillAmount': instance.basicBillAmount,
       'nextBillingDate': instance.nextBillingDate,
+      'billAmountComponents': instance.billAmountComponents,
       'status': instance.status,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
@@ -1487,4 +1501,112 @@ Map<String, dynamic> _$GetFileDownloadResponseToJson(
       'statusCode': instance.statusCode,
       'statusMessage': instance.statusMessage,
       'headers': instance.headers,
+    };
+
+TransactionsDataResponse _$TransactionsDataResponseFromJson(
+        Map<String, dynamic> json) =>
+    TransactionsDataResponse(
+      transactions: (json['transactions'] as List<dynamic>?)
+          ?.map((e) => TransactionResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      isSearch: json['isSearch'] as bool?,
+      screenTypeIdentity: json['screenTypeIdentity'] as String?,
+    );
+
+Map<String, dynamic> _$TransactionsDataResponseToJson(
+        TransactionsDataResponse instance) =>
+    <String, dynamic>{
+      'transactions': instance.transactions,
+      'isSearch': instance.isSearch,
+      'screenTypeIdentity': instance.screenTypeIdentity,
+    };
+
+GetTransactionsDataResponse _$GetTransactionsDataResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetTransactionsDataResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              TransactionsDataResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetTransactionsDataResponseToJson(
+        GetTransactionsDataResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
+    };
+
+SaleResponse _$SaleResponseFromJson(Map<String, dynamic> json) => SaleResponse(
+      billNumber: json['billNumber'] as String?,
+      planName: json['planName'] as String?,
+      operatorUserName: json['operatorUserName'] as String?,
+      resellerUserName: json['resellerUserName'] as String?,
+      planBasicCost: (json['planBasicCost'] as num?)?.toDouble(),
+      planOfferedCost: (json['planOfferedCost'] as num?)?.toDouble(),
+      planTax: (json['planTax'] as num?)?.toDouble(),
+      planProfit: (json['planProfit'] as num?)?.toDouble(),
+      billAmount: (json['billAmount'] as num?)?.toDouble(),
+      createdAt: json['createdAt'] as String?,
+      totalTaxCollected: (json['totalTaxCollected'] as num?)?.toDouble(),
+      basicBillAmount: (json['basicBillAmount'] as num?)?.toDouble(),
+      billAmountComponents: json['billAmountComponents'] as String?,
+    );
+
+Map<String, dynamic> _$SaleResponseToJson(SaleResponse instance) =>
+    <String, dynamic>{
+      'billNumber': instance.billNumber,
+      'planName': instance.planName,
+      'operatorUserName': instance.operatorUserName,
+      'resellerUserName': instance.resellerUserName,
+      'planBasicCost': instance.planBasicCost,
+      'planOfferedCost': instance.planOfferedCost,
+      'planTax': instance.planTax,
+      'planProfit': instance.planProfit,
+      'billAmount': instance.billAmount,
+      'createdAt': instance.createdAt,
+      'totalTaxCollected': instance.totalTaxCollected,
+      'basicBillAmount': instance.basicBillAmount,
+      'billAmountComponents': instance.billAmountComponents,
+    };
+
+SalesDataResponse _$SalesDataResponseFromJson(Map<String, dynamic> json) =>
+    SalesDataResponse(
+      sales: (json['sales'] as List<dynamic>?)
+          ?.map((e) => SaleResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      isSearch: json['isSearch'] as bool?,
+      screenTypeIdentity: json['screenTypeIdentity'] as String?,
+    );
+
+Map<String, dynamic> _$SalesDataResponseToJson(SalesDataResponse instance) =>
+    <String, dynamic>{
+      'sales': instance.sales,
+      'isSearch': instance.isSearch,
+      'screenTypeIdentity': instance.screenTypeIdentity,
+    };
+
+GetSalesDataResponse _$GetSalesDataResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetSalesDataResponse(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => SalesDataResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as String?
+      ..message = json['message'] as String?
+      ..errorCode = json['errorCode'] as String?;
+
+Map<String, dynamic> _$GetSalesDataResponseToJson(
+        GetSalesDataResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'errorCode': instance.errorCode,
+      'data': instance.data,
     };

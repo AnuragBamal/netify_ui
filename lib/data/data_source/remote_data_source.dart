@@ -67,6 +67,10 @@ abstract class RemoteDataSource {
       PanelActionRequest panelActionRequest);
   Future<GetFileDownloadResponse> getPanelActionDownloadDone(
       PanelActionRequest panelActionRequest);
+
+  Future<GetTransactionsDataResponse> getTransactionsData(
+      GetTransactionsRequest getTransactionsRequest);
+  Future<GetSalesDataResponse> getSalesData(GetSalesRequest getSalesRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -287,5 +291,18 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
       PanelActionRequest panelActionRequest) async {
     return await _apiServiceClient
         .getPanelActionDownloadDone(panelActionRequest.toJson());
+  }
+
+  @override
+  Future<GetTransactionsDataResponse> getTransactionsData(
+      GetTransactionsRequest getTransactionsRequest) async {
+    return await _apiServiceClient
+        .getTransactionsData(getTransactionsRequest.toJson());
+  }
+
+  @override
+  Future<GetSalesDataResponse> getSalesData(
+      GetSalesRequest getSalesRequest) async {
+    return await _apiServiceClient.getSalesData(getSalesRequest.toJson());
   }
 }

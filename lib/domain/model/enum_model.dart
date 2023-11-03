@@ -14,6 +14,8 @@ class ScreenTypeIdentity {
   static const String biller = "billerScreen";
   static const String unpaidBills = "unpaidBillsScreen";
   static const String upcomingRenewals = "upcomingRenewalsScreen";
+  static const String salesTransactions = "salesTransactionsScreen";
+  static const String sales = "salesTransactionsScreen";
 }
 
 class DataTypeIdentity {
@@ -31,6 +33,7 @@ class DataTypeIdentity {
   static const String bills = "bills";
   static const String biller = "biller";
   static const String renewals = "renewals";
+  static const String salesTransactions = "saleTransaction";
 }
 
 class Roles {
@@ -57,4 +60,22 @@ class DashboardType {
 class PanelButtonType {
   static const String action = "action";
   static const String download = "download";
+}
+
+class TransactionType {
+  static const String w2w = "W2W";
+  static const String offlineSale = "OFFLINE-SALE";
+}
+
+class TranasctionStatus {
+  static const String intiated = "Initiated";
+  static const String failed = "Failed";
+  static const String success = "Success";
+  static const String pending = "Pending";
+}
+
+class PlanType {
+  static const String fup = "FUP";
+  static const String unlimited = "Unlimited";
+  static const String limited = "Limited";
 }

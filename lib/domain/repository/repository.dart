@@ -97,4 +97,10 @@ abstract class Repository {
 
   Future<Either<Failure, SuccessMessage>> getPanelActionDownloadDone(
       PanelActionRequest panelActionRequest);
+
+  Future<Either<Failure, GetTransactionsData>> getTransactionsData(
+      GetTransactionsRequest getTransactionsRequest);
+
+  Future<Either<Failure, GetSalesdata>> getSalesData(
+      GetSalesRequest getSalesRequest);
 }
