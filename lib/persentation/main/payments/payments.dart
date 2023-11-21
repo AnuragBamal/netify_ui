@@ -67,12 +67,13 @@ class _PaymentsState extends State<Payments> {
     return Column(
       children: [
         Container(
+          height: MediaQuery.of(context).size.height * 0.07,
           decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
                       width: 1, color: Color.fromRGBO(198, 198, 198, 1)))),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(10.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(mainPageModel.title,
@@ -80,30 +81,25 @@ class _PaymentsState extends State<Payments> {
             ),
           ),
         ),
-        Column(
-          children: [
-            if (mainPageModel.viewType == ScreenViewType.grid &&
-                mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
-              DashboardView(
-                itemBuilder: dashboardGridItemBuilder,
-                dashboardStream: _paymentsPageViewModel.outputForDashborad,
-                onTap: goToPage,
-              ),
-            if (mainPageModel.dataTypeIdentity == DataTypeIdentity.wallet)
-              _walletScreen(
-                  context, _paymentsPageViewModel.outputForUserWallet),
-            if (mainPageModel.dataTypeIdentity == DataTypeIdentity.transactions)
-              TransactionWidget(
-                mainPageModel: mainPageModel,
-                paymentsPageViewModel: _paymentsPageViewModel,
-              ),
-            if (mainPageModel.screenTypeIdentity ==
-                ScreenTypeIdentity.salesTransactions)
-              SalesWidget(
-                  mainPageModel: mainPageModel,
-                  paymentsPageViewModel: _paymentsPageViewModel)
-          ],
-        ),
+        if (mainPageModel.viewType == ScreenViewType.grid &&
+            mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
+          DashboardView(
+            itemBuilder: dashboardGridItemBuilder,
+            dashboardStream: _paymentsPageViewModel.outputForDashborad,
+            onTap: goToPage,
+          ),
+        if (mainPageModel.dataTypeIdentity == DataTypeIdentity.wallet)
+          _walletScreen(context, _paymentsPageViewModel.outputForUserWallet),
+        if (mainPageModel.dataTypeIdentity == DataTypeIdentity.transactions)
+          TransactionWidget(
+            mainPageModel: mainPageModel,
+            paymentsPageViewModel: _paymentsPageViewModel,
+          ),
+        if (mainPageModel.screenTypeIdentity ==
+            ScreenTypeIdentity.salesTransactions)
+          SalesWidget(
+              mainPageModel: mainPageModel,
+              paymentsPageViewModel: _paymentsPageViewModel),
       ],
     );
     // return Container(
@@ -121,16 +117,27 @@ class _PaymentsState extends State<Payments> {
           if (snapshot.hasData) {
             return Column(
               children: [
-                const SizedBox(
-                  height: AppSize.s24,
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.20,
+                    child:
+                        _getWalletCardWidget(context, snapshot.data!.balance)),
+                const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.compare_arrows,
+                      size: 50,
+                    ),
+                    title: Text(AppString.w2wTransfer),
+                    //subtitle: Text('Subtitle'),
+                  ),
                 ),
-                _getWalletCardWidget(context, snapshot.data!.balance),
-                const SizedBox(
-                  height: AppSize.s16,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.37,
+                  child: W2WTransferWidget(
+                      paymentsPageViewModel: _paymentsPageViewModel,
+                      payee: snapshot.data!.payee),
                 ),
-                W2WTransferWidget(
-                    paymentsPageViewModel: _paymentsPageViewModel,
-                    payee: snapshot.data!.payee),
               ],
             );
           } else {
@@ -142,20 +149,19 @@ class _PaymentsState extends State<Payments> {
   Widget _getWalletCardWidget(BuildContext context, double balance) {
     return Card(
       elevation: 20, // Control the shadow elevation
-      margin: const EdgeInsets.all(AppSize.s16),
+      margin: const EdgeInsets.symmetric(horizontal: AppSize.s16),
       borderOnForeground: false, // Control the card's margin
       child: Column(
         children: [
           const ListTile(
-            leading: Icon(Icons.wallet, size: 50),
+            leading: Icon(Icons.wallet, size: 40),
             title: Text(AppString.walletBalance),
             //subtitle: Text('Subtitle'),
           ),
 
           // Divider(), // Add a divider line
           Padding(
-            padding:
-                const EdgeInsets.only(top: AppSize.s12, bottom: AppSize.s48),
+            padding: const EdgeInsets.only(top: AppSize.s8, bottom: AppSize.s8),
             child: Text(
               'Rs. $balance',
               style: Theme.of(context).textTheme.headlineLarge,
@@ -169,7 +175,7 @@ class _PaymentsState extends State<Payments> {
   Widget _walletShimmerWidget() {
     return ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.70,
+          maxHeight: MediaQuery.of(context).size.height * 0.55,
         ),
         child: ListView.builder(
           itemCount: 1,

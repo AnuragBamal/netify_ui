@@ -48,117 +48,129 @@ class _LoginViewState extends State<LoginView> {
   Widget _getContentWidget(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: AppPadding.p100),
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: AppSize.s100,
-              ),
-              const Image(
-                image: AssetImage(ImageAssets.splashLogo),
-                width: AppSize.s200,
-              ),
-              const SizedBox(
-                height: AppSize.s64,
-              ),
-              Text(
-                AppString.loginWelcome,
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              const SizedBox(
-                height: AppSize.s64,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
-                child: StreamBuilder<bool>(
-                    stream: _loginViewModel.outputIsUserNameValid,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _userNameController,
-                        decoration: InputDecoration(
-                          hintText: AppString.usernameHint,
-                          labelText: AppString.username,
-                          errorText:
-                              snapshot.data == true || snapshot.data == null
-                                  ? null
-                                  : AppString.usernameError,
-                        ),
-                      );
-                    }),
-              ),
-              const SizedBox(
-                height: AppSize.s48,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
-                child: StreamBuilder<bool>(
-                    stream: _loginViewModel.outputIsPasswordValid,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: AppString.passwordHint,
-                          labelText: AppString.password,
-                          errorText:
-                              snapshot.data == true || snapshot.data == null
-                                  ? null
-                                  : AppString.passwordError,
-                        ),
-                      );
-                    }),
-              ),
-              const SizedBox(
-                height: AppSize.s48,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
-                child: StreamBuilder<bool>(
-                  stream: _loginViewModel.outputIsAllInputValid,
-                  builder: (context, snapshot) {
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: (snapshot.data == true)
-                            ? () {
-                                _loginViewModel.login(context);
-                              }
-                            : null,
-                        child: const Text(AppString.login),
-                      ),
-                    );
-                  },
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * .90,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: AppSize.s100,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: AppPadding.p8,
-                    left: AppPadding.p24,
-                    right: AppPadding.p24),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        _loginViewModel.navigateToForgotPassword();
-                      },
-                      child: Text(AppString.forgotPassword,
-                          style: Theme.of(context).textTheme.bodyLarge),
-                    ),
-                    TextButton(
+                const Image(
+                  image: AssetImage(ImageAssets.splashLogo),
+                  width: AppSize.s200,
+                ),
+                const SizedBox(
+                  height: AppSize.s64,
+                ),
+                Text(
+                  AppString.loginWelcome,
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+                const SizedBox(
+                  height: AppSize.s64,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                  child: StreamBuilder<bool>(
+                      stream: _loginViewModel.outputIsUserNameValid,
+                      builder: (context, snapshot) {
+                        return TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: _userNameController,
+                          decoration: InputDecoration(
+                            hintText: AppString.usernameHint,
+                            labelText: AppString.username,
+                            errorText:
+                                snapshot.data == true || snapshot.data == null
+                                    ? null
+                                    : AppString.usernameError,
+                          ),
+                        );
+                      }),
+                ),
+                const SizedBox(
+                  height: AppSize.s48,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                  child: StreamBuilder<bool>(
+                      stream: _loginViewModel.outputIsPasswordValid,
+                      builder: (context, snapshot) {
+                        return TextFormField(
+                          keyboardType: TextInputType.visiblePassword,
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: AppString.passwordHint,
+                            labelText: AppString.password,
+                            errorText:
+                                snapshot.data == true || snapshot.data == null
+                                    ? null
+                                    : AppString.passwordError,
+                          ),
+                        );
+                      }),
+                ),
+                const SizedBox(
+                  height: AppSize.s48,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                  child: StreamBuilder<bool>(
+                    stream: _loginViewModel.outputIsAllInputValid,
+                    builder: (context, snapshot) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: (snapshot.data == true)
+                              ? () {
+                                  _loginViewModel.login(context);
+                                }
+                              : null,
+                          child: const Text(AppString.login),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: AppPadding.p8,
+                      left: AppPadding.p24,
+                      right: AppPadding.p24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
                         onPressed: () {
-                          _loginViewModel.navigateToSignup();
+                          _loginViewModel.navigateToForgotPassword();
                         },
-                        child: Text(AppString.registerText,
-                            style: Theme.of(context).textTheme.bodyLarge))
-                  ],
-                ),
-              )
-            ],
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(AppString.forgotPassword,
+                              style: Theme.of(context).textTheme.bodyLarge),
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            _loginViewModel.navigateToSignup();
+                          },
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(AppString.registerText,
+                                style: Theme.of(context).textTheme.bodyLarge),
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

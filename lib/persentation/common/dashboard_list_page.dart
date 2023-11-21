@@ -26,12 +26,13 @@ class DashboardView extends StatelessWidget {
             stream: dashboardStream, //homepageViewModel.outputForDashboard,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.75,
-                  ),
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.675,
+                  // constraints: BoxConstraints(
+                  //   maxHeight: MediaQuery.of(context).size.height * 0.70,
+                  // ),
                   child: GridView.builder(
-                      padding: const EdgeInsets.all(25.0),
+                      padding: const EdgeInsets.all(10.0),
                       itemCount: snapshot.data!.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

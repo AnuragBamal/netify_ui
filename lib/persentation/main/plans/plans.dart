@@ -54,12 +54,13 @@ class _PlansState extends State<PlansView> {
     return Column(
       children: [
         Container(
+          height: MediaQuery.of(context).size.height * 0.07,
           decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
                       width: 1, color: Color.fromRGBO(198, 198, 198, 1)))),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(10.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(mainPageModel.title,
@@ -96,9 +97,12 @@ class _PlansState extends State<PlansView> {
       String screenTypeIdentity, List<Filter> filterList) {
     return Column(
       children: [
-        BaseSearchWidget(
-          filters: filterList,
-          onFilterChanged: _plansPageViewModel.planScreenSearch,
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.12,
+          child: BaseSearchWidget(
+            filters: filterList,
+            onFilterChanged: _plansPageViewModel.planScreenSearch,
+          ),
         ),
         StreamBuilder<bool>(
           stream: _plansPageViewModel.outputSearch,
@@ -124,9 +128,12 @@ class _PlansState extends State<PlansView> {
       String screenTypeIdentity, List<Filter> filterList) {
     return Column(
       children: [
-        BaseSearchWidget(
-          filters: filterList,
-          onFilterChanged: _plansPageViewModel.resellerPriceScreenSearch,
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.12,
+          child: BaseSearchWidget(
+            filters: filterList,
+            onFilterChanged: _plansPageViewModel.resellerPriceScreenSearch,
+          ),
         ),
         StreamBuilder<bool>(
           stream: _plansPageViewModel.outputSearch,
@@ -152,9 +159,12 @@ class _PlansState extends State<PlansView> {
       String screenTypeIdentity, List<Filter> filterList) {
     return Column(
       children: [
-        BaseSearchWidget(
-          filters: filterList,
-          onFilterChanged: _plansPageViewModel.operatorPriceScreenSearch,
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.12,
+          child: BaseSearchWidget(
+            filters: filterList,
+            onFilterChanged: _plansPageViewModel.operatorPriceScreenSearch,
+          ),
         ),
         StreamBuilder<bool>(
           stream: _plansPageViewModel.outputSearch,
@@ -185,7 +195,7 @@ class _PlansState extends State<PlansView> {
             if (snapshot.data!.isEmpty) {
               return Stack(children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.66,
+                    height: MediaQuery.of(context).size.height * 0.56,
                     child: const Center(child: Text("No data found"))),
                 Positioned(
                   bottom: MediaQuery.of(context).size.height * 0.08,
@@ -211,7 +221,7 @@ class _PlansState extends State<PlansView> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.66,
+                        height: MediaQuery.of(context).size.height * 0.56,
                         // constraints: BoxConstraints(
                         //   maxHeight: ,
                         // ),
@@ -255,7 +265,7 @@ class _PlansState extends State<PlansView> {
             if (snapshot.data!.isEmpty) {
               return Stack(children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.66,
+                    height: MediaQuery.of(context).size.height * 0.56,
                     child: const Center(child: Text("No data found"))),
                 Positioned(
                   bottom: MediaQuery.of(context).size.height * 0.08,
@@ -281,7 +291,7 @@ class _PlansState extends State<PlansView> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.66,
+                        height: MediaQuery.of(context).size.height * 0.56,
                         // constraints: BoxConstraints(
                         //   maxHeight: ,
                         // ),
@@ -325,7 +335,7 @@ class _PlansState extends State<PlansView> {
             if (snapshot.data!.isEmpty) {
               return Stack(children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.66,
+                    height: MediaQuery.of(context).size.height * 0.56,
                     child: const Center(child: Text("No data found"))),
                 if (_plansPageViewModel.loggedInUserRole == Roles.admin)
                   Positioned(
@@ -349,7 +359,7 @@ class _PlansState extends State<PlansView> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.66,
+                        height: MediaQuery.of(context).size.height * 0.56,
                         // constraints: BoxConstraints(
                         //   maxHeight: ,
                         // ),
@@ -385,7 +395,7 @@ class _PlansState extends State<PlansView> {
   Widget _shimmerWidget() {
     return ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.66,
+          maxHeight: MediaQuery.of(context).size.height * 0.56,
         ),
         child: ListView.builder(
           itemCount: 8,

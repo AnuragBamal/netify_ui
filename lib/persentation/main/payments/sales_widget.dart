@@ -20,11 +20,15 @@ class SalesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(children: [
-      BaseSearchWidget(
-        filters: mainPageModel.filter,
-        onFilterChanged: paymentsPageViewModel.updateSearchFilter,
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.11,
+        child: BaseSearchWidget(
+          filters: mainPageModel.filter,
+          onFilterChanged: paymentsPageViewModel.updateSearchFilter,
+        ),
       ),
       SizedBox(
+        height: MediaQuery.of(context).size.height * 0.075,
         width: MediaQuery.of(context).size.width *
             Constant.expandedPanelContainerWidth,
         child: DateSelectors(
@@ -40,7 +44,7 @@ class SalesWidget extends StatelessWidget {
             if (snapshot.hasData) {
               if (!snapshot.data!) {
                 return SizedBox(
-                    height: MediaQuery.of(context).size.height * .60,
+                    height: MediaQuery.of(context).size.height * .495,
                     child: SalesViewWidget(
                       loggedInUser: paymentsPageViewModel.loggedInUser,
                       salesSnapshot: paymentsPageViewModel
@@ -48,7 +52,7 @@ class SalesWidget extends StatelessWidget {
                     ));
               } else {
                 return SizedBox(
-                    height: MediaQuery.of(context).size.height * .60,
+                    height: MediaQuery.of(context).size.height * .495,
                     child: SalesViewWidget(
                       loggedInUser: paymentsPageViewModel.loggedInUser,
                       salesSnapshot: paymentsPageViewModel
@@ -57,7 +61,7 @@ class SalesWidget extends StatelessWidget {
               }
             } else {
               return SizedBox(
-                  height: MediaQuery.of(context).size.height * .60,
+                  height: MediaQuery.of(context).size.height * .495,
                   child: SalesViewWidget(
                     loggedInUser: paymentsPageViewModel.loggedInUser,
                     salesSnapshot: paymentsPageViewModel

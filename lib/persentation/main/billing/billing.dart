@@ -51,12 +51,13 @@ class _BillingState extends State<Billing> {
     return Column(
       children: [
         Container(
+          height: MediaQuery.of(context).size.height * 0.07,
           decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
                       width: 1, color: Color.fromRGBO(198, 198, 198, 1)))),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(10.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(mainPageModel.title,
@@ -79,17 +80,20 @@ class _BillingState extends State<Billing> {
                 ScreenTypeIdentity.upcomingRenewals)
           Column(
             children: [
-              BaseSearchWidget(
-                filters: mainPageModel.filter,
-                onFilterChanged:
-                    _billingPageViewModel.updateUpcomingBillsSearchFilter,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.12,
+                child: BaseSearchWidget(
+                  filters: mainPageModel.filter,
+                  onFilterChanged:
+                      _billingPageViewModel.updateUpcomingBillsSearchFilter,
+                ),
               ),
               GestureDetector(
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
                 child: SizedBox(
-                    height: MediaQuery.of(context).size.height * .67,
+                    height: MediaQuery.of(context).size.height * .56,
                     child:
                         upcomingRenewalStreamBuilder(mainPageModel, context)),
               ),
@@ -99,11 +103,16 @@ class _BillingState extends State<Billing> {
             mainPageModel.screenTypeIdentity == ScreenTypeIdentity.bills)
           Column(
             children: [
-              BaseSearchWidget(
-                filters: mainPageModel.filter,
-                onFilterChanged: _billingPageViewModel.updateBillsSearchFilter,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.11,
+                child: BaseSearchWidget(
+                  filters: mainPageModel.filter,
+                  onFilterChanged:
+                      _billingPageViewModel.updateBillsSearchFilter,
+                ),
               ),
               SizedBox(
+                height: MediaQuery.of(context).size.height * 0.075,
                 width: MediaQuery.of(context).size.width *
                     Constant.expandedPanelContainerWidth,
                 child: DateSelectors(
@@ -117,7 +126,7 @@ class _BillingState extends State<Billing> {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
                 child: SizedBox(
-                    height: MediaQuery.of(context).size.height * .60,
+                    height: MediaQuery.of(context).size.height * .50,
                     child: billsStreamBuilder(mainPageModel, context)),
               ),
             ],
@@ -126,16 +135,20 @@ class _BillingState extends State<Billing> {
             mainPageModel.screenTypeIdentity == ScreenTypeIdentity.unpaidBills)
           Column(
             children: [
-              BaseSearchWidget(
-                filters: mainPageModel.filter,
-                onFilterChanged: _billingPageViewModel.updateBillsSearchFilter,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.12,
+                child: BaseSearchWidget(
+                  filters: mainPageModel.filter,
+                  onFilterChanged:
+                      _billingPageViewModel.updateBillsSearchFilter,
+                ),
               ),
               GestureDetector(
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
                 child: SizedBox(
-                    height: MediaQuery.of(context).size.height * .67,
+                    height: MediaQuery.of(context).size.height * .56,
                     child: unpaidBillsStreamBuilder(mainPageModel, context)),
               ),
             ],

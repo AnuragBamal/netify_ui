@@ -118,7 +118,7 @@ class GroupWidget extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * .40,
+                  width: MediaQuery.of(context).size.width * .395,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -152,7 +152,7 @@ class GroupWidget extends StatelessWidget {
                 ),
                 if (item + 1 < groupList.length)
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * .40,
+                    width: MediaQuery.of(context).size.width * .395,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

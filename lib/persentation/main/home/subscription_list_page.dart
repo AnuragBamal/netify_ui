@@ -24,11 +24,13 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        BaseSearchWidget(
-          filters: filterList,
-          onFilterChanged: homepageViewModel.updateSubscriptionSearchFilter,
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.12,
+          child: BaseSearchWidget(
+            filters: filterList,
+            onFilterChanged: homepageViewModel.updateSubscriptionSearchFilter,
+          ),
         ),
         StreamBuilder<bool>(
             stream: homepageViewModel.outputForSearchState,
@@ -64,7 +66,7 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
       if (snapshot.data!.isEmpty) {
         return Stack(children: [
           SizedBox(
-              height: MediaQuery.of(context).size.height * 0.66,
+              height: MediaQuery.of(context).size.height * 0.56,
               child: const Center(child: Text("No data found"))),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.08,
@@ -86,7 +88,7 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.66,
+                height: MediaQuery.of(context).size.height * 0.56,
                 child: ExpandedPanelWidget(
                   key: regularKey,
                   dataTypeIdentity: DataTypeIdentity.subscription,
@@ -113,7 +115,7 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
     } else {
       return ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.66,
+            maxHeight: MediaQuery.of(context).size.height * 0.56,
           ),
           child: ListView.builder(
             itemCount: 10,
@@ -146,7 +148,7 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
       if (snapshot.data!.isEmpty) {
         return Stack(children: [
           SizedBox(
-              height: MediaQuery.of(context).size.height * 0.66,
+              height: MediaQuery.of(context).size.height * 0.55,
               child: const Center(child: Text("No data found"))),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.08,
@@ -168,7 +170,7 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.66,
+                height: MediaQuery.of(context).size.height * 0.55,
                 child: ExpandedPanelWidget(
                   key: searchkey,
                   dataTypeIdentity: DataTypeIdentity.subscription,
@@ -195,7 +197,7 @@ class SubscriptionDataTypeScreen extends StatelessWidget {
     } else {
       return ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.66,
+            maxHeight: MediaQuery.of(context).size.height * 0.55,
           ),
           child: ListView.builder(
             itemCount: 10,

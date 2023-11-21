@@ -57,6 +57,7 @@ class _MainState extends State<Main> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+          toolbarHeight: MediaQuery.of(context).size.height * .1,
           title: Text(_titleOptions.elementAt(_selectedIndex)),
           actions: [
             if (widget.argument.roleId == 0)
@@ -72,6 +73,7 @@ class _MainState extends State<Main> {
                 icon: const Icon(Icons.logout))
           ]),
       body: Container(
+          height: MediaQuery.of(context).size.height * .80,
           color: ColorManager.surfaceColor,
           child:
               //  _isSettingsPressed
@@ -81,7 +83,7 @@ class _MainState extends State<Main> {
               //   return Settings()
               // else
               Center(child: _widgetOptions.elementAt(_selectedIndex))),
-      bottomNavigationBar: _navigationBar(),
+      bottomNavigationBar: _navigationBar(context),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () => _onItemTapped(0),
       //   backgroundColor: ColorManager.primaryColor,
@@ -133,12 +135,12 @@ class _MainState extends State<Main> {
     );
   }
 
-  Widget _navigationBar() {
+  Widget _navigationBar(BuildContext context) {
     return BottomAppBar(
       //color: ColorManager.primaryColor,
       //shape: const CircularNotchedRectangle(),
-      notchMargin: 12.0,
-      height: 60,
+      //notchMargin: 12.0,
+      height: MediaQuery.of(context).size.height * 0.1,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(

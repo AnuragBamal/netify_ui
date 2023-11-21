@@ -30,11 +30,13 @@ class UserDataTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        BaseSearchWidget(
-          filters: filterList,
-          onFilterChanged: homepageViewModel.updateSearchFilter,
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.12,
+          child: BaseSearchWidget(
+            filters: filterList,
+            onFilterChanged: homepageViewModel.updateSearchFilter,
+          ),
         ),
         StreamBuilder<bool>(
             stream: homepageViewModel.outputForSearchState,
@@ -88,7 +90,7 @@ class UserDataTypeScreen extends StatelessWidget {
       if (snapshot.data!.isEmpty) {
         return Stack(children: [
           SizedBox(
-              height: MediaQuery.of(context).size.height * 0.70,
+              height: MediaQuery.of(context).size.height * 0.56,
               child: const Center(child: Text("No data found"))),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.08,
@@ -112,7 +114,7 @@ class UserDataTypeScreen extends StatelessWidget {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.67,
+                height: MediaQuery.of(context).size.height * 0.56,
                 // constraints: BoxConstraints(
                 //   maxHeight: ,
                 // ),
@@ -150,7 +152,7 @@ class UserDataTypeScreen extends StatelessWidget {
     } else {
       return ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.65,
+            maxHeight: MediaQuery.of(context).size.height * 0.55,
           ),
           child: ListView.builder(
             itemCount: 10,

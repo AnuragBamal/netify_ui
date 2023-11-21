@@ -23,7 +23,7 @@ class AppString {
   static const String login = "Login";
   static const String loginWelcome = "Welcome Back!";
   static const String forgotPassword = "Forgot Password?";
-  static const String registerText = "Not a member ? Sign up";
+  static const String registerText = " Sign up";
   static const String registerFormText = "Registration";
   static const String loading = "Loading...";
   static const String retryAgain = "Retry Again";

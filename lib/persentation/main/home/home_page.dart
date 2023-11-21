@@ -56,12 +56,13 @@ class _HomeState extends State<Home> {
     return Column(
       children: [
         Container(
+          height: MediaQuery.of(context).size.height * 0.07,
           decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
                       width: 1, color: Color.fromRGBO(198, 198, 198, 1)))),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(10.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(mainPageModel.title,
@@ -69,42 +70,35 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              if (mainPageModel.viewType == ScreenViewType.grid &&
-                  mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
-                DashboardView(
-                  itemBuilder: dashboardGridItemBuilder,
-                  dashboardStream: _homepageViewModel.outputForDashboard,
-                  onTap: goToPage,
-                ),
-              if (mainPageModel.viewType == ScreenViewType.list &&
-                  mainPageModel.dataTypeIdentity == DataTypeIdentity.user)
-                UserDataTypeScreen(
-                  itemBuilder: userListBuilder,
-                  filterList: mainPageModel.filter,
-                  homepageViewModel: _homepageViewModel,
-                  screenName: mainPageModel.screenTypeIdentity,
-                ),
-              if (mainPageModel.viewType == ScreenViewType.list &&
-                  mainPageModel.dataTypeIdentity == DataTypeIdentity.subscriber)
-                SubscriberDataTypeScreen(
-                  filterList: mainPageModel.filter,
-                  homepageViewModel: _homepageViewModel,
-                  screenName: mainPageModel.screenTypeIdentity,
-                ),
-              if (mainPageModel.viewType == ScreenViewType.list &&
-                  mainPageModel.dataTypeIdentity ==
-                      DataTypeIdentity.subscription)
-                SubscriptionDataTypeScreen(
-                  filterList: mainPageModel.filter,
-                  homepageViewModel: _homepageViewModel,
-                  screenName: mainPageModel.screenTypeIdentity,
-                )
-            ],
+        if (mainPageModel.viewType == ScreenViewType.grid &&
+            mainPageModel.dataTypeIdentity == DataTypeIdentity.dashboard)
+          DashboardView(
+            itemBuilder: dashboardGridItemBuilder,
+            dashboardStream: _homepageViewModel.outputForDashboard,
+            onTap: goToPage,
           ),
-        ),
+        if (mainPageModel.viewType == ScreenViewType.list &&
+            mainPageModel.dataTypeIdentity == DataTypeIdentity.user)
+          UserDataTypeScreen(
+            itemBuilder: userListBuilder,
+            filterList: mainPageModel.filter,
+            homepageViewModel: _homepageViewModel,
+            screenName: mainPageModel.screenTypeIdentity,
+          ),
+        if (mainPageModel.viewType == ScreenViewType.list &&
+            mainPageModel.dataTypeIdentity == DataTypeIdentity.subscriber)
+          SubscriberDataTypeScreen(
+            filterList: mainPageModel.filter,
+            homepageViewModel: _homepageViewModel,
+            screenName: mainPageModel.screenTypeIdentity,
+          ),
+        if (mainPageModel.viewType == ScreenViewType.list &&
+            mainPageModel.dataTypeIdentity == DataTypeIdentity.subscription)
+          SubscriptionDataTypeScreen(
+            filterList: mainPageModel.filter,
+            homepageViewModel: _homepageViewModel,
+            screenName: mainPageModel.screenTypeIdentity,
+          ),
       ],
     );
   }

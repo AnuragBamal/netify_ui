@@ -22,11 +22,13 @@ class SubscriberDataTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        BaseSearchWidget(
-          filters: filterList,
-          onFilterChanged: homepageViewModel.updateSubscriberSearchFilter,
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.12,
+          child: BaseSearchWidget(
+            filters: filterList,
+            onFilterChanged: homepageViewModel.updateSubscriberSearchFilter,
+          ),
         ),
         StreamBuilder<bool>(
             stream: homepageViewModel.outputForSearchState,
@@ -61,7 +63,7 @@ class SubscriberDataTypeScreen extends StatelessWidget {
       if (snapshot.data!.isEmpty) {
         return Stack(children: [
           SizedBox(
-              height: MediaQuery.of(context).size.height * 0.66,
+              height: MediaQuery.of(context).size.height * 0.56,
               child: const Center(child: Text("No data found"))),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.08,
@@ -83,7 +85,7 @@ class SubscriberDataTypeScreen extends StatelessWidget {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.66,
+                height: MediaQuery.of(context).size.height * 0.56,
                 child: ExpandedPanelWidget(
                   dataTypeIdentity: DataTypeIdentity.subscriber,
                   subscriberItemSnapshot: snapshot.data,
@@ -109,7 +111,7 @@ class SubscriberDataTypeScreen extends StatelessWidget {
     } else {
       return ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.66,
+            maxHeight: MediaQuery.of(context).size.height * 0.56,
           ),
           child: ListView.builder(
             itemCount: 10,

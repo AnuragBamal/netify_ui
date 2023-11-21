@@ -21,11 +21,15 @@ class TransactionWidget extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          BaseSearchWidget(
-            filters: mainPageModel.filter,
-            onFilterChanged: paymentsPageViewModel.updateSearchFilter,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.11,
+            child: BaseSearchWidget(
+              filters: mainPageModel.filter,
+              onFilterChanged: paymentsPageViewModel.updateSearchFilter,
+            ),
           ),
           SizedBox(
+            height: MediaQuery.of(context).size.height * 0.075,
             width: MediaQuery.of(context).size.width *
                 Constant.expandedPanelContainerWidth,
             child: DateSelectors(
@@ -41,7 +45,7 @@ class TransactionWidget extends StatelessWidget {
                 if (snapshot.hasData) {
                   if (!snapshot.data!) {
                     return SizedBox(
-                        height: MediaQuery.of(context).size.height * .60,
+                        height: MediaQuery.of(context).size.height * .495,
                         child: TransactionsViewWidget(
                           loggedInUser: paymentsPageViewModel.loggedInUser,
                           w2wTransactionSnapshot: paymentsPageViewModel
@@ -49,7 +53,7 @@ class TransactionWidget extends StatelessWidget {
                         ));
                   } else {
                     return SizedBox(
-                        height: MediaQuery.of(context).size.height * .60,
+                        height: MediaQuery.of(context).size.height * .495,
                         child: TransactionsViewWidget(
                           loggedInUser: paymentsPageViewModel.loggedInUser,
                           w2wTransactionSnapshot: paymentsPageViewModel
@@ -58,7 +62,7 @@ class TransactionWidget extends StatelessWidget {
                   }
                 } else {
                   return SizedBox(
-                      height: MediaQuery.of(context).size.height * .60,
+                      height: MediaQuery.of(context).size.height * .495,
                       child: TransactionsViewWidget(
                         // key: const Key("_transaction__"),
                         loggedInUser: paymentsPageViewModel.loggedInUser,
@@ -144,7 +148,7 @@ class _TransactionsViewWidget extends State<TransactionsViewWidget> {
                       ),
                     ),
                     title: Text(
-                      "Transaction Id: ${transaction.transactionId}",
+                      " ${transaction.transactionDate.day}/${transaction.transactionDate.month}/${transaction.transactionDate.year}",
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                     subtitle: Column(

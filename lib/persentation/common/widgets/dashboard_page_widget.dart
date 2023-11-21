@@ -47,12 +47,13 @@ Widget mainDashboardWidget(
 }
 
 Widget dashboardShimmer(BuildContext context) {
-  return ConstrainedBox(
-    constraints: BoxConstraints(
-      maxHeight: MediaQuery.of(context).size.height * 0.75,
-    ),
+  return SizedBox(
+    height: MediaQuery.of(context).size.height * 0.675,
+    // constraints: BoxConstraints(
+    //   maxHeight: MediaQuery.of(context).size.height * 0.70,
+    // ),
     child: GridView.builder(
-      padding: const EdgeInsets.all(25.0),
+      padding: const EdgeInsets.all(20.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
           crossAxisSpacing: 5.0,

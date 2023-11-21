@@ -38,51 +38,37 @@ class _W2WTransferWidgetState extends State<W2WTransferWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 16.0),
-          child: ListTile(
-            leading: Icon(
-              Icons.compare_arrows,
-              size: 50,
-            ),
-            title: Text(AppString.w2wTransfer),
-            //subtitle: Text('Subtitle'),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: AppSize.s12, bottom: AppSize.s48),
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  _getPayeeWidget(context, widget.payee),
-                  const SizedBox(
-                    height: AppSize.s8,
-                  ),
-                  _getAmountWidget(context),
-                  const SizedBox(
-                    height: AppSize.s8,
-                  ),
-                  _getRemarksWidget(context),
-                  const SizedBox(
-                    height: AppSize.s8,
-                  ),
-                  _getTransferButton(context),
-                  const SizedBox(
-                    height: AppSize.s8,
-                  ),
-                ],
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
+            child: Column(
+              children: [
+                _getPayeeWidget(context, widget.payee),
+                const SizedBox(
+                  height: AppSize.s8,
+                ),
+                _getAmountWidget(context),
+                const SizedBox(
+                  height: AppSize.s8,
+                ),
+                _getRemarksWidget(context),
+                const SizedBox(
+                  height: AppSize.s8,
+                ),
+                _getTransferButton(context),
+                const SizedBox(
+                  height: AppSize.s8,
+                ),
+              ],
             ),
           ),
-        ),
-        // _getPayeeWidget(context, payee),
-        // _getAmountWidget(context),
-        // _getTransferButton(context),
-      ],
+          // _getPayeeWidget(context, payee),
+          // _getAmountWidget(context),
+          // _getTransferButton(context),
+        ],
+      ),
     );
   }
 
@@ -96,7 +82,7 @@ class _W2WTransferWidgetState extends State<W2WTransferWidget> {
           ),
           labelText: AppString.payee,
         ),
-        value: payee[0],
+        //value: payee[0],
         onChanged: (Payee? newValue) {
           widget.paymentsPageViewModel
               .setPayeeName(newValue!.userName, newValue.userId);

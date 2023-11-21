@@ -47,7 +47,7 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: <Widget>[
           _searchInput(),
@@ -67,7 +67,7 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
                 side: const BorderSide(
                     color: Colors.grey, width: 2.0, style: BorderStyle.solid),
               ),
-              iconSize: 30.0,
+              iconSize: 24.0,
               icon: const Icon(Icons.filter_list),
               onOpened: () {
                 setState(() {
@@ -110,7 +110,7 @@ class BaseSearchWidgetState extends State<BaseSearchWidget> {
           //focusNode: searchFocusNode,
           decoration: InputDecoration(
             labelText: _activeFilter?.label ?? 'Select a filter to search',
-            border: const OutlineInputBorder(),
+            border: const OutlineInputBorder(gapPadding: 0.0),
           ),
         ),
       );
